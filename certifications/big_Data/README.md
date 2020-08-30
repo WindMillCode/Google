@@ -1,17 +1,23 @@
 # Data cerfitifications
 
+## Social network 
+
+### Messages
+
+Greetings I am currently going to get several GCP certifications. Subscribe to my youtube channel as I do tutorials on the fundamentals and advanced concepts of GCP. Any advice for  education and career prospects will be appreciated .  https://www.youtube.com/channel/UCmqEX_zasOf3AQ9vnPkxtjg/
+
 ## Coursera 
 
 
+
+
 ### 1 
-
-
 * need a lot of compute power for big data jobs 
 * for stablizing a video, lot of data 
 * talking petabytes
 * google uses many data centers to get things done
 
-#### Creating a VM on Compute Engine
+#### Creating a VM on Compute Engine Tutorial
 
 * data from USGS
 * plot earthquake activity
@@ -87,3 +93,225 @@
 
 * objects -> column[public access] -> copy url
     * u have a warning sign because it was made public
+
+
+#### Elastic Storage with google cloud storage
+
+* need a place to store all data
+* compute, and storage is seperate 
+* getting data into storage and transforming for purpose
+
+##### details
+
+* four storage classes
+    * different on access speed and cost
+    standard storage - fastest 
+    archive storage- least expensive
+* if you want to use folders u must have an organization
+* gsutil uses familiar linux cmd 
+
+#### Networking
+
+* google builds 1,000 of fiber optics with repeaters to connect the world
+* has bandwith so big 100,000 can commuicate at 10gb/s
+
+#### Security 
+* on-prem, you are responsible for security
+* gcp - google handles many lower layer security
+* there DOS protection, data encryption
+* BiqQuery
+    * petabyte data encrypted with a data encryption key, encrypted with key encryption key
+    * can limit team 
+
+#### History of managing large scale data
+* 2002  GFS - to deal with petabyte data
+
+
+#### Google Cloud Public Datasets program
+* access 1TB data/month at no cost
+* dont need to worry abt licenses all data in one place
+* you got the worlds data in one place
+
+
+
+#### Getting Started with Google Cloud Platform and Qwiklabs Tutorial
+
+
+* allows you to use gcp at no cost 
+* using GCP console for bigquery data
+* note the lab credentials
+    open google console
+    use another acct ,copy paste for the lab
+    use the correct acct credentials
+    dont click end lab till yr done
+
+##### Questions
+
+* how dont I need a table for the dataset       
+
+##### Steps 
+
+* menu -> bigQuery
+* load public dataset USA Names into bigquery
+    ADD DATA -> explore public datasets -> usa names
+    VIEW DATASET 
+        BigQuery opens in a new tab you can see the dataset in your resources tree
+    
+* in query editor 
+    ```sql
+    SELECT
+    name, gender,
+    SUM(number) AS total
+    FROM
+    `bigquery-public-data.usa_names.usa_1910_2013`
+    GROUP BY
+    name, gender
+    ORDER BY
+    total DESC
+    LIMIT
+    10    
+    ```
+    * you learn whether the query is valid, 
+    * and the amnt of data needed to get it to run 
+
+* create a custom table
+    download babynames.zip 
+    read the pdf 
+    note the location of yob2014.txt
+    * Resources -> [GCP Project ID]  -> cREATE DATASET
+
+    | name          | value           | data 
+    | :------------ |:---------------:| -----:|
+    |      Dataset ID         |     babynames            |       |
+    |        Data location,       |     United States (US)            |       |
+    |     Default table expiration          |      [default]           |       |
+    
+
+    * babynames -> create table
+
+    | name          | value           | data  |
+    | :------------ |:---------------:| -----:|
+    |     Source  Create table from:       |      Upload           |        |
+    |     Source     Selecti File      | fakepath/yob2014.txt                |       |
+    |     Source     File Format       |     CSV                 |       |
+    | tABLE NAME |  names_2014|
+    | schema  | name:string,gender:string,count:integer   | edit as text selected|  
+
+
+    * babynames ->  names_2014  -> preview tab
+
+* query the table 
+
+    * in query editor 
+    ```sql
+    SELECT
+    name, count
+    FROM
+    `babynames.names_2014`
+    WHERE
+    gender = 'M'
+    ORDER BY count DESC LIMIT 5
+    ```
+
+
+#### Choosing the right approach
+
+* compute engine- running individual code 
+* GKE - contaierized code, docker stuff,  when u got a software architecture code
+* app engine - long lived web apps
+* cloud functions - execute code on event file on cloud storage
+* storage -> ingest -> analyze -> ml -> serve 
+
+#### What you can do with Google Cloud Platform
+
+* use case, AutoML , customer can search for details like granite countertops
+* uses ML to routing emails to the right mailbox
+* kewpie sorted discolored food
+
+
+#### Explore real customer solution architectures
+* cloud.google.com/customers
+* filter big data analytics and ml
+* select use case that interests you
+* questions 
+    * barries and challenges customer faced
+    * how GCP solved it
+    * what was the business impact    
+
+* bloomberg
+    * 1 getting data from 100 of news sources, intrepret into something ppl can understand, 40 countries 170 languages
+    *  2  GCP already had the tool, integration was easy
+    *  3 business impact was fantastic it was an amazing feeling for them
+
+
+#### Key roles in a data-driven organization
+
+
+#### Introduction to machine learning
+* recommadatin
+    *data, model,infrastructure
+    * learning from data in an automated way
+    * who is the user like 
+    * Cloud SQL , few gigs 
+    * Cloud Spanner more SQL
+
+![](./images/Capture.JPG)
+
+#### From zero to an Apache Spark job in 10 minutes or less
+
+##### Steps
+ 
+navigation menu -> dataproc -> clusters 
+
+create cluster
+
+| name          | value           | data 
+| :------------ |:---------------:| -----:|
+|     name          |        cluster-af04         |       |
+|      cluster mode         |   standard (1 master N workers)              |       |
+
+
+create 
+
+dataproc -> jobs
+
+submit a job
+
+| name          | value           | data 
+| :------------ |:---------------:| -----:|
+|    job ID           |  estimate-pi-digits               |       |
+|        job type       |   spark                  |       |
+|        main class or jar       |      org.apache.spark.examples.SparkPi      |   |  
+|  arguments     | 10 | |
+| jar files |  spark/examples/jars/spark-examples.jar   |
+
+
+###### Issues 
+we had to stop short early not allowed to select a cluster
+
+
+#### Challenge: Utilizing and tuning on-premise clusters
+
+*  a team uses 100% of the cluster for 2 jobs
+* or a team a use 10 % for 4  jobs
+ * GCP is dynamic with jobs and cluster resources
+ * jobs get resources they need
+ * store data off cluster 
+
+#### Move storage off-cluster with Google Cloud Storage
+
+#### Lab: Product Recommendations using Cloud SQL and Spark
+
+
+##### Steps
+nav menu -> STORAGE > SQL 
+create instance 
+choose MySQL
+
+| name          | value           | data 
+| :------------ |:---------------:| -----:|
+|    instance ID           | rentals                 |       |
+|         root password      |  BananaBowl7368                 |       |
+|               |                 |       |
+
+create
