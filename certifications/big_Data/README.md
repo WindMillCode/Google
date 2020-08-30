@@ -300,19 +300,69 @@ we had to stop short early not allowed to select a cluster
 
 #### Move storage off-cluster with Google Cloud Storage
 
-#### Lab: Product Recommendations using Cloud SQL and Spark
+#### Introduction to BigQuery
+
+* petabyte-scale fully managed data warehouse
+* work best working off its own storage
+* managed with SQL  
+* BigQuery support  ARRAY TYPES
 
 
-##### Steps
-nav menu -> STORAGE > SQL 
-create instance 
-choose MySQL
+###### Activity Practice Exploring BigQuery Public Datasets
 
-| name          | value           | data 
-| :------------ |:---------------:| -----:|
-|    instance ID           | rentals                 |       |
-|         root password      |  BananaBowl7368                 |       |
-|               |                 |       |
+1 dataset name 
+    austin_bikeshare
+2. 
+    using this SQL 
+```sql
+SELECT COUNT(*) AS records
+FROM bigquery-public-data.austin_bikeshare.bikeshare_stations;
+```
 
-create 
+there are 96 records
+
+3. data quality concerns
+    which bike stations are out of order 
+
+4. 
+    some insights I think I can find are exact location on planet earth
+    alternstive names to train station
+
+5.  I can join with austin_311 to see how many ppl called asking about bike station locations   
+
+##### Demo: Analyzing lightning strikes with BigQuery GIS
+* GCP Marketplace -> Datasets
+
+![](./images/right_model_type.JPG)
+
+
+
+* theres a historical right model
+    * I want to forecast future sales
+        * model - linear regiression
+    * I want to classify something
+        * logistic regression (2 classes)
+        * multi-class more than 2
+    * I want to recommend something
+        * matrix factorization 
+
+Use simple models
+* Simple model to get to a benchmark,
+* quicker to train 
+__benchmark__ -  a good result from your data
+
+
+#### Predicting customer lifetime value
+* high value customer or not,
+* future customer with new data but we have past data
+* sometimes columns are not useful to the model
+* model_type is the only required options for MODEL
+__ML.WEIGHTS__ - how useful a column was from 0 not needed to 1 paramoount 
+
+
+- __Lab__: Predict Visitor Purchases with a Classification Model with BigQuery ML
+
+
+
+
 
