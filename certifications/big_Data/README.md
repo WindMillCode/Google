@@ -364,5 +364,54 @@ __ML.WEIGHTS__ - how useful a column was from 0 not needed to 1 paramoount
 
 
 
+### Modern data pipeline challenges
+
+* scalable reliable pipelines high proiortiy
+* many diiferent sources, must be organized and correct 
+* variety, volumne,velocity, corruption
+
+#### Message-oriented architectures with Cloud Pub/S
+
+* iot devices such as delivery drivers,or temperature sensor in a lab
+* Pub/Sub deal with this
+* can receive messages from variety of different streams
+
+* __topic__ - an antenna, like angular subjects
+    * decoupled from each other
+* Example - someone got hired 
+2 Pub HR office, id tags 
+4 Sub  directory,faclities, new office allocaion, account provisioning system
+
+#### Designing streaming pipelines with Apache Beam
 
 
+* pipeline design 
+    * good for batch and streaming
+    * SDK suuport everything I wanna do 
+    * any templates, 
+    USE APACHE BEAM
+
+
+#### Implementing streaming pipelines on Cloud Dataflow
+
+* implementation
+    how much maintainance
+    is it reliable
+    hows scaling
+    monitor system
+    stuck with a vendor
+
+work with these [templates](github.com/GoogleCloudPlatform/DataflowTemplates)
+
+#### Visualizing insights with Data Studio
+
+* just because access to dashboard, doesnt mean access to data
+* when you add a data soruce, anyone might be able to see them
+
+
+#### Demo: Data Studio walkthrough
+* can export bigquery dataset to data studio
+* start with high level key performance indicators, 
+    * then breakdown
+
+#### Lab Create a Streaming Data Pipeline for a Real-Time Dashboard with Cloud Dataflow
