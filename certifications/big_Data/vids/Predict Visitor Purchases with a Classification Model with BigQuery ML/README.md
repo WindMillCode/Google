@@ -432,7 +432,6 @@ Overall, only 0.7% of first-time visitors make a purchase in a later visit.
 
 Targeting the top 6% of first-time increases marketing ROI by 9x vs targeting them all!
 
-Addition
 
 ## Additional info 
 
