@@ -415,3 +415,31 @@ work with these [templates](github.com/GoogleCloudPlatform/DataflowTemplates)
     * then breakdown
 
 #### Lab Create a Streaming Data Pipeline for a Real-Time Dashboard with Cloud Dataflow
+
+
+# Building Batch data pipelines on GCP
+
+### Lab Building and Executing a Pipeline Graph with Data Fusion
+
+__joiner node__ - siminlar to a SQL join
+__sink__ - where you store your data
+
+## Orchestrating work between GCP services with Cloud Composer
+
+### DAGs and Operators
+
+### Workflow scheduling
+
+###  Lab An Introduction to Cloud Composer
+
+__Airflow__ is a platform to programmatically author, schedule and monitor workflows.
+
+__DAG__ A Directed Acyclic Graph is a collection of all the tasks you want to run, organized in a way that reflects their relationships and dependencies.
+
+__Operator__ The description of a single task, it is usually atomic. For example, the BashOperator is used to execute bash command.
+
+__Task__ A parameterised instance of an Operator; a node in the DAG.
+
+__Task Instance__ A specific run of a task; characterized as: a DAG, a Task, and a point in time. It has an indicative state: running, success, failed, skipped, ...
+
+
