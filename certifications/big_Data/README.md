@@ -450,3 +450,16 @@ __Task Instance__ A specific run of a task; characterized as: a DAG, a Task, and
 
 * intelligent watermarking
 
+## Building Cloud Dataflow Pipelines in code
+
+### Lab A simple Dataflow pipeline (Python)
+
+* about grep.py
+    all /javahelp/src/main/java/com/google/cloud/training/dataanalyst/javahelp/ java files are input files
+    the search term is 'import'
+    the output goes to /tmp/prefix
+
+### Task 4. Execute the pipeline locally
+
+
+
