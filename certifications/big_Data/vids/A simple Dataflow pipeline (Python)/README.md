@@ -33,9 +33,15 @@ install apache beam
 ```bash
 cd ~/training-data-analyst/courses/data_analysis/lab2/python
 pip3 -V  
+
 ```
 
 the  output for the pip3 version should be 8.0 if not open another tab
+
+
+```bash
+./install_packages.sh
+```
 
 IF YOU ARE LOGGED OF OUT CLOUD SHELL DUE TO ACTIVTIVY RUN THE PREVIOUS BASH COMMANDS
 
@@ -44,7 +50,7 @@ IF YOU ARE LOGGED OF OUT CLOUD SHELL DUE TO ACTIVTIVY RUN THE PREVIOUS BASH COMM
 
 in cloud editor
 
-view[ /training-data-analyst/courses/data_analysis/lab2/python]()
+view[ /training-data-analyst/courses/data_analysis/lab2/python/grep.py]()
 
 
 ## Task 4. Execute the pipeline locally
