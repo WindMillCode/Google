@@ -442,4 +442,11 @@ __Task__ A parameterised instance of an Operator; a node in the DAG.
 
 __Task Instance__ A specific run of a task; characterized as: a DAG, a Task, and a point in time. It has an indicative state: running, success, failed, skipped, ...
 
+## Cloud Dataflow
+
+* batch and stream with dataflow
+
+## Why customers value Dataflow
+
+* intelligent watermarking
 

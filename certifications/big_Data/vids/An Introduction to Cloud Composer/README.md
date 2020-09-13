@@ -8,10 +8,10 @@ CREATE ENVIRONMENT
 
 |name|value|data|
 |:------|:------:|------:|
-|Name|highcpu||
+|Name|n1-standard||
 |Location|us-central1||
 |Zone|us-central1-a||
-|Machine type|	n1-highcpu-4||
+|Machine type|	n1-standard-1||
 
 Create
 
