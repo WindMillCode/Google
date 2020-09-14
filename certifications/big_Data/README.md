@@ -459,7 +459,17 @@ __Task Instance__ A specific run of a task; characterized as: a DAG, a Task, and
     the search term is 'import'
     the output goes to /tmp/prefix
 
-### Task 4. Execute the pipeline locally
+### Lab Serverless Data Analysis with Dataflow: MapReduce in Dataflow (Python)
+
+### Serverless Data Analysis with Dataflow: Side Inputs 
+
+file cd ~/training-data-analyst/courses/data_analysis/lab2/python
+nano JavaProjectsThatNeedHelp.py
 
 
+# Building Resilient Streaming Analytics Systems on GCP
 
+## Processing Streaming Data
+* we stream to get real time to see the state of the business
+
+### Lab Publish Streaming Data into Pub/Sub
