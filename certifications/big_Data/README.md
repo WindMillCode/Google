@@ -473,3 +473,11 @@ nano JavaProjectsThatNeedHelp.py
 * we stream to get real time to see the state of the business
 
 ### Lab Publish Streaming Data into Pub/Sub
+
+
+## Streaming Data Challenges
+
+## Streaming into BigQuery and Visualizing Results
+
+* must have correct permission to connect bigquery to data studio
+
