@@ -481,3 +481,7 @@ nano JavaProjectsThatNeedHelp.py
 
 * must have correct permission to connect bigquery to data studio
 
+## High-Throughput Streaming with Cloud Bigtable
+
+* high throughput ? bigtable
+* high

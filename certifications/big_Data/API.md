@@ -18,9 +18,22 @@ gcloud config set project [PROJECT_ID]
 gcloud config get-value project
 ```
 
+
+
 ## Big Query
 
 * can stream data
+
+## Big Table
+
+* high performance applications
+* __colossus__ where bigtable  stores data
+* index with row key
+* speed through simple
+* nosql database
+* you just want a quick scan, sorting = less performance 
+* have identical data closer to each other
+* if data is read more than others, colusses reorganizes for optimization
 
 
 # Dataflow
