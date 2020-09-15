@@ -485,3 +485,36 @@ nano JavaProjectsThatNeedHelp.py
 
 * high throughput ? bigtable
 * high
+
+## GIS Functions
+
+* always create descriptions for your columns
+* __GeoViz__ web graph front end    
+* __GIS__ - Geographical Information Systems
+
+## WITH Clauses vs Permanent Tables
+
+* help with asyncc
+
+## Lab Optimizing your BigQuery Queries for Performance
+
+* adding 3 # is slowing than adding 2 ## becuase more data is read not the operation
+* more column in SELECT is not good
+* cache queries for 24 hrs, free
+
+* no cache if
+    * unstable result
+    * table has changed
+    * query is not ===
+    * streams 
+    * uses DML
+    * external data
+
+* place views in tables
+* BI Engine  helps with caching
+* avoid joins
+* __denormalized__ give up on storing data efficiently, and instead add redundant copies of data.
+* avoid overwhelming worker memory to “resources exceeded" error
+* BigQuery provides fast, low-memory approximations of aggregate functions. Instead of using __COUNT(DISTINCT …)__,  use __APPROX_COUNT_DISTINCT__ on large data streams when a small stat uncertainty in the result is ok. 
+
+
