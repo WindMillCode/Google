@@ -496,7 +496,7 @@ nano JavaProjectsThatNeedHelp.py
 
 * help with asyncc
 
-## Lab Optimizing your BigQuery Queries for Performance
+### Lab Optimizing your BigQuery Queries for Performance
 
 * adding 3 # is slowing than adding 2 ## becuase more data is read not the operation
 * more column in SELECT is not good
@@ -517,4 +517,24 @@ nano JavaProjectsThatNeedHelp.py
 * avoid overwhelming worker memory to “resources exceeded" error
 * BigQuery provides fast, low-memory approximations of aggregate functions. Instead of using __COUNT(DISTINCT …)__,  use __APPROX_COUNT_DISTINCT__ on large data streams when a small stat uncertainty in the result is ok. 
 
+#### Performance Considerations Cheatsheet
 
+* avoid unneded columns
+* some fn are faster than others
+* filter early and often
+* outermost query
+* largest table on the left 
+* wildcards to query multiple tables
+* low cardinatliy is faster than high cardinatliy
+* time partition for easier search 
+
+### Lab Creating Date-Partitioned Tables in BigQuery 
+
+* Common use-cases for date-partitioned tables
+    * All transactions for the last year
+    * All visitor interactions within the last 7 days
+    * All products sold in the last month
+
+* you need your partitioned tables to expire, you will be charged for them
+
+#
