@@ -537,4 +537,21 @@ nano JavaProjectsThatNeedHelp.py
 
 * you need your partitioned tables to expire, you will be charged for them
 
-#
+### Streaming Data Processing: Streaming Data Pipelines
+
+* how many elements the pipeline processes per second,
+* system lag
+*  how many data elements have been processed so far
+
+ Navigation menu >  Dataflow > [PROJECT ID] job >  Get messages node
+
+
+# Smart Analytics, Machine Learning, and AI on GCP
+
+## What is ML?
+
+__ML__ - using algorithms to make predicitve insights from data and make repeated decisions. A type of AI
+
+__deep learning__ - ML on unstructed data, aka images,speech
+
+playgroud.tensorflow.org
