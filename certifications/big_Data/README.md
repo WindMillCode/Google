@@ -555,3 +555,84 @@ __ML__ - using algorithms to make predicitve insights from data and make repeate
 __deep learning__ - ML on unstructed data, aka images,speech
 
 playgroud.tensorflow.org
+
+### Lab Using the Natural Language API to classify unstructured text
+
+##  What’s a Notebook
+
+__platform notebook__ - integrates comments plots and code,
+__pandas__ - numeric library of python
+
+
+### Lab BigQuery in Jupyter Labs on AI Platform
+
+
+## Phases of ML Projects
+
+
+## Kubeflow
+
+__Kubeflow__ - is a place to manage ML pipelines
+
+### Lab : Running AI models on Kubeflow
+* boost cloud shell gives you a larger docker client
+__Kustomize__ - a Kubernetes tool for managing deployments
+
+__kfctl__ allows you to install Kubeflow on an existing cluster or create one from scratch.
+
+__kubeflow-qwiklab/app.yaml__ = , which defines a full, default Kubeflow installation.
+
+* Kubeflow helps create a service acct for pyhton to work
+* to use GCP in kubernetes container must set the  GOOGLE_APPLICATION_CREDENTIALS env var to put to keys.json credential file generated for the service acct
+* this keys.json is known as user-gcp-sa.json
+
+## BigQuery ML for Quick Model Building
+
+![](images/to_create_a_model.PNG)
+
+* how to predict
+first arg is model, snd is table
+    * for a regular table just one select on the first row
+```sql
+SELECT * FROM ML.PREDICT(
+    MODEL advdata.txtclass,
+    (
+        SELECT 'govt' as word1,
+        SELECT 'shutdown' as word2,
+        SELECT 'govt' as word3,
+        SELECT 'shutdown' as word4,   
+        SELECT 'reeling' as word5,           
+        UNION ALL SELECT 'unlikey', 'partnership', 'in', 'house', 'gives'
+        UNION ALL SELECT 'fitbit', 's', 'fitness', 'tracker', 'is'
+        UNION ALL SELECT 'downloading','the','android','studio','project'      
+    )
+)
+```
+### Classification, Regregression, and Recommender Models
+
+* linear 
+    * predict whether flight is on time or not
+![](images/linear.PNG)
+
+* non linear, (DNN)
+    car depreciation
+
+![](images/dnn_ml.PNG)
+
+so there are sevaral models
+* linear_reg
+* dnn_regressor
+* boosted_tree_tensorflow
+
+*if you trained on Tensorflow you can load into BQ
+
+* recommendation 
+    * matrix_factorization
+        * collab filter
+
+
+### Unsupervised ML with Clustering Models
+
+* explore patterns in data
+
+#### Predict Bike Trip Duration with a Regression Model in BQML

@@ -10,7 +10,7 @@ nav > api & services  > credentials > create credentials > API Key
 
 |property|value|data|
 |:------|:------:|------:|
-|api key|   AIzaSyDDg6NA_bd3NZNjc6JtSu20W_WN256Hqb8  ||
+|api key|     ||
 ||||
 ||||
 ||||

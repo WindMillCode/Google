@@ -31,10 +31,29 @@ gcloud iam service-accounts keys create key.json --iam-account=my-account@$PROJE
 export GOOGLE_APPLICATION_CREDENTIALS=key.json
 ```
 
+* to enable an API
+
+```bash
+gcloud services enable [API NAME]
+```
+
+* to create a storage bucket
+```bash
+gsutil mb gs://[<<BUCKET_NAME(MUST BE UNIQUE)>>]
+gsutil mb gs://kubeflow-qwiklabs-gcp-01-1a614bf66a2b
+```
+
+* to list service accts
+```bash
+gcloud --project=$PROJECT_ID iam service-accounts list
+```
 
 ## Big Query
 
 * can stream data
+
+* to create a model
+![](images/to_create_a_model.PNG)
 
 ## Big Table
 
