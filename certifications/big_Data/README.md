@@ -635,4 +635,9 @@ so there are sevaral models
 
 * explore patterns in data
 
-#### Predict Bike Trip Duration with a Regression Model in BQML
+#### LAB Predict Bike Trip Duration with a Regression Model in BQML
+
+* Feature columns have to be either numeric (INT64, FLOAT64, etc.) or categorical (STRING). If the feature is numeric but needs to be treated as categorical, we need to cast it as a string 
+* if its an expensive query, save as a table, if it s repetead but simple make a view
+
+*to remember the sets of transformations we did at the time of training and automatically apply them at the time of prediction use the __SQL TRANSFORM__ clause
