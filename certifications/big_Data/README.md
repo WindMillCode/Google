@@ -641,3 +641,9 @@ so there are sevaral models
 * if its an expensive query, save as a table, if it s repetead but simple make a view
 
 *to remember the sets of transformations we did at the time of training and automatically apply them at the time of prediction use the __SQL TRANSFORM__ clause
+
+#### LAB Movie Recommendations in BigQuery ML
+
+* __Matrix factorization__ is a collaborative filtering technique that relies on two vectors called the user factors and the item factors
+
+## Why Auto ML?

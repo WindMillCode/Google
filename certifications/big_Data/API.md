@@ -48,12 +48,59 @@ gsutil mb gs://kubeflow-qwiklabs-gcp-01-1a614bf66a2b
 gcloud --project=$PROJECT_ID iam service-accounts list
 ```
 
+
+* to create a bigquery dataset 
+```bash
+bq --location=EU mk --dataset movies
+```
+
+
 ## Big Query
 
 * can stream data
 
 * to create a model
 ![](images/to_create_a_model.PNG)
+
+
+* to parse thise string
+
+- "Adventure|Children|Fantasy"
+```sql
+CREATE OR REPLACE TABLE
+  movies.movielens_movies AS
+SELECT
+  * REPLACE(SPLIT(genres, "|") AS genres)
+FROM
+  movies.movielens_movies_raw
+```
+
+* to hear all recommendations about a model
+```sql
+SELECT
+  *
+FROM
+  ML.RECOMMEND(MODEL `cloud-training-prod-bucket.movies.movie_recommender`)
+LIMIT 
+  100000
+```
+
+
+* to query an item from an array
+```sql
+    SELECT
+      movieId,
+      title,
+      903 AS userId,
+      genres
+    FROM
+      `movies.movielens_movies`,
+      UNNEST(genres) g
+    WHERE
+      g = 'Comedy' 
+```
+
+
 
 ## Big Table
 
