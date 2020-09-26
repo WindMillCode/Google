@@ -1,9 +1,3 @@
-# Pub/Sub
-
- * if your system are down, Pub/Sub holds onto messages for 7 days
- * async and sync publisher
- * dont use for chat apps
- * messages may come out of order
 
 
 
@@ -11,6 +5,14 @@
 
 ## Python
 [list of python API here](https://cloud.google.com/python/docs/reference)
+
+## Errors
+
+[error codes here ](https://cloud.google.com/apis/design/errors)
+
+# Service Accounts
+
+* if you delete a service acct that you did not create from the IAM roles  page, toss the project its corrupted
 
 # Cloud Shell
 
@@ -29,7 +31,7 @@ gcloud config get-value project
 * to make a storage bucket
 
 ```bash
-gsutil mb -p [PROJECT NAME] -c [STORAGE CLASS] -l [LOCATION] gs://[NAME]
+gsutil mb -p [PROJECT NAME] -c [STORAGE CLASS] -l [LOCATION] gs://[NAME ]
 ```
 
 ## Service Accounts
@@ -69,13 +71,51 @@ gsutil mb gs://kubeflow-qwiklabs-gcp-01-1a614bf66a2b
 
 * to create a bigquery dataset 
 ```bash
-bq --location=EU mk --dataset movies
+ 
 ```
 
 * to list datasets 
 ```bash
 bq ls
 ```
+
+## Cloud SQL
+
+* to login to your database cluster
+```bash
+gcloud sql connect rentals --user=root --quiet
+```
+
+## Dataproc
+
+* to create a dataproc cluster
+```sql
+gcloud dataproc clusters create cluster-dqm01 \
+  --region us-central1 \
+  --zone us-central1-a \
+  --master-machine-type n1-standard-4 \
+  --master-boot-disk-size 500 \
+  --num-workers 2 \
+  --worker-machine-type n1-standard-4 \
+  --worker-boot-disk-size 500 \
+  --image-version 1.3-deb9 \
+  --project xxxxxx \
+  --service-account xxxx.iam.gserviceaccount.com
+
+gcloud dataproc clusters create rentals \
+  --region us-central1 \
+  --zone us-central1-a \
+  --master-machine-type n1-standard-4 \
+  --master-boot-disk-size 500 \
+  --num-workers 2 \
+  --worker-machine-type n1-standard-4 \
+  --worker-boot-disk-size 500 \
+  --image-version 1.3-deb9 \
+  --project gcp-data-certification-288008 
+```
+
+
+
 
 # Big Query
 
@@ -187,3 +227,16 @@ LIMIT 100
 * import through big query
 * 100 g or less
 * get data valdiation
+
+# Pub/Sub
+
+ * if your system is down, Pub/Sub holds onto messages for 7 days
+ * async and sync publisher
+ * dont use for chat apps
+ * messages may come out of order
+
+# Cheatsheats
+
+https://gist.github.com/pydevops/cffbd3c694d599c6ca18342d3625af97
+
+

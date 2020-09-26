@@ -53,11 +53,7 @@ nav menu > bigquery > [project ID] > babynames > CREATE TABLE( plus icon )
 |Destination > Table name|names_2014||
 |Schema > Edit as text|toggle on||
 |Schema > text box|name:string,gender:string,count:integer||
-||||
-||||
-||||
-||||
-||||
+
 
 ## Task 5. Query the table
 
