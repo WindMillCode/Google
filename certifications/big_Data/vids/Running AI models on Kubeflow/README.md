@@ -2,9 +2,17 @@
 
 ## What You'll Build
 
-ml model 
 
-gcloud config set project qwiklabs-gcp-02-4213d9ea90dd
+How to set up a Kubeflow cluster on GCP
+
+How to package a TensorFlow program in a container, and upload it to Google Container Registry
+
+How to submit a Tensorflow training job, and save the resulting model to Google Cloud Storage
+
+How to serve and interact with a trained model
+
+
+
 
 ## Enable Boost mode
 
@@ -18,50 +26,36 @@ git clone https://github.com/GoogleCloudPlatform/training-data-analyst
 cd training-data-analyst/courses/data-engineering/kubeflow-examples
 ```
 
-### Setting Environment Variables
 
-
-* set the project var
-    * if u get errorr just grab the project id from  here
-
-![](project_id.PNG)
+in cloud shell
 
 ```bash
-export PROJECT_ID=$(gcloud config list project --format "value(core.project)")
-gcloud config set project $PROJECT_ID
+gcloud config set project gcp-data-certification-288008    #PROJECT_ID
+gcloud config set compute/zone us-central1-a #ZONE
+/home/michaelodumosu57/training-data-analyst/courses/data-engineering/kubeflow-examples/mnist #WORKING_DIR
 ```
 
 
-
-* set the zone 
-
-```bash
-export ZONE=us-central1-a
-gcloud config set compute/zone $ZONE
-```
-
-* set the working dir of the project
-
-```bash
-cd ./mnist
-export WORKING_DIR=$PWD
-```
 
 ### Installing Kustomize
 
 * too install
 ```bash
-mkdir $WORKING_DIR/bin
-wget https://storage.googleapis.com/cloud-training/dataengineering/lab_assets/kubeflow-resources/kustomize_2.0.3_linux_amd64 -O $WORKING_DIR/bin/kustomize
-chmod +x $WORKING_DIR/bin/kustomize
-PATH=$PATH:${WORKING_DIR}/bin
+mkdir /home/michaelodumosu57/training-data-analyst/courses/data-engineering/kubeflow-examples/mnist/bin
+
+wget https://storage.googleapis.com/cloud-training/dataengineering/lab_assets/kubeflow-resources/kustomize_2.0.3_linux_amd64 -O /home/michaelodumosu57/training-data-analyst/courses/data-engineering/kubeflow-examples/mnist/bin/kustomize
+
+chmod +x /home/michaelodumosu57/training-data-analyst/courses/data-engineering/kubeflow-examples/mnist/bin/kustomize
+
+PATH=$PATH:/home/michaelodumosu57/training-data-analyst/courses/data-engineering/kubeflow-examples/mnist/bin
 ```
 
 ### Install kfctl
 
 ```bash
 wget -P /tmp https://storage.googleapis.com/cloud-training/dataengineering/lab_assets/kubeflow-resources/kfctl_v1.0-0-g94c35cf_linux.tar.gz
-tar -xvf /tmp/kfctl_v1.0-0-g94c35cf_linux.tar.gz -C ${WORKING_DIR}/bin
+
+tar -xvf /tmp/kfctl_v1.0-0-g94c35cf_linux.tar.gz -C /home/michaelodumosu57/training-data-analyst/courses/data-engineering/kubeflow-examples/mnist/bin
 ```
 
 ### Enabling the API
@@ -76,19 +70,24 @@ gcloud services enable container.googleapis.com
 * to create an application directory with local config files and enable APIs for your project,
 
 ```bash
-export KUBEFLOW_USERNAME=student-02-a2af4e986416@qwiklabs.net
-export KUBEFLOW_PASSWORD=s8B3nVXY9
-export CONFIG_URI=https://storage.googleapis.com/cloud-training/dataengineering/lab_assets/kubeflow-resources/kfctl_gcp_basic_auth.v1.0.1.yaml
-export KF_NAME=kubeflow
-export KF_DIR=${WORKING_DIR}/${KF_NAME}
+michaelodumosu57@gmail.com # KUBEFLOW_USERNAME
+ # KUBEFLOW_PASSWORD
+
+https://storage.googleapis.com/cloud-training/dataengineering/lab_assets/kubeflow-resources/kfctl_gcp_basic_auth.v1.0.1.yaml #CONFIG_URI
+
+kubeflow # KF_NAME
+
+/home/michaelodumosu57/training-data-analyst/courses/data-engineering/kubeflow-examples/mnist/kubeflow # KF_DIR
 ```
 
 * To generate the files used to create the deployment, including a cluster and service accounts
 
 ```bash
-mkdir -p ${KF_DIR}
-cd ${KF_DIR}
-kfctl build -V -f ${CONFIG_URI}
+mkdir -p /home/michaelodumosu57/training-data-analyst/courses/data-engineering/kubeflow-examples/mnist/kubeflow
+
+cd /home/michaelodumosu57/training-data-analyst/courses/data-engineering/kubeflow-examples/mnist/kubeflow
+
+kfctl build -V -f https://storage.googleapis.com/cloud-training/dataengineering/lab_assets/kubeflow-resources/kfctl_gcp_basic_auth.v1.0.1.yaml 
 ``` 
 
 * To use the generated files to create all the objects in your project, run this command:

@@ -6,6 +6,12 @@
  * messages may come out of order
 
 
+
+# API 
+
+## Python
+[list of python API here](https://cloud.google.com/python/docs/reference)
+
 # Cloud Shell
 
 * to set the project 
@@ -18,10 +24,19 @@ gcloud config set project [PROJECT_ID]
 gcloud config get-value project
 ```
 
+## storage
+
+* to make a storage bucket
+
+```bash
+gsutil mb -p [PROJECT NAME] -c [STORAGE CLASS] -l [LOCATION] gs://[NAME]
+```
+
+## Service Accounts
 
 *to create a service acct with its private key
 ```bash
-gcloud config set project qwiklabs-gcp-04-df6a67a77e11
+gcloud config set project [PROJECT ID]
 
 export PROJECT=<your_project_name>
 
@@ -29,6 +44,11 @@ gcloud iam service-accounts create my-account --display-name my-account
 gcloud projects add-iam-policy-binding $PROJECT --member=serviceAccount:my-account@$PROJECT.iam.gserviceaccount.com --role=roles/bigquery.admin
 gcloud iam service-accounts keys create key.json --iam-account=my-account@$PROJECT.iam.gserviceaccount.com
 export GOOGLE_APPLICATION_CREDENTIALS=key.json
+```
+
+* to list service accts
+```bash
+gcloud --project=$PROJECT_ID iam service-accounts list
 ```
 
 * to enable an API
@@ -43,19 +63,21 @@ gsutil mb gs://[<<BUCKET_NAME(MUST BE UNIQUE)>>]
 gsutil mb gs://kubeflow-qwiklabs-gcp-01-1a614bf66a2b
 ```
 
-* to list service accts
-```bash
-gcloud --project=$PROJECT_ID iam service-accounts list
-```
 
+
+## Big Query
 
 * to create a bigquery dataset 
 ```bash
 bq --location=EU mk --dataset movies
 ```
 
+* to list datasets 
+```bash
+bq ls
+```
 
-## Big Query
+# Big Query
 
 * can stream data
 
@@ -100,7 +122,14 @@ LIMIT
       g = 'Comedy' 
 ```
 
-
+* to reference a table a previous point in time
+```sql
+SELECT *
+FROM `demos.average_speeds`
+FOR SYSTEM_TIME AS OF TIMESTAMP_SUB(CURRENT_TIMESTAMP, INTERVAL 10 MINUTE)
+ORDER BY timestamp DESC
+LIMIT 100
+```
 
 ## Big Table
 
@@ -120,3 +149,41 @@ LIMIT
 
 * 3 types fixed sliding and session
 * in python late data is discarded  in java u can do something about late data
+
+## AutoML 
+
+* csv must be in same bucket as source files
+* how long models remain depends on model ttype
+
+* company sells clothes get emails
+* model 1, clothes or businnes inquery
+  * model 2 pants or shirts
+    * model 3 yellow shirts or orange shirts
+      * lakers jerseys or golden staten jerseys
+
+
+### Auto ML Vision
+
+* remove very low frequery level images
+* if the target is at 
+
+|target|training data should reflect|
+|:------|:------:|
+|day|day||
+|green room|green room||
+|blue item|blue item||
+|human presnse|human presence||
+
+* perfect, means not enough variety 
+
+### Auto ML NLP
+
+* topics of items
+* max 128 kb 
+* models deleted every 6 months
+
+### Auto ML Tables
+
+* import through big query
+* 100 g or less
+* get data valdiation
