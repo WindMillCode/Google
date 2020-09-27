@@ -38,6 +38,7 @@ __organization__ - a bunch of folders
 
 
 
+
 ### Security: On-premise vs Cloud-native
 
 ### Lab Exploring a BigQuery Public Dataset
@@ -97,3 +98,23 @@ __Dataproc__ - managed env to run Apache Spark
 * shut down cluster resurces you dont need
 
 ### Lab: Recommend products using Cloud SQL and SparkML
+
+
+### Choosing a ML model type for structured data
+
+![](images/model_types.PNG)
+* start with simple model, help determine if ML is a good solution for the problem
+
+### Predicting customer lifetime value
+
+* approximate reality based on what you do know
+
+### BigQuery ML: key features walkthrough
+
+* __ML.EVALUATE__ - inspect how good a model is on the test
+* use the same columns in created model to predict or u get an error
+
+
+### Lab Predicting Visitor Purchases with a Classification Model with BigQuery ML
+
+* __ROC__ -  Receiver Operating Characteristic for classification we want to minimize the False Positive Rate  maximize the True Positive Rate, this is the metric that measures the model against that goal

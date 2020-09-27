@@ -71,7 +71,7 @@ gsutil mb gs://kubeflow-qwiklabs-gcp-01-1a614bf66a2b
 
 * to create a bigquery dataset 
 ```bash
- 
+bq mk --dataset ecommerce 
 ```
 
 * to list datasets 
@@ -120,6 +120,8 @@ gcloud dataproc clusters create rentals \
 # Big Query
 
 * can stream data
+* pay for stored data 
+* for streaming or real-time data, use cloud dataflow
 
 * to create a model
 ![](images/to_create_a_model.PNG)
