@@ -99,4 +99,3 @@ select count(*) from trips where trip_distance = 0;
 select count(*) from trips where fare_amount < 0;
 ```
 
-j
