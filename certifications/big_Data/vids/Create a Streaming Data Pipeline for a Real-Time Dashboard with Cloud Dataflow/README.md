@@ -18,8 +18,12 @@ we will do command line this time
 nav menu > BigQuery
 look for the terminal icon top right corner of the screen
 
-will make the taxirides dataset and the realtime table for the dataset
+* will make the taxirides dataset and the realtime table for the dataset
+
+in cloud shell
 ```bash
+gcloud config set project gcp-data-certs
+
 bq mk taxirides
 
 bq mk \
@@ -39,6 +43,7 @@ nav menu > stroage
 |      default storage class         | multi-regional                 |       |
 |               |                 |       |
 
+CREATE BUCKET
 
 ## Set up a Cloud Dataflow Pipeline
 
@@ -55,14 +60,14 @@ nav menu > dataflow
 
  run job
 
- if you have issues
- keep trying to run the job or add permissions and roles for the service acct in question
+* if you have issues
+  * keep trying to run the job or add permissions and roles for the service acct in question
 
- enable the cloud pub/sub api although if you get to the dashboard without enabling the API  you might want to remport it to google
+  * enable the cloud pub/sub api although if you get to the dashboard without enabling the API  you might want to remport it to google
 
-> console.developers.google.com  > IAM  > members > find the service account Dataflow is complaining about >
+  * console.developers.google.com  > IAM  > members > find the service account Dataflow is complaining about >
 
- give it the specifc Role its complaining about, if it still fails to work, make it Owner so the service acct has full access to all resources
+  * give it the specifc Role its complaining about, if it still fails to work, make it Owner so the service acct has full access to all resources
 
 
 ## Analyze the Taxi Data Using BigQuery
@@ -70,16 +75,41 @@ nav menu > dataflow
 nav menu > big query 
 
 in query editor
+
+* look at the last 10 rides from your fleet
 ```sql
-SELECT * FROM taxirides.realtime LIMIT 10
+SELECT * FROM taxirides.realtime WHERE ride_status='dropoff' LIMIT 10
 ```
 
 run this over and your will see how dataflow and Pub/Sub work with realtime data
 
+explore data > w/ data studio 
+if you get prompt ooops click save
+no thanks in preferences
+refresh tab
+
+look the the UI for the following settings 
+
+| name          | value           | data 
+| :------------ |:---------------:| -----:|
+|    Chart type           |     column chart            |       |
+|    dimension           |      passenger_count           |       |
+|Metric| AVG() meter_reading, CT() passenger_count, SUM()  (If Record Count is present then, mouse over Record Count and click the (x) to remove it.)|
+|Sort|AVG() meter_reading |
+
+* we can see for the drivers with x amount of passsages
+  * our fleet recieved x passgeners passenger_count times
+  * the avg mtr reading for x passengeres was $y
+
+* play around with the aggregation metrics to get more insights that would be complicated to perform with SQL
+
+
+
+
 ## Perform aggregations on the stream for reporting
 
 
-key metrics per minute for every taxi dropoff
+* key metrics per minute for every taxi dropoff
 ```sql
 
 WITH streaming_data AS (

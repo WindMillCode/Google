@@ -393,3 +393,5 @@ SELECT * EXCEPT(unique_session_id) FROM (
 ORDER BY
   predicted_will_buy_on_return_visit DESC;
 ```
+
+

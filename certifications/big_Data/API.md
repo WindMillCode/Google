@@ -14,6 +14,8 @@
 
 * if you delete a service acct that you did not create from the IAM roles  page, toss the project its corrupted
 
+* __default Compute Engine service account__ [PROJECT_NUMBER]-compute@developer.gserviceaccount.com
+
 # Cloud Shell
 
 * to set the project 
@@ -77,6 +79,13 @@ bq mk --dataset ecommerce
 * to list datasets 
 ```bash
 bq ls
+```
+
+* to make a table
+```bash
+bq mk \
+--time_partitioning_field timestamp \
+--schema [your columne schema here] -t taxirides.realtime
 ```
 
 ## Cloud SQL
@@ -236,7 +245,17 @@ LIMIT 100
  * async and sync publisher
  * dont use for chat apps
  * messages may come out of order
+ * only captures data, does not send it to other API
+ * Use apache beam for pipelines
 
+* pub sub workflow 
+
+![](images/pub_sub_workflow.PNG)
+
+
+# Data Studio
+
+* users do not see data if they dont have access in bigquery
 # Cheatsheats
 
 https://gist.github.com/pydevops/cffbd3c694d599c6ca18342d3625af97

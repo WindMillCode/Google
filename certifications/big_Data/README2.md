@@ -118,3 +118,24 @@ __Dataproc__ - managed env to run Apache Spark
 ### Lab Predicting Visitor Purchases with a Classification Model with BigQuery ML
 
 * __ROC__ -  Receiver Operating Characteristic for classification we want to minimize the False Positive Rate  maximize the True Positive Rate, this is the metric that measures the model against that goal
+
+
+## Modern data pipeline challenges
+
+* variety or data sources
+* volumne
+* transformations
+
+### Message-oriented architectures with Cloud Pub/Sub
+
+![](images/pub_sub_workflow.PNG)
+
+ * Use apache beam for pipelines
+
+ * __Apache beam__ - portable data processing program model, extensible
+ * __serverless__ - low-maintenance
+ * [templates](github.com/GoogleCloudPlatform/DataflowTemplates)
+
+### Visualizing insights with Data Studio
+
+* focus on highliths end users need to see
