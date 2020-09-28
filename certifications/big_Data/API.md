@@ -133,6 +133,15 @@ gcloud dataproc clusters create rentals \
 * for streaming or real-time data, use cloud dataflow
 * up to certain terabytes free per month
 
+
+|property|value|data|
+|:------|:------:|------:|
+|Aggregate functions| COUNT(),SUM(),AVG(),MIN(),MAX(),ROUND()|use GROUP BY on the non aggregated colums to get it to work|
+|EXTRACT(x from date) where x is|DATE,WEEKOFDAY,HOUR||
+|WITH|WITH memory_table AS ([SQL QUERY])|make an in memory table just for one SQL query help with joins, so you dont join bigger tables|
+|IF,COUNTIF|x(CONDITION,TRUE RETURN,FALSE RETURN)|good if a value is empty return 0 instead of null to avoid complicated transformations and breaking the app|
+
+
 * to create a model
 ![](images/to_create_a_model.PNG)
 
