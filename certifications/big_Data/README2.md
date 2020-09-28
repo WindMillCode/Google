@@ -139,3 +139,86 @@ __Dataproc__ - managed env to run Apache Spark
 ### Visualizing insights with Data Studio
 
 * focus on highliths end users need to see
+
+### Lab Create a Streaming Data Pipeline for a Real-Time Dashboard with Cloud Dataflow
+
+
+## Where is unstructured ML used in business?
+
+* how does ML learn unstructed data
+* __dialogflow__ - chatbot dialog ML the GCP offers
+* several ML model API
+
+![](images/unstructed_ML_models_API.PNG)
+
+
+### Using pre-built AI to create a chatbot
+
+* __dialogflow__ - chatbot dialog ML the GCP offers, its the standard
+    * idenitify entities
+    * understand emotion in a block of text
+    * agents, that get trained
+        * train or use pre builts
+        * 
+
+### Customizing Pre-built models with AutoML
+
+### Lab Classifying Images of Clouds in the Cloud with AutoML Vision
+
+
+## Building a Custom Model
+
+*  [bigquery ML](https://cloud.google.com/bigquery/docs/bigqueryml-intro)
+*  [auto ML](https://cloud.google.com/automl/)
+*  [tensorflow ML](https://www.tensorflow.org/tutorials/)
+
+
+# Modernizing Data Lakes and Data Warehouses with GCP
+
+## Explore the role of a data engineer
+
+* __data engineer__ builds data pipelines
+* pipeline, make data-driven decisions
+* __data lake__ - data across enterprise stored in data lake
+    * can I access my data lake easy
+
+### Analyze data engineering challenges
+
+* difficult to access data
+* not good daa
+* cant transform, query
+__data warehouse__ - clean data very efficient to query
+    * bigquery is the data warehouse
+*  do cleanup once, and store as needed
+* compuation problems, got to wrestle for resources and make sure the software is orchestrated
+
+* to do a federated query for google spreadsheet in bigquery
+    * look for google spreadsheet when creating the table copy the spreadsheet url 
+    write out yr schema thts it, good to go for data studio
+
+* cloud sql is for writing 
+* big query is for analytics
+* who cares use bigquery and go home, its gunna be better than cloud sql anyway
+
+### Partner effectively with other data teams
+
+* other teams want yr data, must prepare it for them and use best practices
+
+### Manage data access and governance
+
+* setup data access, security
+* hows PII handled
+* data catalog + 
+* __DLP API__ - managed sensitive data
+
+### Build production-ready pipelines
+
+* automate and optimize
+* __cloud composer__ GCP's own apache airflow this is pipeline orchestration
+
+
+### Lab Using BigQuery to do Analysis
+
+* 
+
+

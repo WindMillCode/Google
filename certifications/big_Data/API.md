@@ -131,6 +131,7 @@ gcloud dataproc clusters create rentals \
 * can stream data
 * pay for stored data 
 * for streaming or real-time data, use cloud dataflow
+* up to certain terabytes free per month
 
 * to create a model
 ![](images/to_create_a_model.PNG)
