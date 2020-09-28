@@ -28,6 +28,11 @@ gcloud config set project [PROJECT_ID]
 gcloud config get-value project
 ```
 
+* to get ip addr of yr cloud shell
+```bash
+$(wget -qO - http://ipecho.net/plain)/32
+```
+
 ## storage
 
 * to make a storage bucket
@@ -93,7 +98,35 @@ bq mk \
 * to login to your database cluster
 ```bash
 gcloud sql connect rentals --user=root --quiet
+
+mysql --host=$MYSQLIP --user=root \
+      --password --verbose
 ```
+
+* import data 
+```bash
+mysqlimport --local --host=$MYSQLIP --user=root --password \
+--ignore-lines=1 --fields-terminated-by=',' bts trips.csv-*
+```
+
+
+* to creata a cloud sql instance
+```bash
+gcloud sql instances create taxi \
+    --tier=db-n1-standard-1 --activation-policy=ALWAYS
+```
+
+* set root password for cloud sql instance
+```sql
+gcloud sql users set-password root --host % --instance taxi \
+ --password Passw0rd
+```
+
+* whitelist an ip to access cloud sql
+```sh
+gcloud sql instances patch taxi --authorized-networks $ADDRESS
+```
+
 
 ## Dataproc
 

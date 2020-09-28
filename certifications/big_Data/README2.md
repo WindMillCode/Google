@@ -219,6 +219,30 @@ __data warehouse__ - clean data very efficient to query
 
 ### Lab Using BigQuery to do Analysis
 
-* 
+## Introduction to Data Lakes
 
+### civil engineering 
+
+* bringing the raw materials to skyscraper site 
+    * data from various ioT
+
+* cut glass, shape metal    
+    * transform raw to data warehouse
+
+* how to transform to use pieces, is the worker, 
+    * the API or framework helping use
+
+* manager, masonry manager
+    * orchestration cloud composer
+
+![](images/big_data_workflow.PNG)
+
+### Data Storage and ETL options on GCP
+
+* get warehouse once you have a use case a schema defined
+* __EL__ - data is clean ready to go
+* __ELT__ - transform in GCP, just needed a quick filter
+* __ETL__ - transform before GCP
+
+### Securing Cloud Storage
 
