@@ -1,0 +1,23 @@
+
+    {
+        "name": "race",
+        "type": "STRING",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "participants",
+        "type": "RECORD",
+        "mode": "REPEATED",
+        "fields": [
+            {
+                "name": "name",
+                "type": "STRING",
+                "mode": "NULLABLE"
+            },
+            {
+                "name": "splits",
+                "type": "FLOAT",
+                "mode": "REPEATED"
+            }
+        ]
+    }

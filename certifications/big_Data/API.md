@@ -81,6 +81,16 @@ gsutil mb gs://kubeflow-qwiklabs-gcp-01-1a614bf66a2b
 bq mk --dataset ecommerce 
 ```
 
+* to load data from cloud storage
+```bash
+bq load \
+--source_format=CSV \
+--autodetect \
+--noreplace  \
+nyctaxi.2018trips \
+gs://cloud-training/OCBL013/nyc_tlc_yellow_trips_2018_subset_2.csv
+```
+
 * to list datasets 
 ```bash
 bq ls
@@ -168,11 +178,14 @@ gcloud dataproc clusters create rentals \
 
 
 |property|value|data|
-|:------|:------:|------:|
-|Aggregate functions| COUNT(),SUM(),AVG(),MIN(),MAX(),ROUND()|use GROUP BY on the non aggregated colums to get it to work|
+|:------|:------:|------|
+|Aggregate functions| COUNT(),SUM(),AVG(),MIN(),MAX(),ROUND(),ARRAY_AGG(),ARRAY_LENGTH()|use GROUP BY on the non aggregated colums to get it to work|
 |EXTRACT(x from date) where x is|DATE,WEEKOFDAY,HOUR||
 |WITH|WITH memory_table AS ([SQL QUERY])|make an in memory table just for one SQL query help with joins, so you dont join bigger tables|
 |IF,COUNTIF|x(CONDITION,TRUE RETURN,FALSE RETURN)|good if a value is empty return 0 instead of null to avoid complicated transformations and breaking the app|
+|UNNEST()|brings arrays back into rows  always follows the table name in your FROM clause |SELECT person, fruit_array, total_cost FROM `data-to-insights.advanced.fruit_store`,UNNEST(fruit_array) AS f|
+
+
 
 
 * to create a model
@@ -201,6 +214,8 @@ LIMIT
   100000
 ```
 
+* to create an array
+![](images/array_API.PNG)
 
 * to query an item from an array
 ```sql
@@ -216,16 +231,35 @@ LIMIT
       g = 'Comedy' 
 ```
 
-* to reference a table a previous point in time
+
+*  to select structs
+    * can also remove the .*
 ```sql
-SELECT *
-FROM `demos.average_speeds`
-FOR SYSTEM_TIME AS OF TIMESTAMP_SUB(CURRENT_TIMESTAMP, INTERVAL 10 MINUTE)
-ORDER BY timestamp DESC
-LIMIT 100
+SELECT
+  visitId,
+  totals.*,
+  device.*
+FROM `bigquery-public-data.google_analytics_sample.ga_sessions_20170801`
+WHERE visitId = 1501570398
+LIMIT 10
 ```
 
-## Big Table
+* to create a struct
+```sql
+#standardSQL
+SELECT STRUCT("Rudisha" as name, 23.4 as split) as runner
+```
+
+* to reference a table a previous point in time
+```sql
+    SELECT *
+    FROM `demos.average_speeds`
+    FOR SYSTEM_TIME AS OF TIMESTAMP_SUB(CURRENT_TIMESTAMP, INTERVAL 10 MINUTE)
+    ORDER BY timestamp DESC
+    LIMIT 100
+```
+
+# BigTable
 
 * high performance applications
 * __colossus__ where bigtable  stores data
@@ -235,6 +269,7 @@ LIMIT 100
 * you just want a quick scan, sorting = less performance 
 * have identical data closer to each other
 * if data is read more than others, colusses reorganizes for optimization
+* unless yr in prod with TB+ data use bigquery 
 
 
 # Dataflow

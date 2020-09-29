@@ -246,3 +246,29 @@ __data warehouse__ - clean data very efficient to query
 
 ### Securing Cloud Storage
 
+### The Modern Data Warehouse
+
+### Loading Data
+
+### Demo: Exploring Schemas
+
+* many ways you can reogranize data for better query performance
+* Nested and repeated fields are the way to go
+
+### Nested and Repeated Fields
+
+* repeated data in structs and arrays is faster, nested and repeated
+![](images/how_to_store_complex_data.PNG)
+
+* __structs__ - standardSQL, subtables in a table
+    * structs can have other sturcts inside of it
+    * structs TYPE = RECORD
+    * sturcts are colums
+![](images/structs.PNG)
+
+* __arrays__ - MODE - REPEATED
+    * rows with in a row
+    * the data mus be the same type
+![](images/arrays.PNG)
+
+
