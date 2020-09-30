@@ -1,0 +1,73 @@
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+    #   - deploy:
+    #       requires:
+    #         - build
+    #       filters:
+    #         branches:
+    #           only: master
+version: 2
+# orbs:
+#   ruby: circleci/ruby@0.2.1
+jobs:
+  build:
+    # working_directory: ~/
+    docker:
+      - image: circleci/ruby:2.6.5-node-browsers
+        environment:
+          BUNDLER_VERSION: 1.17.2              
+    steps:
+      - checkout            
+      - restore_cache:
+          keys:
+            - my-project-{{ checksum "./planning/capybara/Gemfile.lock" }}      
+      - restore_cache:
+          key: my-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
+      - run: 
+          command: npm install
+      # - run:
+      #     name: Configure Bundler
+      #     command: |
+      #       sudo gem update --system
+      #       sudo gem uninstall bundler
+      #       sudo rm /usr/local/bin/bundle
+      #       sudo rm /usr/local/bin/bundler
+      #       echo 'export BUNDLER_VERSION=$(cat ./planning/capybara/Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+      #       source $BASH_ENV      
+      #       sudo gem install bundler:1.17.2 
+      - run:           
+          command: cd ./planning/capybara && bundle install --path=vendor/bundle
+      - save_cache:
+          key: my-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          paths:
+            - "node_modules"
+      - save_cache:
+          key: my-project-{{ checksum "./planning/capybara/Gemfile.lock" }}
+          paths:
+            - vendor/bundle            
+      # - run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+      - run:
+          command: | 
+            npx ng serve --no-progress &  
+            cd ./planning/capybara/linux
+            ./LT -user $LT_USERNAME -key $LT_APIKEY &
+            sleep 20s
+            cd ../spec/e2e
+            # npx percy exec -- bundle exec rspec ./nav-e2e.lambdatest.spec.rb  
+      # IF YOU want to start up the mock backend service    
+      - run:
+          command: npm run test -- --no-watch --no-progress  
+      # - run:
+      #     command: npm run e2e -- --protractor-config=e2e/protractor.conf.js 
+  deploy:
+    docker:
+      - image: circleci/buildpack-deps:xenial
+    steps:
+      - checkout
+      - run:
+          name: Deploy Master to Heroku
+          command: |
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master

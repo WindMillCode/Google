@@ -87,8 +87,8 @@ export class AppComponent implements OnInit,OnDestroy {
                     co.metadata.zChildrenSubject = new Subject<any>()
                     .pipe(
                         tap((val)=>{
-                            co.metadata.zChildren = val.inputZChild
-                            co.metadata.zChildren$ = of(val.inputZChild)                    
+                            co.metadata.zChildren = val.directivesZChild
+                            co.metadata.zChildren$ = of(val.directivesZChild)                    
                         }),
                     ) 
                 })

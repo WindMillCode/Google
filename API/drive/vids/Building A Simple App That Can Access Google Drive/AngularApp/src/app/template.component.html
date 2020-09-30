@@ -203,6 +203,7 @@
         </ng-template>  
         <ng-template #pictureBlock1  >    
             <button #myVal 
+            appPrintFiles  [printFiles]  = "ryber.appAvailble( a.extras[2][bb], 'appPrintFiles')"
             appInputHandle [inputHandle] = "ryber.appAvailble( a.extras[2][bb], 'appInputHandle')"
             appFormControl [formControl] = "ryber.appAvailble( a.extras[2][bb], 'appFormControl')"
             appFileHandler [fileHandler] = "ryber.appAvailble( a.extras[2][bb], 'appFileHandler')"

@@ -9,11 +9,12 @@ import { DropDownDirective } from './directive/dropdown.directive';
 import { ExtendDirective } from './directive/extend.directive';
 import { FileHandlerDirective } from './directive/file-handler.directive';
 import { FocusFontDirective } from './directive/focus-font.directive';
-import { FormControlDirective } from './directive/form-control.directive';
+// import { FormControlDirective } from './directive/form-control.directive';
 import { InputHandleDirective } from './directive/input-handle.directive';
 import { MoneyClickDirective } from './directive/money-click.directive';
 import { SignPadDirective } from './directive/sign-pad.directive';
 import { ToggleButtonDirective } from './directive/toggle-button.directive';
+import { PrintFilesDirective } from './directive/print-files.directive';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ToggleButtonDirective } from './directive/toggle-button.directive';
     InputHandleDirective,
     MoneyClickDirective,
     SignPadDirective,
-    ToggleButtonDirective
+    ToggleButtonDirective,
+    PrintFilesDirective
   ],
   imports: [
     BrowserModule,

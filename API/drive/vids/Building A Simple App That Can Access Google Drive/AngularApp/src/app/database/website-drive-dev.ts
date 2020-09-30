@@ -3,7 +3,7 @@ let website:any = {}
 website.convertCMS = [
 
     {
-        "title": "signature",
+        "title": "present_drive_files",
         "type_slug": "forms",
         "metafields": [
 
@@ -24,7 +24,8 @@ website.convertCMS = [
             {
                 "key": "Button",
                 "value": "Authorize",
-                "type": "button",
+                "type": "printfiles button",
+                "printGroup":"drive",
                 "split": "3",
                 "left":"300",
                 "googleSheets": {}
@@ -34,12 +35,14 @@ website.convertCMS = [
                 "value": "Sign Out",
                 "type": "button",
                 "split": "3",
+                "printGroup":"drive",
                 // "left":"400",
                 "googleSheets": {}
             },   
             {
                 "key": "files",
                 "value": "These are the files you choose",
+                "printGroup":"drive",
                 "type": "text",
                 "next":"true",
                 "split": "5",

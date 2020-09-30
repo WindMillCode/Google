@@ -7,6 +7,8 @@
 Greetings I am currently going to get several GCP certifications. Like share Subscribe to my youtube channel as I do tutorials on the fundamentals and advanced concepts of GCP. Any advice for  education and career prospects will be appreciated .  https://www.youtube.com/channel/UCmqEX_zasOf3AQ9vnPkxtjg/
 
 
+Greetings I have high interest in becoming a data engineer managing and working with IoT infrastructure. I would love a mentorship who can help me build my portiflio and gain the needed certifications and education. I also have a youtube channel as I do tutorials on the fundamentals and advanced concepts of GCP, please like share and subscribe at least if you dont have time to mentor. .  https://www.youtube.com/channel/UCmqEX_zasOf3AQ9vnPkxtjg/
+
 
 ## Google Cloud Platform Big Data and Machine Learning Fundamentals
 
@@ -35,6 +37,8 @@ __organization__ - a bunch of folders
 ### Build on Google's Global Network
 
 * 10 GBPS 
+
+
 
 
 
@@ -272,3 +276,24 @@ __data warehouse__ - clean data very efficient to query
 ![](images/arrays.PNG)
 
 
+### Optimizing with Partitioning and Clustering
+
+* when a table is partitioned, such as time, how it works and how its cheaper, it makes more metadata, therefore instead of reading metadata, it just reads the grouping the metadata indicates
+
+### Preview: Transforming Batch and Streaming Data
+
+* can send data straight to big query
+* transform with dataflow
+* try to use batch over streaming
+
+# Building Batch Data Pipelines
+
+* ETL - use dataflow
+* Data Fusion to visually create pipelines
+* Dataproc if you know hadoop and spark well
+
+## Hadoop and Dataproc
+
+* dataproc should not be long lived 
+
+### Lab Running Apache Spark jobs on Cloud Dataproc 

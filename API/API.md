@@ -259,6 +259,24 @@ SELECT STRUCT("Rudisha" as name, 23.4 as split) as runner
     LIMIT 100
 ```
 
+* to create a partitioned table
+```sql
+CREATE OR REPLACE TABLE ecommerce.partitions
+    PARTITION BY date_formatted
+    OPTIONS ( 
+        description="a table partitioned by date"
+    ) AS
+
+    SELECT 
+        COUNT(transactionId)
+        PARSE_DATE("%Y%m%d",date) AS  date_formatted
+    FROM
+        'data-to-insights.ecommerce.all_sessions'
+    WHERE
+        transactionId IS NOT NULL
+    GROUP BY date_formatted
+```
+
 # BigTable
 
 * high performance applications

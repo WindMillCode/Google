@@ -62,10 +62,8 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
 
                 let zChild = this.zChildInit()
                 let staticZKeys = this.staticZKeysGen(zChild)
-                // if(this.appTV === "formCO0"){
-                    if(environment.component.zChild) console.log(zChild);   
+                if(environment.component.zChild) console.log(zChild);   
                 //     console.log(this.templateMyElements)
-                // }
                 
             
                 // drags elements for you 
@@ -78,7 +76,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                 
                 // giving inputHandle what it needs
                 this.directivesSendData({
-                    inputZChild:zChild,
+                    directivesZChild:zChild,
                     random:Math.random()
                 }) 
                 //     
@@ -388,6 +386,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                     )
                     .subscribe((moving)=>{ 
     
+
                         if(moving instanceof Event){
                             moving = {
                                 boardHeight : "0px",
@@ -1072,7 +1071,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                                         
     
                                     this.directivesSendData({
-                                        inputZChild:zChild,
+                                        directivesZChild:zChild,
                                         random:Math.random(),
                                     }) 
                 
@@ -1323,30 +1322,30 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
     }
 
     private directivesSendData(devObj?:{
-        inputZChild:zChildren,
+        directivesZChild:zChildren,
         random?:any,
         duplicate?
     }):void{
         
         
-        let {inputZChild,random,duplicate} = devObj
+        let {directivesZChild,random,duplicate} = devObj
         // subjects meeded for input handle to work
         Object
-        .keys(inputZChild)
+        .keys(directivesZChild)
         .forEach((x,i)=>{
-            if(inputZChild[x].extras !== undefined && inputZChild[x].extras !== null ){
-                if( inputZChild[x].extras.appInputHandle !== undefined){
-                    inputZChild[x].extras.appInputHandle.zSymbol = x
+            if(directivesZChild[x].extras !== undefined && directivesZChild[x].extras !== null ){
+                if( directivesZChild[x].extras.appInputHandle !== undefined){
+                    directivesZChild[x].extras.appInputHandle.zSymbol = x
                 }
-                if( inputZChild[x].extras.appDropDown !== undefined){
-                    if(   inputZChild[x].extras.appDropDown.change !== "dropdowns"){
-                        inputZChild[x].extras.appDropDown.zSymbol = x
+                if( directivesZChild[x].extras.appDropDown !== undefined){
+                    if(   directivesZChild[x].extras.appDropDown.change !== "dropdowns"){
+                        directivesZChild[x].extras.appDropDown.zSymbol = x
                     }
                 }                
             }
         })       
-        this.ryber[this.appTV.valueOf()].metadata.zChildrenSubject.next(({inputZChild,random}))
-  
+        this.ryber[this.appTV.valueOf()].metadata.zChildrenSubject.next(({directivesZChild,random}))
+    
     }
 
     private inputHandleModifyName(devObj:{

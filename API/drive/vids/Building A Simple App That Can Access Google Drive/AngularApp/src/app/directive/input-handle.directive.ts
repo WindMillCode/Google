@@ -175,7 +175,6 @@ export class InputHandleDirective {
         }
     }  
     
-    
     @HostListener('touchend') ontouchEnd(){
         if(this.extras === undefined){
             return
@@ -256,9 +255,7 @@ export class InputHandleDirective {
                         .pipe(first())
                         //
                         .subscribe(()=>{
-
                             
-
                             //aux -> aux
                             if(
                                 this.ryber.appCO0.metadata.inputHandle.mappings
@@ -597,7 +594,7 @@ export class InputHandleDirective {
             }  
             if(environment.inputHandle[type.valueOf()]){
                 console.log(this.el.nativeElement.innerText,this.el.nativeElement.className)
-                console.log(this.inputHandle) 
+                console.log(this.extras) 
                 console.log(this.ryber.appCO0.metadata.inputHandle)
             }               
             //         
