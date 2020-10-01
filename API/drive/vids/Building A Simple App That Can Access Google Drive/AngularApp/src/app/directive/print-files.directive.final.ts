@@ -22,18 +22,53 @@ export class PrintFilesDirective {
         if(this.extras?.confirm === 'true'){
 
 
-            //accesing the drive API 
-            
-				//credentials					
-                //
+			//accesing the drive API 
+			let CLIENT_ID =environment .googleDrive.clientId
+			let  API_KEY = environment.googleDrive.apiKey
+			var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
+			var SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly';
+			
 
-                //reactiong functions
-                let {appendTarget,ryber,extras} = this
-                //
+			//reactiong functions
+			let {appendTarget,ryber,extras} = this
+			//
 
-				//load the auth sdk				
-				//
-				
+			gapi.load('client:auth2', ()=>{
+				gapi.client.init({
+					apiKey: API_KEY,
+					clientId: CLIENT_ID,
+					discoveryDocs: DISCOVERY_DOCS,
+					scope: SCOPES
+				})
+				.then(function () {
+
+					// sign in if needed
+					if(!gapi.auth2.getAuthInstance().isSignedIn.get()){
+						gapi.auth2.getAuthInstance().signIn();
+					}
+					//
+
+					//get the drive data
+					gapi.auth2.getAuthInstance().isSignedIn.listen(()=>{
+						gapi.client.drive.files.list({
+							'pageSize': 10,
+							'fields': "nextPageToken, files(id, name)"
+						})
+						.then(manifest({aT:appendTarget}));		
+					})	
+					
+					// if the sign in handler doesnt work
+					gapi.client.drive.files.list({
+						'pageSize': 10,
+						'fields': "nextPageToken, files(id, name)"
+					})
+					.then(manifest({aT:appendTarget}));					
+					//
+				})
+				.catch(function(error) {
+					console.log(error)
+				})		
+			});	
 			//		
 		}
 	}
@@ -68,7 +103,25 @@ export class PrintFilesDirective {
 							this.signOutTarget = x[1]
 
 
-							//sign out functionality				
+							//sign out functionality
+							this.pF_BSub = fromEvent(x[1].element,'click')
+							.subscribe(()=>{
+								try{
+									gapi.auth2.getAuthInstance().signOut();
+									this.appendTarget
+									.forEach((x:any,i)=>{
+										x.innerText.item = "None"	
+									})
+									eventDispatcher({
+										element:window,
+										event:"resize"
+									})									
+								}
+								catch(e){
+									console.log(e)
+								}
+								console.log('signed out')
+							})
 							//	
 							
 							
@@ -116,6 +169,24 @@ export class PrintFilesDirective {
 
 
 //function once files are in the app
+function manifest(devObj) {
 
+	return(response)=>{
+		var files = response.result.files;
+		console.log(files)
+		console.log(devObj)
+
+		devObj.aT
+		.forEach((x:any,i)=>{
+			console.log(files[i]?.name)
+			x.innerText.item  = files[i]?.name === undefined ?  'None' :  files[i]?.name
+		})
+		eventDispatcher({
+			element:window,
+			event:"resize"
+		})
+	}
+	
+}
 //
 

@@ -7,7 +7,7 @@ export const environment: any = {
 		linkInit: true
 	},
 	printFiles: {
-		test:true
+		test:false
 	},
 	lifecycleHooks: false,
 	component: {
@@ -29,9 +29,13 @@ export const environment: any = {
 		click: false
 	},
 	googleDrive: {
-		clientId: "637621663480-fjeor8d83uakuld5fngm1k0hhmfbngpf.apps.googleusercontent.com",
-		clientSecret: "",
-		apiKey: "AIzaSyAl4azeCqVGiLKooch7LCsNh5HTleDt1Mc"
+
+		// insert credentials here
+		clientId: "",
+		apiKey: ""
+		//
+
+		
 	}
 
 };

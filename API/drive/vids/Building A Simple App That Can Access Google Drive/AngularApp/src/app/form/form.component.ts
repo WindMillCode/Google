@@ -311,7 +311,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
     
                 //init   buttons
                 let group = this.ryber[this.appTV.valueOf()].metadata.multipleGroup
-                console.log(group)            
+                // console.log(group)            
 
                 //more init
                 let cmsZKeys = this.ryber[this.appTV.valueOf()].metadata.order

@@ -78,7 +78,7 @@
             },
             "development": {
               "optimization": false,
-              "sourceMap": true,
+              "sourceMap": false,
               "poll": 2500,
               "verbose": false,
               "watch": true
