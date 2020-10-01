@@ -39,7 +39,6 @@
               "backend/modernizr/modernizr.js",
               "backend/polyfills/object.js",
               "backend/polyfills/signaturePad.js",
-              "backend/nodejsAPI/obs.js",
               "src/assets/scripts/pikaday.js"
             ]
           },
@@ -79,7 +78,7 @@
             },
             "development": {
               "optimization": false,
-              "sourceMap": false,
+              "sourceMap": true,
               "poll": 2500,
               "verbose": false,
               "watch": true

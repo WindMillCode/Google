@@ -43,7 +43,7 @@ export class RyberService {
                 options = {}
             }
             
-            let {printGroup,key,type,gap,stack,value,group,count,repeatable,newline,form,multipleGroup,refreshGroup,background,color,fonts,title,fontSize,italics,googleSheets} =devObj.mf 
+            let {printGroupType,printGroup,key,type,gap,stack,value,group,count,repeatable,newline,form,multipleGroup,refreshGroup,background,color,fonts,title,fontSize,italics,googleSheets} =devObj.mf 
             let {left,top,height,width,split,next} = devObj.mf 
             let component = {left,top,height,width,split,next}
 
@@ -582,7 +582,7 @@ export class RyberService {
                         type,
                         appPrintFiles:{
                             printGroup,
-                            type:'append'
+                            type:printGroupType
                         }   
                     }         
                 })                        
@@ -778,7 +778,7 @@ export class RyberService {
                     'background-color':background,
                     color,
                     "font-family":fonts,  
-                    "font-weight":italics                   
+                    "font-weight":italics,                
                 }   
                 options.css === undefined ? undefined :(()=>{
                     css = options.css; 
@@ -910,7 +910,7 @@ export class RyberService {
                     'background-color':background,
                     color,
                     "font-family":fonts,
-                    "font-weight":italics                       
+                    "font-weight":italics,                    
                 }   
                 options.css === undefined ? undefined :(()=>{
                     css = options.css; 
@@ -1065,7 +1065,7 @@ export class RyberService {
                             confirm:'true',
                             name,
                             co,
-                            printGroup
+                            printGroup,
                         },
                         appInputHandle:{
                             confirm:'true',
@@ -1079,7 +1079,7 @@ export class RyberService {
                         },                        
                         deltaIndex:1,
                         component,                        
-                        multipleGroup,
+                        multipleGroup:printGroup,
                         type                          
                     }         
                 })                     

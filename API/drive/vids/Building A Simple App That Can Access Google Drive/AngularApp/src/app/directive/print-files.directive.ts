@@ -15,81 +15,67 @@ export class PrintFilesDirective {
 	extras:any
 	pF_ASub:Subscription
 	pF_BSub:Subscription
-	appendTarget:any
+	appendTarget:any = []
 	signOutTarget:any
 
 	@HostListener('click') onClick(){
-
-		
         if(this.extras?.confirm === 'true'){
-		//accesing the drive API 
-		let CLIENT_ID =environment .googleDrive.clientId
-		let  API_KEY = environment.googleDrive.apiKey
-		var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
-		var SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly';
+			//accesing the drive API 
+			let CLIENT_ID =environment .googleDrive.clientId
+			let  API_KEY = environment.googleDrive.apiKey
+			var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
+			var SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly';
+			
 
-		gapi.load('client:auth2', ()=>{
-			gapi.client.init({
-				apiKey: API_KEY,
-				clientId: CLIENT_ID,
-				discoveryDocs: DISCOVERY_DOCS,
-				scope: SCOPES
-			})
-			.then(function () {
+			//reactiong functions
+			let {appendTarget,ryber,extras} = this
+			//
 
-				
+			gapi.load('client:auth2', ()=>{
+				gapi.client.init({
+					apiKey: API_KEY,
+					clientId: CLIENT_ID,
+					discoveryDocs: DISCOVERY_DOCS,
+					scope: SCOPES
+				})
+				.then(function () {
 
-				// sign in if needed
-				if(!gapi.auth2.getAuthInstance().isSignedIn.get()){
-					gapi.auth2.getAuthInstance().signIn();
-				}
-				//
+					// sign in if needed
+					if(!gapi.auth2.getAuthInstance().isSignedIn.get()){
+						gapi.auth2.getAuthInstance().signIn();
+					}
+					//
 
-
-
-				//get the drive data
-
-				gapi.auth2.getAuthInstance().isSignedIn.listen(()=>{
+					//get the drive data
+					gapi.auth2.getAuthInstance().isSignedIn.listen(()=>{
+						gapi.client.drive.files.list({
+							'pageSize': 10,
+							'fields': "nextPageToken, files(id, name)"
+						})
+						.then(manifest({aT:appendTarget}));		
+					})	
+					
+					// if the sign in handler doesnt work
 					gapi.client.drive.files.list({
 						'pageSize': 10,
 						'fields': "nextPageToken, files(id, name)"
 					})
-					.then(function(response) {
-						var files = response.result.files;
-						console.log(files)
-						deltaNode({
-							intent:'add',
-							elements: appendTarget,
-							co:this.ryber[this.extras.co.valueOf()],
-							subCO:1, //decide to use the number of the signature
-							group:this.group,
-							symbolDeltaStart:8410,
-						}) 						
-					});		
-				})	
-				
-				// if the sign in handler doesnt work
-				gapi.client.drive.files.list({
-					'pageSize': 10,
-					'fields': "nextPageToken, files(id, name)"
+					.then(manifest({aT:appendTarget}));					
+					//
 				})
-				.then(function(response) {
-					var files = response.result.files;
-					console.log(files)
-				});					
-				//
-			})
-			.catch(function(error) {
-				console.log(error)
-			})		
-		});	
-		//		
+				.catch(function(error) {
+					console.log(error)
+				})		
+			});	
+			//		
 		}
 	}
 	
     ngOnInit(){
-        // console.log(this.dateClick)
 		this.extras = this.printFiles
+		console.log(this.extras)
+
+
         if(this.extras?.confirm === 'true'){
 
 			// grabbing needed component zChildren to get job done
@@ -102,9 +88,9 @@ export class PrintFilesDirective {
 					.forEach((x:any,i)=>{
 						if(
 							x[1].extras?.appPrintFiles?.printGroup === this.extras.printGroup &&
-							x[1].extras?.appPrintFiles?.type === "append"
+							x[1].extras?.appPrintFiles?.type === "replace"
 						){
-							this.appendTarget = x[1]
+							this.appendTarget.push(x[1])
 							console.log(this.appendTarget)
 							
 						}
@@ -113,14 +99,23 @@ export class PrintFilesDirective {
 							x[1].extras?.appPrintFiles?.type === "signOut"
 						){
 							this.signOutTarget = x[1]
-							console.log(this.signOutTarget)
 							//sign out functionality
 							this.pF_BSub = fromEvent(x[1].element,'click')
 							.subscribe(()=>{
 								try{
 									gapi.auth2.getAuthInstance().signOut();
+									this.appendTarget
+									.forEach((x:any,i)=>{
+										x.innerText.item = "None"	
+									})
+									eventDispatcher({
+										element:window,
+										event:"resize"
+									})									
 								}
-								catch(e){}
+								catch(e){
+									console.log(e)
+								}
 								console.log('signed out')
 							})
 							//							
@@ -134,6 +129,13 @@ export class PrintFilesDirective {
 				//
 
 			})
+
+			if(environment.printFiles.test){
+				setTimeout(()=>{
+					this.el.nativeElement.click()
+				},200)
+			}
+
         }
         
 
@@ -157,3 +159,28 @@ export class PrintFilesDirective {
     ) { }    
 
 }
+
+
+
+//function once files are in the app
+function manifest(devObj) {
+
+	return(response)=>{
+		var files = response.result.files;
+		console.log(files)
+		console.log(devObj)
+
+		devObj.aT
+		.forEach((x:any,i)=>{
+			console.log(files[i]?.name)
+			x.innerText.item  = files[i]?.name === undefined ?  'None' :  files[i]?.name
+		})
+		eventDispatcher({
+			element:window,
+			event:"resize"
+		})
+	}
+	
+}
+//
+

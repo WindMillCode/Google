@@ -22,7 +22,7 @@ website.convertCMS = [
                 "googleSheets": {}
             },                
             {
-                "key": "Button",
+                "key": "authorize_button",
                 "value": "Authorize",
                 "type": "printfiles button",
                 "printGroup":"drive",
@@ -31,7 +31,7 @@ website.convertCMS = [
                 "googleSheets": {}
             },   
             {
-                "key": "Button",
+                "key": "sign_button",
                 "value": "Sign Out",
                 "type": "button",
                 "split": "3",
@@ -40,15 +40,50 @@ website.convertCMS = [
                 "googleSheets": {}
             },   
             {
-                "key": "files",
+                "key": "1_files",
                 "value": "These are the files you choose",
                 "printGroup":"drive",
+                "multipleGroup":"drive",
                 "type": "text",
                 "next":"true",
                 "split": "5",
                 "left":450,
                 "googleSheets": {}
-            },                                                
+            },      
+            {
+                "key": "2_files",
+                "value": "None",
+                "printGroup":"drive",
+                "printGroupType":"replace",
+                "type": "text",
+                "next":"true",
+                "split": "5",
+                "left":450,
+                "googleSheets": {}
+            },   
+            {
+                "key": "3_files",
+                "value": "None",
+                "printGroup":"drive",
+                "printGroupType":"replace",
+                "type": "text",
+                "next":"true",
+                "split": "5",
+                "left":450,
+                "googleSheets": {}
+            },    
+            {
+                "key": "4_files",
+                "value": "None",
+                "printGroup":"drive",
+                "printGroupType":"replace",
+                "type": "text",
+                "next":"true",
+                "split": "5",
+                "left":450,
+                "googleSheets": {}
+            },                             
+                                                                                                                
         ]
     },                  
 ]
