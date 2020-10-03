@@ -1,6 +1,6 @@
 export const environment: any = {
 	production: false,
-	url: 'rental',
+	url: 'drive',
 	inputHandle: {
 		options: false,
 		link: false,
