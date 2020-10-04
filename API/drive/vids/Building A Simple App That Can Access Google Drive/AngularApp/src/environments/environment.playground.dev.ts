@@ -39,7 +39,12 @@ export const environment: any = {
 	},
 	playground:{
 		create:false,
-		createThumbnail:false
+		createThumbnail:false,
+		upload:{
+			simple:false, 
+			multipart:true,
+			resumable:false 
+		}
 	}
 
 };

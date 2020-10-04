@@ -1,9 +1,10 @@
 import { Directive, ElementRef, HostListener, Input, Renderer2, TemplateRef, ViewContainerRef, ViewRef, EmbeddedViewRef, ViewChildren } from '@angular/core';
 import { RyberService } from '../ryber.service'
-import { fromEvent, from, Subscription, Subscriber } from 'rxjs';
+import { fromEvent, from, Subscription, Subscriber, of } from 'rxjs';
 import { deltaNode, eventDispatcher, numberParse, objectCopy } from '../customExports'
-import { delay } from 'rxjs/operators'
+import { catchError, delay } from 'rxjs/operators'
 import { environment } from '../../environments/environment'
+import { HttpClient } from '@angular/common/http';
 
 
 @Directive({
@@ -15,7 +16,8 @@ export class PlaygroundDirective {
 	extras: any;
 
 	constructor(
-		private el: ElementRef
+		private el: ElementRef, 
+		private http:HttpClient
 	) { }
 
 	@HostListener('click') onClick() {
@@ -27,6 +29,11 @@ export class PlaygroundDirective {
 			let API_KEY = environment.googleDrive.apiKey
 			let DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
 			let SCOPES = `https://www.googleapis.com/auth/drive`;
+			
+
+			//scope access
+			let http = this.http
+			//
 
 
 			gapi.load('client:auth2', () => {
@@ -48,8 +55,8 @@ export class PlaygroundDirective {
 						console.log(gapi.client.drive.files)
 
 						//create a file
-						if (environment.playground.create) {
-							let file = gapi.client.drive.files.create({
+						if (environment.playground?.create) {
+							gapi.client.drive.files.create({
 								// resource: fileMetadata,
 								name: 'medi.PNG',   //OPTIONAL
 								media: 'media',   //OPTIONAL
@@ -65,10 +72,10 @@ export class PlaygroundDirective {
 						//
 
 						//create a file with thumbnail
-						if (environment.playground.createThumbnail) {
+						if (environment.playground?.createThumbnail) {
 							let image = `` // take an image head  to https://www.base64-image.de/ and paste in the template strings `` as nneded then run the app
 							image = btoa(image)
-							let file = gapi.client.drive.files.create({
+							gapi.client.drive.files.create({
 								// resource: fileMetadata,
 								name: 'medi.PNG',
 								media: 'media',
@@ -88,6 +95,68 @@ export class PlaygroundDirective {
 							})
 						}
 						//						
+
+						// simple upload 
+						if (environment.playground?.upload.simple) {
+							gapi.client.drive.files.create({
+								// resource: fileMetadata,
+								name: 'simpleUpload.txt',   //OPTIONAL
+								media: 'media',   //OPTIONAL
+								fields: 'id',   //OPTIONAL
+								uploadType:'media'
+							})
+							.then(function (a, b, c) {
+								console.log(a)
+							})
+							.catch((error) => {
+								console.log(error.body)
+							})
+						}
+						//
+
+						// multipart upload 
+						if (environment.playground?.upload.multipart) {
+							http.get("https://static.skillshare.com/uploads/project/413d60c0dac2da6c97f939829fd1a064/9d28e322")
+							.pipe(catchError((error)=>{
+								console.log(error)
+								return of([])
+							}))
+							.subscribe((img)=>{
+								console.log(img)
+								gapi.client.drive.files.create({
+									// resource: fileMetadata,
+									name: 'multipart.PNG',   //OPTIONAL
+									media: 'media',   //OPTIONAL
+									uploadType:'media',
+									starred:true
+								})
+								.then(function (a, b, c) {
+									console.log(a)
+								})
+								.catch((error) => {
+									console.log(error.body)
+								})								
+							})							
+						}
+						//	
+						
+						// resumable upload 
+						if (environment.playground?.upload.resumable) {
+							gapi.client.drive.files.create({
+								// resource: fileMetadata,
+								name: 'medi.PNG',   //OPTIONAL
+								media: 'media',   //OPTIONAL
+								fields: 'id',   //OPTIONAL
+								uploadType:'media'
+							})
+							.then(function (a, b, c) {
+								console.log(a)
+							})
+							.catch((error) => {
+								console.log(error.body)
+							})
+						}
+						//							
 
 
 					})
