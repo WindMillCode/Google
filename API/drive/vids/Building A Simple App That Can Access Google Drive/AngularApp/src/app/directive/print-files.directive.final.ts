@@ -27,7 +27,7 @@ export class PrintFilesDirective {
 			let  API_KEY = environment.googleDrive.apiKey
 			var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
 			var SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly';
-			
+			//			
 
 			//reactiong functions
 			let {appendTarget,ryber,extras} = this

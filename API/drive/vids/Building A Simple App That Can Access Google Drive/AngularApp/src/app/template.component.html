@@ -202,7 +202,9 @@
             />
         </ng-template>  
         <ng-template #pictureBlock1  >    
-            <button #myVal 
+            <button #myVal
+            appSignout  [signOut]  = "ryber.appAvailble( a.extras[2][bb], 'appSignout')" 
+            appPlayground  [playground]  = "ryber.appAvailble( a.extras[2][bb], 'appPlayground')" 
             appPrintFiles  [printFiles]  = "ryber.appAvailble( a.extras[2][bb], 'appPrintFiles')"
             appInputHandle [inputHandle] = "ryber.appAvailble( a.extras[2][bb], 'appInputHandle')"
             appFormControl [formControl] = "ryber.appAvailble( a.extras[2][bb], 'appFormControl')"

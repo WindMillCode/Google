@@ -40,7 +40,6 @@ export class PrintFilesDirective {
 	
     ngOnInit(){
 		this.extras = this.printFiles
-		console.log(this.extras)
 
 
         if(this.extras?.confirm === 'true'){

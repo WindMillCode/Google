@@ -15,6 +15,8 @@ import { MoneyClickDirective } from './directive/money-click.directive';
 import { SignPadDirective } from './directive/sign-pad.directive';
 import { ToggleButtonDirective } from './directive/toggle-button.directive';
 import { PrintFilesDirective } from './directive/print-files.directive';
+import { PlaygroundDirective } from './directive/playground.directive';
+import { SignoutDirective } from './directive/signout.directive';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { PrintFilesDirective } from './directive/print-files.directive';
     MoneyClickDirective,
     SignPadDirective,
     ToggleButtonDirective,
-    PrintFilesDirective
+    PrintFilesDirective,
+    PlaygroundDirective,
+    SignoutDirective
   ],
   imports: [
     BrowserModule,

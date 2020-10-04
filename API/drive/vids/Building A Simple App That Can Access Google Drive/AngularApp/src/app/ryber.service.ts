@@ -1083,7 +1083,105 @@ export class RyberService {
                         type                          
                     }         
                 })                     
-            }            
+            }
+            
+            else if(type === "playground"){
+
+                          
+                let css = {
+                    width:'325px',
+                    "font-size":"48px",
+                    top:"0px",
+                    // height:"75px",
+                    // left:'400px',
+                    "z-index":4,
+                    'background-color':background,
+                    color,                    
+                    "font-family":fonts,                    
+                    "font-weight":italics,
+                }   
+                options.css === undefined ? undefined :(()=>{
+                    css = options.css; 
+                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null 
+                })()
+                let name = this[co.valueOf()].quantity[1][1].signature + " "+ zCTgen.next().value
+        
+                symbol = rUD({
+                    co,
+                    bool:'b',
+                    text:"Playground",
+                    val:key.split("_").reverse()[0] + " a_p_p_Button",
+                    css,
+                    extras:{
+                        appPlayground:{
+                            confirm:'true',
+                        },
+                        appInputHandle:{
+                            confirm:'true',
+                            zSymbol :"",// zChildSymbol goes here
+                            co,
+                            name,
+                            googleSheets,
+                            required:form?.required !== undefined ? "file button" :"false",
+                            link:form?.link,
+                            type:"file button"
+                        },                        
+                        deltaIndex:1,
+                        component,                        
+                        multipleGroup:printGroup,
+                        type                          
+                    }         
+                })                     
+            } 
+            
+            else if(type === "sign out button"){
+
+                          
+                let css = {
+                    width:'325px',
+                    "font-size":"48px",
+                    top:"0px",
+                    // height:"75px",
+                    // left:'400px',
+                    "z-index":4,
+                    'background-color':background,
+                    color,                    
+                    "font-family":fonts,                    
+                    "font-weight":italics,
+                }   
+                options.css === undefined ? undefined :(()=>{
+                    css = options.css; 
+                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null 
+                })()
+                let name = this[co.valueOf()].quantity[1][1].signature + " "+ zCTgen.next().value
+        
+                symbol = rUD({
+                    co,
+                    bool:'b',
+                    text:"Sign Out",
+                    val:key.split("_").reverse()[0] + " a_p_p_Button",
+                    css,
+                    extras:{
+                        appSignout:{
+                            confirm:'true',
+                        },
+                        appInputHandle:{
+                            confirm:'true',
+                            zSymbol :"",// zChildSymbol goes here
+                            co,
+                            name,
+                            googleSheets,
+                            required:form?.required !== undefined ? "file button" :"false",
+                            link:form?.link,
+                            type:"file button"
+                        },                        
+                        deltaIndex:1,
+                        component,                        
+                        multipleGroup:printGroup,
+                        type                          
+                    }         
+                })                     
+            }             
         
             else if(type === "signature"){
         
