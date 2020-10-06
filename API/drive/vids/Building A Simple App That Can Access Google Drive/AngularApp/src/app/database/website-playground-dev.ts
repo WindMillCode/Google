@@ -26,16 +26,25 @@ website.convertCMS = [
                 "key": "playground",
                 "type": "playground",
                 "split": "3",
-                "left":"450",
+                "left":"250",
                 "googleSheets": {}
             },    
             {
                 "key": "signOut",
                 "type": "sign out button",
                 "split": "3",
-                "left":"450",
+                "left":"650",
                 "googleSheets": {}
-            },                                                                                                                                        
+            }, 
+            {
+                "key": "Upload",
+                "type": "file button",
+                "value":"Upload",
+                "next":"true",
+                // "split": "3",
+                "height":"250",
+                "googleSheets": {}
+            },                                                                                                                                                    
         ]
     },                  
 ]

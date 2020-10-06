@@ -113,13 +113,88 @@ gapi.client.drive.files.create({
 })
 ```
     
-## Upload file data
+## Upload File Data
 
 * 3 types 
 __Simple upload__ -  to quickly transfer a small media file (5 MB or less) without supplying metadata
-__Multipart upload__ -  to quickly transfer a small file (5 MB or less) and metadata that describes the file, in a single reques
+__Multipart upload__ -  to quickly transfer a small file (5 MB or less) and metadata that describes the file, in a single request
 __Resumable upload__ -  for large files (greater than 5 MB) and when there's a high chance of network interruption 
  
 
 * to perform a simple upload
+```ts
+fileUpload.files[0].text() //doesnt work for IE
+    .then((text) => {
 
+        gapi.client.request({
+            'path': 'https://www.googleapis.com/upload/drive/v3/files',
+            'method': 'POST',
+            'params': { 'uploadType': 'media' },
+            'headers': {
+                'Content-Type': 'application/json',
+                'Content-Length': fileUpload.files[0].size
+            },
+            'body': text
+        }).execute((a) => {
+            console.log(a)
+        })
+    })
+```
+
+
+* to perfrom a multipart upload 
+    * this is the option you most likely want to start with
+```ts
+// console.log(img) 
+fileUpload.files[0].text() //doesnt work for IE
+    .then((pdf) => {
+        var fileName = 'multipart.json';
+        var contentType = 'application/json'
+        var metadata = {
+            'name': fileName,
+            'mimeType': contentType
+        };
+
+        const boundary = 'xyz'
+        const delimiter = "\r\n--" + boundary + "\r\n";
+        const close_delim = "\r\n--" + boundary + "--";
+
+        var multipartRequestBody =
+            delimiter +
+            'Content-Type: application/json; charset=UTF-8\r\n\r\n' +
+            JSON.stringify(metadata) +
+            delimiter +
+            'Content-Type: ' + contentType + '\r\n\r\n' +
+            pdf +
+            close_delim;
+
+        gapi.client.request({
+            'path': 'https://www.googleapis.com/upload/drive/v3/files',
+            'method': 'POST',
+            'params': { 'uploadType': 'multipart' },
+            'headers': {
+                'Content-Type': 'multipart/related; boundary=' + boundary
+            },
+            'body': multipartRequestBody
+        }).execute((a) => {
+            console.log(a)
+        })
+    })
+
+
+```
+
+
+* to perform a resumable upload
+1. Send the initial request and retrieve the resumable session UR
+2. Upload the data and monitor upload state.
+3. (optional) If upload is disturbed, resume the upload.
+
+
+### Lab Upload File Data
+
+
+# Issues with the DRIVE API 
+
+* uploading file content that indicate an image specifcally jpegs seems to corrpt the file, XHR on the data is a bit corroupted, but getting the from HTMLInputElement file upload provides identical binary in the text editor, find how to modify the data before sending it to google drive
+    *i got the api to react [here](https://stackoverflow.com/questions/63422138/how-to-upload-file-into-specific-folder-with-google-drive-api-and-python/64204197#64204197)

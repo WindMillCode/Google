@@ -17,11 +17,6 @@ Greetings I am currently going to get several GCP certifications. Subscribe to m
 
 
 
-
-
-
-
-
 ### 1 
 * need a lot of compute power for big data jobs 
 * for stablizing a video, lot of data 

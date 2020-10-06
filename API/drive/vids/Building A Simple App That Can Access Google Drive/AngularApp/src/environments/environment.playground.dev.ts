@@ -42,8 +42,8 @@ export const environment: any = {
 		createThumbnail:false,
 		upload:{
 			simple:false, 
-			multipart:true,
-			resumable:false 
+			multipart:false,
+			resumable:true
 		}
 	}
 
