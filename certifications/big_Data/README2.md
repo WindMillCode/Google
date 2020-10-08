@@ -150,9 +150,6 @@ __Dataproc__ - managed env to run Apache Spark
 ## Where is unstructured ML used in business?
 
 * how does ML learn unstructed data
-* __dialogflow__ - chatbot dialog ML the GCP offers
-* several ML model API
-
 ![](images/unstructed_ML_models_API.PNG)
 
 
@@ -163,7 +160,7 @@ __Dataproc__ - managed env to run Apache Spark
     * understand emotion in a block of text
     * agents, that get trained
         * train or use pre builts
-        * 
+     
 
 ### Customizing Pre-built models with AutoML
 
@@ -189,7 +186,7 @@ __Dataproc__ - managed env to run Apache Spark
 ### Analyze data engineering challenges
 
 * difficult to access data
-* not good daa
+* not good data
 * cant transform, query
 __data warehouse__ - clean data very efficient to query
     * bigquery is the data warehouse

@@ -7,7 +7,7 @@ export const environment: any = {
 		linkInit: true
 	},
 	printFiles: {
-		test:false
+		test: false
 	},
 	lifecycleHooks: false,
 	component: {
@@ -31,19 +31,19 @@ export const environment: any = {
 	googleDrive: {
 
 		// insert credentials here
-		apiKey: "",
-		clientId: ""
+		apiKey: "AIzaSyBUNA128RmwCbTjRT9wx0th0fPPPj9qZkA",
+		clientId: "637621663480-v9bjf1b2cvkc0ummik2hs1v6fbr4raj3.apps.googleusercontent.com"
 		//
 
-		
+
 	},
-	playground:{
-		create:false,
-		createThumbnail:false,
-		upload:{
-			simple:false, 
-			multipart:false,
-			resumable:true
+	playground: {
+		create: false,
+		createThumbnail: false,
+		upload: {
+			simple: false,
+			multipart: false,
+			resumable: true
 		}
 	}
 

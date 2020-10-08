@@ -172,48 +172,11 @@ export class PlaygroundDirective {
 						if (environment.playground?.upload.resumable) {
 
 
-							let fileSize = Math.round(fileUpload.files[0].size/10)
-							let newCap = 256 * 1024 
-							let fileName = fileUpload.files[0].name
-							let headers = new HttpHeaders()
-							headers = headers
-								.set("Authorization", `Bearer ${gapi.auth.getToken().access_token}`)
-							// .set("X-Upload-Content-Length",fileSize.toString())
-
-							combineLatest([
-								from(fileUpload.files[0].text()),
-								http.post(
-									"https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable",
-									{ name: "resumable.txt", mimeType: "text/plain" },
-									{ headers, observe: 'response' }
-								)
-							])
-								.pipe(
-									catchError((error) => {
-										console.error(error)
-										return of([])
-									})
-								)
-								.subscribe((result) => {
-									let headers = new HttpHeaders({
-										"Content-Range": `bytes 0-${newCap}/${fileSize}`,
-									})
-									let fileContent = result[0]
-									let resumableURL = result[1].headers.get('Location')
-									console.log(fileSize)
-									console.log(headers.get("Content-Range"))
-									chunked({
-										http,
-										url: resumableURL,
-										fileContent,
-										headers,
-										fileSize,
-										newCap,
-										offset: 0
-									})
-
-
-								})
+							resumable({
+								http,
+								fileUpload,
+								resumableError:'false'
+							})
 
 
 						}
@@ -266,11 +229,63 @@ export class PlaygroundDirective {
 
 }
 
+function resumable(devObj) {
+
+	let {http,fileUpload,resumableError} = devObj
+
+	let fileSize = Math.round(fileUpload.files[0].size / 10)
+	let newCap = 256 * 1024
+	let fileName = fileUpload.files[0].name
+	let headers = new HttpHeaders()
+	headers = headers
+		.set("Authorization", `Bearer ${gapi.auth.getToken().access_token}`)
+
+
+	combineLatest([
+		from(fileUpload.files[0].text()),
+		http.post(
+			"https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable",
+			{ name: "resumable.txt", mimeType: "text/plain" },
+			{ headers, observe: 'response' }
+		)
+	])
+		.pipe(
+			catchError((error) => {
+				console.error(error)
+				return of([])
+			})
+		)
+		.subscribe((result) => {
+			let headers = new HttpHeaders({
+				"Content-Range": `bytes 0-${newCap}/${fileSize}`,
+			})
+			let fileContent = result[0]
+			let resumableURL = result[1].headers.get('Location')
+			console.log(fileSize)
+			console.log(headers.get("Content-Range"))
+			chunked({
+				http,
+				fileUpload,
+				resumableError,
+				url: resumableURL,
+				fileContent,
+				headers,
+				fileSize,
+				newCap,
+				offset: 0
+			})
+
+
+		})
+
+
+}
+
 
 function chunked(devObj) {
 
-	let { http, url, fileContent, headers, offset,fileSize,newCap } = devObj
-	
+	let { http, url, fileContent, headers, offset, fileSize, newCap,resumableError,fileUpload } = devObj
+
 	http.put(
 		url,
 		fileContent.substring(offset, newCap + 1), // becuase of the error
@@ -284,20 +299,42 @@ function chunked(devObj) {
 		.subscribe((result) => {
 
 			//you need to upload more chunks
-				// if you dont know the positions do */fileSize
-				// if you dont knwo the fileSize do offset-chunkSize/*
-				//if you dont know both */*
-			if (result.status === 308) {
+			// if you dont know the positions do */fileSize
+			// if you dont knwo the fileSize do offset-chunkSize/*
+			//if you dont know both */*
+
+
+			if (result.status === 200 || result.status === 200) {
+				alert('file uploaded')
+			}
+
+			else if (result.status === 308) {
 				let newOffset = parseInt(result.headers.get('Range').split("-")[1]) + 1
-				let newCap = newOffset + (256 * 1024) 
-				newCap = newCap > fileSize ? fileSize - 1 : newCap 
-				let headers = new HttpHeaders({
+				let newCap = newOffset + (256 * 1024)
+				newCap = newCap > fileSize ? fileSize - 1 : newCap
+				let headers: any = new HttpHeaders({
 					"Content-Range": `bytes ${newOffset}-${newCap}/${fileSize}`,
 				})
 				console.log(headers.get("Content-Range"))
 
+
+				//cause a 4xx
+				if (newOffset > 1000000 && resumableError === 'false') {
+					headers = new HttpHeaders({
+						"Content-Range": `bytes ${newOffset}-${newCap}/2`,
+					})
+					resumableError === 'true'
+					resumable({
+						http,
+						fileUpload
+					})
+				}
+				//
+
 				chunked({
 					http,
+					fileUpload,
+					resumableError,
 					url,
 					fileContent,
 					headers,
@@ -306,6 +343,8 @@ function chunked(devObj) {
 					offset: newOffset
 				})
 			}
+
+			// else if(result.status ===  4)
 			//
 
 

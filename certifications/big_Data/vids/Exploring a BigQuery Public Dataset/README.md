@@ -3,7 +3,7 @@
 
 ## Task 1. Query a public dataset
 
-nav menu > bigquery > resources > ADD DATA > Explore public datasets. > searchbo > USA Names > VIEW dataset
+nav menu > bigquery > resources > ADD DATA > Explore public datasets. > searchbox > USA Names > VIEW dataset
 
 in query editor 
 * to  get the name and gender of the babies in this dataset, and then list the top 10 names in descending order 

@@ -41,6 +41,11 @@ $(wget -qO - http://ipecho.net/plain)/32
 gsutil mb -p [PROJECT NAME] -c [STORAGE CLASS] -l [LOCATION] gs://[NAME ]
 ```
 
+* to copy big items to storage
+```bash
+gsutil -m cp -r GB_folder   gs://my_notebook 
+```
+
 ## Service Accounts
 
 *to create a service acct with its private key
@@ -183,13 +188,13 @@ gcloud dataproc clusters create rentals \
 |EXTRACT(x from date) where x is|DATE,WEEKOFDAY,HOUR||
 |WITH|WITH memory_table AS ([SQL QUERY])|make an in memory table just for one SQL query help with joins, so you dont join bigger tables|
 |IF,COUNTIF|x(CONDITION,TRUE RETURN,FALSE RETURN)|good if a value is empty return 0 instead of null to avoid complicated transformations and breaking the app|
-|UNNEST()|brings arrays back into rows  always follows the table name in your FROM clause |SELECT person, fruit_array, total_cost FROM `data-to-insights.advanced.fruit_store`,UNNEST(fruit_array) AS f|
+|UNNEST()|brings arrays back into rows  always follows the table name in your FROM clause |SELECT person, f, total_cost FROM `data-to-insights.advanced.fruit_store`,UNNEST(fruit_array) AS f|
 
 
 
 
 * to create a model
-![](images/to_create_a_model.PNG)
+![](../certifications/big_Data/images/to_create_a_model.PNG)
 
 
 * to parse thise string
@@ -215,7 +220,7 @@ LIMIT
 ```
 
 * to create an array
-![](images/array_API.PNG)
+![](../certifications/big_Data/images/array_API.PNG)
 
 * to query an item from an array
 ```sql
@@ -297,7 +302,7 @@ CREATE OR REPLACE TABLE ecommerce.partitions
 * 3 types fixed sliding and session
 * in python late data is discarded  in java u can do something about late data
 
-## AutoML 
+# AutoML 
 
 * csv must be in same bucket as source files
 * how long models remain depends on model ttype
@@ -309,9 +314,9 @@ CREATE OR REPLACE TABLE ecommerce.partitions
       * lakers jerseys or golden staten jerseys
 
 
-### Auto ML Vision
+## Auto ML Vision
 
-* remove very low frequery level images
+* remove very low frequency level images
 * if the target is at 
 
 |target|training data should reflect|
@@ -323,13 +328,13 @@ CREATE OR REPLACE TABLE ecommerce.partitions
 
 * perfect, means not enough variety 
 
-### Auto ML NLP
+## Auto ML NLP
 
 * topics of items
 * max 128 kb 
 * models deleted every 6 months
 
-### Auto ML Tables
+## Auto ML Tables
 
 * import through big query
 * 100 g or less
