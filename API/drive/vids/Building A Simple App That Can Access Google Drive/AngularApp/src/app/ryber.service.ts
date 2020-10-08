@@ -1,10 +1,10 @@
-import { Injectable } from "@angular/core";
+import { Injectable,VERSION } from "@angular/core";
 import { Observable, of, Subject, Subscription,BehaviorSubject,ReplaySubject,merge, combineLatest } from "rxjs";
 // import { Router,RouterEvent } from "@angular/router";
 import { zChildren, componentObject,numberParse,ryberUpdate, objectCopy } from "./customExports";
 import { HttpClient } from "@angular/common/http";
 import website from './website';
-import {      tap,last,catchError } from 'rxjs/operators'
+import {tap,last,catchError } from 'rxjs/operators'
 
 
 
@@ -1133,6 +1133,55 @@ export class RyberService {
                     }         
                 })                     
             } 
+
+            else if(type === "upload button"){
+
+                          
+                let css = {
+                    width:'325px',
+                    "font-size":"48px",
+                    top:"0px",
+                    // height:"75px",
+                    // left:'400px',
+                    "z-index":4,
+                    'background-color':background,
+                    color,                    
+                    "font-family":fonts,                    
+                    "font-weight":italics,
+                }   
+                options.css === undefined ? undefined :(()=>{
+                    css = options.css; 
+                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null 
+                })()
+                let name = this[co.valueOf()].quantity[1][1].signature + " "+ zCTgen.next().value
+        
+                symbol = rUD({
+                    co,
+                    bool:'b',
+                    text:value,
+                    val:key.split("_").reverse()[0] + " a_p_p_Button",
+                    css,
+                    extras:{
+                        appUpload:{
+                            confirm:'true',
+                        },
+                        appInputHandle:{
+                            confirm:'true',
+                            zSymbol :"",// zChildSymbol goes here
+                            co,
+                            name,
+                            googleSheets,
+                            required:form?.required !== undefined ? "file button" :"false",
+                            link:form?.link,
+                            type:"file button"
+                        },                        
+                        deltaIndex:1,
+                        component,                        
+                        multipleGroup:printGroup,
+                        type                          
+                    }         
+                })                     
+            }             
             
             else if(type === "sign out button"){
 
@@ -1749,7 +1798,7 @@ export class RyberService {
 
             // check if were greater    than v9
             if(
-                parseInt(document.querySelector("body > app-root").attributes["ng-version"].value.split(".")[0]) >= 9
+                parseInt(VERSION.major) >= 9
             ){
                 a(event)
             }

@@ -1,13 +1,13 @@
 export const environment: any = {
 	production: false,
-	url: 'drive',
+	url: 'playground',
 	inputHandle: {
 		options: false,
 		link: false,
 		linkInit: true
 	},
 	printFiles: {
-		test:false
+		test: false
 	},
 	lifecycleHooks: false,
 	component: {
@@ -29,14 +29,31 @@ export const environment: any = {
 		click: false
 	},
 	googleDrive: {
-
 		// insert credentials here
-		clientId: "",
-		apiKey: ""
+		apiKey: "",
+		clientId: ""
 		//
+	},
+	playground: {
+		create: false,
+		createThumbnail: false,
+		upload: {
+			simple: false,
+			multipart: false,
+			resumable: true,
+			indexable:false,
+			gSuite:false
+		}
+	},
 
-		
+	//replace upload object here
+	upload:{
+		simple:true,
+		multipart:false,
+		resumable:false
 	}
+	//
+		
 
 };
 

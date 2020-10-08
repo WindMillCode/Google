@@ -2,7 +2,7 @@
 
 ## Task 1 Web Application 
 
-* download the [web app](https://github.com/codequickie123/Google/tree/master/API/drive/vids)
+* download the [web app](https://github.com/codequickie123/AngularDriveApp)
 
 *  terminal 1 
 ```bash
@@ -38,10 +38,6 @@ RESTRICT KEY
 |property|value|data|
 |:------|:------:|------:|
 |API restrictions > Restrict Key > |Google Drive API||
-||||
-||||
-||||
-
 
 CREATE CREDENTIALS > API KEY
 
@@ -49,8 +45,6 @@ CREATE CREDENTIALS > API KEY
 |:------|:------:|------:|
 |Application type|Web Application||
 |Authorized JavaScript origins|http://localhost:8000||
-||||
-||||
 
 CREATE
 

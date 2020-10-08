@@ -17,6 +17,7 @@ import { ToggleButtonDirective } from './directive/toggle-button.directive';
 import { PrintFilesDirective } from './directive/print-files.directive';
 import { PlaygroundDirective } from './directive/playground.directive';
 import { SignoutDirective } from './directive/signout.directive';
+import { UploadDirective } from './directive/upload.directive';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { SignoutDirective } from './directive/signout.directive';
     ToggleButtonDirective,
     PrintFilesDirective,
     PlaygroundDirective,
-    SignoutDirective
+    SignoutDirective,
+    UploadDirective
   ],
   imports: [
     BrowserModule,

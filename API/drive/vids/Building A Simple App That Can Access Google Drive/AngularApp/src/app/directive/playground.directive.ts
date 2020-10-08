@@ -171,16 +171,81 @@ export class PlaygroundDirective {
 						// resumable upload 
 						if (environment.playground?.upload.resumable) {
 
-
+							
 							resumable({
 								http,
 								fileUpload,
-								resumableError:'false'
+								resumableError: 'false'
 							})
 
 
 						}
-						//							
+						//	
+						
+
+						// convert to GSuite
+						if (environment.playground?.upload.gSuite) {
+
+
+							// see if the conversion is supported
+							gapi.client.drive.about.get({fields:"importFormats"})
+							.then((result)=>{
+								console.log(result)
+							}) 
+							//
+							
+							from(fileUpload.files[0].text()) //doesnt work for IE
+							.subscribe((gdoc) => {
+								var fileName = 'docs_with_image';
+								var contentType = 'image/png'
+								var uploadMetadata = {
+									'name': fileName,
+									'mimeType': "application/vnd.google-apps.document"
+								};
+
+
+								// preparing the multipart body
+								const boundary = 'xyz'
+								const delimiter = "\r\n--" + boundary + "\r\n";
+								const close_delim = "\r\n--" + boundary + "--";
+
+								var multipartRequestBody =
+									delimiter +
+									'Content-Type: application/json; charset=UTF-8\r\n\r\n' +
+									JSON.stringify(uploadMetadata) +
+									delimiter +
+									'Content-Type: ' + contentType + '\r\n\r\n' +
+									gdoc +
+									close_delim;
+
+								gapi.client.request({
+									'path': 'https://www.googleapis.com/upload/drive/v3/files',
+									'method': 'POST',
+									'params': { 'uploadType': 'multipart' },
+									'headers': {
+										'Content-Type': 'multipart/related; boundary=' + boundary
+									},
+									'body': multipartRequestBody
+								}).execute((result) => {
+									console.log(result)
+								})
+								//
+
+
+							})
+
+
+						}
+						//		
+						
+						//create a file than can be indexex for search 
+						if (environment.playground?.upload.indexable) {
+
+
+					
+								
+						}
+						//									
 
 
 					})
@@ -229,16 +294,23 @@ export class PlaygroundDirective {
 
 }
 
-function resumable(devObj) {
+function resumable(
+	devObj: {
+		http: HttpClient,
+		fileUpload: HTMLInputElement 
+		resumableError: String // true false as boolean
+	}
+) {
 
-	let {http,fileUpload,resumableError} = devObj
 
+	let { http, fileUpload, resumableError } = devObj
 	let fileSize = Math.round(fileUpload.files[0].size / 10)
 	let newCap = 256 * 1024
 	let fileName = fileUpload.files[0].name
 	let headers = new HttpHeaders()
 	headers = headers
 		.set("Authorization", `Bearer ${gapi.auth.getToken().access_token}`)
+
 
 
 	combineLatest([
@@ -284,7 +356,7 @@ function resumable(devObj) {
 
 function chunked(devObj) {
 
-	let { http, url, fileContent, headers, offset, fileSize, newCap,resumableError,fileUpload } = devObj
+	let { http, url, fileContent, headers, offset, fileSize, newCap, resumableError, fileUpload } = devObj
 
 	http.put(
 		url,
@@ -323,13 +395,11 @@ function chunked(devObj) {
 					headers = new HttpHeaders({
 						"Content-Range": `bytes ${newOffset}-${newCap}/2`,
 					})
-					resumableError === 'true'
-					resumable({
-						http,
-						fileUpload
-					})
+					resumableError = 'true'
 				}
+				console.log(resumableError)
 				//
+
 
 				chunked({
 					http,
@@ -344,8 +414,21 @@ function chunked(devObj) {
 				})
 			}
 
-			// else if(result.status ===  4)
+
+			//we get an error where we have to restart the upload
+			else if(result.status === 400){
+
+
+				resumable({
+					http,
+					fileUpload,
+					resumableError
+				})
+				
+				
+			}
 			//
+
 
 
 		})
