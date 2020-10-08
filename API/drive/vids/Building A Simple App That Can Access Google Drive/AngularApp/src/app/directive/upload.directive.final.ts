@@ -90,27 +90,27 @@ export class UploadDirective {
 						fileUpload.files[0].text() //doesnt work for IE
 							.then((pdf) => {
 								var fileName = 'multipart.json';
-								var contentType = 'application/json'
+								var contentType , uploadContentType = 'application/json'
 								var metadata = {
 									'name': fileName,
 									'mimeType': contentType
 								};
-
-
+					
+					
 								// preparing the multipart body
 								const boundary = 'xyz'
 								const delimiter = "\r\n--" + boundary + "\r\n";
 								const close_delim = "\r\n--" + boundary + "--";
-
+					
 								var multipartRequestBody =
 									delimiter +
 									'Content-Type: application/json; charset=UTF-8\r\n\r\n' +
 									JSON.stringify(metadata) +
 									delimiter +
-									'Content-Type: ' + contentType + '\r\n\r\n' +
+									'Content-Type: ' + uploadContentType + '\r\n\r\n' +
 									pdf +
 									close_delim;
-
+					
 								gapi.client.request({
 									'path': 'https://www.googleapis.com/upload/drive/v3/files',
 									'method': 'POST',
@@ -121,14 +121,14 @@ export class UploadDirective {
 									'body': multipartRequestBody
 								}).execute((a) => {
 									console.log(a)
-								})
+								})								
 								//
-
-
+					
+					
 							})
-
-
-
+					
+					
+					
 					}
 					//	
 

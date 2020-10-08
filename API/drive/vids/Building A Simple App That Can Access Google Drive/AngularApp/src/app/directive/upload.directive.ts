@@ -29,11 +29,8 @@ export class UploadDirective {
 
 			//accesing the drive API 
 
-			//paste credentials here
-			let CLIENT_ID = environment .googleDrive.clientId
-			let API_KEY = environment.googleDrive.apiKey
-			var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
-			var SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly';			
+			//paste credentials here	
+	
 			//
 
 			//scope access
@@ -44,57 +41,6 @@ export class UploadDirective {
 
 
 			//load the auth SDK
-			gapi.load('client:auth2', () => {
-				gapi.client.init({
-					apiKey: API_KEY,
-					clientId: CLIENT_ID,
-					discoveryDocs: DISCOVERY_DOCS,
-					scope: SCOPES
-				})
-				.then(function () {
-			
-					// sign in if needed
-					if (!gapi.auth2.getAuthInstance().isSignedIn.get()) {
-						gapi.auth2.getAuthInstance().signIn();
-					}
-					//
-				
-			
-					// simple upload 
-					if (environment.upload.simple) {
-						fileUpload.files[0].text() 
-						.then((text) => {
-					
-							gapi.client.request({
-								'path': 'https://www.googleapis.com/upload/drive/v3/files',
-								'method': 'POST',
-								'params': { 'uploadType': 'media' },
-								'headers': {
-									'Content-Type': 'application/json',
-									'Content-Length': fileUpload.files[0].size
-								},
-								'body': text
-							}).execute((a) => {
-								console.log(a)
-							})
-						})
-					}					
-					//
-			
-			
-					// multipart upload 
-					//	
-			
-					// resumable upload 
-					//		
-					
-	
-			
-				})
-				.catch(function (error) {
-					console.log(error)
-				})
-			});			
 			//
 
 			//				
@@ -141,7 +87,8 @@ export class UploadDirective {
 
 // tell Google Drive API were going to have a resumable upload session
 
-//* 
+
+//
 
 // your upload session
 

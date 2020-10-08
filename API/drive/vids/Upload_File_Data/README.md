@@ -1,17 +1,19 @@
-# Upload File 
+# Upload File Data using Google Drive API
 
 ## Task 1 Web Application 
 
 * download the [web app](https://github.com/codequickie123/AngularDriveApp)
-* download the test files [here](https://github.com/codequickie123/Google/tree/master/API/drive/vids/Upload%20File%20Data) to upload or get 2 files 1 smaller than 5mb and one bigger than 5mb
+* download the test files [here](https://github.com/codequickie123/Google/tree/master/API/drive/vids/Upload_File_Data) to upload or get 2 files 1 smaller than 5mb and one bigger than 5mb
     * place in a seperate folder 
 
 
 *  terminal 1 
 ```bash
 cd [root of project folder]
-npx ng serve -c=upload
+npx ng serve -c=upload --open=true
 ```
+
+open devTools in the browser
 
 
 at the end of this lab, the code should look like 
@@ -166,7 +168,7 @@ if (environment.upload.multipart) {
     fileUpload.files[0].text() //doesnt work for IE
         .then((pdf) => {
             var fileName = 'multipart.json';
-            var contentType = uploadContentType = 'application/json'
+            var contentType , uploadContentType = 'application/json'
             var metadata = {
                 'name': fileName,
                 'mimeType': contentType
@@ -212,6 +214,7 @@ if (environment.upload.multipart) {
             })
 ```
 
+* upload the multipart.ts.json or a file smaller than 5mb
 
 ## Task 6 perform a resumable upload
 
@@ -275,11 +278,6 @@ function resumable(
 	.subscribe((result) => {
 
         //starting the upload
-		let headers = new HttpHeaders({
-			"Content-Range": `bytes 0-${chunk}/${fileSize}`,
-		})
-		let fileContent = result[0]
-        let resumableURL = result[1].headers.get('Location')
         //
 		
 		//indicate where we are in the upload
@@ -312,14 +310,14 @@ function resumable(
     * however if the file is not > 5mb and the api allows for resumable, we indicate the end range is fileSize - 1
     * if were not using the SDK always have to include the access token for yr Oauth 2.0 apps
 ```ts
-	let { http, fileUpload, resumableError } = devObj
-	let fileSize = Math.round(fileUpload.files[0].size )
+    let { http, fileUpload, resumableError } = devObj
+    let fileSize = Math.round(fileUpload.files[0].size )
     let chunk = 256 * 1024
     chunk = chunk > fileSize ? fileSize - 1 : chunk
-	let fileName = fileUpload.files[0].name
-	let headers = new HttpHeaders()
-	headers = headers
-		.set("Authorization", `Bearer ${gapi.auth.getToken().access_token}`)
+    let fileName = fileUpload.files[0].name
+    let headers = new HttpHeaders()
+    headers = headers
+        .set("Authorization", `Bearer ${gapi.auth.getToken().access_token}`)
 ```
 
 * in starting the upload paste this code    
@@ -457,4 +455,4 @@ if (result.status === 200 || result.status === 201) {
 }
 ```
 
-* go ahead and upload resumable.txt from the app
+* go ahead and upload resumable.txt from the app or a file bigger than 5mb

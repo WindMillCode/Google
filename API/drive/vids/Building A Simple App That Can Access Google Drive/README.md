@@ -6,9 +6,11 @@
 
 *  terminal 1 
 ```bash
-npx ng serve -c=drive
+npx ng serve -c=upload --open=true
 ```
-open /src/app/directive/print-files.directive.ts in your code editor
+
+open devTools in the opened browser
+
 
 at the end of this lab, the code should look like 
 /src/app/directive/print-files.directive.final.ts
@@ -18,6 +20,8 @@ at the end of this lab, the code should look like
 
 
 ## Task 2 setup up credentials
+
+open /src/app/directive/print-files.directive.ts in your code editor
 
 * in credentials paste this code
 ```ts
