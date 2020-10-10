@@ -12,7 +12,7 @@ import { environment } from '../../environments/environment'
 export class SignoutDirective {
 
 	@Input() signOut: any;
-	extras: any;	
+	extras: any;
 
 	constructor(
 		private el:ElementRef
@@ -22,13 +22,13 @@ export class SignoutDirective {
 
 		if (this.extras?.confirm === 'true') {
 
-			//accesing the drive API 
+			//accesing the drive API
 			let CLIENT_ID = environment.googleDrive.clientId
 			let API_KEY = environment.googleDrive.apiKey
 			let DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
 			let SCOPES = `https://www.googleapis.com/auth/drive`;
-			
-			
+
+
 			gapi.load('client:auth2', ()=>{
 				gapi.client.init({
 					apiKey: API_KEY,
@@ -38,24 +38,24 @@ export class SignoutDirective {
 				})
 				.then(function () {
 
-					// sign in if needed
+					// sign out 
 					if(gapi.auth2.getAuthInstance().isSignedIn.get()){
 						gapi.auth2.getAuthInstance().signOut();
 					}
 					//
-					
+
 					alert("sucessfully signed out")
 
 				})
 				.catch(function(error) {
 					console.log(error)
-				})		
-			});	
-			//				
-			
+				})
+			});
+			//
+
 		}
 
-	}	
+	}
 
 	ngOnInit() {
 		this.extras = this.signOut

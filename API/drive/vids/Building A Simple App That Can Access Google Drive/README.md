@@ -6,7 +6,8 @@
 
 *  terminal 1 
 ```bash
-npx ng serve -c=upload --open=true
+cd [root of project folder]
+npx ng serve -c=drive --open=true
 ```
 
 open devTools in the opened browser

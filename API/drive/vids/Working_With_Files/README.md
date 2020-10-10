@@ -1,10 +1,15 @@
-# Working with Files in Gooogle Drive API
+# Working with Folders in Gooogle Drive API
 
 ## Task 1 Web Application 
 
 * download the [web app](https://github.com/codequickie123/AngularDriveApp)
 
 * at the end of this lab your result shoul dlook like src/app/directive/folders.directive.final.ts
+
+* in terminal 1
+```bash
+npx ng serve -c=folders open=true
+```
 
 ## Task 2 setup up credentials
 
@@ -117,9 +122,9 @@ in create a folder paste
             },
             { headers, observe: 'response' }
         )
-            .subscribe((result) => {
-                console.log(result)
-            })
+        .subscribe((result) => {
+            console.log(result)
+        })
 
 
     }
@@ -157,7 +162,7 @@ if (environment.folders.moveFiles) {
     headers = headers
         .set("Authorization", `Bearer ${gapi.auth.getToken().access_token}`)
 
-    //get all the files in the drive including in trash
+    //get all the files in the drive 
     //
 
 
@@ -214,6 +219,7 @@ if (environment.folders.moveFiles) {
 * in move the file from a to b paste
     * this is a HTTP PATCH request, if u havent seen it its protocol used to modify a ressouce, in this case we use the id, to modify the directory tree of the file, 
     * notice if we have a bigger directory tree, we dont need the whole directory, just the target parent directory id
+    * to place in tld, addParents must be ""
 ```ts
 http.patch(
     `https://www.googleapis.com/drive/v3/files/${folders.target.id}`,
@@ -234,4 +240,5 @@ http.patch(
 ```
 
 
+* open the drive and see that multipart.json has been moved from folder 1 to folder 2
 

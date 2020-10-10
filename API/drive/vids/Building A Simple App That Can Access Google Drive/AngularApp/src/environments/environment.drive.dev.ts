@@ -63,7 +63,7 @@ export const environment: any = {
 	folders:{
 		create:false,
 		moveFiles:true
-	}
+	},
 	//
 
 };
