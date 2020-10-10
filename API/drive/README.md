@@ -129,9 +129,9 @@ __Multipart upload__ -  to quickly transfer a small file (5 MB or less) and meta
 __Resumable upload__ -  for large files (greater than 5 MB) and when there's a high chance of network interruption 
  
 
-* to perform a simple upload
+###  simple upload
 
-### TypeScript
+#### TypeScript
 ```ts
 fileUpload.files[0].text() //doesnt work for IE
     .then((text) => {
@@ -152,9 +152,9 @@ fileUpload.files[0].text() //doesnt work for IE
 ```
 
 
-* to perfrom a multipart upload 
+### multipart upload 
     * this is the option you most likely want to start with
-### TypeScript
+#### TypeScript
 ```ts
 // console.log(img) 
 fileUpload.files[0].text() //doesnt work for IE
@@ -196,7 +196,7 @@ fileUpload.files[0].text() //doesnt work for IE
 
 
 
-* to perform a resumable upload
+### to perform a resumable upload
 1. Send the initial request and retrieve the resumable session URL
 2. Upload the data and monitor upload state.
 3. (optional) If upload is disturbed, resume the upload.
@@ -204,7 +204,7 @@ fileUpload.files[0].text() //doesnt work for IE
 * the most i    
 
 
-### TypeScript
+#### TypeScript
 ```ts
 
 /// I can place the function call first  due to hoisting, if intimidated by the code just copy paste in  a lib in ur app and run the function call
@@ -364,7 +364,7 @@ function chunked(devObj) {
 
 ```
 
-## Import to Google Docs types
+### Import to Google Docs types
 * you can convert a file to a g suite doc
 * to see if you can use the drive.about.get method fields parameter is required
 __G Suite Doc__ - google sheets ,google slides, a google office document
@@ -372,7 +372,7 @@ __G Suite Doc__ - google sheets ,google slides, a google office document
 * use ocrLanguage parameter to convert image words to text
 
 
-## Define indexable text for unknown file types
+### Define indexable text for unknown file types
 * To allow content searches use contentHints.indexableText
     - API must be uploading a file of unknown mimeType
     * size is more than 128KiB.
@@ -382,8 +382,37 @@ __G Suite Doc__ - google sheets ,google slides, a google office document
 
 
 
-### Lab Upload File Data
+### Lab Upload File Data using Google Drive API
 
+## Create and populate folders
+
+* folders are only files that contain metadata used to organize google drive
+
+### Create a folder
+
+* To create a folder, use the files.create method with the application/vnd.google-apps.folder MIME type and a title.
+* make a post request to https://www.googleapis.com/drive/v3/files with that mimeType
+
+#### TypeScript
+
+```ts
+let headers = new HttpHeaders()
+headers = headers
+    .set("Authorization", `Bearer ${gapi.auth.getToken().access_token}`)
+
+http.post(
+    "https://www.googleapis.com/drive/v3/files",
+    { name: "My Folder", mimeType: "application/vnd.google-apps.folder" },
+    { headers, observe: 'response' }
+)	
+.subscribe((result)=>{
+    console.log(result)
+})					
+```
+
+### Moving files between folders
+
+* to move a file around use files.update with addParents removeParents
 
 # Issues with the DRIVE API 
 

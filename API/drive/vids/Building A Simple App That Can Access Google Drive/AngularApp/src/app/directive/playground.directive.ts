@@ -5,6 +5,7 @@ import { deltaNode, eventDispatcher, numberParse, objectCopy } from '../customEx
 import { catchError, delay } from 'rxjs/operators'
 import { environment } from '../../environments/environment'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { env } from 'process';
 
 
 @Directive({
@@ -171,7 +172,7 @@ export class PlaygroundDirective {
 						// resumable upload 
 						if (environment.playground?.upload.resumable) {
 
-							
+
 							resumable({
 								http,
 								fileUpload,
@@ -181,71 +182,156 @@ export class PlaygroundDirective {
 
 						}
 						//	
-						
+
 
 						// convert to GSuite
 						if (environment.playground?.upload.gSuite) {
 
 
 							// see if the conversion is supported
-							gapi.client.drive.about.get({fields:"importFormats"})
-							.then((result)=>{
-								console.log(result)
-							}) 
-							//
-							
-							from(fileUpload.files[0].text()) //doesnt work for IE
-							.subscribe((gdoc) => {
-								var fileName = 'docs_with_image';
-								var contentType = 'image/png'
-								var uploadMetadata = {
-									'name': fileName,
-									'mimeType': "application/vnd.google-apps.document"
-								};
-
-
-								// preparing the multipart body
-								const boundary = 'xyz'
-								const delimiter = "\r\n--" + boundary + "\r\n";
-								const close_delim = "\r\n--" + boundary + "--";
-
-								var multipartRequestBody =
-									delimiter +
-									'Content-Type: application/json; charset=UTF-8\r\n\r\n' +
-									JSON.stringify(uploadMetadata) +
-									delimiter +
-									'Content-Type: ' + contentType + '\r\n\r\n' +
-									gdoc +
-									close_delim;
-
-								gapi.client.request({
-									'path': 'https://www.googleapis.com/upload/drive/v3/files',
-									'method': 'POST',
-									'params': { 'uploadType': 'multipart' },
-									'headers': {
-										'Content-Type': 'multipart/related; boundary=' + boundary
-									},
-									'body': multipartRequestBody
-								}).execute((result) => {
+							gapi.client.drive.about.get({ fields: "importFormats" })
+								.then((result) => {
 									console.log(result)
 								})
-								//
+							//
+
+							from(fileUpload.files[0].text()) //doesnt work for IE
+								.subscribe((gdoc) => {
+									var fileName = 'docs_with_image';
+									var contentType = 'image/png'
+									var uploadMetadata = {
+										'name': fileName,
+										'mimeType': "application/vnd.google-apps.document"
+									};
 
 
-							})
+									// preparing the multipart body
+									const boundary = 'xyz'
+									const delimiter = "\r\n--" + boundary + "\r\n";
+									const close_delim = "\r\n--" + boundary + "--";
+
+									var multipartRequestBody =
+										delimiter +
+										'Content-Type: application/json; charset=UTF-8\r\n\r\n' +
+										JSON.stringify(uploadMetadata) +
+										delimiter +
+										'Content-Type: ' + contentType + '\r\n\r\n' +
+										gdoc +
+										close_delim;
+
+									gapi.client.request({
+										'path': 'https://www.googleapis.com/upload/drive/v3/files',
+										'method': 'POST',
+										'params': { 'uploadType': 'multipart' },
+										'headers': {
+											'Content-Type': 'multipart/related; boundary=' + boundary
+										},
+										'body': multipartRequestBody
+									}).execute((result) => {
+										console.log(result)
+									})
+									//
+
+
+								})
 
 
 						}
 						//		
-						
+
 						//create a file than can be indexex for search 
 						if (environment.playground?.upload.indexable) {
 
 
-					
-								
+
+
 						}
-						//									
+						//		
+
+						//create a folder
+						if (environment.playground?.folders.create) {
+
+
+							let headers = new HttpHeaders()
+							headers = headers
+								.set("Authorization", `Bearer ${gapi.auth.getToken().access_token}`)
+
+							http.post(
+								"https://www.googleapis.com/drive/v3/files",
+								{ name: "My Folder", mimeType: "application/vnd.google-apps.folder" },
+								{ headers, observe: 'response' }
+							)
+								.subscribe((result) => {
+									console.log(result)
+								})
+
+
+						}
+						//
+
+						//move files around
+						if (environment.playground?.folders.moveFiles) {
+
+
+
+							let folders = {
+								a: { id: '' },
+								b: { id: '' },
+								target: { id: '' }
+							}
+							let headers = new HttpHeaders()
+							headers = headers
+								.set("Authorization", `Bearer ${gapi.auth.getToken().access_token}`)
+
+							//get all the files in the drive including in trash
+							http.get(
+								"https://www.googleapis.com/drive/v3/files",
+								{ headers, observe: 'response' }
+							)
+							.subscribe((result: any) => {
+								result.body.files
+								.forEach((x: any, i) => {
+									if (x.name === 'multipart.json') {
+										folders.target.id = x.id
+									}
+
+									else if (x.name === 'Folder1') {
+										folders.a.id = x.id
+									}
+
+									else if (x.name === 'Folder2') {
+										folders.b.id = x.id
+									}
+								})
+
+								console.log(folders)
+
+								// move the file from a to b
+								http.patch(
+									`https://www.googleapis.com/drive/v3/files/${folders.target.id}`,
+									{ fields: 'id, parents', addParents: folders.b.id },
+									{
+										headers,
+										observe: 'response' ,
+										params:{
+											fields: 'id, parents', 
+											addParents: folders.b.id,
+											removeParents:folders.a.id
+										}
+									}
+								)
+								.subscribe((result) => {
+									console.log(result)
+								})
+								//								
+							})
+
+							
+							//
+
+
+						}
+						//						
 
 
 					})
@@ -297,7 +383,7 @@ export class PlaygroundDirective {
 function resumable(
 	devObj: {
 		http: HttpClient,
-		fileUpload: HTMLInputElement 
+		fileUpload: HTMLInputElement
 		resumableError: String // true false as boolean
 	}
 ) {
@@ -416,7 +502,7 @@ function chunked(devObj) {
 
 
 			//we get an error where we have to restart the upload
-			else if(result.status === 400){
+			else if (result.status === 400) {
 
 
 				resumable({
@@ -424,8 +510,8 @@ function chunked(devObj) {
 					fileUpload,
 					resumableError
 				})
-				
-				
+
+
 			}
 			//
 

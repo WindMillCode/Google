@@ -95,7 +95,7 @@
 								}								
 							],							
 							"optimization": false,
-							"sourceMap": false,
+							"sourceMap": true,
 							"poll": 2500,
 							"verbose": false,
 							"watch": true
@@ -216,7 +216,7 @@
 						"playground": {
 							"browserTarget": "AngularApp:drive:playground",
 							"port": 8000,
-							"liveReload": false
+							"liveReload": true
 						}						
 					}
 				},
