@@ -5,7 +5,6 @@ import { deltaNode, eventDispatcher, numberParse, objectCopy } from '../customEx
 import { catchError, delay } from 'rxjs/operators'
 import { environment } from '../../environments/environment'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { env } from 'process';
 
 
 @Directive({
@@ -28,7 +27,7 @@ export class PlaygroundDirective {
 
 		if (this.extras?.confirm === 'true') {
 
-			//accesing the drive API 
+			//accesing the drive API
 			let CLIENT_ID = environment.googleDrive.clientId
 			let API_KEY = environment.googleDrive.apiKey
 			let DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
@@ -101,9 +100,9 @@ export class PlaygroundDirective {
 									console.log(error.body)
 								})
 						}
-						//						
+						//
 
-						// simple upload 
+						// simple upload
 						if (environment.playground?.upload.simple) {
 							fileUpload.files[0].text() //doesnt work for IE
 								.then((text) => {
@@ -124,11 +123,11 @@ export class PlaygroundDirective {
 						}
 						//
 
-						// multipart upload 
+						// multipart upload
 						if (environment.playground?.upload.multipart) {
 
 
-							// console.log(img) 
+							// console.log(img)
 							fileUpload.files[0].text() //doesnt work for IE
 								.then((pdf) => {
 									var fileName = 'multipart.json';
@@ -167,9 +166,9 @@ export class PlaygroundDirective {
 
 
 						}
-						//	
+						//
 
-						// resumable upload 
+						// resumable upload
 						if (environment.playground?.upload.resumable) {
 
 
@@ -181,7 +180,7 @@ export class PlaygroundDirective {
 
 
 						}
-						//	
+						//
 
 
 						// convert to GSuite
@@ -237,16 +236,16 @@ export class PlaygroundDirective {
 
 
 						}
-						//		
+						//
 
-						//create a file than can be indexex for search 
+						//create a file than can be indexex for search
 						if (environment.playground?.upload.indexable) {
 
 
 
 
 						}
-						//		
+						//
 
 						//create a folder
 						if (environment.playground?.folders.create) {
@@ -314,7 +313,7 @@ export class PlaygroundDirective {
 										headers,
 										observe: 'response' ,
 										params:{
-											fields: 'id, parents', 
+											fields: 'id, parents',
 											addParents: folders.b.id,
 											removeParents:folders.a.id
 										}
@@ -323,15 +322,15 @@ export class PlaygroundDirective {
 								.subscribe((result) => {
 									console.log(result)
 								})
-								//								
+								//
 							})
 
-							
+
 							//
 
 
 						}
-						//						
+						//
 
 
 					})
@@ -339,7 +338,7 @@ export class PlaygroundDirective {
 						console.log(error)
 					})
 			});
-			//				
+			//
 
 		}
 
@@ -348,7 +347,6 @@ export class PlaygroundDirective {
 	ngOnInit() {
 		this.extras = this.playground
 		if (this.extras?.confirm === 'true') {
-
 			this.ryber["formCO0"].metadata.zChildrenSubject
 				.subscribe((item) => {
 					Object.values(item.directivesZChild)

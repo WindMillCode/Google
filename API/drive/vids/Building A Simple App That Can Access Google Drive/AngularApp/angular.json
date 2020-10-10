@@ -116,7 +116,24 @@
 							"poll": 2500,
 							"verbose": false,
 							"watch": true
-						}						
+						},
+						"folders": {
+							"fileReplacements": [
+								{
+									"replace": "src/app/website.ts",
+									"with": "src/app/database/website-folders-dev.ts"
+								},
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.drive.dev.ts"
+								}								
+							],							
+							"optimization": false,
+							"sourceMap": false,
+							"poll": 2500,
+							"verbose": false,
+							"watch": true
+						}												
 					}
 				},
 				"playground": {
@@ -212,7 +229,12 @@
 							"browserTarget": "AngularApp:drive:upload",
 							"port": 8000,
 							"liveReload": true
-						},						
+						},	
+						"folders": {
+							"browserTarget": "AngularApp:drive:folders",
+							"port": 8000,
+							"liveReload": true
+						},												
 						"playground": {
 							"browserTarget": "AngularApp:drive:playground",
 							"port": 8000,

@@ -47,7 +47,7 @@ export const environment: any = {
 		folders:{
 			create:false,
 			moveFiles:true
-		}	
+		}
 	},
 
 	//replace upload object here
@@ -55,9 +55,16 @@ export const environment: any = {
 		simple:false,
 		multipart:false,
 		resumable:false
+	},
+	//
+
+
+	// replace folders object here
+	folders:{
+		create:false,
+		moveFiles:true
 	}
 	//
-		
 
 };
 

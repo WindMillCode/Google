@@ -18,6 +18,7 @@ import { PrintFilesDirective } from './directive/print-files.directive';
 import { PlaygroundDirective } from './directive/playground.directive';
 import { SignoutDirective } from './directive/signout.directive';
 import { UploadDirective } from './directive/upload.directive';
+import { FoldersDirective } from './directive/folders.directive';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { UploadDirective } from './directive/upload.directive';
     PrintFilesDirective,
     PlaygroundDirective,
     SignoutDirective,
-    UploadDirective
+    UploadDirective,
+    FoldersDirective
   ],
   imports: [
     BrowserModule,

@@ -139,7 +139,7 @@ upload:{
     simple:true,
     multipart:false,
     resumable:false
-}
+},
 ```
 
 * now upload simple.ts.json and check your drive
@@ -155,7 +155,7 @@ upload:{
     simple:false,
     multipart:true,
     resumable:false
-}
+},
 ```
 open /src/app/directive/upload.directive.ts in your code editor
 
@@ -228,7 +228,7 @@ upload:{
     simple:false,
     multipart:false,
     resumable:true
-}
+},
 ```
 
 * in resumable upload paste

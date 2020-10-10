@@ -17,7 +17,7 @@ export class RyberService {
     constructor(
         // private router:Router
         public http:HttpClient
-    ) { 
+    ) {
         // console.log("ryberservice constructor fires")
 
         let rUD = ((a)=>{
@@ -30,27 +30,27 @@ export class RyberService {
             var index = 0;
             while (true)
             yield index++;
-        }()      
+        }()
 
         function zChildTemplate(devObj:{ // objects for rUD calls custom to the dev and the website
             co? :string,
             mf?:any,
             options?:any
         }):any{
-        
+
             let {co,options} = devObj
             if(options === undefined){
                 options = {}
             }
-            
-            let {printGroupType,printGroup,key,type,gap,stack,value,group,count,repeatable,newline,form,multipleGroup,refreshGroup,background,color,fonts,title,fontSize,italics,googleSheets} =devObj.mf 
-            let {left,top,height,width,split,next} = devObj.mf 
+
+            let {printGroupType,printGroup,key,type,gap,stack,value,group,count,repeatable,newline,form,multipleGroup,refreshGroup,background,color,fonts,title,fontSize,italics,googleSheets} =devObj.mf
+            let {left,top,height,width,split,next} = devObj.mf
             let component = {left,top,height,width,split,next}
 
-            
+
 
             let symbol:any = ""
-            
+
             if(type ==="new" || type === "body"){
                 let sectionDefault :any = objectCopy(this.appCO0.metadata.ryber.sectionDefault)
                 let section :any = {
@@ -59,7 +59,7 @@ export class RyberService {
                     width: width === undefined ?  sectionDefault.width:width,
                     split: split === undefined ?  sectionDefault.split : split ,
                     stack: stack === undefined ? sectionDefault.stack : stack
-                } 
+                }
                 symbol = rUD({
                     co,
                     // ryber:this,
@@ -70,33 +70,33 @@ export class RyberService {
                         top:"0px",
                         "background-color": background
                     },
-                    extras:{   
+                    extras:{
                         section,
                         type,
-                        component                   
+                        component
                     }
-                })                    
+                })
             }
 
             else if(type === "title" || type === "heading" ){
-                
+
                 let css = {
                     "z-index":4,
-                    display:"table",                      
+                    display:"table",
                     "font-size":fontSize !== undefined ? fontSize +"px": "54px" ,
                     "font-weight":italics,
                     'background-color':background,
                     color,
                     "font-family":fonts
-                } 
-                
+                }
+
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    css['font-size'] === undefined ?  (  css['font-size'] = '54px') : null 
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '54px') : null
                 })()
-                
-               
-                
+
+
+
                 symbol = rUD({
                     co,
                     bool:'h1',
@@ -107,33 +107,33 @@ export class RyberService {
                         component,
                         multipleGroup,
                         deltaIndex:1,
-                        type                     
-                    }         
-                })             
-                   
-            } 
-        
+                        type
+                    }
+                })
+
+            }
+
             else if(type === "input"){
                 let extend: any = {
                             type:'text',
                             placeholder:value,
-                            form:'myForm'                   
+                            form:'myForm'
                         }
-                        
-               form?.required === undefined ? null:((a)=>{ a.required =form?.required})(extend)  
+
+               form?.required === undefined ? null:((a)=>{ a.required =form?.required})(extend)
                 let css = {
                     "z-index":4,
-                    // display:"table",   
+                    // display:"table",
                     "font-size":"30px",
                     'background-color':background,
                     color,
-                    "font-family":fonts                    
+                    "font-family":fonts
                 }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    css['font-size'] === undefined ?  (  css['font-size'] = '30px') : null 
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '30px') : null
                 })()
-        
+
                 symbol = rUD({
                     co,
                     bool:'i',
@@ -155,34 +155,34 @@ export class RyberService {
                             googleSheets,
                             link:form?.link
                         },
-                        component,                        
+                        component,
                         multipleGroup,
-                        type              
-                    }          
-                })                     
-            } 
-        
+                        type
+                    }
+                })
+            }
+
             else if(type === "textbox"){
                 let extend: any = {
                             type:'text',
                             placeholder:value,
                             form:'myForm',
-                            
+
                         }
-                
-               form?.required === undefined ? null:((a)=>{ a.required =form?.required})(extend)  
+
+               form?.required === undefined ? null:((a)=>{ a.required =form?.required})(extend)
                 let css = {
                     "font-size": "27px",
                     "z-index":4,
                     'background-color':background,
                     color,
-                    "font-family":fonts                    
+                    "font-family":fonts
                 }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    css['font-size'] === undefined ?  (  css['font-size'] = '30px') : null 
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '30px') : null
                 })()
-        
+
                 symbol = rUD({
                     co,
                     bool:'ta',
@@ -204,33 +204,33 @@ export class RyberService {
                             googleSheets,
                             link:form?.link
                         },
-                        component,                        
+                        component,
                         multipleGroup,
-                        type                 
-                    }          
-                })                     
-            }            
-        
+                        type
+                    }
+                })
+            }
+
             else if(type === "email"){
                 let extend: any = {
                             type:'email',
                             placeholder:value,
                             form:'myForm',
-                            
+
                         }
-               form?.required === undefined ? null:((a)=>{ a.required =form?.required})(extend)  
+               form?.required === undefined ? null:((a)=>{ a.required =form?.required})(extend)
                 let css = {
                     "font-size":"32px",
                     "z-index":4,
                     'background-color':background,
                     color,
-                    "font-family":fonts  
+                    "font-family":fonts
                 }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    css['font-size'] === undefined ?  (  css['font-size'] = '30px') : null 
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '30px') : null
                 })()
-        
+
                 symbol = rUD({
                     co,
                     bool:'i',
@@ -252,37 +252,37 @@ export class RyberService {
                             googleSheets,
                             link:form?.link
                         },
-                        component,                        
+                        component,
                         multipleGroup,
-                        type            
-                    }          
-                })                     
-            }            
-        
+                        type
+                    }
+                })
+            }
+
             else if(type === "phone"){
                 let extend: any = {
                             type:'tel',
                             placeholder:value,
                             form:'myForm',
                         }
-               form?.required === undefined ? null:((a)=>{ a.required =form?.required})(extend)  
+               form?.required === undefined ? null:((a)=>{ a.required =form?.required})(extend)
                 let css = {
                     "font-size":"32px",
                     "z-index":4,
                     'background-color':background,
                     color,
-                    "font-family":fonts 
+                    "font-family":fonts
                 }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    css['font-size'] === undefined ?  (  css['font-size'] = '30px') : null 
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '30px') : null
                 })()
-        
+
                 symbol = rUD({
                     co,
                     bool:'i',
                     val:key.split("_").reverse()[0] + ' a_p_p_Input',
-                    css:(options.css === undefined ? 
+                    css:(options.css === undefined ?
                         {
                             width:'1085px',
                             "font-size":"32px",
@@ -307,32 +307,32 @@ export class RyberService {
                             googleSheets,
                             link:form?.link
                         },
-                        component,                        
+                        component,
                         multipleGroup,
-                        type                   
-                    }          
-                })                     
-            }  
-            
+                        type
+                    }
+                })
+            }
+
             else if(type === "zipcode"){
                 let extend: any = {
                             type:'text',
                             placeholder:value,
                             form:'myForm',
                         }
-               form?.required === undefined ? null:((a)=>{ a.required =form?.required})(extend)  
+               form?.required === undefined ? null:((a)=>{ a.required =form?.required})(extend)
                 let css = {
                     "font-size":"32px",
                     "z-index":4,
                     'background-color':background,
                     color,
-                    "font-family":fonts 
+                    "font-family":fonts
                 }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    css['font-size'] === undefined ?  (  css['font-size'] = '30px') : null 
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '30px') : null
                 })()
-        
+
                 symbol = rUD({
                     co,
                     bool:'i',
@@ -354,11 +354,11 @@ export class RyberService {
                             googleSheets,
                             link:form?.link
                         },
-                        component,                        
+                        component,
                         multipleGroup,
-                        type            
-                    }          
-                })                     
+                        type
+                    }
+                })
             }
 
             else if(type === "number"){
@@ -367,19 +367,19 @@ export class RyberService {
                             placeholder:value,
                             form:'myForm',
                         }
-               form?.required === undefined ? null:((a)=>{ a.required =form?.required})(extend)  
+               form?.required === undefined ? null:((a)=>{ a.required =form?.required})(extend)
                 let css = {
                     "font-size":"32px",
                     "z-index":4,
                     'background-color':background,
                     color,
-                    "font-family":fonts 
+                    "font-family":fonts
                 }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    css['font-size'] === undefined ?  (  css['font-size'] = '30px') : null 
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '30px') : null
                 })()
-        
+
                 symbol = rUD({
                     co,
                     bool:'i',
@@ -401,32 +401,32 @@ export class RyberService {
                             googleSheets,
                             link:form?.link
                         },
-                        component,                        
+                        component,
                         multipleGroup,
-                        type            
-                    }          
-                })                     
-            }            
-            
+                        type
+                    }
+                })
+            }
+
             else if(type === "drivers license"){
                 let extend: any = {
                             type:'text',
                             placeholder:value,
                             form:'myForm',
                         }
-               form?.required === undefined ? null:((a)=>{ a.required =form?.required})(extend)  
+               form?.required === undefined ? null:((a)=>{ a.required =form?.required})(extend)
                 let css = {
                     "font-size":"32px",
                     "z-index":4,
                     'background-color':background,
                     color,
-                    "font-family":fonts 
+                    "font-family":fonts
                 }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    css['font-size'] === undefined ?  (  css['font-size'] = '30px') : null 
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '30px') : null
                 })()
-        
+
                 symbol = rUD({
                     co,
                     bool:'i',
@@ -448,32 +448,32 @@ export class RyberService {
                             googleSheets,
                             link:form?.link
                         },
-                        component,                        
+                        component,
                         multipleGroup,
-                        type                 
-                    }          
-                })                     
+                        type
+                    }
+                })
             }
-            
+
             else if(type === "social security"){
                 let extend: any = {
                             type:'text',
                             placeholder:value,
                             form:'myForm',
                         }
-               form?.required === undefined ? null:((a)=>{ a.required =form?.required})(extend)  
+               form?.required === undefined ? null:((a)=>{ a.required =form?.required})(extend)
                 let css = {
                     "font-size":"32px",
                     "z-index":4,
                     'background-color':background,
                     color,
-                    "font-family":fonts 
+                    "font-family":fonts
                 }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    css['font-size'] === undefined ?  (  css['font-size'] = '30px') : null 
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '30px') : null
                 })()
-        
+
                 symbol = rUD({
                     co,
                     bool:'i',
@@ -495,32 +495,32 @@ export class RyberService {
                             googleSheets,
                             link:form?.link
                         },
-                        component,                        
+                        component,
                         multipleGroup,
-                        type                
-                    }          
-                })                     
-            }            
-        
+                        type
+                    }
+                })
+            }
+
             else if(type === "date"){
                 let extend: any = {
                             type:'text',
                             placeholder:value,
-                            form:'myForm',   
+                            form:'myForm',
                         }
-               form?.required === undefined ? null:((a)=>{ a.required =form?.required})(extend)  
+               form?.required === undefined ? null:((a)=>{ a.required =form?.required})(extend)
                 let css = {
                     "font-size":"32px",
                     "z-index":4,
                     'background-color':background,
                     color,
-                    "font-family":fonts 
+                    "font-family":fonts
                 }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    css['font-size'] === undefined ?  (  css['font-size'] = '30px') : null 
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '30px') : null
                 })()
-        
+
                 symbol = rUD({
                     co,
                     bool:'i',
@@ -539,22 +539,22 @@ export class RyberService {
                             zSymbol :"",// zChildSymbol goes here
                             co,
                             name:this[co.valueOf()].quantity[1][1].signature + " "+ zCTgen.next().value,
-                            googleSheets,  
+                            googleSheets,
                             link:form?.link
                         },
-                        component,      
-                        multipleGroup,                   
+                        component,
+                        multipleGroup,
                         appDateClick:{
                             confirm:"true"
                         },
-                        type            
-                    }          
-                })                     
-            }            
-        
+                        type
+                    }
+                })
+            }
+
             else if(type === "text"){
-        
-                  
+
+
                 let css = {
                     "font-size":fontSize !== undefined ? fontSize +"px": "30px" ,
                     "z-index":4,
@@ -563,12 +563,12 @@ export class RyberService {
                     "font-weight":italics,
                     "font-family":fonts,
                     "text-align": devObj.mf["text-align"]
-                } 
+                }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    css['font-size'] === undefined ?  (  css['font-size'] = '30px') : null 
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '30px') : null
                 })()
-        
+
                 symbol = rUD({
                     co,
                     bool:'p',
@@ -577,29 +577,29 @@ export class RyberService {
                     css,
                     extras:{
                         deltaIndex:1,
-                        component,                        
+                        component,
                         multipleGroup,
                         type,
                         appPrintFiles:{
                             printGroup,
                             type:printGroupType
-                        }   
-                    }         
-                })                        
+                        }
+                    }
+                })
             }
 
             else if(type === "loading"){
-        
-                  
+
+
                 let css = {
                     "z-index":4,
                     // 'background-color':background,
                     // color,
                     stroke:color,
                     "text-align": devObj.mf["text-align"]
-                } 
+                }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css;  
+                    css = options.css;
                 })()
 
                 let extend = {
@@ -608,8 +608,8 @@ export class RyberService {
                 }
 
                 component.height =  component?.height === undefined ? 100:   component.height
-                component.width =  component?.height === undefined ? 100:   component.height  // widht is not allowed here it will break the mat-spinner                
-        
+                component.width =  component?.height === undefined ? 100:   component.height  // widht is not allowed here it will break the mat-spinner
+
                 symbol = rUD({
                     co,
                     bool:'mat-spinner',
@@ -617,30 +617,30 @@ export class RyberService {
                     css,
                     extras:{
                         deltaIndex:1,
-                        component,                        
+                        component,
                         multipleGroup,
                         type,
-                        extend   
-                    }         
-                })                        
-            }            
-            
+                        extend
+                    }
+                })
+            }
+
             else if(type === "sub-heading"){
-        
-                
+
+
                 let css = {
                     "font-size":fontSize !== undefined ? fontSize +"px": "30px" ,
                     "z-index":4,
                     'background-color':background,
                     color,
                     "font-weight":italics,
-                    "font-family":fonts 
-                } 
+                    "font-family":fonts
+                }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    css['font-size'] === undefined ?  (  css['font-size'] = '30px') : null 
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '30px') : null
                 })()
-        
+
                 symbol = rUD({
                     co,
                     bool:'p',
@@ -649,13 +649,13 @@ export class RyberService {
                     css,
                     extras:{
                         deltaIndex:1,
-                        component,                        
+                        component,
                         multipleGroup,
-                        type                        
-                    }         
-                })                        
-            }            
-            
+                        type
+                    }
+                })
+            }
+
             else if(type === "options"){
                 if(this[co.valueOf()].metadata.toggleButton === undefined){
                     this[co.valueOf()].metadata.toggleButton = {
@@ -666,23 +666,23 @@ export class RyberService {
                     this[co.valueOf()].metadata.toggleButton.options[group.valueOf()] = {
                         selectedElement:[],
                         count,
-                        stuff:[]                        
+                        stuff:[]
                     }
                 }
 
-                
+
                 let css = {
                     "z-index":4,
-                    display:"table",  
+                    display:"table",
                     "font-size":"21px",
                     // 'background-color':background,
                     // color,
                     "font-weight":italics,
-                    "font-family":fonts                     
+                    "font-family":fonts
                 }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    css['font-size'] === undefined ?  (  css['font-size'] = '30px') : null 
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '30px') : null
                 })()
 
                 symbol = rUD({
@@ -717,14 +717,14 @@ export class RyberService {
                         component,
                         deltaIndex:1,
                         type,
-                        group                                    
-                    }         
-        
-                })                        
-            }  
-            
+                        group
+                    }
+
+                })
+            }
+
             else if(type === "button"){
-        
+
                 let css = {
                     width:'325px',
                     "font-size":"48px",
@@ -735,16 +735,16 @@ export class RyberService {
                     'background-color':background,
                     color,
                     "font-family":fonts,
-                    "font-weight":italics                     
-                }   
+                    "font-weight":italics
+                }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null 
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null
                 })()
 
 
-                
-        
+
+
                 symbol = rUD({
                     co,
                     bool:'b',
@@ -758,16 +758,16 @@ export class RyberService {
                         appPrintFiles:{
                             printGroup,
                             type:'signOut'
-                        }                           
-                    }         
-                })   
+                        }
+                    }
+                })
 
 
 
             }
-            
+
             else if(type === "add button"){
-        
+
                 let css = {
                     width:'325px',
                     "font-size":"48px",
@@ -777,18 +777,18 @@ export class RyberService {
                     "z-index":4,
                     'background-color':background,
                     color,
-                    "font-family":fonts,  
-                    "font-weight":italics,                
-                }   
+                    "font-family":fonts,
+                    "font-weight":italics,
+                }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null 
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null
                 })()
 
 
                 component.left =  component?.left === undefined ? 500:   component.left
-                
-        
+
+
                 symbol = rUD({
                     co,
                     bool:'b',
@@ -799,12 +799,12 @@ export class RyberService {
                         component,
                         multipleAdd:multipleGroup,
                         type
-                    }         
-                })   
+                    }
+                })
 
                 if(this[co.valueOf()].metadata.multipleGroup  === undefined && multipleGroup !== undefined){
                     this[co.valueOf()].metadata.multipleGroup ={}
-                }                
+                }
 
                 if( multipleGroup !== undefined){
                     if(this[co.valueOf()].metadata.multipleGroup[multipleGroup.valueOf()]  === undefined){
@@ -813,10 +813,10 @@ export class RyberService {
                     this[co.valueOf()].metadata.multipleGroup[multipleGroup.valueOf()].add = symbol
                 }
 
-            } 
+            }
 
             else if(type === "refresh button"){
-        
+
                 let css = {
                     width:'325px',
                     "font-size":"48px",
@@ -826,17 +826,17 @@ export class RyberService {
                     "z-index":4,
                     'background-color':background,
                     color,
-                    "font-family":fonts,  
-                    "font-weight":italics                   
-                }   
+                    "font-family":fonts,
+                    "font-weight":italics
+                }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null 
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null
                 })()
 
 
                 component.left =  component?.left === undefined ? 500:   component.left
-        
+
                 symbol = rUD({
                     co,
                     bool:'b',
@@ -851,15 +851,15 @@ export class RyberService {
                             clear:refreshGroup
                         },
                         type
-                    }         
-                })   
+                    }
+                })
 
 
 
-            } 
+            }
 
             else if(type === "close button"){
-        
+
                 let css = {
                     width:'325px',
                     "font-size":"48px",
@@ -869,17 +869,17 @@ export class RyberService {
                     "z-index":4,
                     'background-color':background,
                     color,
-                    "font-family":fonts,  
-                    "font-weight":italics                   
-                }   
+                    "font-family":fonts,
+                    "font-weight":italics
+                }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null 
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null
                 })()
 
 
                 component.left =  component?.left === undefined ? 500:   component.left
-        
+
                 symbol = rUD({
                     co,
                     bool:'b',
@@ -891,15 +891,15 @@ export class RyberService {
                         deltaIndex:1,
                         multipleGroup,
                         type
-                    }         
-                })   
+                    }
+                })
 
 
 
-            }                         
-            
+            }
+
             else if(type === "remove button"){
-        
+
                 let css = {
                     width:'325px',
                     "font-size":"48px",
@@ -910,15 +910,15 @@ export class RyberService {
                     'background-color':background,
                     color,
                     "font-family":fonts,
-                    "font-weight":italics,                    
-                }   
+                    "font-weight":italics,
+                }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null 
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null
                 })()
 
                 component.left =  component?.left === undefined ? 900:   component.left
-        
+
                 symbol = rUD({
                     co,
                     bool:'b',
@@ -929,25 +929,25 @@ export class RyberService {
                         component,
                         multipleRemove:multipleGroup,
                         type
-                    }         
-                })      
-                
+                    }
+                })
+
                 if(this[co.valueOf()].metadata.multipleGroup  === undefined && multipleGroup !== undefined){
                     this[co.valueOf()].metadata.multipleGroup ={}
-                }                
+                }
 
                 if( multipleGroup !== undefined){
                     if(this[co.valueOf()].metadata.multipleGroup[multipleGroup.valueOf()]  === undefined){
                         this[co.valueOf()].metadata.multipleGroup[multipleGroup.valueOf()] = {}
                     }
-                    this[co.valueOf()].metadata.multipleGroup[multipleGroup.valueOf()].remove = symbol   
+                    this[co.valueOf()].metadata.multipleGroup[multipleGroup.valueOf()].remove = symbol
                 }
 
-              
-            }  
-            
+
+            }
+
             else if(type === "submit button"){
-        
+
                 let css = {
                     width:'325px',
                     "font-size":"48px",
@@ -958,13 +958,13 @@ export class RyberService {
                     'background-color':background,
                     color,
                     "font-family":fonts,
-                    "font-weight":italics                       
-                }   
+                    "font-weight":italics
+                }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null 
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null
                 })()
-        
+
                 symbol = rUD({
                     co,
                     bool:'b',
@@ -978,14 +978,14 @@ export class RyberService {
                             co
                         },
                         component,
-                        type                               
-                    }         
-                })                     
-            }             
-            
+                        type
+                    }
+                })
+            }
+
             else if(type === "file button"){
 
-                          
+
                 let css = {
                     width:'325px',
                     "font-size":"48px",
@@ -994,16 +994,16 @@ export class RyberService {
                     // left:'400px',
                     "z-index":4,
                     'background-color':background,
-                    color,                    
-                    "font-family":fonts,                    
+                    color,
+                    "font-family":fonts,
                     "font-weight":italics,
-                }   
+                }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null 
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null
                 })()
                 let name = this[co.valueOf()].quantity[1][1].signature + " "+ zCTgen.next().value
-        
+
                 symbol = rUD({
                     co,
                     bool:'b',
@@ -1024,18 +1024,18 @@ export class RyberService {
                             required:form?.required !== undefined ? "file button" :"false",
                             link:form?.link,
                             type:"file button"
-                        },                        
+                        },
                         deltaIndex:1,
-                        component,                        
+                        component,
                         multipleGroup,
-                        type                          
-                    }         
-                })                     
+                        type
+                    }
+                })
             }
-            
+
             else if(type === "printfiles button"){
 
-                          
+
                 let css = {
                     width:'325px',
                     "font-size":"48px",
@@ -1044,16 +1044,16 @@ export class RyberService {
                     // left:'400px',
                     "z-index":4,
                     'background-color':background,
-                    color,                    
-                    "font-family":fonts,                    
+                    color,
+                    "font-family":fonts,
                     "font-weight":italics,
-                }   
+                }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null 
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null
                 })()
                 let name = this[co.valueOf()].quantity[1][1].signature + " "+ zCTgen.next().value
-        
+
                 symbol = rUD({
                     co,
                     bool:'b',
@@ -1076,18 +1076,18 @@ export class RyberService {
                             required:form?.required !== undefined ? "file button" :"false",
                             link:form?.link,
                             type:"file button"
-                        },                        
+                        },
                         deltaIndex:1,
-                        component,                        
+                        component,
                         multipleGroup:printGroup,
-                        type                          
-                    }         
-                })                     
+                        type
+                    }
+                })
             }
-            
+
             else if(type === "playground"){
 
-                          
+
                 let css = {
                     width:'325px',
                     "font-size":"48px",
@@ -1096,16 +1096,16 @@ export class RyberService {
                     // left:'400px',
                     "z-index":4,
                     'background-color':background,
-                    color,                    
-                    "font-family":fonts,                    
+                    color,
+                    "font-family":fonts,
                     "font-weight":italics,
-                }   
+                }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null 
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null
                 })()
                 let name = this[co.valueOf()].quantity[1][1].signature + " "+ zCTgen.next().value
-        
+
                 symbol = rUD({
                     co,
                     bool:'b',
@@ -1125,18 +1125,18 @@ export class RyberService {
                             required:form?.required !== undefined ? "file button" :"false",
                             link:form?.link,
                             type:"file button"
-                        },                        
+                        },
                         deltaIndex:1,
-                        component,                        
+                        component,
                         multipleGroup:printGroup,
-                        type                          
-                    }         
-                })                     
-            } 
+                        type
+                    }
+                })
+            }
 
             else if(type === "upload button"){
 
-                          
+
                 let css = {
                     width:'325px',
                     "font-size":"48px",
@@ -1145,16 +1145,16 @@ export class RyberService {
                     // left:'400px',
                     "z-index":4,
                     'background-color':background,
-                    color,                    
-                    "font-family":fonts,                    
+                    color,
+                    "font-family":fonts,
                     "font-weight":italics,
-                }   
+                }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null 
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null
                 })()
                 let name = this[co.valueOf()].quantity[1][1].signature + " "+ zCTgen.next().value
-        
+
                 symbol = rUD({
                     co,
                     bool:'b',
@@ -1174,18 +1174,18 @@ export class RyberService {
                             required:form?.required !== undefined ? "file button" :"false",
                             link:form?.link,
                             type:"file button"
-                        },                        
+                        },
                         deltaIndex:1,
-                        component,                        
+                        component,
                         multipleGroup:printGroup,
-                        type                          
-                    }         
-                })                     
-            }             
-            
-            else if(type === "sign out button"){
+                        type
+                    }
+                })
+            }
 
-                          
+            else if(type === "folders button"){
+
+
                 let css = {
                     width:'325px',
                     "font-size":"48px",
@@ -1194,16 +1194,65 @@ export class RyberService {
                     // left:'400px',
                     "z-index":4,
                     'background-color':background,
-                    color,                    
-                    "font-family":fonts,                    
+                    color,
+                    "font-family":fonts,
                     "font-weight":italics,
-                }   
+                }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null 
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null
                 })()
                 let name = this[co.valueOf()].quantity[1][1].signature + " "+ zCTgen.next().value
-        
+
+                symbol = rUD({
+                    co,
+                    bool:'b',
+                    text:value,
+                    val:key.split("_").reverse()[0] + " a_p_p_Button",
+                    css,
+                    extras:{
+                        appFolders:{
+                            confirm:'true',
+                        },
+                        appInputHandle:{
+                            confirm:'true',
+                            zSymbol :"",// zChildSymbol goes here
+                            co,
+                            name,
+                            googleSheets,
+                            required:form?.required !== undefined ? "file button" :"false",
+                            link:form?.link,
+                            type:"file button"
+                        },
+                        deltaIndex:1,
+                        component,
+                        multipleGroup:printGroup,
+                        type
+                    }
+                })
+            }
+
+            else if(type === "sign out button"){
+
+
+                let css = {
+                    width:'325px',
+                    "font-size":"48px",
+                    top:"0px",
+                    // height:"75px",
+                    // left:'400px',
+                    "z-index":4,
+                    'background-color':background,
+                    color,
+                    "font-family":fonts,
+                    "font-weight":italics,
+                }
+                options.css === undefined ? undefined :(()=>{
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null
+                })()
+                let name = this[co.valueOf()].quantity[1][1].signature + " "+ zCTgen.next().value
+
                 symbol = rUD({
                     co,
                     bool:'b',
@@ -1223,18 +1272,18 @@ export class RyberService {
                             required:form?.required !== undefined ? "file button" :"false",
                             link:form?.link,
                             type:"file button"
-                        },                        
+                        },
                         deltaIndex:1,
-                        component,                        
+                        component,
                         multipleGroup:printGroup,
-                        type                          
-                    }         
-                })                     
-            }             
-        
+                        type
+                    }
+                })
+            }
+
             else if(type === "signature"){
-        
-                 
+
+
                 let css = {
                     width:'1085px',
                     top:"0px",
@@ -1242,15 +1291,15 @@ export class RyberService {
                     left:'90px',
                     border:"2px solid black",
                     "background-color":"transparent"
-                } 
+                }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    css['font-size'] === undefined ?  (  css['font-size'] = '30px') : null 
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '30px') : null
                 })()
 
-            
+
                 component.split = component.split === undefined ? this.appCO0.metadata.ryber.sectionDefault.split :  component.split
-        
+
                 symbol = rUD({
                     co,
                     bool:'c',
@@ -1265,7 +1314,7 @@ export class RyberService {
                             width:numberParse(css.width),
                             height:numberParse(css.height),
                         },
-                        component,                        
+                        component,
                         multipleGroup,
                         refresh:{
                             group:refreshGroup
@@ -1277,17 +1326,17 @@ export class RyberService {
                             name:this[co.valueOf()].quantity[1][1].signature + " "+ zCTgen.next().value,
                             googleSheets,
                             link:form?.link
-                        },                                                   
-                        
-                    }         
-                })     
-                
-               
+                        },
+
+                    }
+                })
+
+
             }
-        
+
             else if(type === "display"){
-        
-                
+
+
                 let css = {
                     top:'0px',
                     left:'90px',
@@ -1296,13 +1345,13 @@ export class RyberService {
                     "background-color":background === undefined ? "rgb(211,211,211)" : background,
                     color,
                     "border-radius":Modernizr.borderradius ? "20px 20px 20px 20px" : null
-                } 
+                }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
+                    css = options.css;
                 })()
 
                 component.height =  component?.height === undefined ? 1200:   component.height
-        
+
                 symbol = rUD({
                     co,
                     bool:'div',
@@ -1313,13 +1362,13 @@ export class RyberService {
                         component,
                         multipleGroup,
                         type
-                    }         
-                })                        
+                    }
+                })
             }
-            
+
             else if(type === "bullet point"){
-        
-                          
+
+
                 let css = {
                     "font-size":"24px",
                     "z-index":4,
@@ -1327,12 +1376,12 @@ export class RyberService {
                     color,
                     "font-family":fonts,
                     "font-weight":italics,
-                }   
+                }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    
+                    css = options.css;
+
                 })()
-        
+
                 symbol = rUD({
                     co,
                     bool:'p',
@@ -1342,26 +1391,26 @@ export class RyberService {
                         (
                             newline
                             .reduce((acc,x,i)=>{
-                                acc += "<br><br>" + x 
+                                acc += "<br><br>" + x
                                 return acc
                             })
                         )
                     ),
                     extras:{
                         deltaIndex:1,
-                        component,                        
+                        component,
                         multipleGroup,
-                        type                             
-                    }         
-                })                        
-            }   
-            
+                        type
+                    }
+                })
+            }
+
             else if(type === "dropdown"){
-        
+
 
                 let extend: any = {
                 }
-                form?.required === undefined ? null:((a)=>{ a.required =form?.required})(extend)                           
+                form?.required === undefined ? null:((a)=>{ a.required =form?.required})(extend)
                 let css = {
                     "font-size":"24px",
                     "z-index":5,
@@ -1370,13 +1419,13 @@ export class RyberService {
                     'background-color':background,
                     color,
                     "font-family":fonts,
-                    "font-weight":italics,                     
-                }   
+                    "font-weight":italics,
+                }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    
+                    css = options.css;
+
                 })()
-        
+
                 symbol = rUD({
                     co,
                     bool:'a',
@@ -1385,16 +1434,16 @@ export class RyberService {
                     text:value,
                     extras:{
                         deltaIndex:1,
-                        extend,       
+                        extend,
                         appDropDown:{
                             confirm:'true',
                             zSymbol :"",// zChildSymbol goes here
                             co,
                             values:newline,
                             truSelectVal:value
-                        },   
+                        },
                         component,
-                        multipleGroup, 
+                        multipleGroup,
                         type,
                         appInputHandle:{
                             googleSheets,
@@ -1405,28 +1454,28 @@ export class RyberService {
                             name:this[co.valueOf()].quantity[1][1].signature + " "+ zCTgen.next().value,
                             link:form?.link,
                             required:form?.required !== undefined ? "dropdown" :"false",
-                        }                                                                         
-                    },                    
+                        }
+                    },
 
-                })   
-                
+                })
 
-            } 
-                        
+
+            }
+
             else if(type === "count" ){
-                
+
                 let css = {
                     "z-index":4,
-                    display:"table",                      
+                    display:"table",
                     "font-size":"54px",
-                } 
-                
+                }
+
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    css['font-size'] === undefined ?  (  css['font-size'] = '54px') : null 
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '54px') : null
                 })()
-                
-                
+
+
                 symbol = rUD({
                     co,
                     bool:'p',
@@ -1438,15 +1487,15 @@ export class RyberService {
                         multipleGroup,
                         deltaIndex:1,
                         delta:{type:"increment"},
-                        type                     
-                    }         
-                })             
-                   
-            }              
-            
+                        type
+                    }
+                })
+
+            }
+
             else{
-        
-                  
+
+
                 let css = {
                     "font-size":"30px",
                     "z-index":4,
@@ -1455,12 +1504,12 @@ export class RyberService {
                     "font-weight":italics,
                     "font-family":fonts,
                     "text-align": devObj.mf["text-align"]
-                } 
+                }
                 options.css === undefined ? undefined :(()=>{
-                    css = options.css; 
-                    css['font-size'] === undefined ?  (  css['font-size'] = '30px') : null 
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '30px') : null
                 })()
-        
+
                 symbol = rUD({
                     co,
                     bool:'p',
@@ -1469,13 +1518,13 @@ export class RyberService {
                     css,
                     extras:{
                         deltaIndex:1,
-                        component,                        
+                        component,
                         multipleGroup,
-                        type:"text"   
-                    }         
-                })                        
-            }           
-            
+                        type:"text"
+                    }
+                })
+            }
+
             return symbol
         }
 
@@ -1483,7 +1532,7 @@ export class RyberService {
             return (zConsist)=>{
                 return zChildTemplate.call(a,zConsist)
             }
-        })(this)          
+        })(this)
 
         // cms setup
         let regex = {
@@ -1491,18 +1540,18 @@ export class RyberService {
             dl:' +^[0-9]{7,8}$ +',
             ssn:'[0-9]{3}[-]?[0-9]{2}[-]?[0-9]{4}',
             zip:'^(\d\w){5}(?:[-\s](\d|\w){4})?$',
-        }        
+        }
         let cmsData
         let sucessCMS
         try{
             // cmsData = cms()
             // will be using cms later cosmicjs issues
-            sucessCMS = cmsData.objects === undefined ? false : true // change if bad check 
+            sucessCMS = cmsData.objects === undefined ? false : true // change if bad check
         }
         catch(e){
             sucessCMS = false
         }
-        
+
         let convertCMS:any = {}
         let myCMS:any = undefined
         if(sucessCMS){
@@ -1514,23 +1563,23 @@ export class RyberService {
 
                     x.metafields
                     .forEach((y,j)=>{
-                        
+
                         y.children
                         .forEach((z:any,k)=>{
-    
+
                             if(z.title === "subsheet titles"){
-                                this.appCO0.metadata["google-sheets"] = objectCopy(z.options)   
+                                this.appCO0.metadata["google-sheets"] = objectCopy(z.options)
                             }
 
-                            else if(z.title === "office fields"){  
+                            else if(z.title === "office fields"){
                                 z.children
                                 .forEach((w:any,h)=>{
                                     if(w.title === "applicant_id"){
-                                        this.appCO0.metadata["applicant_id"] = objectCopy(w.options) 
-                                        
+                                        this.appCO0.metadata["applicant_id"] = objectCopy(w.options)
+
                                     }
                                 })
-                            }                            
+                            }
 
                         })
 
@@ -1538,10 +1587,10 @@ export class RyberService {
 
                 }
 
-            })  
+            })
 
             if(this.appCO0.metadata["google-sheets"] !== undefined){
-                this.appCO0.metadata["google-sheets-mapping"] = 
+                this.appCO0.metadata["google-sheets-mapping"] =
                 Object.fromEntries(
                     this.appCO0.metadata["google-sheets"]
                     .map((x:any,i)=>{
@@ -1551,14 +1600,14 @@ export class RyberService {
             }
             this.appCO0.metadata["applicant_id_mapping"] = this.appCO0.metadata["applicant_id"]
             ?.map((x:any,i)=>{
-                let conversionKey = this.appCO0.metadata["applicant_id"][i].key 
+                let conversionKey = this.appCO0.metadata["applicant_id"][i].key
                 return {
                     key:this.appCO0.metadata["google-sheets-mapping"][conversionKey.valueOf()] === undefined ? x.key :this.appCO0.metadata["google-sheets-mapping"][conversionKey.valueOf()] ,
                     value:x.value
                 }
-            })  
-            //     
-            
+            })
+            //
+
             //frontend from the cms
             convertCMS = cmsData
             .objects
@@ -1566,7 +1615,7 @@ export class RyberService {
                 return x.type_slug !== "google-sheets"
             })
             .map((x,i)=>{
-                let contentMetafields = 
+                let contentMetafields =
                 x.metafields
                 .map((x:any,i)=>{
                     let myContent =
@@ -1575,10 +1624,10 @@ export class RyberService {
                         .filter((y:any,j)=>{
                             return y.title === "content"
                         })[0]
-                    ) 
+                    )
                     myContent.key = x.key
                     return myContent
-                })                 
+                })
                 return {
                     title:x.title,
                     type_slug:x.type_slug,
@@ -1587,12 +1636,12 @@ export class RyberService {
 
                         let newline = []
                         let googleSheets = {}
-                        
+
                         let options =
                         y.options
                         .map((z,k)=>{
 
-                        
+
                             if(z.key === 'newline'){
                                 newline.push(z.value)
                                 return null
@@ -1610,7 +1659,7 @@ export class RyberService {
 
                         x.metafields[j].children
                         .filter((z:any,k)=>{
-                                return z.title === "google subsheets" 
+                                return z.title === "google subsheets"
                         })
                         .forEach((z:any,k)=>{
                             z.children
@@ -1624,48 +1673,48 @@ export class RyberService {
                                 // console.log(googleSheetOptions)
                                 googleSheets[this.appCO0.metadata["google-sheets-mapping"][w.key].valueOf()] = googleSheetOptions
                             })
-                        }) 
-                        
+                        })
 
-                        
+
+
                         options = Object.fromEntries(options)
-                        options.googleSheets = objectCopy(googleSheets)                        
+                        options.googleSheets = objectCopy(googleSheets)
                         options["background"] !== undefined ? options["background"] = options["background"]?.split(" ").join("") : null
                         options["color"] !== undefined ? options["color"] = options["color"]?.split(" ").join("") : null
                         let result =  {
                             key  : y.key,
                             ...options,
                         }
-                        newline.length !== 0 ? result.newline = newline : null 
+                        newline.length !== 0 ? result.newline = newline : null
                         Object.keys(googleSheets).length !== 0 ? result.googleSheets = googleSheets : null
                         return result
-                    })                  
-                }   
-            })   
+                    })
+                }
+            })
             .filter((x,i)=>{
                 if(x.type_slug === "google-sheets"){
                     return false
                 }
                 return true
-            })             
+            })
             //
-            
+
             // TODO when the app is online  and you change the cms data
             //
-                      
-        
+
+
         }
         else{
-            
+
             //use backup cache to setup the website
             convertCMS = objectCopy(website.convertCMS)
             delete  website.convertCMS
-            Object.assign(this.appCO0.metadata,website)  
+            Object.assign(this.appCO0.metadata,website)
             //
-            
+
         }
-        
-        // content setup                
+
+        // content setup
         let track = {}
         myCMS= Object
         .fromEntries(
@@ -1708,16 +1757,16 @@ export class RyberService {
 
 
                 let coOrderArray = []
-                this.appCO0.metadata.ryber.CO$.push( 
+                this.appCO0.metadata.ryber.CO$.push(
 
                     x$
                     .subscribe((item)=>{
                         let coArray:any = this[mySlug + 'CO'.valueOf()]
-                        
+
                         x.metafields
                         .forEach((y,j)=>{
-                            
-                            
+
+
                             // they forgot to create a new component fail gracefully and given them a board
                             if(j=== 0){
                                 if(y.type !== "body"){
@@ -1725,16 +1774,16 @@ export class RyberService {
                                         zCT ({
                                             co:coArray[coArray.length-1],
                                             mf: {
-                                                key: "f_o_r_m_new", 
+                                                key: "f_o_r_m_new",
                                                 type: "body",
                                                 background: ["lightgrey","white"][i % 2],
                                                 title:x.title
                                             }
-                                            
+
                                         })
-                                    )                                             
+                                    )
                                 }
-                                // debugger                                        
+                                // debugger
                             }
                             //
 
@@ -1743,25 +1792,25 @@ export class RyberService {
                                     co:coArray[coArray.length-1],
                                     mf: j === 0 ? {...y,title:x.title} :y
                                 })
-                            )                            
+                            )
                         })
                         this[co.valueOf()].metadata.order  = coOrderArray.splice(1)
                         coOrderArray = []
                     })
                 )
-                
+
                 return [co,x]
             })
         )
-        //          
+        //
 
         // console.log(myCMS)
         // console.log(this.appCO0.metadata["google-sheets"].metafields[0].options )
-        // console.log(myCMS['formCO0'].title)        
-        // console.log(JSON.stringify(convertCMS,null,4)) 
-        // console.log(cmsData)           
+        // console.log(myCMS['formCO0'].title)
+        // console.log(JSON.stringify(convertCMS,null,4))
+        // console.log(cmsData)
         // console.log(this)
-        
+
 
 
     };
@@ -1777,10 +1826,10 @@ export class RyberService {
 
     /* app*/
     appCurrentNav:string = "/home"
-    appReloaded:string = "true"  
+    appReloaded:string = "true"
     appES =  {
         router:{
-        },        
+        },
         resize:{
         },
         click:{
@@ -1817,7 +1866,7 @@ export class RyberService {
         catch (e){
         }
     }
-    //    
+    //
     appEvents: Function = (devObj:{
         typesES:string,
         event:string, //property of ES
@@ -1826,12 +1875,12 @@ export class RyberService {
         let item = this[devObj.typesES.valueOf()][devObj.event.valueOf()].generator.next().value
         this[devObj.typesES.valueOf()]
         [devObj.event.valueOf()]
-        [item] = 
+        [item] =
         devObj.of
         return item
     }
-    appTestKeyword = "root"   
-    appTV = "" 
+    appTestKeyword = "root"
+    appTV = ""
     // appCO  extra metadata object
     appCO0:Partial<componentObject> = {
         metadata:{
@@ -1848,7 +1897,7 @@ export class RyberService {
                     width:1175,
                     split:9,
                     stack:20
-                }  
+                }
             },
             inputHandle:{
                 mappings:[
@@ -1863,7 +1912,7 @@ export class RyberService {
                     {
                         type:"file button",
                         cssClass:"a_p_p_FileButton",
-                    }                                        
+                    }
                 ]
             },
             clickDone:new ReplaySubject<Array<any>>(1),
@@ -1881,15 +1930,15 @@ export class RyberService {
     loading = 'false'
     network = 'connect'
     //
-     
+
     /* */
-    
 
-      
-    
-    
 
-    
-    
+
+
+
+
+
+
 }
 
