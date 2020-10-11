@@ -19,6 +19,7 @@ import { PlaygroundDirective } from './directive/playground.directive';
 import { SignoutDirective } from './directive/signout.directive';
 import { UploadDirective } from './directive/upload.directive';
 import { FoldersDirective } from './directive/folders.directive';
+import { DownloadDirective } from './directive/download.directive';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { FoldersDirective } from './directive/folders.directive';
     PlaygroundDirective,
     SignoutDirective,
     UploadDirective,
-    FoldersDirective
+    FoldersDirective,
+    DownloadDirective
   ],
   imports: [
     BrowserModule,

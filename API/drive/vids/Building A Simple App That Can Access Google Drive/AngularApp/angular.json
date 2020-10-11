@@ -92,14 +92,14 @@
 								{
 									"replace": "src/environments/environment.ts",
 									"with": "src/environments/environment.drive.dev.ts"
-								}								
-							],							
+								}
+							],
 							"optimization": false,
 							"sourceMap": true,
 							"poll": 2500,
 							"verbose": false,
 							"watch": true
-						},						
+						},
 						"upload": {
 							"fileReplacements": [
 								{
@@ -109,8 +109,8 @@
 								{
 									"replace": "src/environments/environment.ts",
 									"with": "src/environments/environment.drive.dev.ts"
-								}								
-							],							
+								}
+							],
 							"optimization": false,
 							"sourceMap": false,
 							"poll": 2500,
@@ -126,14 +126,31 @@
 								{
 									"replace": "src/environments/environment.ts",
 									"with": "src/environments/environment.drive.dev.ts"
-								}								
-							],							
+								}
+							],
 							"optimization": false,
 							"sourceMap": false,
 							"poll": 2500,
 							"verbose": false,
 							"watch": true
-						}												
+						},
+						"download": {
+							"fileReplacements": [
+								{
+									"replace": "src/app/website.ts",
+									"with": "src/app/database/website-download-dev.ts"
+								},
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.drive.dev.ts"
+								}
+							],
+							"optimization": false,
+							"sourceMap": false,
+							"poll": 2500,
+							"verbose": false,
+							"watch": true
+						}
 					}
 				},
 				"playground": {
@@ -210,7 +227,7 @@
 							"watch": true
 						}
 					}
-				},			
+				},
 				"serve": {
 					"builder": "@angular-devkit/build-angular:dev-server",
 					"options": {
@@ -229,17 +246,22 @@
 							"browserTarget": "AngularApp:drive:upload",
 							"port": 8000,
 							"liveReload": true
-						},	
+						},
 						"folders": {
 							"browserTarget": "AngularApp:drive:folders",
 							"port": 8000,
 							"liveReload": true
-						},												
+						},
+						"download": {
+							"browserTarget": "AngularApp:drive:download",
+							"port": 8000,
+							"liveReload": true
+						},
 						"playground": {
 							"browserTarget": "AngularApp:drive:playground",
 							"port": 8000,
 							"liveReload": true
-						}						
+						}
 					}
 				},
 				"extract-i18n": {

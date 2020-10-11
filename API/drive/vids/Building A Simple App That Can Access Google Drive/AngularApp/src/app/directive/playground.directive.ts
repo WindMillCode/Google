@@ -272,7 +272,6 @@ export class PlaygroundDirective {
 						if (environment.playground?.folders.moveFiles) {
 
 
-
 							let folders = {
 								a: { id: '' },
 								b: { id: '' },
@@ -331,6 +330,180 @@ export class PlaygroundDirective {
 
 						}
 						//
+
+						// download a file from Google drive
+						if(environment.playground?.download.drive){
+
+
+							let headers = new HttpHeaders()
+							headers = headers
+								.set("Authorization", `Bearer ${gapi.auth.getToken().access_token}`)
+
+							//get all the files in the drive including in trash
+							http.get(
+								"https://www.googleapis.com/drive/v3/files",
+								{ headers, observe: 'response' }
+							)
+							.subscribe((result: any) => {
+
+								let fileId = result.body.files[0].id
+								http.get(
+									"https://www.googleapis.com/drive/v3/files/" + fileId,
+									{
+										headers,
+										observe:'response',
+										responseType:'text',
+										params:{
+											// fileId,
+											alt:'media'
+										}
+									}
+								)
+								.subscribe((result:any)=>{
+									console.log(result.body) // yr file content
+								})
+
+							})
+
+						}
+						//
+
+						// download a gSuite doc
+						if(environment.playground?.download.gSuite){
+
+
+							let headers = new HttpHeaders()
+							headers = headers
+								.set("Authorization", `Bearer ${gapi.auth.getToken().access_token}`)
+
+							//get all the files in the drive including in trash
+							http.get(
+								"https://www.googleapis.com/drive/v3/files",
+								{ headers, observe: 'response' }
+							)
+							.subscribe((result: any) => {
+
+								let fileId = result.body.files[0].id
+								http.get(
+									"https://www.googleapis.com/drive/v3/files/" + fileId,
+									{
+										headers,
+										observe:'response',
+										responseType:'text',
+										params:{
+											// fileId,
+											alt:'media'
+										}
+									}
+								)
+								.subscribe((result:any)=>{
+									console.log(result.body) // yr file content
+								})
+
+							})
+
+						}
+						//
+
+
+
+                        //restrict Download
+                        if(environment.playground?.download.restrictDownload){
+
+							let headers = new HttpHeaders()
+							headers = headers
+                                .set("Authorization", `Bearer ${gapi.auth.getToken().access_token}`)
+
+
+								var fileName = 'cantDownloand.haha';
+								var contentType , uploadContentType = 'application/json'
+								var metadata = {
+									'name': fileName,
+                                    'mimeType': contentType,
+                                    'viewersCanCopyContent':false
+								};
+
+
+                            // preparing the multipart body
+                            const boundary = 'xyz'
+                            const delimiter = "\r\n--" + boundary + "\r\n";
+                            const close_delim = "\r\n--" + boundary + "--";
+
+                            var multipartRequestBody =
+                                delimiter +
+                                'Content-Type: application/json; charset=UTF-8\r\n\r\n' +
+                                JSON.stringify(metadata) +
+                                delimiter +
+                                'Content-Type: ' + uploadContentType + '\r\n\r\n' +
+                                "cant download me haha" +
+                                close_delim;
+
+                            gapi.client.request({
+                                'path': 'https://www.googleapis.com/upload/drive/v3/files',
+                                'method': 'POST',
+                                'params': { 'uploadType': 'multipart' },
+                                'headers': {
+                                    'Content-Type': 'multipart/related; boundary=' + boundary
+                                },
+                                'body': multipartRequestBody
+                            }).execute((createdResult) => {
+                                console.log(createdResult)
+
+
+
+                            //get all the files in the drive including in trash
+							http.get(
+								"https://www.googleapis.com/drive/v3/files",
+								{ headers, observe: 'response' }
+							)
+							.subscribe((result: any) => {
+
+
+                                // download the file
+                                let fileId
+                                result.body.files
+                                .forEach((x:any,i)=>{
+                                    if(x.name === 'cantDownloand.haha' && x.id === createdResult.id ){
+                                        fileId = x.id
+                                    }
+                                    else if(x.name === 'cantDownloand.haha'){
+                                        http.delete(
+                                            "https://www.googleapis.com/drive/v3/files/"+x.id,
+                                            {
+                                                headers,
+                                                observe:'response'
+                                            }
+                                        )
+                                        .subscribe((result:any)=>{
+                                            console.log(result.status)
+                                        })
+                                    }
+                                })
+								http.get(
+									"https://www.googleapis.com/drive/v3/files/" + fileId,
+									{
+										headers,
+										observe:'response',
+										responseType:'text',
+										params:{
+											// fileId,
+											alt:'media'
+										}
+									}
+								)
+								.subscribe((result:any)=>{
+									console.log(result.body) // yr file content
+                                })
+                                // //
+
+                            })
+
+                            //
+                            })
+                            //
+                            return
+                        }
+                        //
 
 
 					})

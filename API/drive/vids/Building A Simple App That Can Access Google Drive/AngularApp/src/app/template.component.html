@@ -2,262 +2,262 @@
 
 
     <ng-container *ngFor = 'let aa of a.quantity[0];let bb = index;'  >
-        <div 
-        #myVal 
-        *ngIf= "a.bool[0][bb] ==='div' else boardBlock0" 
+        <div
+        #myVal
+        *ngIf= "a.bool[0][bb] ==='div' else boardBlock0"
         class = {{a.val[0][bb]}}
         [ngStyle] = 'a.ngCss[0][bb]' >
         </div>
-        <ng-template #boardBlock0  >    
-            <img 
-            #myVal 
-            *ngIf= "a.bool[0][bb] ==='img' else boardBlock1" 
-            class = {{a.val[2][bb]}} 
-            [ngStyle] = 'a.ngCss[2][bb]' 
+        <ng-template #boardBlock0  >
+            <img
+            #myVal
+            *ngIf= "a.bool[0][bb] ==='img' else boardBlock1"
+            class = {{a.val[2][bb]}}
+            [ngStyle] = 'a.ngCss[2][bb]'
             />
-        </ng-template>  
-        <ng-template #boardBlock1  >    
-            <video 
-            #myVal 
-            *ngIf= "a.bool[0][bb] ==='video' " 
-            class = {{a.val[2][bb]}} 
+        </ng-template>
+        <ng-template #boardBlock1  >
+            <video
+            #myVal
+            *ngIf= "a.bool[0][bb] ==='video' "
+            class = {{a.val[2][bb]}}
             [ngStyle] = 'a.ngCss[2][bb]'  >
             </video>
-        </ng-template>                  
+        </ng-template>
     </ng-container>
-    
+
     <ng-container *ngFor = 'let aa of a.quantity[1];let bb = index;' >
-        <h1 
-        #myVal 
-        *ngIf= "a.bool[1][bb] ==='h1' else elseBlock2" 
-        class = {{a.val[1][bb]}} 
-        [ngStyle] = 'a.ngCss[1][bb]'  
+        <h1
+        #myVal
+        *ngIf= "a.bool[1][bb] ==='h1' else elseBlock2"
+        class = {{a.val[1][bb]}}
+        [ngStyle] = 'a.ngCss[1][bb]'
         [innerHTML] = 'a.text[1][bb].item'>
         </h1>
-        <ng-template #elseBlock2  > 
-            <h2 
-            #myVal 
-            *ngIf= "a.bool[1][bb] ==='h2' else elseBlock3" 
-            class = {{a.val[1][bb]}} 
-            [ngStyle] = 'a.ngCss[1][bb]'  
-            [innerHTML] = 'a.text[1][bb].item'>
-        </h2>            
-        </ng-template>   
-        <ng-template #elseBlock3  > 
-        <h3 
-            #myVal 
-            *ngIf= "a.bool[1][bb] ==='h3' else elseBlock4" 
-            class = {{a.val[1][bb]}} 
-            [ngStyle] = 'a.ngCss[1][bb]'  
-            [innerHTML] = 'a.text[1][bb].item'>
-        </h3>            
-        </ng-template>
-        <ng-template #elseBlock4  > 
-            <h4 #myVal 
-            *ngIf= "a.bool[1][bb] ==='h4' else elseBlock5" 
-            class = {{a.val[1][bb]}} 
-            [ngStyle] = 'a.ngCss[1][bb]'  
-            [innerHTML] = 'a.text[1][bb].item'>
-        </h4>            
-        </ng-template>     
-        <ng-template #elseBlock5  > 
-            <h5 
-            #myVal 
-            *ngIf= "a.bool[1][bb] ==='h5' else elseBlock6" 
-            class = {{a.val[1][bb]}} 
-            [ngStyle] = 'a.ngCss[1][bb]'  
-            [innerHTML] = 'a.text[1][bb].item'>
-        </h5>            
-        </ng-template>    
-        <ng-template #elseBlock6  > 
-            <h6 #myVal 
-            *ngIf= "a.bool[1][bb] ==='h6' else elseBlock7" 
-            class = {{a.val[1][bb]}} 
-            [ngStyle] = 'a.ngCss[1][bb]'  
-            [innerHTML] = 'a.text[1][bb].item'>
-        </h6>            
-        </ng-template> 
-        <ng-template #elseBlock7  > 
-            <a 
-            appDropDown [dropDown] = "ryber.appAvailble( a.extras[1][bb], 'appDropDown')" 
-            appInputHandle [inputHandle] = "ryber.appAvailble( a.extras[1][bb], 'appInputHandle')"
-            toggleButton [stuff] ="ryber.appAvailble( a.extras[1][bb], 'toggleButton')" 
-            #myVal 
-            *ngIf= "a.bool[1][bb] ==='a' else elseBlock8" 
-            class = {{a.val[1][bb]}} 
-            [ngStyle] = 'a.ngCss[1][bb]' 
-            [innerHTML] = 'a.text[1][bb].item'>
-        </a>            
-        </ng-template> 
-        <ng-template #elseBlock8  > 
-            <p 
-            #myVal 
-            *ngIf= "a.bool[1][bb] ==='p' else elseBlock9" 
-            class = {{a.val[1][bb]}} 
-            [ngStyle] = 'a.ngCss[1][bb]'  
-            [innerHTML] = 'a.text[1][bb].item'>
-        </p>            
-        </ng-template> 
-        <ng-template #elseBlock9  > 
-            <code 
-            #myVal 
-            *ngIf= "a.bool[1][bb] ==='code' else elseBlock10" 
-            class = {{a.val[1][bb]}} 
+        <ng-template #elseBlock2  >
+            <h2
+            #myVal
+            *ngIf= "a.bool[1][bb] ==='h2' else elseBlock3"
+            class = {{a.val[1][bb]}}
             [ngStyle] = 'a.ngCss[1][bb]'
             [innerHTML] = 'a.text[1][bb].item'>
-        </code>            
-        </ng-template> 
-        <ng-template #elseBlock10  > 
-            <span 
-            #myVal 
-            *ngIf= "a.bool[1][bb] ==='span' else elseBlock11" 
-            class = {{a.val[1][bb]}} 
-            [ngStyle] = 'a.ngCss[1][bb]'  
+        </h2>
+        </ng-template>
+        <ng-template #elseBlock3  >
+        <h3
+            #myVal
+            *ngIf= "a.bool[1][bb] ==='h3' else elseBlock4"
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
             [innerHTML] = 'a.text[1][bb].item'>
-        </span>            
-        </ng-template> 
-        <ng-template #elseBlock11  > 
-            <strong 
-            #myVal 
+        </h3>
+        </ng-template>
+        <ng-template #elseBlock4  >
+            <h4 #myVal
+            *ngIf= "a.bool[1][bb] ==='h4' else elseBlock5"
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
+            [innerHTML] = 'a.text[1][bb].item'>
+        </h4>
+        </ng-template>
+        <ng-template #elseBlock5  >
+            <h5
+            #myVal
+            *ngIf= "a.bool[1][bb] ==='h5' else elseBlock6"
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
+            [innerHTML] = 'a.text[1][bb].item'>
+        </h5>
+        </ng-template>
+        <ng-template #elseBlock6  >
+            <h6 #myVal
+            *ngIf= "a.bool[1][bb] ==='h6' else elseBlock7"
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
+            [innerHTML] = 'a.text[1][bb].item'>
+        </h6>
+        </ng-template>
+        <ng-template #elseBlock7  >
+            <a
+            appDropDown [dropDown] = "ryber.appAvailble( a.extras[1][bb], 'appDropDown')"
+            appInputHandle [inputHandle] = "ryber.appAvailble( a.extras[1][bb], 'appInputHandle')"
+            toggleButton [stuff] ="ryber.appAvailble( a.extras[1][bb], 'toggleButton')"
+            #myVal
+            *ngIf= "a.bool[1][bb] ==='a' else elseBlock8"
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
+            [innerHTML] = 'a.text[1][bb].item'>
+        </a>
+        </ng-template>
+        <ng-template #elseBlock8  >
+            <p
+            #myVal
+            *ngIf= "a.bool[1][bb] ==='p' else elseBlock9"
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
+            [innerHTML] = 'a.text[1][bb].item'>
+        </p>
+        </ng-template>
+        <ng-template #elseBlock9  >
+            <code
+            #myVal
+            *ngIf= "a.bool[1][bb] ==='code' else elseBlock10"
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
+            [innerHTML] = 'a.text[1][bb].item'>
+        </code>
+        </ng-template>
+        <ng-template #elseBlock10  >
+            <span
+            #myVal
+            *ngIf= "a.bool[1][bb] ==='span' else elseBlock11"
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
+            [innerHTML] = 'a.text[1][bb].item'>
+        </span>
+        </ng-template>
+        <ng-template #elseBlock11  >
+            <strong
+            #myVal
             *ngIf= "a.bool[1][bb] ==='strong' else elseBlock12"
-            class = {{a.val[1][bb]}} 
-            [ngStyle] = 'a.ngCss[1][bb]'  
-            [innerHTML] = 'a.text[1][bb].item'>             
-        </strong>            
-        </ng-template> 
-        <ng-template #elseBlock12  > 
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
+            [innerHTML] = 'a.text[1][bb].item'>
+        </strong>
+        </ng-template>
+        <ng-template #elseBlock12  >
             <input
-            appExtend [extend] = "ryber.appAvailble( a.extras[1][bb], 'extend')" 
+            appExtend [extend] = "ryber.appAvailble( a.extras[1][bb], 'extend')"
             appInputHandle [inputHandle] = "ryber.appAvailble( a.extras[1][bb], 'appInputHandle')"
             appMoneyClick [moneyClick] = "ryber.appAvailble( a.extras[1][bb], 'appMoneyClick')"
             appFocusFont [focusFont] = "ryber.appAvailble( a.extras[1][bb], 'appFocusFont')"
             appDateClick [dateClick] = "ryber.appAvailble( a.extras[1][bb], 'appDateClick')"
-            #myVal 
-            *ngIf= "a.bool[1][bb] ==='i' else elseBlock13" class = {{a.val[1][bb]}} 
-            [ngStyle] = 'a.ngCss[1][bb]' 
-            >           
-        </ng-template> 
-        <ng-template #elseBlock13  > 
-            <textarea 
+            #myVal
+            *ngIf= "a.bool[1][bb] ==='i' else elseBlock13" class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
+            >
+        </ng-template>
+        <ng-template #elseBlock13  >
+            <textarea
             appInputHandle [inputHandle] = "ryber.appAvailble( a.extras[1][bb], 'appInputHandle')"
             appMoneyClick [moneyClick] = "ryber.appAvailble( a.extras[1][bb], 'appMoneyClick')"
             appFocusFont [focusFont] = "ryber.appAvailble( a.extras[1][bb], 'appFocusFont')"
-            #myVal 
-            *ngIf= "a.bool[1][bb] ==='ta' else elseBlock14" 
-            class = {{a.val[1][bb]}}  
-            [ngStyle] = 'a.ngCss[1][bb]' 
-            appExtend [extend] = "ryber.appAvailble( a.extras[1][bb], 'extend')"  
-            ></textarea>          
-        </ng-template>  
-        <ng-template #elseBlock14  > 
-            <canvas 
+            #myVal
+            *ngIf= "a.bool[1][bb] ==='ta' else elseBlock14"
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
+            appExtend [extend] = "ryber.appAvailble( a.extras[1][bb], 'extend')"
+            ></textarea>
+        </ng-template>
+        <ng-template #elseBlock14  >
+            <canvas
             appInputHandle [inputHandle] = "ryber.appAvailble( a.extras[1][bb], 'appInputHandle')"
-            appSignPad [signPad]="ryber.appAvailble( a.extras[1][bb],'appSignPad')" 
+            appSignPad [signPad]="ryber.appAvailble( a.extras[1][bb],'appSignPad')"
             #myVal
             *ngIf= "a.bool[1][bb] ==='c' else elseBlock15"
-            class = {{a.val[1][bb]}}  
-            [ngStyle] = 'a.ngCss[1][bb]' >   
-            </canvas>   
-        </ng-template>  
-        <ng-template #elseBlock15  > 
-            <label 
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]' >
+            </canvas>
+        </ng-template>
+        <ng-template #elseBlock15  >
+            <label
             #myVal
             *ngIf= "a.bool[1][bb] ==='l' else elseBlock16"
-            class = {{a.val[1][bb]}}  
-            [ngStyle] = 'a.ngCss[1][bb]' 
-            [innerHTML] = 'a.text[1][bb].item'></label>       
-        </ng-template> 
-        <ng-template #elseBlock16  > 
-            <ul 
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
+            [innerHTML] = 'a.text[1][bb].item'></label>
+        </ng-template>
+        <ng-template #elseBlock16  >
+            <ul
             #myVal
             *ngIf= "a.bool[1][bb] ==='u' else elseBlock17"
-            class = {{a.val[1][bb]}}  
-            [ngStyle] = 'a.ngCss[1][bb]' 
-            [innerHTML] = 'a.text[1][bb].item'></ul>       
-        </ng-template>         
-        <ng-template #elseBlock17  > 
-            <form 
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
+            [innerHTML] = 'a.text[1][bb].item'></ul>
+        </ng-template>
+        <ng-template #elseBlock17  >
+            <form
             #myVal
             *ngIf= "a.bool[1][bb] ==='f'"
-            class = {{a.val[1][bb]}}  
-            [ngStyle] = 'a.ngCss[1][bb]' 
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
             [innerHTML] = 'a.text[1][bb].item'
-            appExtend [extend] = "ryber.appAvailble( a.extras[1][bb], 'extend')" ></form>       
-        </ng-template>                                                                                                                         
+            appExtend [extend] = "ryber.appAvailble( a.extras[1][bb], 'extend')" ></form>
+        </ng-template>
     </ng-container>
-    
+
     <ng-container *ngFor = 'let aa of a.quantity[2];let bb = index; ' >
-        <div 
-            #myVal 
-            *ngIf= "a.bool[2][bb] ==='div'   else pictureBlock0" 
-            class = {{a.val[2][bb]}} 
+        <div
+            #myVal
+            *ngIf= "a.bool[2][bb] ==='div'   else pictureBlock0"
+            class = {{a.val[2][bb]}}
             [ngStyle] = 'a.ngCss[2][bb]' >
-        </div>     
-        <ng-template #pictureBlock0  >    
-            <img 
-                #myVal 
-                *ngIf= "a.bool[2][bb] ==='img' else pictureBlock1" 
-                class = {{a.val[2][bb]}} 
-                [ngStyle] = 'a.ngCss[2][bb]' 
+        </div>
+        <ng-template #pictureBlock0  >
+            <img
+                #myVal
+                *ngIf= "a.bool[2][bb] ==='img' else pictureBlock1"
+                class = {{a.val[2][bb]}}
+                [ngStyle] = 'a.ngCss[2][bb]'
             />
-        </ng-template>  
-        <ng-template #pictureBlock1  >    
+        </ng-template>
+        <ng-template #pictureBlock1  >
             <button #myVal
-            appFolders  [folders]  = "ryber.appAvailble( a.extras[2][bb], 'appFolders')" 
-            appUpload  [upload]  = "ryber.appAvailble( a.extras[2][bb], 'appUpload')" 
-            appSignout  [signOut]  = "ryber.appAvailble( a.extras[2][bb], 'appSignout')" 
-            appPlayground  [playground]  = "ryber.appAvailble( a.extras[2][bb], 'appPlayground')" 
+            appDownload  [download]  = "ryber.appAvailble( a.extras[2][bb], 'appDownload')"
+            appFolders  [folders]  = "ryber.appAvailble( a.extras[2][bb], 'appFolders')"
+            appUpload  [upload]  = "ryber.appAvailble( a.extras[2][bb], 'appUpload')"
+            appSignout  [signOut]  = "ryber.appAvailble( a.extras[2][bb], 'appSignout')"
+            appPlayground  [playground]  = "ryber.appAvailble( a.extras[2][bb], 'appPlayground')"
             appPrintFiles  [printFiles]  = "ryber.appAvailble( a.extras[2][bb], 'appPrintFiles')"
             appInputHandle [inputHandle] = "ryber.appAvailble( a.extras[2][bb], 'appInputHandle')"
             appFormControl [formControl] = "ryber.appAvailble( a.extras[2][bb], 'appFormControl')"
             appFileHandler [fileHandler] = "ryber.appAvailble( a.extras[2][bb], 'appFileHandler')"
-            *ngIf= "a.bool[2][bb] ==='b' else pictureBlock2 " 
-            class = {{a.val[2][bb]}} 
-            [ngStyle] =  'a.ngCss[2][bb]'  
+            *ngIf= "a.bool[2][bb] ==='b' else pictureBlock2 "
+            class = {{a.val[2][bb]}}
+            [ngStyle] =  'a.ngCss[2][bb]'
             [innerHTML] = 'a.text[2][bb].item'
             appExtend [extend] = "ryber.appAvailble( a.extras[2][bb], 'extend')" >
         </button>
-        </ng-template> 
-        <ng-template #pictureBlock2  >    
-            <embed 
-            #myVal 
-            *ngIf= "a.bool[2][bb] ==='embed' else pictureBlock3" 
-            class = {{a.val[2][bb]}}  
+        </ng-template>
+        <ng-template #pictureBlock2  >
+            <embed
+            #myVal
+            *ngIf= "a.bool[2][bb] ==='embed' else pictureBlock3"
+            class = {{a.val[2][bb]}}
             [ngStyle] =  'a.ngCss[2][bb]'
             appExtend [extend] = "ryber.appAvailble( a.extras[1][bb], 'extend')"  >
-        </ng-template>           
-        <ng-template #pictureBlock3  >    
-            <video 
+        </ng-template>
+        <ng-template #pictureBlock3  >
+            <video
             controls
-            appExtend [extend] = "ryber.appAvailble( a.extras[1][bb], 'extend')"  
-            #myVal *ngIf= "a.bool[2][bb] ==='video' else pictureBlock4" 
-            class = {{a.val[2][bb]}}  
+            appExtend [extend] = "ryber.appAvailble( a.extras[1][bb], 'extend')"
+            #myVal *ngIf= "a.bool[2][bb] ==='video' else pictureBlock4"
+            class = {{a.val[2][bb]}}
             [ngStyle] =  'a.ngCss[2][bb]'>
-                <!-- <source src="/media/examples/flower.mp4" type="video/mp4"> 
+                <!-- <source src="/media/examples/flower.mp4" type="video/mp4">
                     use a directive to setControls?-->
             </video>
-        </ng-template>                      
-        <ng-template #pictureBlock4  >    
-            <audio 
-            #myVal 
-            *ngIf= "a.bool[2][bb] ==='audio' else pictureBlock5" 
-            class = {{a.val[2][bb]}}  
+        </ng-template>
+        <ng-template #pictureBlock4  >
+            <audio
+            #myVal
+            *ngIf= "a.bool[2][bb] ==='audio' else pictureBlock5"
+            class = {{a.val[2][bb]}}
             [ngStyle] ='a.ngCss[2][bb]'
             appExtend [extend] = "ryber.appAvailble( a.extras[1][bb], 'extend')"
             ></audio>
-        </ng-template>  
-        <ng-template #pictureBlock5  >    
+        </ng-template>
+        <ng-template #pictureBlock5  >
             <mat-progress-spinner
-            #myVal 
-            *ngIf= "a.bool[2][bb] ==='mat-spinner'" 
-            class = {{a.val[2][bb]}}  
+            #myVal
+            *ngIf= "a.bool[2][bb] ==='mat-spinner'"
+            class = {{a.val[2][bb]}}
             [ngStyle] ='a.ngCss[2][bb]'
             appExtend [extend] = "ryber.appAvailble( a.extras[1][bb], 'extend')"
             mode="indeterminate"
             ></mat-progress-spinner>
 
-        </ng-template>          
-    </ng-container>    
-    
-    </ng-container>     
-    
+        </ng-template>
+    </ng-container>
+
+    </ng-container>

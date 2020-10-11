@@ -7,7 +7,6 @@
 
 *   Integrate with the Google Drive UI
 
-* for some reason through web user interface, if you give the api key once, and you give an empty string again for the API key, the api key still works how should I go about reporting this
 
 ###  Lab Building A Simple App That Can Access Google Drive
 
@@ -382,7 +381,7 @@ __G Suite Doc__ - google sheets ,google slides, a google office document
 
 
 
-### Lab Upload File Data using Google Drive API
+### [Lab Upload File Data using Google Drive API](./vids/Upload_File_Data/README.md)
 
 ## Create and populate folders
 
@@ -413,6 +412,170 @@ http.post(
 ### Moving files between folders
 
 * to move a file around use files.update with addParents removeParents
+```ts
+let headers = new HttpHeaders()
+headers = headers
+	.set("Authorization", `Bearer ${gapi.auth.getToken().access_token}`)
+
+//get all the files in the drive
+http.get(
+	"https://www.googleapis.com/drive/v3/files",
+	{ headers, observe: 'response' }
+)
+.subscribe((result: any) => {
+
+	//gather the ids
+	result.body.files
+	.forEach((x: any, i) => {
+		if (x.name === 'multipart.json') {
+			folders.target.id = x.id
+		}
+
+		else if (x.name === 'Folder1') {
+			folders.a.id = x.id
+		}
+
+		else if (x.name === 'Folder2') {
+			folders.b.id = x.id
+		}
+	})
+
+	console.log(folders)
+	//
+
+
+	// move the file from a to b
+	http.patch(
+		`https://www.googleapis.com/drive/v3/files/${folders.target.id}`,
+		{ fields: 'id, parents', addParents: folders.b.id },
+		{
+			headers,
+			observe: 'response' ,
+			params:{
+				fields: 'id, parents',
+				addParents: folders.b.id,
+				removeParents:folders.a.id
+			}
+		}
+	)
+	.subscribe((result) => {
+		console.log(result)
+	})
+	//
+
+})
+//
+```
+
+### [Lab Working with Folders using Google Drive API](./vids/Working_With_Folders/README.md)
+
+
+## Download files
+
+### Download a file stored on Google Drive
+* use files.get, with the parameter alt=media, to indicate a download is needed
+* for REST API you use the fileId in the path and the alt=media as a query param
+
+#### Typescript
+```ts
+let headers = new HttpHeaders()
+headers = headers
+	.set("Authorization", `Bearer ${gapi.auth.getToken().access_token}`)
+
+//get all the files in the drive including in trash
+http.get(
+	"https://www.googleapis.com/drive/v3/files",
+	{ headers, observe: 'response' }
+)
+.subscribe((result: any) => {
+
+	let fileId = result.body.files[0].id
+	http.get(
+		"https://www.googleapis.com/drive/v3/files/" + fileId,
+		{
+			headers,
+			observe:'response',
+			responseType:'text',
+			params:{
+				alt:'media'
+			}
+		}
+	)
+	.subscribe((result:any)=>{
+		console.log(result.body) // yr file content
+	})
+
+})
+
+}
+//
+```
+
+### Download a Google Workspace Document
+* use the files.export method with the param alt.media
+* with REST API make a GET to the "https://www.googleapis.com/drive/v3/files/" + fileId + "/export", url with alt=media and mimeType=[supported mime type] 
+
+* for gSuite docs, the file extension is not included so heres a list 
+* so it cannot be download as the original document, just as in the UI you must choose a different supported mimeType to download the  file in
+
+* FIXME link is from [2012](https://fileinfo.com/help/google_drive_file_types)
+
+|extension|type|desctiption|
+|:------|:------:|------:|
+|.gdoc|Google Drive Document||
+|.gslides|Google Drive Presentation||
+|.gsheet|drive spreadsheet||
+|.gtable|Google Drive Fusion Table||
+|.gdraw|Google Drive Drawing||
+|.gform|	Google Drive Form|
+
+
+
+```ts
+let headers = new HttpHeaders()
+headers = headers
+	.set("Authorization", `Bearer ${gapi.auth.getToken().access_token}`)
+
+//get all the files in the drive including in trash
+http.get(
+	"https://www.googleapis.com/drive/v3/files",
+	{ headers, observe: 'response' }
+)
+.subscribe((result: any) => {
+
+	let fileId = ""
+	result.body.files
+	.forEach((x:any,i)=>{
+		if(x.name === "My_Gdoc_resume"){
+			fileId = x.id
+		}
+	})
+
+	http.get(
+		"https://www.googleapis.com/drive/v3/files/" + fileId + "/export",
+		{
+			headers,
+			observe:'response',
+			responseType:'text',
+			params:{
+				alt:'media',
+				mimeType:'application/pdf' 
+			}
+		}
+	)
+	.pipe(
+		catchError((err)=>{
+			console.log(err.error)
+		})
+	)
+	.subscribe((result:any)=>{
+		console.log(result) // yr file content
+	})
+
+})
+```
+
+
 
 # Issues with the DRIVE API 
 
@@ -424,3 +587,9 @@ http.post(
 
 * Define indexable text for unknown file types
     * I just dont know how to setup the API call
+
+* for some reason through web user interface, if you give the api key once, and you give an empty string again for the API key, the api key still works how should I go about reporting this
+
+* viewersCanCopyContent = false still allows for download
+
+* i dont get viewing files in the browser, can I just use embed how do I get the whole files reosurce object

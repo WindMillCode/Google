@@ -30,8 +30,8 @@ export const environment: any = {
 	},
 	googleDrive: {
 		// insert credentials here
-		apiKey: "AIzaSyCD44QOh5OaPjmoBP6Rk0iS3omol-AQrJI",
-		clientId: "637621663480-g2o26odrg312op1qvj8qfbhd5c4oj3qp.apps.googleusercontent.com"
+		apiKey: "",
+		clientId: ""
 		//
 	},
 	playground: {
@@ -46,7 +46,10 @@ export const environment: any = {
 		},
 		folders:{
 			create:false,
-			moveFiles:true
+			moveFiles:false
+		},
+		download:{
+			restrictDownload:false
 		}
 	},
 
@@ -66,5 +69,13 @@ export const environment: any = {
 	},
 	//
 
+	// replace download object here
+	download:{
+		drive:false,
+		gSuite:false,
+		restrictDownload:false,
+		partial:true
+	}
+	//
 };
 
