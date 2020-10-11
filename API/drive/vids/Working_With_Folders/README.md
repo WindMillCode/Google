@@ -13,7 +13,7 @@ npx ng serve -c=folders open=true
 
 ## Task 2 setup up credentials
 
-open /src/app/directive/files.directive.ts in your code editor
+open /src/app/directive/folders.directive.ts in your code editor
 * in paste credentials here paste this code
 ```ts
 let CLIENT_ID = environment .googleDrive.clientId
