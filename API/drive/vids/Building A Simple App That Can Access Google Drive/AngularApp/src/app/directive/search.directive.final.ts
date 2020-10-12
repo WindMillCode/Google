@@ -58,7 +58,7 @@ export class SearchDirective {
                     //
 
 
-                    //get a list of all folders
+                    //get a list of all files
                     if(environment.search.all){
 
                         let headers = new HttpHeaders()

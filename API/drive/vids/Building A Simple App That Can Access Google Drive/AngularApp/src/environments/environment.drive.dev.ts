@@ -30,8 +30,8 @@ export const environment: any = {
 	},
 	googleDrive: {
 		// insert credentials here
-		apiKey: "",
-		clientId: ""
+		apiKey: "AIzaSyAPkvxNBojMDfVXgFVScqcR_2XJwsE_9NY",
+		clientId: "637621663480-q40l4jmp84qso2ibumb8iop2asksag8r.apps.googleusercontent.com"
 		//
 	},
 	playground: {

@@ -93,7 +93,7 @@ gapi.load('client:auth2', () => {
 //
 ```
 
-## Task 3 Select all files from Google Drive
+## Task 4 Select all files from Google Drive
 
 * in get our files paste this code
     * we make a get request to the url to get all our files
@@ -130,7 +130,7 @@ function getAllFiles(devObj) {
 }
 ```
 
-## Task 4 Download a regular file
+## Task 5 Download a regular file
 
 * upload download_me.txt to google drive
 * open /src/environment/environment.drive.dev.ts
@@ -204,7 +204,7 @@ http.get(
 * whats the error we get
 * rmbr folders are a way to organize files in google drive they are not meant for anything else, get all files with the parent set to the target parent id as needed
 
-## Task 5 Download a gSuite doc
+## Task 6 Download a gSuite doc
 
 
 * go to this [site](https://docs.google.com)
@@ -286,7 +286,7 @@ http.get(
 })
 ```
 
-## Task 6 Partial Download
+## Task 7 Partial Download
 * upload partial.txt to google drive
 
 * open /src/environment/environment.drive.dev.ts
