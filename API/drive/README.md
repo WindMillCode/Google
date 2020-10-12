@@ -8,6 +8,14 @@
 *   Integrate with the Google Drive UI
 
 
+### Messages
+
+Greetings I am currently going to get several GCP certifications. Like share Subscribe to my youtube channel as I do tutorials on the fundamentals and advanced concepts of GCP. Any advice for  education and career prospects will be appreciated .  https://www.youtube.com/channel/UCmqEX_zasOf3AQ9vnPkxtjg/
+
+
+Greetings I have high interest in becoming a data engineer managing and working with IoT infrastructure. I would love a mentorship who can help me build my portiflio and gain the needed certifications and education. I also have a youtube channel as I do tutorials on the fundamentals and advanced concepts of GCP, please like share and subscribe at least if you dont have time to mentor. .  https://www.youtube.com/channel/UCmqEX_zasOf3AQ9vnPkxtjg/
+
+
 ###  Lab Building A Simple App That Can Access Google Drive
 
 ## Files and folders overview
@@ -55,7 +63,7 @@
 
 * __Spaces__ - got the drive spaces for users, App data folder space - for apps not for users, and photos space, for peoples photos
 
-* __Corpora__ - 
+* __Corpora__ -[corpora_anchor]
 Collections of files used to narrow the scope of file and folder searches. like a bigquery partiton or cluster 
     * enum 
         * user, domain, drive, and allDrives
@@ -530,7 +538,7 @@ http.get(
 |.gform|	Google Drive Form|
 
 
-
+#### Typescript
 ```ts
 let headers = new HttpHeaders()
 headers = headers
@@ -575,7 +583,98 @@ http.get(
 })
 ```
 
+### Partial Download
+* whats important here is the Range header, sent in amount of bytes
+* good for applications that store data in files and can be split by bytes
+* if you error here it fails gracefully so make sure the numbers are correcct
+```ts
+// partial download here
+http.get(
+	"https://www.googleapis.com/drive/v3/files/" + fileId,
+	{
+		headers:{
+			"Authorization": `Bearer ${gapi.auth.getToken().access_token}`,
+			"Range": "bytes=500-599"
+		},
+		observe: 'response',
+		responseType: 'text',
+		params: {
+			// fileId,
+			alt: 'media'
+		}
+	}
+)
+.subscribe((result: any) => {
+	console.log(result.body) // yr file content
+})
+//
+```
 
+
+## Search for files and folders
+* use the files.list method
+* REST API: http.get to https://www.googleapis.com/drive/v3/files/
+### Search for all files and folders on the current user's My Drive
+
+* use the files.list method
+* use without any pararmeters
+* REST API: http.get to https://www.googleapis.com/drive/v3/files/ with no parameters
+
+#### Typescript
+```ts
+http.get(
+	"https://www.googleapis.com/drive/v3/files",
+	{ headers, observe: 'response' }
+)
+.subscribe((result: any) => {
+
+})
+```
+
+## Search for specifc files
+* we use the q prop in our params to find this
+* the logic is setup where  q is the key
+```
+q: [query_term] [operator] [values]
+```
+
+__query_term__ - more like the key, a key on a sample resource file object
+__operator__ - a comparison operator
+__values__ - string or regex yr looking for
+
+[examples](https://developers.google.com/drive/api/v3/search-files#query_string_examples)
+
+[reference](https://developers.google.com/drive/api/v3/ref-search-terms#operators)
+
+```ts
+let headers = new HttpHeaders()
+headers = headers
+	.set("Authorization", `Bearer ${gapi.auth.getToken().access_token}`)
+
+http.get(
+	"https://www.googleapis.com/drive/v3/files",
+	{
+		headers,
+		observe: 'response',
+		params:{
+			q:"mimeType = 'image/gif'",
+			fields: 'files(id, starred,name)', // not the focus but this is how you get different file properties
+		}
+	}
+)
+.subscribe((result: any) => {
+	console.log(result)
+})
+```
+
+## Search by corpora
+* the files.list method default is 
+```
+corpora:user
+```
+to search different corpora choose from the enum earlier in this document
+[here]()
+__enum__ - comp sci term for "acceptable options"
 
 # Issues with the DRIVE API 
 
@@ -593,3 +692,6 @@ http.get(
 * viewersCanCopyContent = false still allows for download
 
 * i dont get viewing files in the browser, can I just use embed how do I get the whole files reosurce object
+
+
+[here](corpora_anchor)

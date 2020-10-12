@@ -339,6 +339,7 @@ if (environment.download.partial) {
         * negative numbers
         * bigger than the file size
         * several requests with different chunks
+    *if you error here it fails gracefully so make sure the numbers are correcct
 ```ts
 http.get(
     "https://www.googleapis.com/drive/v3/files/" + fileId,

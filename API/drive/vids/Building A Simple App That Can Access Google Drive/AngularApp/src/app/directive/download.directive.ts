@@ -5,7 +5,6 @@ import { deltaNode, eventDispatcher, numberParse, objectCopy } from '../customEx
 import { catchError, delay } from 'rxjs/operators'
 import { environment } from '../../environments/environment'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { PrintFilesDirective } from './print-files.directive';
 
 @Directive({
     selector: '[appDownload]'

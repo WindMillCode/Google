@@ -150,6 +150,23 @@
 							"poll": 2500,
 							"verbose": false,
 							"watch": true
+						},
+						"search": {
+							"fileReplacements": [
+								{
+									"replace": "src/app/website.ts",
+									"with": "src/app/database/website-search-dev.ts"
+								},
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.drive.dev.ts"
+								}
+							],
+							"optimization": false,
+							"sourceMap": false,
+							"poll": 2500,
+							"verbose": false,
+							"watch": true
 						}
 					}
 				},
@@ -254,6 +271,11 @@
 						},
 						"download": {
 							"browserTarget": "AngularApp:drive:download",
+							"port": 8000,
+							"liveReload": true
+						},
+						"search": {
+							"browserTarget": "AngularApp:drive:search",
 							"port": 8000,
 							"liveReload": true
 						},

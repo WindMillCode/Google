@@ -405,8 +405,6 @@ export class PlaygroundDirective {
 						}
 						//
 
-
-
                         //restrict Download
                         if(environment.playground?.download.restrictDownload){
 

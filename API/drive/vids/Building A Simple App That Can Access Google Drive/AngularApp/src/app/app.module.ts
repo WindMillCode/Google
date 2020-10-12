@@ -20,6 +20,7 @@ import { SignoutDirective } from './directive/signout.directive';
 import { UploadDirective } from './directive/upload.directive';
 import { FoldersDirective } from './directive/folders.directive';
 import { DownloadDirective } from './directive/download.directive';
+import { SearchDirective } from './directive/search.directive';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { DownloadDirective } from './directive/download.directive';
     SignoutDirective,
     UploadDirective,
     FoldersDirective,
-    DownloadDirective
+    DownloadDirective,
+    SearchDirective
   ],
   imports: [
     BrowserModule,
