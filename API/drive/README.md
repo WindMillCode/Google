@@ -135,6 +135,9 @@ __Simple upload__ -  to quickly transfer a small media file (5 MB or less) witho
 __Multipart upload__ -  to quickly transfer a small file (5 MB or less) and metadata that describes the file, in a single request
 __Resumable upload__ -  for large files (greater than 5 MB) and when there's a high chance of network interruption 
  
+* check OUT
+	files.arrayBuffer()
+	FileReader.readAsBinaryString()
 
 ###  simple upload
 
@@ -163,41 +166,55 @@ fileUpload.files[0].text() //doesnt work for IE
     * this is the option you most likely want to start with
 #### TypeScript
 ```ts
-// console.log(img) 
-fileUpload.files[0].text() //doesnt work for IE
-    .then((pdf) => {
-        var fileName = 'multipart.json';
-        var contentType = 'application/json'
-        var metadata = {
-            'name': fileName,
-            'mimeType': contentType
-        };
+let reader = new FileReader()
+reader.readAsBinaryString(fileUpload.files[0])
+reader.onload =(evt) => {
 
-        const boundary = 'xyz'
-        const delimiter = "\r\n--" + boundary + "\r\n";
-        const close_delim = "\r\n--" + boundary + "--";
+	const boundary = '-------314159265358979323846';
+	const delimiter = "\r\n--" + boundary + "\r\n";
+	const close_delim = "\r\n--" + boundary + "--";
 
-        var multipartRequestBody =
-            delimiter +
-            'Content-Type: application/json; charset=UTF-8\r\n\r\n' +
-            JSON.stringify(metadata) +
-            delimiter +
-            'Content-Type: ' + contentType + '\r\n\r\n' +
-            pdf +
-            close_delim;
+	let fileData:any = fileUpload.files[0]
+	var contentType = fileData.type || 'application/octet-stream';
+	var metadata = {
+		'title': fileData.fileName,
+		'mimeType': contentType
+	};
 
-        gapi.client.request({
-            'path': 'https://www.googleapis.com/upload/drive/v3/files',
-            'method': 'POST',
-            'params': { 'uploadType': 'multipart' },
-            'headers': {
-                'Content-Type': 'multipart/related; boundary=' + boundary
-            },
-            'body': multipartRequestBody
-        }).execute((a) => {
-            console.log(a)
-        })
-    })
+	var base64Data = btoa((reader.result as any));
+	var multipartRequestBody =
+		delimiter +
+		'Content-Type: application/json\r\n\r\n' +
+		JSON.stringify(metadata) +
+		delimiter +
+		'Content-Type: ' + contentType + '\r\n' +
+		'Content-Transfer-Encoding: base64\r\n' +
+		'\r\n' +
+		base64Data +
+		close_delim;
+
+
+
+	http.post(
+		"https://www.googleapis.com/upload/drive/v3/files",
+		multipartRequestBody,
+		{
+			headers:{
+				'Content-Type': 'multipart/related; boundary=' + boundary,
+				"Authorization": `Bearer ${gapi.auth.getToken().access_token}`
+			},
+			observe:'response',
+			params: {
+				'uploadType': 'multipart'
+			}
+		}
+	)
+	.subscribe((result)=>{
+		console.log(result)
+	})
+
+
+}
 ```
 
 
@@ -386,6 +403,14 @@ __G Suite Doc__ - google sheets ,google slides, a google office document
     * no need to order words    
     * yr app should update the parameter every time
     
+### Pregenereate ID
+
+as an addition say if you need to send the link out to another endpoint and dont have time to wait for a resumable network you can use pregenerated ids instead
+
+the link will look like this 
+```
+https://drive.google.com/file/d/[ID goes here]/view?usp=sharing
+```
 
 
 

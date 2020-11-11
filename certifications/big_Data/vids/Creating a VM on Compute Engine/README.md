@@ -1,4 +1,4 @@
-#### Creating a VM on Compute Engine Tutorial
+# Creating a VM on Compute Engine Tutorial
 
 * data from USGS
 * plot earthquake activity

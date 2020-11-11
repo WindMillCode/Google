@@ -102,8 +102,6 @@ big queury > [project id] > create dataset
 |:------|:------:|------:|
 |Dataset ID|bike_model||
 |Data location|European Union (EU)||
-||||
-||||
 
 
 

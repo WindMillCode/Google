@@ -161,57 +161,70 @@ open /src/app/directive/upload.directive.ts in your code editor
 
 * in multipart upload  paste
 ```ts
-if (environment.upload.multipart) {
+if (environment.playground?.upload.multipart) {
 
+    // console.log(img)
+    let reader = new FileReader()
+    reader.readAsBinaryString(fileUpload.files[0])
+    reader.onload =(evt) => {
 
-    // console.log(img) 
-    fileUpload.files[0].text() //doesnt work for IE
-        .then((pdf) => {
-            var fileName = 'multipart.json';
-            var contentType , uploadContentType = 'application/json'
-            var metadata = {
-                'name': fileName,
-                'mimeType': contentType
-            };
+    //preparing the multipart body 
 
+    //
 
-            // preparing the multipart body
-            //
+    //make the request
 
-
-        })
-
-
+    //
+    }
 
 }
 ```
 
 * in preparing the multipart body paste
 ```ts
-            const boundary = 'xyz'
-            const delimiter = "\r\n--" + boundary + "\r\n";
-            const close_delim = "\r\n--" + boundary + "--";
+const boundary = '-------314159265358979323846';
+const delimiter = "\r\n--" + boundary + "\r\n";
+const close_delim = "\r\n--" + boundary + "--";
 
-            var multipartRequestBody =
-                delimiter +
-                'Content-Type: application/json; charset=UTF-8\r\n\r\n' +
-                JSON.stringify(metadata) +
-                delimiter +
-                'Content-Type: ' + uploadContentType + '\r\n\r\n' +
-                pdf +
-                close_delim;
+let fileData:any = fileUpload.files[0]
+var contentType = fileData.type || 'application/octet-stream';
+var metadata = {
+    'title': fileData.fileName,
+    'mimeType': contentType
+};
 
-            gapi.client.request({
-                'path': 'https://www.googleapis.com/upload/drive/v3/files',
-                'method': 'POST',
-                'params': { 'uploadType': 'multipart' },
-                'headers': {
-                    'Content-Type': 'multipart/related; boundary=' + boundary
-                },
-                'body': multipartRequestBody
-            }).execute((a) => {
-                console.log(a)
-            })
+var base64Data = btoa((reader.result as any));
+var multipartRequestBody =
+    delimiter +
+    'Content-Type: application/json\r\n\r\n' +
+    JSON.stringify(metadata) +
+    delimiter +
+    'Content-Type: ' + contentType + '\r\n' +
+    'Content-Transfer-Encoding: base64\r\n' +
+    '\r\n' +
+    base64Data +
+    close_delim;
+```
+
+* make the request paste
+```ts
+http.post(
+    "https://www.googleapis.com/upload/drive/v3/files",
+    multipartRequestBody,
+    {
+        headers:{
+            'Content-Type': 'multipart/related; boundary=' + boundary,
+            "Authorization": `Bearer ${gapi.auth.getToken().access_token}`
+        },
+        observe:'response',
+        params: {
+            'uploadType': 'multipart'
+        }
+    }
+)
+.subscribe((result)=>{
+    console.log(result)
+})
 ```
 
 * upload the multipart.ts.json or a file smaller than 5mb
@@ -456,3 +469,91 @@ if (result.status === 200 || result.status === 201) {
 ```
 
 * go ahead and upload resumable.txt from the app or a file bigger than 5mb
+
+
+## Task 7 PregenerateId 
+
+as an addition say if you need to send the link out to another endpoint and dont have time to wait for a resumable network you can use pregenerated ids instead
+
+the link will look like this 
+```
+https://drive.google.com/file/d/[ID goes here]/view?usp=sharing
+```
+
+```ts
+// pregeneratedId upload
+
+    let reader = new FileReader()
+    reader.readAsBinaryString(fileUpload.files[0])
+
+
+
+    reader.onload =
+        (evt) => {
+
+            http.get(
+                "https://www.googleapis.com/drive/v3/files/generateIds",
+                {
+                    headers:{
+                        "Authorization": `Bearer ${gapi.auth.getToken().access_token}`
+                    },
+                    observe:'response',
+                    params: {
+                        count:"1",
+                        fields:"*",
+                        space:'drive'
+                    }
+                }
+            )
+            .subscribe((result:any)=>{
+
+                const boundary = '-------314159265358979323846';
+                const delimiter = "\r\n--" + boundary + "\r\n";
+                const close_delim = "\r\n--" + boundary + "--";
+
+                let fileData:any = fileUpload.files[0]
+                var contentType = fileData.type || 'application/octet-stream';
+                var metadata = {
+                    'name': "pregenerated.pdf",
+                    'mimeType': contentType,
+                    id:result.body.ids[0]
+                };
+
+            
+                var base64Data = btoa((reader.result as any));
+                var multipartRequestBody =
+                    delimiter +
+                    'Content-Type: application/json\r\n\r\n' +
+                    JSON.stringify(metadata) +
+                    delimiter +
+                    'Content-Type: ' + contentType + '\r\n' +
+                    'Content-Transfer-Encoding: base64\r\n' +
+                    '\r\n' +
+                    base64Data +
+                    close_delim;
+
+                http.post(
+                    "https://www.googleapis.com/upload/drive/v3/files",
+                    multipartRequestBody,
+                    {
+                        headers:{
+                            'Content-Type': 'multipart/related; boundary=' + boundary,
+                            "Authorization": `Bearer ${gapi.auth.getToken().access_token}`
+                        },
+                        observe:'response',
+                        params: {
+                            'uploadType': 'multipart'
+                        }
+                    }
+                )
+                .subscribe((result)=>{
+                    console.log(result)
+                })
+            })
+
+
+
+
+        }
+//
+```

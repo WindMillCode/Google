@@ -30,8 +30,8 @@ export const environment: any = {
 	},
 	googleDrive: {
 		// insert credentials here
-		apiKey: "AIzaSyAPkvxNBojMDfVXgFVScqcR_2XJwsE_9NY",
-		clientId: "637621663480-q40l4jmp84qso2ibumb8iop2asksag8r.apps.googleusercontent.com"
+		apiKey: "AIzaSyDGwvxYiTVw95Roljs-wp0t44RcrrfK1Vk",
+		clientId: "637621663480-nt3bckdocsmk6hn2h8r0h1226fair6of.apps.googleusercontent.com"
 		//
 	},
 	playground: {
@@ -42,7 +42,8 @@ export const environment: any = {
 			multipart: false,
 			resumable: false,
 			indexable:false,
-			gSuite:false
+			gSuite:false,
+			pregenerated:true,
 		},
 		folders:{
 			create:false,
@@ -56,8 +57,8 @@ export const environment: any = {
 	//replace upload object here
 	upload:{
 		simple:false,
-		multipart:false,
-		resumable:false
+		multipart:false	,
+		resumable:false,
 	},
 	//
 

@@ -4,6 +4,7 @@
 
 * download the [web app](https://github.com/codequickie123/AngularDriveApp)
 * download the search_me [here](https://github.com/codequickie123/Google/tree/master/API/drive/vids/Searching_for_Files/search_me)
+* upload the search_me  folder and its contents to google drive
 
 
 * at the end of this lab your result shoul dlook like src/app/directive/search.directive.final.ts
@@ -141,7 +142,7 @@ if(environment.search.all){
     * replace search object
     ```ts
     search:{
-		all:true,
+		all:false,
 		query:true
 	},
     ```

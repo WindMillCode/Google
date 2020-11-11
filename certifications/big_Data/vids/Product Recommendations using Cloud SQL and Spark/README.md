@@ -1,4 +1,4 @@
-#### Lab: Product Recommendations using Cloud SQL and Spark
+# Product Recommendations using Cloud SQL and Spark
 
 
 ##### Steps

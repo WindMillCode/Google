@@ -71,10 +71,16 @@ gcloud --project=$PROJECT_ID iam service-accounts list
 gcloud services enable [API NAME]
 ```
 
+* to see all availbe API
+```bash
+gcloud services list --available
+```
+
 * to create a storage bucket
 ```bash
 gsutil mb gs://[<<BUCKET_NAME(MUST BE UNIQUE)>>]
-gsutil mb gs://kubeflow-qwiklabs-gcp-01-1a614bf66a2b
+# example
+# gsutil mb gs://kubeflow-qwiklabs-gcp-01-1a614bf66a2b
 ```
 
 
@@ -83,7 +89,7 @@ gsutil mb gs://kubeflow-qwiklabs-gcp-01-1a614bf66a2b
 
 * to create a bigquery dataset 
 ```bash
-bq mk --dataset ecommerce 
+bq mk --dataset [DATA SET NAME HERE] 
 ```
 
 * to load data from cloud storage

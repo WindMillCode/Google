@@ -634,7 +634,8 @@ export class RyberService {
                     'background-color':background,
                     color,
                     "font-weight":italics,
-                    "font-family":fonts
+                    "font-family":fonts,
+                    "text-align": devObj.mf["text-align"]
                 }
                 options.css === undefined ? undefined :(()=>{
                     css = options.css;

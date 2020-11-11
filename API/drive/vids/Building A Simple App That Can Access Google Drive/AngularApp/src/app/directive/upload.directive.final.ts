@@ -27,7 +27,7 @@ export class UploadDirective {
 
 		if (this.extras?.confirm === 'true') {
 
-			//accesing the drive API 
+			//accesing the drive API
 
 			//paste credentials here
 			let CLIENT_ID = environment.googleDrive.clientId
@@ -58,9 +58,9 @@ export class UploadDirective {
 						gapi.auth2.getAuthInstance().signIn();
 					}
 					//
-				
 
-					// simple upload 
+
+					// simple upload
 					if (environment.upload.simple) {
 						fileUpload.files[0].text() //doesnt work for IE
 							.then((text) => {
@@ -80,62 +80,69 @@ export class UploadDirective {
 							})
 					}
 					//
-			
-
-					// multipart upload 
-					if (environment.upload.multipart) {
 
 
-						// console.log(img) 
-						fileUpload.files[0].text() //doesnt work for IE
-							.then((pdf) => {
-								var fileName = 'multipart.json';
-								var contentType , uploadContentType = 'application/json'
-								var metadata = {
-									'name': fileName,
-									'mimeType': contentType
-								};
-					
-					
-								// preparing the multipart body
-								const boundary = 'xyz'
+					// multipart upload
+					if (environment.playground?.upload.multipart) {
+
+						// console.log(img)
+						let reader = new FileReader()
+						reader.readAsBinaryString(fileUpload.files[0])
+						reader.onload =(evt) => {
+
+								const boundary = '-------314159265358979323846';
 								const delimiter = "\r\n--" + boundary + "\r\n";
 								const close_delim = "\r\n--" + boundary + "--";
-					
+
+								let fileData:any = fileUpload.files[0]
+								var contentType = fileData.type || 'application/octet-stream';
+								var metadata = {
+								  'title': fileData.fileName,
+								  'mimeType': contentType
+								};
+
+								var base64Data = btoa((reader.result as any));
 								var multipartRequestBody =
 									delimiter +
-									'Content-Type: application/json; charset=UTF-8\r\n\r\n' +
+									'Content-Type: application/json\r\n\r\n' +
 									JSON.stringify(metadata) +
 									delimiter +
-									'Content-Type: ' + uploadContentType + '\r\n\r\n' +
-									pdf +
+									'Content-Type: ' + contentType + '\r\n' +
+									'Content-Transfer-Encoding: base64\r\n' +
+									'\r\n' +
+									base64Data +
 									close_delim;
-					
-								gapi.client.request({
-									'path': 'https://www.googleapis.com/upload/drive/v3/files',
-									'method': 'POST',
-									'params': { 'uploadType': 'multipart' },
-									'headers': {
-										'Content-Type': 'multipart/related; boundary=' + boundary
-									},
-									'body': multipartRequestBody
-								}).execute((a) => {
-									console.log(a)
-								})								
-								//
-					
-					
-							})
-					
-					
-					
-					}
-					//	
 
-					// resumable upload 
+
+
+								http.post(
+									"https://www.googleapis.com/upload/drive/v3/files",
+									multipartRequestBody,
+									{
+										headers:{
+											'Content-Type': 'multipart/related; boundary=' + boundary,
+											"Authorization": `Bearer ${gapi.auth.getToken().access_token}`
+										},
+										observe:'response',
+										params: {
+											'uploadType': 'multipart',
+										}
+									}
+								)
+								.subscribe((result)=>{
+									console.log(result)
+								})
+
+
+						}
+
+					}
+					//
+
+					// resumable upload
 					if (environment.upload.resumable) {
 
-						
+
 						resumable({
 							http,
 							fileUpload,
@@ -144,10 +151,10 @@ export class UploadDirective {
 
 
 					}
-					//		
-					
+					//
 
-			
+
+
 
 
 				})
@@ -157,13 +164,13 @@ export class UploadDirective {
 			});
 			//
 
-			//				
+			//
 
 		}
 
 	}
-	
-	
+
+
 	ngOnInit() {
 		this.extras = this.upload
 		if (this.extras?.confirm === 'true') {
@@ -203,7 +210,7 @@ export class UploadDirective {
 function resumable(
 	devObj: {
 		http: HttpClient,
-		fileUpload: HTMLInputElement 
+		fileUpload: HTMLInputElement
 		resumableError: String // true false as boolean
 	}
 ) {
@@ -243,8 +250,8 @@ function resumable(
 		})
 		let fileContent = result[0]
         let resumableURL = result[1].headers.get('Location')
-        //		
-		
+        //
+
 		//indicate where we are in the upload
 		console.log(headers.get("Content-Range"))
 		//
@@ -267,7 +274,7 @@ function resumable(
 
 
 }
-//* 
+//*
 
 // your upload session
 function chunked(devObj) {
@@ -285,7 +292,7 @@ function chunked(devObj) {
 			return of(error) // angular http thinks 308 is an error, GCP drive API uses to indicate incomplete
 		})
 	)
-	// 
+	//
 	.subscribe((result) => {
 
 
@@ -293,12 +300,12 @@ function chunked(devObj) {
 		if (result.status === 200 || result.status === 201) {
 			alert('file uploaded')
 		}
-		// 
+		//
 
 		//you need to upload more chunks
 			// if you dont know the positions do */fileSize
 			// if you dont knwo the fileSize do offset-chunkSize/*
-			//if you dont know both */*			
+			//if you dont know both */*
 		if (result.status === 308) {
 			let newOffset = parseInt(result.headers.get('Range').split("-")[1]) + 1
 			let chunk = newOffset + (256 * 1024)
@@ -330,7 +337,7 @@ function chunked(devObj) {
 				chunk,
 				offset: newOffset
 			})
-		}	
+		}
 		//
 
 
@@ -343,8 +350,8 @@ function chunked(devObj) {
 				fileUpload,
 				resumableError
 			})
-			
-			
+
+
 		}
 		//
 

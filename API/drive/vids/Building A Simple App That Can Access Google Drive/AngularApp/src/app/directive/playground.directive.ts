@@ -126,44 +126,137 @@ export class PlaygroundDirective {
 						// multipart upload
 						if (environment.playground?.upload.multipart) {
 
-
 							// console.log(img)
-							fileUpload.files[0].text() //doesnt work for IE
-								.then((pdf) => {
-									var fileName = 'multipart.json';
-									var contentType = 'application/json'
-									var metadata = {
-										'name': fileName,
-										'mimeType': contentType
-									};
+							let reader = new FileReader()
+							reader.readAsBinaryString(fileUpload.files[0])
+							reader.onload =
+								(evt) => {
 
-									const boundary = 'xyz'
+									const boundary = '-------314159265358979323846';
 									const delimiter = "\r\n--" + boundary + "\r\n";
 									const close_delim = "\r\n--" + boundary + "--";
 
+									let fileData:any = fileUpload.files[0]
+									var contentType = fileData.type || 'application/octet-stream';
+									var metadata = {
+									  'name': fileData.fileName,
+									  'mimeType': contentType
+									};
+
+									var base64Data = btoa((reader.result as any));
 									var multipartRequestBody =
 										delimiter +
-										'Content-Type: application/json; charset=UTF-8\r\n\r\n' +
+										'Content-Type: application/json\r\n\r\n' +
 										JSON.stringify(metadata) +
 										delimiter +
-										'Content-Type: ' + contentType + '\r\n\r\n' +
-										pdf +
+										'Content-Type: ' + contentType + '\r\n' +
+										'Content-Transfer-Encoding: base64\r\n' +
+										'\r\n' +
+										base64Data +
 										close_delim;
 
-									gapi.client.request({
-										'path': 'https://www.googleapis.com/upload/drive/v3/files',
-										'method': 'POST',
-										'params': { 'uploadType': 'multipart' },
-										'headers': {
-											'Content-Type': 'multipart/related; boundary=' + boundary
-										},
-										'body': multipartRequestBody
-									}).execute((a) => {
-										console.log(a)
+
+									http.post(
+										"https://www.googleapis.com/upload/drive/v3/files",
+										multipartRequestBody,
+										{
+											headers:{
+												'Content-Type': 'multipart/related; boundary=' + boundary,
+												"Authorization": `Bearer ${gapi.auth.getToken().access_token}`
+											},
+											observe:'response',
+											params: {
+												'uploadType': 'multipart',
+											}
+										}
+									)
+									.subscribe((result)=>{
+										console.log(result)
 									})
-								})
+
+								}
 
 
+
+						}
+						//
+
+						// pregeneratedId upload
+						if (environment.playground?.upload.pregenerated) {
+
+							// console.log(img)
+							let reader = new FileReader()
+							reader.readAsBinaryString(fileUpload.files[0])
+
+
+
+							reader.onload =
+								(evt) => {
+
+									http.get(
+										"https://www.googleapis.com/drive/v3/files/generateIds",
+										{
+											headers:{
+												"Authorization": `Bearer ${gapi.auth.getToken().access_token}`
+											},
+											observe:'response',
+											params: {
+												count:"1",
+												fields:"*",
+												space:'drive'
+											}
+										}
+									)
+									.subscribe((result:any)=>{
+
+										const boundary = '-------314159265358979323846';
+										const delimiter = "\r\n--" + boundary + "\r\n";
+										const close_delim = "\r\n--" + boundary + "--";
+
+										let fileData:any = fileUpload.files[0]
+										var contentType = fileData.type || 'application/octet-stream';
+										var metadata = {
+										  	'name': "pregenerated.pdf",
+										  	'mimeType': contentType,
+										  	id:result.body.ids[0]
+										};
+
+										// https://drive.google.com/file/d/1qDmaYd00QbxoAlsaKOaMiUmpqDnI2z4H/view?usp=sharing
+										var base64Data = btoa((reader.result as any));
+										var multipartRequestBody =
+											delimiter +
+											'Content-Type: application/json\r\n\r\n' +
+											JSON.stringify(metadata) +
+											delimiter +
+											'Content-Type: ' + contentType + '\r\n' +
+											'Content-Transfer-Encoding: base64\r\n' +
+											'\r\n' +
+											base64Data +
+											close_delim;
+
+										http.post(
+											"https://www.googleapis.com/upload/drive/v3/files",
+											multipartRequestBody,
+											{
+												headers:{
+													'Content-Type': 'multipart/related; boundary=' + boundary,
+													"Authorization": `Bearer ${gapi.auth.getToken().access_token}`
+												},
+												observe:'response',
+												params: {
+													'uploadType': 'multipart'
+												}
+											}
+										)
+										.subscribe((result)=>{
+											console.log(result)
+										})
+									})
+
+
+
+
+								}
 
 						}
 						//
