@@ -12,9 +12,21 @@
 
 # Service Accounts
 
-* if you delete a service acct that you did not create from the IAM roles  page, toss the project its corrupted
+* if you delete a service acct that you did not create from the IAM roles  page, try to recover using these steps 
+
+head [here]
+Service Acct > find the sa in question > UNIQUE_ID
+
+make a POST request with an empty body
+https://content-iam.googleapis.com/v1/projects/[PROJECT HERE]/serviceAccounts/[UNIQUE_ID_HERE]:undelete?alt=json&key=[API key here]
+
+if sucessful you get a 200 back
+
+
+* otherwise toss the project its corrupted
 
 * __default Compute Engine service account__ [PROJECT_NUMBER]-compute@developer.gserviceaccount.com
+
 
 # Cloud Shell
 

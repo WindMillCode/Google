@@ -480,6 +480,9 @@ the link will look like this
 https://drive.google.com/file/d/[ID goes here]/view?usp=sharing
 ```
 
+once given the link there is still an issue the service account owns 
+the file, to see it you must change the permission once its uploaded    
+
 ```ts
 // pregeneratedId upload
 
@@ -547,7 +550,24 @@ https://drive.google.com/file/d/[ID goes here]/view?usp=sharing
                     }
                 )
                 .subscribe((result)=>{
-                    console.log(result)
+
+                    http.post(
+                        "https://www.googleapis.com/drive/v3/files/"+metadata.id+"/permissions",
+                        {
+                            role:"writer",
+                            type:"user",
+                            emailAddress:"[PLACE INTEDED EMAIL ADDR HERE]"
+                        },
+                        {
+                            headers:{
+                                "Authorization": `Bearer ${token}`
+                            }
+                        }
+                    )
+                    .subscribe((result)=>{
+                    })
+                    //        
+
                 })
             })
 

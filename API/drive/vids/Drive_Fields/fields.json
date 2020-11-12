@@ -1,0 +1,88 @@
+{
+    "kind": "drive#file",
+    "id": "1LW14MwZJgG4bU5Yb6t7HV-Fi6-SfvIlt",
+    "name": "fields",
+    "mimeType": "application/vnd.google-apps.folder",
+    "starred": false,
+    "trashed": false,
+    "explicitlyTrashed": false,
+    "parents": [
+        "0AIm_R4pfax09Uk9PVA"
+    ],
+    "spaces": [
+        "drive"
+    ],
+    "version": "4",
+    "webViewLink": "https://drive.google.com/drive/folders/1LW1IOPZJgG4asdb213U5Yb1HV-Fi6-SfvIlt",
+    "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.folder",
+    "hasThumbnail": false,
+    "thumbnailVersion": "0",
+    "viewedByMe": true,
+    "viewedByMeTime": "2020-10-12T15:07:17.798Z",
+    "createdTime": "2020-10-12T09:09:11.126Z",
+    "modifiedTime": "2020-10-12T09:09:11.126Z",
+    "modifiedByMeTime": "2020-10-12T09:09:11.126Z",
+    "modifiedByMe": true,
+    "owners": [
+        {
+            "kind": "drive#user",
+            "displayName": "codequickie",
+            "me": true,
+            "permissionId": "14770421419975095053",
+            "emailAddress": "yourEmailAddress@gmail.com"
+        }
+    ],
+    "lastModifyingUser": {
+        "kind": "drive#user",
+        "displayName": "codequickie",
+        "me": true,
+        "permissionId": "14770421419975095053",
+        "emailAddress": "yourEmailAddress@gmail.com"
+    },
+    "shared": false,
+    "ownedByMe": true,
+    "capabilities": {
+        "canAddChildren": true,
+        "canAddMyDriveParent": false,
+        "canChangeCopyRequiresWriterPermission": false,
+        "canChangeViewersCanCopyContent": false,
+        "canComment": true,
+        "canCopy": false,
+        "canDelete": true,
+        "canDownload": true,
+        "canEdit": true,
+        "canListChildren": true,
+        "canModifyContent": true,
+        "canMoveChildrenWithinDrive": true,
+        "canMoveItemIntoTeamDrive": true,
+        "canMoveItemOutOfDrive": true,
+        "canMoveItemWithinDrive": true,
+        "canReadRevisions": false,
+        "canRemoveChildren": true,
+        "canRemoveMyDriveParent": true,
+        "canRename": true,
+        "canShare": true,
+        "canTrash": true,
+        "canUntrash": true
+    },
+    "viewersCanCopyContent": true,
+    "copyRequiresWriterPermission": false,
+    "writersCanShare": true,
+    "permissions": [
+        {
+            "kind": "drive#permission",
+            "id": "14770421419975095053",
+            "type": "user",
+            "emailAddress": "yourEmailAddress@gmail.com",
+            "role": "owner",
+            "displayName": "codequickie",
+            "deleted": false
+        }
+    ],
+    "permissionIds": [
+        "19770421412125095053"
+    ],
+    "folderColorRgb": "#8f8f8f",
+    "quotaBytesUsed": "0",
+    "isAppAuthorized": false
+}

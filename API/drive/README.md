@@ -636,6 +636,9 @@ http.get(
 ```
 
 
+### [Lab Downloading Files with Google Drive API](./vids/Download_from_Google_drive/README.md)
+
+
 ## Search for files and folders
 * use the files.list method
 * REST API: http.get to https://www.googleapis.com/drive/v3/files/
@@ -656,7 +659,7 @@ http.get(
 })
 ```
 
-## Search for specifc files
+### Search for specifc files
 * we use the q prop in our params to find this
 * the logic is setup where  q is the key
 ```
@@ -692,7 +695,7 @@ http.get(
 })
 ```
 
-## Search by corpora
+### Search by corpora
 * the files.list method default is 
 ```
 corpora:user
@@ -701,10 +704,41 @@ to search different corpora choose from the enum earlier in this document
 [here]()
 __enum__ - comp sci term for "acceptable options"
 
+
+## Return specific fields for a file
+
+* when you ask the API for a file, it only gives a few default fields
+* to get the desired fields use the fields object
+
+### Fetching the fields of a nested resource
+
+* TO DO IT 
+
+in REST API  params
+__permissions.get__ with __fields=role__ or __fields=*__.
+__files.get__ with __fields=files(role)__ or __fields=permissions/role__.
+__files.get__ with __fields=files(permissions)__ to imply all fields of the nested resource.
+__changes.list__ with __fields=changes(file(permissions(role)))__.
+
+### Formatting rules for the fields parameter
+
+* for more than one field use comma seperated fields
+* use / to get to fields nested in other fields
+* when you have a.id & b.id access the desired one using __b(id)__
+* use an __*__ as a select all wildcard
+
+* sucess 200
+* fail 400
+
+### [Lab Fields](./vids/Drive_Fields/README.md)
+
+
+
+
+
 # Issues with the DRIVE API 
 
-* uploading file content that indicate an image specifcally jpegs seems to corrpt the file, XHR on the data is a bit corroupted, but getting the from HTMLInputElement file upload provides identical binary in the text editor, find how to modify the data before sending it to google drive
-    *i got the api to react [here](https://stackoverflow.com/questions/63422138/how-to-upload-file-into-specific-folder-with-google-drive-api-and-python/64204197#64204197)
+
 
 * Import to Google Docs types 
     *  im getting the needed gsuite doc, however the fileContent is not coming along
@@ -719,4 +753,4 @@ __enum__ - comp sci term for "acceptable options"
 * i dont get viewing files in the browser, can I just use embed how do I get the whole files reosurce object
 
 
-[here](corpora_anchor)
+### [Lab Working with Folders using Google Drive API](./vids/Download_from_Google_drive/README.md)

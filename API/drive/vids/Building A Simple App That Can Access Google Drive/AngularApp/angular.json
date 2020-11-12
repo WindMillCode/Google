@@ -5,7 +5,11 @@
 	"projects": {
 		"AngularApp": {
 			"projectType": "application",
-			"schematics": {},
+			"schematics": {
+				"@schematics/angular:directive": {
+					"skipTests": true
+				}
+			},
 			"root": "",
 			"sourceRoot": "src",
 			"prefix": "app",
@@ -167,6 +171,23 @@
 							"poll": 2500,
 							"verbose": false,
 							"watch": true
+						},
+						"fields": {
+							"fileReplacements": [
+								{
+									"replace": "src/app/website.ts",
+									"with": "src/app/database/website-fields-dev.ts"
+								},
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.drive.dev.ts"
+								}
+							],
+							"optimization": false,
+							"sourceMap": false,
+							"poll": 2500,
+							"verbose": false,
+							"watch": true
 						}
 					}
 				},
@@ -276,6 +297,11 @@
 						},
 						"search": {
 							"browserTarget": "AngularApp:drive:search",
+							"port": 8000,
+							"liveReload": true
+						},
+						"fields": {
+							"browserTarget": "AngularApp:drive:fields",
 							"port": 8000,
 							"liveReload": true
 						},

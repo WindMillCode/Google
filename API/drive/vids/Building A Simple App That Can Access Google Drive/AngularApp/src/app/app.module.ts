@@ -21,6 +21,7 @@ import { UploadDirective } from './directive/upload.directive';
 import { FoldersDirective } from './directive/folders.directive';
 import { DownloadDirective } from './directive/download.directive';
 import { SearchDirective } from './directive/search.directive';
+import { FieldsDirective } from './directive/fields.directive';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { SearchDirective } from './directive/search.directive';
     UploadDirective,
     FoldersDirective,
     DownloadDirective,
-    SearchDirective
+    SearchDirective,
+    FieldsDirective
   ],
   imports: [
     BrowserModule,

@@ -203,6 +203,7 @@
         </ng-template>
         <ng-template #pictureBlock1  >
             <button #myVal
+            appFields  [fields]  = "ryber.appAvailble( a.extras[2][bb], 'appFields')"
             appSearch  [search]  = "ryber.appAvailble( a.extras[2][bb], 'appSearch')"
             appDownload  [download]  = "ryber.appAvailble( a.extras[2][bb], 'appDownload')"
             appFolders  [folders]  = "ryber.appAvailble( a.extras[2][bb], 'appFolders')"
