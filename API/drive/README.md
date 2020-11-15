@@ -480,7 +480,7 @@ http.get(
 	// move the file from a to b
 	http.patch(
 		`https://www.googleapis.com/drive/v3/files/${folders.target.id}`,
-		{ fields: 'id, parents', addParents: folders.b.id },
+		{  },
 		{
 			headers,
 			observe: 'response' ,
@@ -733,6 +733,164 @@ __changes.list__ with __fields=changes(file(permissions(role)))__.
 ### [Lab Fields](./vids/Drive_Fields/README.md)
 
 
+## Share files, folders and drives
+
+* when it comes to sharing files in google drive, they have this permissions object to get this done
+* to share anything you need __role=writer__
+* to add a member to a shared drive __role=organizer__
+
+a complete list of roles [here](https://developers.google.com/drive/api/v3/ref-roles)
+
+### Permission propagation
+
+* when you move a file from one folder to another, the file picks up the permission from a new folder
+* to remove inherited permissions in a shared drive the changes must take place on the the previous owner
+* inherited permissions in my drive can be overridden 
+
+### Capabilities 
+
+* they actually determine what a user can do to an item
+* the difference, permissions are what you can change, capabilities is what GCP goes by to determine an allowed action
+
+### Create a permission
+
+* need the type and role
+* __type__ - the who (user,group,domain,anyone)
+* __role__ - reader,writer,organizer 
+* a complete list of roles [here](https://developers.google.com/drive/api/v3/ref-roles)
+
+* type === user,group must provide an emailAddr
+* type === domain must provide a domain as well
+
+#### Typescript
+```ts
+//create a permission
+if(environment.share.create){
+
+	
+	from(
+		gapi.client.drive.files.create({
+			name:'share.txt', //optional
+			media: 'media',  //optional
+			fields: 'id'     //optional
+		})
+	).subscribe((result:any)=>{
+		console.log(result.result.id)
+		let id = result.result.id
+		http.post(
+			"https://www.googleapis.com/drive/v3/files/"+id+"/permissions",
+			{
+				role:'reader',
+				type:'user',
+				emailAddress:"NycDailyDeliveries@gmail.com"
+			},
+			{
+				headers,
+			}
+		).subscribe((result)=>{
+			console.log(result)
+		})
+	})
+}
+
+```
+
+### List Permissions
+* to list permissions
+	* if you want to see what a user is allowed to do ask for capabilities in the fields params
+	* for review on fields [here](#return-specific-fields-for-a-file)
+
+#### Typescript
+```ts
+from(
+	gapi.client.drive.files.create({
+		name:'listPermissions.txt', //optional
+		media: 'media',  //optional
+		fields: 'id'     //optional
+	})
+).subscribe((result:any)=>{
+	let id = result.result.id
+	http.post(
+		"https://www.googleapis.com/drive/v3/files/"+id+"/permissions",
+		{
+			role:'reader',
+			type:'user',
+			emailAddress:"NycDailyDeliveries@gmail.com"
+		},
+		{
+			headers,
+		}
+	)
+	.subscribe((result)=>{
+
+		http.get(
+			"https://www.googleapis.com/drive/v3/files/"+id+"/permissions",
+			{
+				headers,
+			}
+		)
+		.subscribe((result)=>{
+			console.log(result)
+		})
+	})
+})
+```
+
+### Determine the role 
+
+* before you can change permissions you need to determine the role and the entity behind it, especially for items in shared drive
+* to do this make a GET request asking for the permissions fields in 
+* we will go over this in the lab for the seciton
+
+
+### Change permissions
+
+* to change permission, you must change  the role
+
+#### Typescript
+
+```ts
+http.patch(
+	"https://www.googleapis.com/drive/v3/files/"+id.file+"/permissions/"+id.permission,
+	{
+		role:'commenter',
+		// expirationTime: provide a datetime here
+	},
+	{
+		headers,
+	}
+)
+.subscribe((result)=>{
+	console.log(result)
+})
+```
+
+### Revoke access to a file or folder
+
+* when you start sharing, the item is in your shared drive, for the other shared to the item goes to share drive
+* to revoke access
+
+#### Typescript
+```ts
+	http.delete(
+		"https://www.googleapis.com/drive/v3/files/"+id.folder+"/permissions/"+id.permission,
+		{
+			headers,
+		}
+	)
+	.subscribe((result)=>{
+		console.log(result) //should be null if sucessful
+	})
+```
+
+* in My Drive you can delete inherited permissions
+* in shared drive inherited permissions cant be revoked, you must update the permission on the parent instead
+
+### Transfer File Ownership
+* same logic, if something is in your shared drive you do not own it
+* to transfer file ownership
+
+
 
 
 
@@ -751,6 +909,5 @@ __changes.list__ with __fields=changes(file(permissions(role)))__.
 * viewersCanCopyContent = false still allows for download
 
 * i dont get viewing files in the browser, can I just use embed how do I get the whole files reosurce object
+v
 
-
-### [Lab Working with Folders using Google Drive API](./vids/Download_from_Google_drive/README.md)

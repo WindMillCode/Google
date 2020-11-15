@@ -44,7 +44,12 @@
 							"backend/polyfills/object.js",
 							"backend/polyfills/signaturePad.js",
 							"src/assets/scripts/pikaday.js"
-						]
+						],
+						"optimization": false,
+						"sourceMap": true,
+						"poll": 2500,
+						"verbose": false,
+						"watch": true
 					},
 					"configurations": {
 						"production": {
@@ -61,7 +66,6 @@
 							"optimization": true,
 							"outputHashing": "all",
 							"sourceMap": false,
-							"extractCss": true,
 							"namedChunks": false,
 							"extractLicenses": true,
 							"vendorChunk": false,
@@ -188,127 +192,56 @@
 							"poll": 2500,
 							"verbose": false,
 							"watch": true
-						}
-					}
-				},
-				"playground": {
-					"builder": "@angular-devkit/build-angular:browser",
-					"options": {
-						"outputPath": "dist/Drive",
-						"baseHref": "",
-						"fileReplacements": [
-							{
-								"replace": "src/app/website.ts",
-								"with": "src/app/database/website-playground-dev.ts"
-							},
-							{
-								"replace": "src/environments/environment.ts",
-								"with": "src/environments/environment.drive.dev.ts"
-							}
-						],
-						"index": "src/index.html",
-						"main": "src/main.ts",
-						"polyfills": "src/polyfills.ts",
-						"tsConfig": "tsconfig.app.json",
-						"aot": true,
-						"assets": [],
-						"styles": [
-							"src/styles.css",
-							"src/assets/styles/pikaday.css"
-						],
-						"scripts": [
-							"backend/modernizr/modernizr.js",
-							"backend/polyfills/object.js",
-							"backend/polyfills/signaturePad.js",
-							"src/assets/scripts/pikaday.js"
-						]
-					},
-					"configurations": {
-						"production": {
+						},
+						"share": {
 							"fileReplacements": [
 								{
-									"replace": "src/environments/environment.ts",
-									"with": "src/environments/environment.drive.prod.ts"
-								},
-								{
 									"replace": "src/app/website.ts",
-									"with": "src/app/database/website-drive-prod.ts"
-								}
-							],
-							"optimization": true,
-							"outputHashing": "all",
-							"sourceMap": false,
-							"extractCss": true,
-							"namedChunks": false,
-							"extractLicenses": true,
-							"vendorChunk": false,
-							"buildOptimizer": true,
-							"budgets": [
-								{
-									"type": "initial",
-									"maximumWarning": "2mb",
-									"maximumError": "5mb"
+									"with": "src/app/database/website-share-dev.ts"
 								},
 								{
-									"type": "anyComponentStyle",
-									"maximumWarning": "6kb",
-									"maximumError": "10kb"
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.drive.dev.ts"
 								}
-							],
-							"assets": []
-						},
-						"development": {
-							"optimization": false,
-							"sourceMap": true,
-							"poll": 2500,
-							"verbose": false,
-							"watch": true
+							]
 						}
 					}
 				},
 				"serve": {
 					"builder": "@angular-devkit/build-angular:dev-server",
 					"options": {
-						"browserTarget": "AngularApp:build:development"
+						"browserTarget": "AngularApp:build:development",
+						"port": 8000,
+						"liveReload": true,
+						"hmr": false
 					},
 					"configurations": {
 						"production": {
 							"browserTarget": "AngularApp:build:production"
 						},
 						"drive": {
-							"browserTarget": "AngularApp:drive:development",
-							"port": 8000,
-							"liveReload": true
+							"browserTarget": "AngularApp:drive:development"
 						},
 						"upload": {
-							"browserTarget": "AngularApp:drive:upload",
-							"port": 8000,
-							"liveReload": true
+							"browserTarget": "AngularApp:drive:upload"
 						},
 						"folders": {
-							"browserTarget": "AngularApp:drive:folders",
-							"port": 8000,
-							"liveReload": true
+							"browserTarget": "AngularApp:drive:folders"
 						},
 						"download": {
-							"browserTarget": "AngularApp:drive:download",
-							"port": 8000,
-							"liveReload": true
+							"browserTarget": "AngularApp:drive:download"
 						},
 						"search": {
-							"browserTarget": "AngularApp:drive:search",
-							"port": 8000,
-							"liveReload": true
+							"browserTarget": "AngularApp:drive:search"
 						},
 						"fields": {
-							"browserTarget": "AngularApp:drive:fields",
-							"port": 8000,
-							"liveReload": true
+							"browserTarget": "AngularApp:drive:fields"
+						},
+						"share": {
+							"browserTarget": "AngularApp:drive:share"
 						},
 						"playground": {
-							"browserTarget": "AngularApp:drive:playground",
-							"port": 8000,
-							"liveReload": true
+							"browserTarget": "AngularApp:drive:playground"
 						}
 					}
 				},

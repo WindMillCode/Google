@@ -30,8 +30,7 @@ export const environment: any = {
 	},
 	googleDrive: {
 		// insert credentials here
-		apiKey: "AIzaSyAFZKThC3_nPCYRj4pkickdpjIIdFlVqK0",
-		clientId: "637621663480-t02k001qoa6adua2nrgbk18hodul3250.apps.googleusercontent.com"
+
 		//
 	},
 	playground: {
@@ -92,6 +91,16 @@ export const environment: any = {
 		nested:false,
 		group:false,
 		multiple:true
+	},
+	//
+
+	//replace share object here
+	share:{
+		create:false,
+		list:false,
+		change:false,
+		revoke:false,
+		transfer:true
 	}
 	//
 };

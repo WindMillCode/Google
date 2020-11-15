@@ -41,6 +41,8 @@ export class FieldsDirective {
             let ryber = this.ryber
             //
 
+
+
             // load the auth SDK
             gapi.load('client:auth2', () => {
                 gapi.client.init({
@@ -55,6 +57,12 @@ export class FieldsDirective {
                     if (!gapi.auth2.getAuthInstance().isSignedIn.get()) {
                         gapi.auth2.getAuthInstance().signIn();
                     }
+                    //
+
+                    //access token setup
+                    let headers = new HttpHeaders()
+                    headers = headers
+                        .set("Authorization", `Bearer ${gapi.auth.getToken().access_token}`)
                     //
 
 
