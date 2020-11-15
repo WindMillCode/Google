@@ -815,7 +815,7 @@ from(
 		{
 			role:'reader',
 			type:'user',
-			emailAddress:"NycDailyDeliveries@gmail.com"
+			emailAddress:"yourEmailHere@gmail.com"
 		},
 		{
 			headers,
@@ -890,6 +890,23 @@ http.patch(
 * same logic, if something is in your shared drive you do not own it
 * to transfer file ownership
 
+#### Typescript
+```ts
+http.post(
+	"https://www.googleapis.com/drive/v3/files/"+id.folder+"/permissions",
+	{
+		role:'owner',
+		type:'user',
+		emailAddress:"yourEmailHere@gmail.com"
+	},
+	{
+		headers,
+		params:{
+			transferOwnership:"true"
+		}
+	}
+)
+```
 
 
 
@@ -911,3 +928,8 @@ http.patch(
 * i dont get viewing files in the browser, can I just use embed how do I get the whole files reosurce object
 v
 
+* transfer file ownership
+	* it seems to take a while to get this done
+
+* permissions batch updartes
+	not availble in browser SDK or REST API

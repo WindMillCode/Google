@@ -30,7 +30,8 @@ export const environment: any = {
 	},
 	googleDrive: {
 		// insert credentials here
-
+		apiKey: "",
+		clientId: ""
 		//
 	},
 	playground: {
@@ -100,7 +101,7 @@ export const environment: any = {
 		list:false,
 		change:false,
 		revoke:false,
-		transfer:true
+		transfer:true,
 	}
 	//
 };
