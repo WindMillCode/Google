@@ -3,5 +3,5 @@ report*.json
 *.mp4
 20*
 Refv*
-README.md
+/README.md
 *node_modules*
