@@ -955,6 +955,19 @@ http.get(
 )
 ```
 
+## Manage File Metadata
+
+### Specifying file names and extensions
+
+* if there is no file extension the API tries to make one based on its mime type
+
+### Saving indexable text
+
+* if the file doesnt have text, its a good idea to supply indexable text so in search results it can be found
+
+### Uploading thumbnails
+
+* if drive cant make a thumbnail you can provide one
 
 # Issues with the DRIVE API 
 

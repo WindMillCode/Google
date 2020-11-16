@@ -19,7 +19,7 @@ open /src/app/directive/share.directive.ts in your code editor
 let CLIENT_ID = environment .googleDrive.clientId
 let API_KEY = environment.googleDrive.apiKey
 var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
-var SCOPES = 'https://www.googleapis.com/auth/drive.metadata';
+var SCOPES = 'https://www.googleapis.com/auth/drive.appdata';
 ```
 * you need to make new api and oauth credentials, because on first login UI discusses the permissions the app is looking for in the scope, this doesn't happen again and would be a security issue to all of a sudden change behind the end users back
 

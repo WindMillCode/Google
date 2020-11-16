@@ -30,7 +30,7 @@ export class AdfDirective {
             //accesing the drive API
 
             //paste credentials here
-            let CLIENT_ID = environment.googleDrive.clientId
+            let CLIENT_ID = environment .googleDrive.clientId
             let API_KEY = environment.googleDrive.apiKey
             var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
             var SCOPES = 'https://www.googleapis.com/auth/drive.appdata';
@@ -40,8 +40,6 @@ export class AdfDirective {
             let http = this.http
             let ryber = this.ryber
             //
-
-
 
             // load the auth SDK
             gapi.load('client:auth2', () => {
@@ -68,8 +66,6 @@ export class AdfDirective {
 
                     //Create a file in the application data folder
                     if(environment.adf.create){
-
-
                         http.post(
                             "https://www.googleapis.com/drive/v3/files",
                             {
@@ -81,12 +77,10 @@ export class AdfDirective {
                         .subscribe((result)=>{
                             console.log(result)
                         })
-
-
                     }
                     //
 
-                    // list all files in the shared drive
+                    // list all files in the application data folder
                     if(environment.adf.list){
 
 

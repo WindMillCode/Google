@@ -22,6 +22,7 @@ export class SignoutDirective {
 
 		if (this.extras?.confirm === 'true') {
 
+
 			//accesing the drive API
 			let CLIENT_ID = environment.googleDrive.clientId
 			let API_KEY = environment.googleDrive.apiKey
@@ -38,7 +39,8 @@ export class SignoutDirective {
 				})
 				.then(function () {
 
-					// sign out 
+
+					// sign out
 					if(gapi.auth2.getAuthInstance().isSignedIn.get()){
 						gapi.auth2.getAuthInstance().signOut();
 					}
