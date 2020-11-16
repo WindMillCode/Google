@@ -7,11 +7,11 @@ import { environment } from '../../environments/environment'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Directive({
-    selector: '[appFields]'
+    selector: '[appAdf]'
 })
-export class FieldsDirective {
+export class AdfDirective {
 
-    @Input() search: any;
+    @Input() adf: any;
     extras: any;
 
     constructor(
@@ -30,10 +30,10 @@ export class FieldsDirective {
             //accesing the drive API
 
             //paste credentials here
-            let CLIENT_ID = environment .googleDrive.clientId
+            let CLIENT_ID = environment.googleDrive.clientId
             let API_KEY = environment.googleDrive.apiKey
             var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
-            var SCOPES = 'https://www.googleapis.com/auth/drive';
+            var SCOPES = 'https://www.googleapis.com/auth/drive.appdata';
             //
 
             //scope access
@@ -66,8 +66,46 @@ export class FieldsDirective {
                     //
 
 
+                    //Create a file in the application data folder
+                    if(environment.adf.create){
 
 
+                        http.post(
+                            "https://www.googleapis.com/drive/v3/files",
+                            {
+                                name: "config.json",
+                                parents:['appDataFolder']
+                            },
+                            { headers }
+                        )
+                        .subscribe((result)=>{
+                            console.log(result)
+                        })
+
+
+                    }
+                    //
+
+                    // list all files in the shared drive
+                    if(environment.adf.list){
+
+
+                        http.get(
+                            "https://www.googleapis.com/drive/v3/files",
+                            {
+                                headers,
+                                params:{
+                                    spaces:'appDataFolder',
+                                }
+                            }
+                        )
+                        .subscribe((result)=>{
+                            console.log(result)
+                        })
+
+
+                    }
+                    //
 
 
 
@@ -83,11 +121,11 @@ export class FieldsDirective {
     }
 
     ngOnInit() {
-        this.extras = this.fields
+        this.extras = this.adf
         if (this.extras?.confirm === 'true') {
-            console.log(environment.search)
+            console.log(environment.adf)
             setTimeout(() => {
-                // this.el.nativeElement.click()
+                this.el.nativeElement.click()
             }, 200)
         }
     }

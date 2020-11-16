@@ -7,11 +7,11 @@ import { environment } from '../../environments/environment'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Directive({
-    selector: '[appFields]'
+    selector: '[appAdf]'
 })
-export class FieldsDirective {
+export class AdfDirective {
 
-    @Input() search: any;
+    @Input() adf: any;
     extras: any;
 
     constructor(
@@ -30,10 +30,7 @@ export class FieldsDirective {
             //accesing the drive API
 
             //paste credentials here
-            let CLIENT_ID = environment .googleDrive.clientId
-            let API_KEY = environment.googleDrive.apiKey
-            var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
-            var SCOPES = 'https://www.googleapis.com/auth/drive';
+
             //
 
             //scope access
@@ -41,41 +38,8 @@ export class FieldsDirective {
             let ryber = this.ryber
             //
 
-
-
             // load the auth SDK
-            gapi.load('client:auth2', () => {
-                gapi.client.init({
-                    apiKey: API_KEY,
-                    clientId: CLIENT_ID,
-                    discoveryDocs: DISCOVERY_DOCS,
-                    scope: SCOPES
-                })
-                .then(function () {
 
-                    // sign in if needed
-                    if (!gapi.auth2.getAuthInstance().isSignedIn.get()) {
-                        gapi.auth2.getAuthInstance().signIn();
-                    }
-                    //
-
-                    //access token setup
-                    let headers = new HttpHeaders()
-                    headers = headers
-                        .set("Authorization", `Bearer ${gapi.auth.getToken().access_token}`)
-                    //
-
-
-
-
-
-
-
-                })
-                .catch(function (error) {
-                    console.log(error)
-                })
-            });
             //
 
         }
@@ -83,11 +47,11 @@ export class FieldsDirective {
     }
 
     ngOnInit() {
-        this.extras = this.fields
+        this.extras = this.adf
         if (this.extras?.confirm === 'true') {
-            console.log(environment.search)
+            console.log(environment.adf)
             setTimeout(() => {
-                // this.el.nativeElement.click()
+                this.el.nativeElement.click()
             }, 200)
         }
     }

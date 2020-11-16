@@ -102,6 +102,13 @@ export const environment: any = {
 		change:false,
 		revoke:false,
 		transfer:true,
+	},
+	//
+
+	//replace adf object here
+	adf:{
+		create:false,
+		list:true
 	}
 	//
 };

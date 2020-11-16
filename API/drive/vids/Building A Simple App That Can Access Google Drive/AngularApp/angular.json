@@ -204,6 +204,18 @@
 									"with": "src/environments/environment.drive.dev.ts"
 								}
 							]
+						},
+						"adf": {
+							"fileReplacements": [
+								{
+									"replace": "src/app/website.ts",
+									"with": "src/app/database/website-adf-dev.ts"
+								},
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.drive.dev.ts"
+								}
+							]
 						}
 					}
 				},
@@ -239,6 +251,9 @@
 						},
 						"share": {
 							"browserTarget": "AngularApp:drive:share"
+						},
+						"adf": {
+							"browserTarget": "AngularApp:drive:adf"
 						},
 						"playground": {
 							"browserTarget": "AngularApp:drive:playground"

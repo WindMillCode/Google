@@ -23,6 +23,7 @@ import { DownloadDirective } from './directive/download.directive';
 import { SearchDirective } from './directive/search.directive';
 import { FieldsDirective } from './directive/fields.directive';
 import { ShareDirective } from './directive/share.directive';
+import { AdfDirective } from './directive/adf.directive';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { ShareDirective } from './directive/share.directive';
     DownloadDirective,
     SearchDirective,
     FieldsDirective,
-    ShareDirective
+    ShareDirective,
+    AdfDirective
   ],
   imports: [
     BrowserModule,

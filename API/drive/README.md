@@ -909,6 +909,51 @@ http.post(
 ```
 
 
+## Store application-specific data
+
+* __application data folder__ - store app specific data, config files things users should not touch
+* when the app is uninstalled, the folder is deleted
+
+### Application data folder scope
+
+* need https://www.googleapis.com/auth/drive.appdata
+
+### Viewing amount of storage used by application data folder
+ in a phone or tablet
+* Settings Icon > Settings > Manage Apps >  
+* you see the amount of data if its hidden that the application data folder
+
+### Create a file in the application data folder
+
+* specify  appDataFolder in the parents property for creating a file
+
+#### Typescript
+```ts
+http.post(
+	"https://www.googleapis.com/drive/v3/files",
+	{ 
+		name: "config.json",
+		parents:['appDataFolder']
+	},
+	{ headers }
+)
+```
+
+### Search for files in the application data folder
+ set the spaces field to appDataFolder and use the files.list method.
+
+#### Typescript
+```ts
+http.get(
+	"https://www.googleapis.com/drive/v3/files",
+	{ 
+		headers,
+		params:{
+			spaces:'appDataFolder' 
+		}
+	}
+)
+```
 
 
 # Issues with the DRIVE API 
