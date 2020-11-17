@@ -216,6 +216,18 @@
 									"with": "src/environments/environment.drive.dev.ts"
 								}
 							]
+						},
+						"comment": {
+							"fileReplacements": [
+								{
+									"replace": "src/app/website.ts",
+									"with": "src/app/database/website-comment-dev.ts"
+								},
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.drive.dev.ts"
+								}
+							]
 						}
 					}
 				},
@@ -254,6 +266,9 @@
 						},
 						"adf": {
 							"browserTarget": "AngularApp:drive:adf"
+						},
+						"comment": {
+							"browserTarget": "AngularApp:drive:comment"
 						},
 						"playground": {
 							"browserTarget": "AngularApp:drive:playground"

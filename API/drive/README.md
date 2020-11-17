@@ -16,7 +16,7 @@ Greetings I am currently going to get several GCP certifications. Like share Sub
 Greetings I have high interest in becoming a data engineer managing and working with IoT infrastructure. I would love a mentorship who can help me build my portiflio and gain the needed certifications and education. I also have a youtube channel as I do tutorials on the fundamentals and advanced concepts of GCP, please like share and subscribe at least if you dont have time to mentor. .  https://www.youtube.com/channel/UCmqEX_zasOf3AQ9vnPkxtjg/
 
 
-###  Lab Building A Simple App That Can Access Google Drive
+###  [Lab Building A Simple App That Can Access Google Drive](API\drive\vids\Building A Simple App That Can Access Google Drive\README.md)
 
 ## Files and folders overview
 
@@ -955,6 +955,8 @@ http.get(
 )
 ```
 
+### [Lab The Application Data Folder](.\vids\Applicaton_Data_Folder\README.md)
+
 ## Manage File Metadata
 
 ### Specifying file names and extensions
@@ -968,6 +970,196 @@ http.get(
 ### Uploading thumbnails
 
 * if drive cant make a thumbnail you can provide one
+* done using contentHints.thumbnail object in the requst body
+* Set contentHints.thumbnail.image to the URL-safe Base64-encoded image (see RFC 4648 section 5)
+* Set contentHints.thumbnail.mimeType to the appropriate type for the image format
+* upload thumbnails every time the files changes, unfortunaltely
+
+## Add comments and replies
+
+* __comments__ user-provided feedback on a file
+* __anchored comment__ - associated with a specific location in a specifc version of the doc
+* __unanchored comment__ - plainly associaedd wih the doc
+* __replies__ - reponses to a commment
+* __discussion__ a coment with a bunch of replies
+
+### Add an unanchored comment
+* the fields query param is required
+* only the person who created the comment can delete the comment
+#### Typescript
+```ts
+http.post(
+	"https://www.googleapis.com/drive/v3/files/"+fileId+"/comments",
+	{
+		content:"On paragraph 2 you wrote a square has 3 sides that should be a triangle"
+	},
+	{
+		headers,
+		params:{
+			fields:'*'
+		}
+	}
+)
+.subscribe((result)=>{
+	console.log(result)
+})
+```
+
+### Add a reply to a comment
+* to add a reply to a comment
+
+#### Typescript
+```ts
+http.post(
+	"https://www.googleapis.com/drive/v3/files/"+id.file+"/comments/"+id.comment+"/replies",
+	{as
+		content:"Greetings teacher, where in parapgraph 2 it is a big paragraph are you looking at a differnt version"
+	},
+	{
+		headers,
+		params:{
+			fields:'*'
+		}
+	}
+)
+subscribe((result)=>{
+	console.log(result)
+})
+```
+
+### Add an anchored comment 
+
+* __anchor__ - file revision and region of a file a cooment is referring to its JSON
+* recommended to use anchors in documents where the position doesnt change, like images and read only files
+
+* call revisions.list method to see which revision you want to  add the comment to,
+* call comments create with a request body of content and anchor a JSON string with the r prop for the revision id, or 'head' for the latest revision and a for the regio of the document you are referring to 
+
+#### Define a region
+
+* __region(a)__ JSON array containing region classifiers specifying the format and location to which a comment is anchored. it can be a 
+* __region classifiers__ - a as a two-dimensional rectangle for an image, a line of text in a document, a time duration in a video, and so on a list [here](https://developers.google.com/drive/api/v3/manage-comments#classifers)
+
+* a typical anchor on an essay
+```json
+    {
+      'r': revisionId,
+      'a': [
+      {
+        'line':
+        {
+          'n': 12,   // start at line 12 go for 3 lines
+          'l': 3,
+        }
+      },
+      {
+        'line':
+        {
+          'n': 18, // just highlight line 18
+          'l': 1,
+        }
+      }]
+    }
+```
+
+* to create an anchored comment
+
+#### Typescript
+```ts
+http.post(
+	"https://www.googleapis.com/drive/v3/files/"+id.file+"/comments",
+	{
+		content:"This is the section do you see it now student",
+		anchor:JSON.stringify({
+			r:'head', // if you want the latest version otherwise chooses the revision as needed
+			'a': [
+				{
+					'line':
+					{
+					'n': 14,
+					'l': 1,
+					}
+				},
+			]
+		})
+	},
+	{
+		headers,
+		params:{
+			fields:'*'
+		}
+	}
+)
+.subscribe((result)=>{
+	console.log(result)
+})
+```
+
+### Resolve a comment
+* to resolve a comment , aka the student make the change the teacher requested
+use comment.update method set the resolved prop to true
+
+#### Typescript
+```ts
+//resolve a comment
+http.patch(
+	"https://www.googleapis.com/drive/v3/files/"+id.file+"/comments/" + id.comment,
+	{
+		resolved:"true",
+		content:""
+	},
+	{
+		headers,
+		params:{
+			fields:"*"
+		}
+
+	}
+)
+//
+.subscribe((result)=>{
+	console.log(result)
+})
+```
+
+### Delete a comment
+
+* to delete a comment
+#### Typescript
+```ts
+// delete a comment
+http.delete(
+	"https://www.googleapis.com/drive/v3/files/"+id.file+"/comments/"+id.comment,
+	{
+		headers
+	}
+)
+//
+.subscribe((result)=>{
+	console.log(result)
+})
+```
+
+### List Comments
+* to list all comment
+
+#### Typescript
+```ts
+http.get(
+	"https://www.googleapis.com/drive/v3/files/"+id.file+"/comments",
+	{
+		headers,
+		params:{
+			fields:"*"
+
+		}
+	}
+)
+```
+
+
+### [Lab Comments in Google Drive API](./vids/Comments/README.md)
+
 
 # Issues with the DRIVE API 
 
@@ -991,3 +1183,44 @@ v
 
 * permissions batch updartes
 	not availble in browser SDK or REST API
+## Comments
+
+* comments ,reply resouce, there is no  resources just the content prop in the response body
+
+* what is meant by htmlContent, I just get string ready to be inserted into html, not colorful html that can display a div, meaningful html 
+
+* define a region link heads to the wrong part of the doc
+
+* the REST API to create an anchored comment still creates an unanchored comment
+according to this ,where the id is a gdoc file 
+```ts
+http.post(
+	"https://www.googleapis.com/drive/v3/files/"+id.file+"/comments",
+	{
+		content:"This is the section do you see it now student",
+		anchor:JSON.stringify({
+			r:'head', // if you want the latest version otherwise chooses the revision as needed
+			'a': [
+				{
+					'line':
+					{
+					'n': 14,
+					'l': 1,
+					}
+				},
+			]
+		})
+	},
+	{
+		headers,
+		params:{
+			fields:'*'
+		}
+	}
+)
+.subscribe((result)=>{
+	console.log(result)
+})
+```
+
+* where is the resolved property on the comments resource is it phased out,refer to comments.list

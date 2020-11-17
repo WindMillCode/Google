@@ -24,6 +24,7 @@ import { SearchDirective } from './directive/search.directive';
 import { FieldsDirective } from './directive/fields.directive';
 import { ShareDirective } from './directive/share.directive';
 import { AdfDirective } from './directive/adf.directive';
+import { CommentDirective } from './directive/comment.directive';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { AdfDirective } from './directive/adf.directive';
     SearchDirective,
     FieldsDirective,
     ShareDirective,
-    AdfDirective
+    AdfDirective,
+    CommentDirective
   ],
   imports: [
     BrowserModule,

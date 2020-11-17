@@ -109,6 +109,21 @@ export const environment: any = {
 	adf:{
         create:false,
 		list:true
+	},
+	//
+
+	//replace comment object here
+	comment:{
+		unanchored:{
+			create:false,
+		},
+		anchored:{
+			create:false//doesnt work
+		},
+		reply:false,
+		resolved:false, //doesnt work
+		delete:false,
+		list:true
 	}
 	//
 };

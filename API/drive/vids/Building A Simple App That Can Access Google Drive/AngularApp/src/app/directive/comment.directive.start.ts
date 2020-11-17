@@ -1,17 +1,19 @@
+
+
 import { Directive, ElementRef, HostListener, Input, Renderer2, TemplateRef, ViewContainerRef, ViewRef, EmbeddedViewRef, ViewChildren } from '@angular/core';
 import { RyberService } from '../ryber.service'
 import { fromEvent, from, Subscription, Subscriber, of, combineLatest } from 'rxjs';
 import { deltaNode, eventDispatcher, numberParse, objectCopy } from '../customExports'
 import { catchError, delay } from 'rxjs/operators'
-import { environment as env } from '../../environments/environment' as env
+import { environment as env} from '../../environments/environment'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Directive({
-    selector: '[appFields]'
+    selector: '[appComment]'
 })
-export class FieldsDirective {
+export class CommentDirective {
 
-    @Input() search: any;
+    @Input() comment: any;
     extras: any;
 
     constructor(
@@ -44,50 +46,20 @@ export class FieldsDirective {
 
 
             // load the auth SDK
-            gapi.load('client:auth2', () => {
-                gapi.client.init({
-                    apiKey: API_KEY,
-                    clientId: CLIENT_ID,
-                    discoveryDocs: DISCOVERY_DOCS,
-                    scope: SCOPES
-                })
-                .then(function () {
 
-                    // sign in if needed
-                    if (!gapi.auth2.getAuthInstance().isSignedIn.get()) {
-                        gapi.auth2.getAuthInstance().signIn();
-                    }
-                    //
-
-                    //access token setup
-                    let headers = new HttpHeaders()
-                    headers = headers
-                        .set("Authorization", `Bearer ${gapi.auth.getToken().access_token}`)
-                    //
-
-
-
-
-
-
-
-                })
-                .catch(function (error) {
-                    console.log(error)
-                })
-            });
             //
-
         }
 
     }
 
+
+
     ngOnInit() {
-        this.extras = this.fields
+        this.extras = this.comment
         if (this.extras?.confirm === 'true') {
-            console.log(env.search)
+            console.log(env.comment)
             setTimeout(() => {
-                // this.el.nativeElement.click()
+                this.el.nativeElement.click()
             }, 200)
         }
     }
