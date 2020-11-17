@@ -18,8 +18,8 @@ npx ng serve -c=props --open=true
 open /src/app/directive/properties.directive.ts in your code editor
 * in paste credentials here paste this code
 ```ts
-let CLIENT_ID = environment .googleDrive.clientId
-let API_KEY = environment.googleDrive.apiKey
+let CLIENT_ID = env.googleDrive.clientId
+let API_KEY = env.googleDrive.apiKey
 var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
 var SCOPES = 'https://www.googleapis.com/auth/drive';
 ```
@@ -144,6 +144,8 @@ props:{
 
 open /src/app/directive/properties.directive.ts in your code editor
 in 'creating properties' paste this code
+    * we see that there are 2 property, but the ui reports only one update, this is the case
+    you need batch requests or make several API requests to update as needed
 ```ts
 if(env.props.create.run){
     http.post(...createAFile)
@@ -163,7 +165,7 @@ if(env.props.create.run){
                     return { properties:[{'a':'I can see you'},{'b':'yes I can'}]}
                 }
                 else if(env.props.create.solo){
-                    return { appProperties:[{'a':'I can see you'},{'b':'yes I can'}]}
+                    return { appProperties:[{'a':'I cant see the props no hacking today'},{'b':'yes I can'}]}
                 }
 
             })(),
@@ -197,7 +199,7 @@ __Immediately-invoked Function Expression__   - js/ts apps can get heavy and we 
 
 * we here have created a property for all apps to see we can demonstrate this but first we need to understand the app entity
 
-### The App Entity
+### The App Entity is  a GCP Project
 * drive API apps are google projects in the GCP  platform, when you use an API KEY and OAuth and credentials etc, from another project you are by defintion using another app
 
 * so all we need to do is create another project and we have a second app 
@@ -206,6 +208,9 @@ __Immediately-invoked Function Expression__   - js/ts apps can get heavy and we 
 * click on your project name
 * click on New Project
 * head to console.developers.google.com
+* head [here](https://console.cloud.google.com/apis/api/drive.googleapis.com/overview) 
+link: https://console.cloud.google.com/apis/api/drive.googleapis.com/overview
+and enable the drive API
 * make an API Key and OAuth in step 2 of this project but dont edit environment.drive.dev.ts yet 
 * replace 'insert credentials here' like so
 ```ts

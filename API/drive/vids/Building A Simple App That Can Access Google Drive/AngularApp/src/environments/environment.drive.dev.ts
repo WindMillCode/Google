@@ -134,10 +134,10 @@ export const environment: any = {
 		create:{
 			run:false,
 			all:false,
-			solo:true
+			solo:false
 		},
 		see:{
-			run:false,
+			run:true,
 			all:false,
 			solo:true
 		},
