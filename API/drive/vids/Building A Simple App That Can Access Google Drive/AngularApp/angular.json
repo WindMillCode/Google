@@ -228,6 +228,18 @@
 									"with": "src/environments/environment.drive.dev.ts"
 								}
 							]
+						},
+						"props": {
+							"fileReplacements": [
+								{
+									"replace": "src/app/website.ts",
+									"with": "src/app/database/website-props-dev.ts"
+								},
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.drive.dev.ts"
+								}
+							]
 						}
 					}
 				},
@@ -269,6 +281,9 @@
 						},
 						"comment": {
 							"browserTarget": "AngularApp:drive:comment"
+						},
+						"props": {
+							"browserTarget": "AngularApp:drive:props"
 						},
 						"playground": {
 							"browserTarget": "AngularApp:drive:playground"

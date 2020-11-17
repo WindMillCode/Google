@@ -3,7 +3,7 @@
 ## Task 1 Web Application 
 
 * download the [web app](https://github.com/codequickie123/AngularDriveApp)
-* head [here](docs.google.com) 
+* head to docs.google.com and make a new gdoc[here](https://docs.google.com) 
     Start a new Document > Blank 
     
 * title it Commented_Document

@@ -25,6 +25,7 @@ import { FieldsDirective } from './directive/fields.directive';
 import { ShareDirective } from './directive/share.directive';
 import { AdfDirective } from './directive/adf.directive';
 import { CommentDirective } from './directive/comment.directive';
+import { PropertiesDirective } from './directive/properties.directive';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { CommentDirective } from './directive/comment.directive';
     FieldsDirective,
     ShareDirective,
     AdfDirective,
-    CommentDirective
+    CommentDirective,
+    PropertiesDirective
   ],
   imports: [
     BrowserModule,

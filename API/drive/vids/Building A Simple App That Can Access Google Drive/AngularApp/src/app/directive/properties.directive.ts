@@ -1,17 +1,19 @@
+
+
 import { Directive, ElementRef, HostListener, Input, Renderer2, TemplateRef, ViewContainerRef, ViewRef, EmbeddedViewRef, ViewChildren } from '@angular/core';
 import { RyberService } from '../ryber.service'
 import { fromEvent, from, Subscription, Subscriber, of, combineLatest } from 'rxjs';
 import { deltaNode, eventDispatcher, numberParse, objectCopy } from '../customExports'
 import { catchError, delay } from 'rxjs/operators'
-import { environment as env } from '../../environments/environment' 
+import { environment as env } from '../../environments/environment'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Directive({
-    selector: '[appFields]'
+    selector: '[appProperties]'
 })
-export class FieldsDirective {
+export class PropertiesDirective {
 
-    @Input() search: any;
+    @Input() properties: any;
     extras: any;
 
     constructor(
@@ -30,10 +32,7 @@ export class FieldsDirective {
             //accesing the drive API
 
             //paste credentials here
-            let CLIENT_ID = env .googleDrive.clientId
-            let API_KEY = env.googleDrive.apiKey
-            var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
-            var SCOPES = 'https://www.googleapis.com/auth/drive';
+
             //
 
             //scope access
@@ -44,38 +43,7 @@ export class FieldsDirective {
 
 
             // load the auth SDK
-            gapi.load('client:auth2', () => {
-                gapi.client.init({
-                    apiKey: API_KEY,
-                    clientId: CLIENT_ID,
-                    discoveryDocs: DISCOVERY_DOCS,
-                    scope: SCOPES
-                })
-                .then(function () {
 
-                    // sign in if needed
-                    if (!gapi.auth2.getAuthInstance().isSignedIn.get()) {
-                        gapi.auth2.getAuthInstance().signIn();
-                    }
-                    //
-
-                    //access token setup
-                    let headers = new HttpHeaders()
-                    headers = headers
-                        .set("Authorization", `Bearer ${gapi.auth.getToken().access_token}`)
-                    //
-
-
-
-
-
-
-
-                })
-                .catch(function (error) {
-                    console.log(error)
-                })
-            });
             //
 
         }
@@ -83,11 +51,11 @@ export class FieldsDirective {
     }
 
     ngOnInit() {
-        this.extras = this.fields
+        this.extras = this.properties
         if (this.extras?.confirm === 'true') {
-            console.log(env.search)
+            console.log(env.props)
             setTimeout(() => {
-                // this.el.nativeElement.click()
+                this.el.nativeElement.click()
             }, 200)
         }
     }
@@ -103,3 +71,4 @@ export class FieldsDirective {
         }
     }
 }
+

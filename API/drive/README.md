@@ -1160,6 +1160,51 @@ http.get(
 
 ### [Lab Comments in Google Drive API](./vids/Comments/README.md)
 
+## Add custom file properties
+
+* __Custom file properties__ -  key/value pairs used to store custom metadata for a file
+* to add props everyone can use the properties on the files resource
+* to add props only your app can see use  appProperties
+* Property and app property keys may contain only the letters a-z and A-Z, the numbers 0-9, and the characters .!@$%^&*()-_/
+
+* max of 100 custom props per file
+* max 30 public/private props per file
+* max 124 bytes per prop
+* this updates one at a time, you have to send mutliple api requests or a batch requests for several prop updates
+
+#### Typescript
+```ts
+let propsForAllToSee = false
+let propsOnlyMyAppCanSee = true
+http.patch(
+	"https://www.googleapis.com/drive/v3/files/"+id.file,
+	// An IIFE, now yr a better coder
+	(()=>{
+		if(propsForAllToSee){
+			return { properties:[{'a':'I can see you'},{'b':'yes I can'}]}
+		}
+		else if(propsOnlyMyAppCanSee){
+			return { appProperties:[{'a':'I can see you'},{'b':'yes I can'}]}
+		}
+
+	})(),
+	//
+	{
+		headers,
+		params:{
+			fields:'properties,appProperties'
+		}
+	}
+)
+.subscribe((result:any)=>{
+	console.log(result)
+
+})
+```
+
+
+
+
 
 # Issues with the DRIVE API 
 

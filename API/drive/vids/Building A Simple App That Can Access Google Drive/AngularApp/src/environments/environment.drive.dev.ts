@@ -32,6 +32,8 @@ export const environment: any = {
 		// insert credentials here
 		apiKey: "",
 		clientId: ""
+
+
 		//
 	},
 	playground: {
@@ -124,6 +126,21 @@ export const environment: any = {
 		resolved:false, //doesnt work
 		delete:false,
 		list:true
+	},
+	//
+
+	//replace properties object here
+	props:{
+		create:{
+			run:false,
+			all:false,
+			solo:true
+		},
+		see:{
+			run:false,
+			all:false,
+			solo:true
+		},
 	}
 	//
 };
