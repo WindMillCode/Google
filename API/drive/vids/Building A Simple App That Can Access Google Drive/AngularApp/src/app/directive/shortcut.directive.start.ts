@@ -31,10 +31,7 @@ export class ShortcutDirective {
             //accesing the drive API
 
             //paste credentials here
-            let CLIENT_ID = env .googleDrive.clientId
-            let API_KEY = env.googleDrive.apiKey
-            var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
-            var SCOPES = 'https://www.googleapis.com/auth/drive';
+
             //
 
             //scope access
@@ -48,93 +45,7 @@ export class ShortcutDirective {
             //
 
             // load the auth SDK
-            gapi.load('client:auth2', () => {
-                gapi.client.init({
-                    apiKey: API_KEY,
-                    clientId: CLIENT_ID,
-                    discoveryDocs: DISCOVERY_DOCS,
-                    scope: SCOPES
-                })
-                .then(function () {
 
-                    // sign in if needed
-                    if (!gapi.auth2.getAuthInstance().isSignedIn.get()) {
-                        gapi.auth2.getAuthInstance().signIn();
-                    }
-                    //
-
-
-                    let headers = new HttpHeaders()
-                    headers = headers.set("Authorization", `Bearer ${gapi.auth.getToken().access_token}`)
-
-
-                    //create a shortcut
-                    if (env.shortcut.create) {
-
-
-                        // choose a file for shortcut
-                        getShortcutFolder({http, headers,shortcutFiles});
-                        //
-
-                        //make the shortcut, check the root folder once done
-                        shortcutFiles.sub
-                        .pipe(
-                        catchError((error)=>{
-                            return of(error)
-                        })
-                        ).subscribe((result:any)=>{
-                            console.log(result)
-                            shortcutFiles.file = result.files[Math.floor(Math.random()*(result.files.length))]
-                            http.post(
-                                "https://www.googleapis.com/drive/v3/files",
-                                {
-                                    name: "My Shortcut",
-                                    //to create a folder this must be included
-                                    mimeType: "application/vnd.google-apps.shortcut",
-                                    'shortcutDetails':{
-                                        targetId:shortcutFiles.file.id
-                                    }
-                                    //
-                                },
-                                { headers, observe: 'response' }
-                            )
-                            .subscribe((result) => {
-                                console.log(result)
-                            })
-                        })
-                        //
-
-                    }
-                    //
-
-                    //serch for  a shortcut
-                    if(env.shortcut.search){
-
-
-                        http.get(
-                            "https://www.googleapis.com/drive/v3/files",
-                            {
-                                headers,
-                                params:{
-                                    q:"mimeType='application/vnd.google-apps.shortcut'",
-                                    //AND shortcutDetails.targetMimeType = ‘application/vnd.google-apps.spreadsheet’ // for more detail
-                                    fields: 'files(id, shortcutDetails,name)',
-                                }
-                            }
-                        )
-                        .subscribe((result: any) => {
-                            console.log(result)
-                        })
-                        
-                    }
-                    //
-
-
-                })
-                .catch(function (error) {
-                    console.log(error)
-                })
-            });
             //
 
         }

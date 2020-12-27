@@ -1238,7 +1238,25 @@ http.post(
 ```
 
 
+* to search for a shortcut
+```ts
+http.get(
+    "https://www.googleapis.com/drive/v3/files",
+    {
+        headers,
+        params:{
+            q:"mimeType='application/vnd.google-apps.shortcut'",
+            //AND shortcutDetails.targetMimeType = ‘application/vnd.google-apps.spreadsheet’ // for more detail
+            fields: 'files(id, shortcutDetails,name)',
+        }
+    }
+)
+.subscribe((result: any) => {
+    console.log(result)
+})
+```
 
+### Lab  [Creating Shortcuts with Google Drive API](vids\Creating_Shortcuts\README.md)
 
 # Issues with the DRIVE API 
 
