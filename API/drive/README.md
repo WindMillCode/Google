@@ -1258,6 +1258,35 @@ http.get(
 
 ### Lab  [Creating Shortcuts with Google Drive API](vids\Creating_Shortcuts\README.md)
 
+## Protect file content from modification
+
+* use 'contentRestrictions.readOnly' field to prevent file updates
+* to lock a file
+```ts
+http.patch(
+    "https://www.googleapis.com/drive/v3/files/"+result.id,
+    {
+        contentRestrictions:[
+            {"readOnly": "true"}
+        ]
+    },
+    {
+        headers
+    }
+)
+.pipe(
+catchError((error)=>{
+    return of(error)
+})
+).subscribe((result:any)=>{
+    console.log(result)
+})
+```
+
+* to unlock simply change true to false
+* this can also be done in the uib
+
+
 # Issues with the DRIVE API 
 
 

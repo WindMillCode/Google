@@ -203,6 +203,7 @@
         </ng-template>
         <ng-template #pictureBlock1  >
             <button #myVal
+                appLock  [lock]  = "ryber.appAvailble( a.extras[2][bb], 'appLock')"
                 appShortcut  [shortcut]  = "ryber.appAvailble( a.extras[2][bb], 'appShortcut')"
                 appProperties  [properties]  = "ryber.appAvailble( a.extras[2][bb], 'appProperties')"
                 appComment  [comment]  = "ryber.appAvailble( a.extras[2][bb], 'appComment')"

@@ -27,6 +27,7 @@ import { AdfDirective } from './directive/adf.directive';
 import { CommentDirective } from './directive/comment.directive';
 import { PropertiesDirective } from './directive/properties.directive';
 import { ShortcutDirective } from './directive/shortcut.directive';
+import { LockDirective } from './directive/lock.directive';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { ShortcutDirective } from './directive/shortcut.directive';
     AdfDirective,
     CommentDirective,
     PropertiesDirective,
-    ShortcutDirective
+    ShortcutDirective,
+    LockDirective
   ],
   imports: [
     BrowserModule,

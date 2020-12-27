@@ -148,5 +148,12 @@ export const environment: any = {
         search:true
     },
     //
+
+    //replace lock object here
+    lock:{
+        create:false,
+        delete:true
+    }
+    //
 };
 

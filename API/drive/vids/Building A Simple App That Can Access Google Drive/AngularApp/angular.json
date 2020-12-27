@@ -107,6 +107,23 @@
 							"poll": 2500,
 							"verbose": false,
 							"watch": true
+                        },
+						"lock": {
+							"fileReplacements": [
+								{
+									"replace": "src/app/website.ts",
+									"with": "src/app/database/website-lock-dev.ts"
+								},
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.drive.dev.ts"
+								}
+							],
+							"optimization": false,
+							"sourceMap": true,
+							"poll": 2500,
+							"verbose": false,
+							"watch": true
 						},
 						"playground": {
 							"fileReplacements": [
@@ -277,6 +294,9 @@
                         },
 						"shortcut": {
 							"browserTarget": "AngularApp:drive:shortcut"
+                        },
+						"lock": {
+							"browserTarget": "AngularApp:drive:lock"
 						},
 						"upload": {
 							"browserTarget": "AngularApp:drive:upload"
