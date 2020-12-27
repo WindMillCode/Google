@@ -177,7 +177,7 @@ reader.onload =(evt) => {
 	let fileData:any = fileUpload.files[0]
 	var contentType = fileData.type || 'application/octet-stream';
 	var metadata = {
-		'title': fileData.fileName,
+		'name': fileData.fileName,
 		'mimeType': contentType
 	};
 
@@ -695,6 +695,11 @@ http.get(
 })
 ```
 
+* to get files in a specifc folder
+```ts
+`'${parent.id}' in parents and trashed = false`,
+```
+
 ### Search by corpora
 * the files.list method default is 
 ```
@@ -1202,6 +1207,35 @@ http.patch(
 })
 ```
 
+
+## Create a shortcut to a Drive file
+* __mime-type__ - application/vnd.google-apps.shortcut 
+* __targetId__ pointing to the target folder,  targetMimeType
+* only one parent
+* to break, target must be deleted, or user lose access
+* shortcut thumbnails do not change with target mimeType change
+
+* to create a shortcut
+
+#### Typescript
+```ts
+http.post(
+    "https://www.googleapis.com/drive/v3/files",
+    {
+        name: "My Folder",
+        //to create a folder this must be included
+        mimeType: "application/vnd.google-apps.shortcut",
+        'shortcutDetails':{
+            targetId:file.id
+        }
+        //
+    },
+    { headers, observe: 'response' }
+)
+.subscribe((result) => {
+    console.log(result)
+})
+```
 
 
 

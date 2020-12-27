@@ -90,6 +90,23 @@
 							"poll": 2500,
 							"verbose": false,
 							"watch": true
+                        },
+						"shortcut": {
+							"fileReplacements": [
+								{
+									"replace": "src/app/website.ts",
+									"with": "src/app/database/website-shortcut-dev.ts"
+								},
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.drive.dev.ts"
+								}
+							],
+							"optimization": false,
+							"sourceMap": true,
+							"poll": 2500,
+							"verbose": false,
+							"watch": true
 						},
 						"playground": {
 							"fileReplacements": [
@@ -257,6 +274,9 @@
 						},
 						"drive": {
 							"browserTarget": "AngularApp:drive:development"
+                        },
+						"shortcut": {
+							"browserTarget": "AngularApp:drive:shortcut"
 						},
 						"upload": {
 							"browserTarget": "AngularApp:drive:upload"

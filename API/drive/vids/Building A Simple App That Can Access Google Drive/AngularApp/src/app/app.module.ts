@@ -26,6 +26,7 @@ import { ShareDirective } from './directive/share.directive';
 import { AdfDirective } from './directive/adf.directive';
 import { CommentDirective } from './directive/comment.directive';
 import { PropertiesDirective } from './directive/properties.directive';
+import { ShortcutDirective } from './directive/shortcut.directive';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { PropertiesDirective } from './directive/properties.directive';
     ShareDirective,
     AdfDirective,
     CommentDirective,
-    PropertiesDirective
+    PropertiesDirective,
+    ShortcutDirective
   ],
   imports: [
     BrowserModule,

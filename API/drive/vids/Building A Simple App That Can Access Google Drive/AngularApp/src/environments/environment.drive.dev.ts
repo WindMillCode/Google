@@ -30,10 +30,8 @@ export const environment: any = {
 	},
 	googleDrive: {
 		// insert credentials here
-		apiKey: "",
-		clientId: ""
-
-
+		apiKey: "AIzaSyAIoy7Srds9J2_4ytkqHumTXnt2IdgAA6w",
+		clientId: "637621663480-rdlo2ffs8c8kj4o5p8eqqr6nt469mokk.apps.googleusercontent.com"
 		//
 	},
 	playground: {
@@ -141,7 +139,14 @@ export const environment: any = {
 			all:false,
 			solo:true
 		},
-	}
-	//
+	},
+    //
+
+    //replace shortcut object here
+    shortcut:{
+        create:false,
+        search:true
+    },
+    //
 };
 

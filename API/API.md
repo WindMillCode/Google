@@ -10,6 +10,12 @@
 
 [error codes here ](https://cloud.google.com/apis/design/errors)
 
+
+# Client SDK
+
+* you always need scopes when working with SDK
+* list of scopes [here](https://developers.google.com/identity/protocols/oauth2/scopes)
+
 # Service Accounts
 
 * if you delete a service acct that you did not create from the IAM roles  page, try to recover using these steps 

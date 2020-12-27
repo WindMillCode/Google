@@ -30,28 +30,21 @@ export class SignoutDirective {
 			let SCOPES = `https://www.googleapis.com/auth/drive`;
 
 
-			gapi.load('client:auth2', ()=>{
-				gapi.client.init({
-					apiKey: API_KEY,
-					clientId: CLIENT_ID,
-					discoveryDocs: DISCOVERY_DOCS,
-					scope: SCOPES
-				})
-				.then(function () {
+			gapi.load('auth2', ()=>{
+                
 
 
-					// sign out
-					if(gapi.auth2.getAuthInstance().isSignedIn.get()){
-						gapi.auth2.getAuthInstance().signOut();
-					}
-					//
 
-					alert("sucessfully signed out")
+                // sign out
+                if(gapi.auth2.getAuthInstance().isSignedIn.get()){
+                    gapi.auth2.getAuthInstance().signOut();
+                }
+                //
 
-				})
-				.catch(function(error) {
-					console.log(error)
-				})
+                alert("sucessfully signed out")
+
+
+
 			});
 			//
 
