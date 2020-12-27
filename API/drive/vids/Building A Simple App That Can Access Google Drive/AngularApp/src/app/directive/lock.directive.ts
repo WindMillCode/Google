@@ -28,7 +28,6 @@ export class LockDirective {
         if (this.extras?.confirm === 'true') {
 
             //accesing the drive API
-
             //paste credentials here
 
             //
@@ -43,6 +42,7 @@ export class LockDirective {
             //
 
             // load the auth SDK
+
             //
 
         }

@@ -1,0 +1,176 @@
+{
+	"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+	"version": 1,
+	"newProjectRoot": "projects",
+	"projects": {
+		"AngularApp": {
+			"projectType": "application",
+			"schematics": {
+				"@schematics/angular:directive": {
+					"skipTests": true
+				}
+			},
+			"root": "",
+			"sourceRoot": "src",
+			"prefix": "app",
+			"architect": {
+				"bigquery": {
+					"builder": "@angular-devkit/build-angular:browser",
+					"options": {
+						"outputPath": "dist/Bigquery",
+						"baseHref": "",
+						"fileReplacements": [
+							{
+								"replace": "src/app/website.ts",
+								"with": "src/app/database/website-bigquery-dev.ts"
+							},
+							{
+								"replace": "src/environments/environment.ts",
+								"with": "src/environments/environment.bigquery.dev.ts"
+							}
+						],
+						"index": "src/index.html",
+						"main": "src/main.ts",
+						"polyfills": "src/polyfills.ts",
+						"tsConfig": "tsconfig.app.json",
+						"aot": true,
+						"assets": [],
+						"styles": [
+							"src/styles.css",
+							"src/assets/styles/pikaday.css"
+						],
+						"scripts": [
+							"backend/modernizr/modernizr.js",
+							"backend/polyfills/object.js",
+							"backend/polyfills/signaturePad.js",
+							"src/assets/scripts/pikaday.js"
+						],
+						"optimization": false,
+						"sourceMap": true,
+						"poll": 2500,
+						"verbose": false,
+						"watch": true
+					},
+					"configurations": {
+						"production": {
+							"fileReplacements": [
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.drive.prod.ts"
+								},
+								{
+									"replace": "src/app/website.ts",
+									"with": "src/app/database/website-bigquery-prod.ts"
+								}
+							],
+							"optimization": true,
+							"outputHashing": "all",
+							"sourceMap": false,
+							"namedChunks": false,
+							"extractLicenses": true,
+							"vendorChunk": false,
+							"buildOptimizer": true,
+							"budgets": [
+								{
+									"type": "initial",
+									"maximumWarning": "2mb",
+									"maximumError": "5mb"
+								},
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "6kb",
+									"maximumError": "10kb"
+								}
+							],
+							"assets": []
+						},
+						"development": {
+							"optimization": false,
+							"sourceMap": false,
+							"poll": 2500,
+							"verbose": false,
+							"watch": true
+                        },
+						"bigquery": {
+							"fileReplacements": [
+								{
+									"replace": "src/app/website.ts",
+									"with": "src/app/database/website-bigquery-dev.ts"
+								},
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.bigquery.dev.ts"
+								}
+							],
+							"optimization": false,
+							"sourceMap": true,
+							"poll": 2500,
+							"verbose": false,
+							"watch": true
+                        },
+						"play": {
+							"fileReplacements": [
+								{
+									"replace": "src/app/website.ts",
+									"with": "src/app/database/website-bigquery-dev.ts"
+								},
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.bigquery.dev.ts"
+								}
+							],
+							"optimization": false,
+							"sourceMap": true,
+							"poll": 2500,
+							"verbose": false,
+							"watch": true
+                        }
+					}
+				},
+				"serve": {
+					"builder": "@angular-devkit/build-angular:dev-server",
+					"options": {
+						"browserTarget": "AngularApp:build:development",
+						"port": 8000,
+						"liveReload": true,
+						"hmr": false
+					},
+					"configurations": {
+						"production": {
+							"browserTarget": "AngularApp:bigquery:production"
+						},
+						"development": {
+							"browserTarget": "AngularApp:bigquery:development"
+                        },
+						"play": {
+							"browserTarget": "AngularApp:bigquery:play"
+                        },
+					}
+				},
+				"extract-i18n": {
+					"builder": "@angular-devkit/build-angular:extract-i18n",
+					"options": {
+						"browserTarget": "AngularApp:build"
+					}
+				},
+				"lint": {
+					"builder": "@angular-devkit/build-angular:tslint",
+					"options": {
+						"tsConfig": [
+							"tsconfig.app.json",
+							"tsconfig.spec.json",
+							"e2e/tsconfig.json"
+						],
+						"exclude": [
+							"**/node_modules/**"
+						]
+					}
+				}
+			}
+		}
+	},
+	"defaultProject": "AngularApp",
+	"cli": {
+		"analytics": "6fac06b6-fb10-4fba-ab5c-c36f335cf9fb"
+	}
+}

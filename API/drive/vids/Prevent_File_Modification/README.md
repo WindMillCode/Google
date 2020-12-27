@@ -129,7 +129,7 @@ if (env.lock.create) {
         console.log(result)
         target.file = result[0]
         http.patch(
-            "https://www.googleapis.com/drive/v3/files/"+result.id,
+            "https://www.googleapis.com/drive/v3/files/"+target.file.id,
             {
                 contentRestrictions:[
                     {"readOnly": "true"}

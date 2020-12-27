@@ -1,7 +1,11 @@
 # Developer Team additons
 report*.json
 *.mp4
+*.log
 20*
 Refv*
 /README.md
 *node_modules*
+*site-packages*
+*ruby*
+bigquery_cert.json

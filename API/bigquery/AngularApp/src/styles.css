@@ -1,0 +1,177 @@
+/* libre-franklin-regular - latin */
+@font-face {
+    font-family: 'Libre Franklin';
+    font-style: normal;
+    font-weight: 400;
+    src: url('assets/fonts/libre-franklin-v4-latin-regular.eot'); /* IE9 Compat Modes */
+    src: local('Libre Franklin'), local('LibreFranklin-Regular'),
+         url('assets/fonts/libre-franklin-v4-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('assets/fonts/libre-franklin-v4-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+         url('assets/fonts/libre-franklin-v4-latin-regular.woff') format('woff'), /* Modern Browsers */
+         url('assets/fonts/libre-franklin-v4-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('assets/fonts/libre-franklin-v4-latin-regular.svg#LibreFranklin') format('svg'); /* Legacy iOS */
+}
+
+
+/* fjalla-one-regular - latin */
+@font-face {
+    font-family: 'Fjalla One';
+    font-style: normal;
+    font-weight: 400;
+    src: url('assets/fonts/fjalla-one-v7-latin-regular.eot'); /* IE9 Compat Modes */
+    src: local('Fjalla One'), local('FjallaOne-Regular'),
+         url('assets/fonts/fjalla-one-v7-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('assets/fonts/fjalla-one-v7-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+         url('assets/fonts/fjalla-one-v7-latin-regular.woff') format('woff'), /* Modern Browsers */
+         url('assets/fonts/fjalla-one-v7-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('assets/fonts/fjalla-one-v7-latin-regular.svg#FjallaOne') format('svg'); /* Legacy iOS */
+}
+  
+
+
+
+/* tachyion helpful values */
+.border-box, a, article, aside, blockquote, body, code, dd, div, dl, dt, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, html, input,input[type="email"], input[type="number"], input[type="password"], input[type="tel"], input[type="text"], input[type="url"], legend, li, main, nav, ol, p, pre, section, table, td, textarea, th, tr, ul {
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+}
+
+body {
+
+    margin: 0;
+
+}
+
+input {
+    padding: 0px 0px 0px 0px;
+}
+
+/* input::-webkit-calendar-picker-indicator{
+    /* width:100%;  */
+    /* opacity:0; */
+    /* z-index:-1; */
+/* } */
+
+/* input::-webkit-datetime-edit-fields-wrapper { */
+
+/* } */ 
+
+
+
+
+app-root * {
+
+    position: absolute;
+    margin : 0px;
+    /* transition: top 2s, left 2s, font-size 3s; */
+}
+
+
+
+html {
+
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+
+}
+
+.a_p_p_BackStageProp{
+    width:0px;
+    height:0px;
+    top:0px;
+    left:0px;
+    display:none
+}
+
+.a_p_p_Text{
+    font-family : 'Arial';
+    font-weight : 400;    
+}
+
+.a_p_p_SubHeading{
+    font-family : Fjalla One;
+    font-weight : 400;    
+}
+
+.a_p_p_Selection{
+    font-family : Fjalla One;
+    border: 2px solid black;
+    font-weight : 400;  
+    background-color: transparent;
+    transition : color 0.5s, background-color 0.5s; 
+    text-align : center;
+    padding : 13px 26px 13px 26px;   
+}
+
+.a_p_p_Heading{
+    font-family : Fjalla One;
+    color:black;
+    font-weight: 400;
+    text-align: center;
+}
+
+.a_p_p_Input{
+    background : transparent;
+    font-family : 'Roboto', sans-serif; 
+    border:0px;
+    border-bottom:2px solid black;
+}
+
+.a_p_p_InputInvalid{
+    border: 5px solid red;
+}
+
+
+.a_p_p_TextArea{
+    border :2px solid black;
+    font-family:"Arial";
+    background-color: transparent;    
+}
+
+/* .a_p_p_Input:invalid{
+    border: 5px solid red;
+} */
+
+.a_p_p_Button{
+    font-family : 'Roboto', sans-serif;
+    background-color : rgb(0, 123, 255);
+    color : rgb(197, 236, 253);
+    font-weight : 400;
+    border-radius :  3px 3px 3px 3px
+
+}
+
+.a_p_p_BulletPoint{
+    display:table;
+    font-family:"Arial";
+    /* list-style: square; */
+}
+
+
+.a_p_p_DropDownStart{
+    padding:13px 26px 13px 26px;
+    border-top-left-radius:     10px;
+    border-top-right-radius:    10px;    
+    border :2px solid black;
+    font-family:Arial;
+    background-color: white;
+}
+
+.a_p_p_DropDownMiddle{
+    padding:13px 26px 13px 26px;   
+    border :2px solid black;
+    font-family:Arial;
+    background-color: white;
+}
+
+.a_p_p_DropDownLast{
+    padding:13px 26px 13px 26px;
+    border-bottom-left-radius:     10px;
+    border-bottom-right-radius:    10px;    
+    border :2px solid black;
+    font-family:Arial;
+    background-color: white;
+}
