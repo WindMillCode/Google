@@ -1,44 +1,6 @@
-# Bigquery
+# Getting Started With the Python SDK in BigQuery
 
-## What is BigQuery?
-
-* can use cli, REST ,Graphql??, SDK,and 3rd party tools to work with biguqery
-* high powered way to deal with big data
-
-## Installation
-* install the cloud sdk [here](https://cloud.google.com/sdk/docs/install)
-
-## Quickstart using the bq command-line tool
-
-
-* To examine the schema of a specific table
-```ps1
-bq show bigquery-public-data:samples.shakespeare
-```
-
-* to get help
-```ps1
-bq help [command?]
-```
-
-* to run a query
-    * always want to use standard sql, same with the REST API 
-
-```ps1
-bq query --use_legacy_sql=false 
-'SELECT
-   word,
-   SUM(word_count) AS count
- FROM
-   `bigquery-public-data`.samples.shakespeare
- WHERE
-   word LIKE "%raisin%"
- GROUP BY
-   word'
-```
-
-
-## Quickstart using Python SDK
+* after the lab your file should look like start.final.py 
 
 * create a service acct [here](https://console.cloud.google.com/apis/credentials?project=gcp-data-certs)
 * click create credentials 
@@ -56,6 +18,7 @@ bq query --use_legacy_sql=false
 * a json file downloads
 * set the GOOGLE_APPLICATION_CREDENTIALS env var to the path of the json
 
+
 * install the python sdk 
     might have to add .\site-packages to path to see the library
     - gcp doesnt ship as one library, it ships as seperate libraries
@@ -63,11 +26,18 @@ bq query --use_legacy_sql=false
 pip install --upgrade google-cloud-bigquery --target .\site-packages
 ```
 
-* start the bigQuery client
+* in 'modify sys.path so you can see the modules'  paste this coe
 ```py
+import sys
+sys.path[0] += "\\site-packages"
+```
+
+* in 'import and intalize the client' paste this code
+```py 
 from google.cloud import bigquery
 client = bigquery.Client()
 ```
+
 
 * make a query
 ```py
@@ -83,9 +53,10 @@ query_job = client.query(
     ORDER BY view_count DESC
     LIMIT 10"""
 )
-
+```
+* in 'see the query' paste this code
+```py
 results = query_job.result()  # Waits for job to complete.
 for row in results:
     print("{} : {} views".format(row.url, row.view_count))
 ```
-

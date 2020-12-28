@@ -1,11 +1,10 @@
-
-
+# modify sys.path so you can see the modules
 import sys
 sys.path[0] += "\\site-packages"
-# end
+# 
 
 
-# import and intalize the library
+# import and intalize the client
 from google.cloud import bigquery
 client = bigquery.Client()
 # 
@@ -24,9 +23,9 @@ query_job = client.query(
     ORDER BY view_count DESC
     LIMIT 10"""
 )
-# see the query
-
 # 
+
+# see the query
 results = query_job.result()  # Waits for job to complete.
 for row in results:
     print("{} : {} views".format(row.url, row.view_count))
