@@ -1,5 +1,8 @@
 # Bigquery
 
+## Messages
+ how-to-guides should be in order of coming from the surface (database) to the core (jobs). Not most important concepts, how can we understand the important concepts if the construction to see it is abstract and kept for later
+
 ## What is BigQuery?
 
 * can use cli, REST ,Graphql??, SDK,and 3rd party tools to work with biguqery
@@ -89,3 +92,44 @@ for row in results:
     print("{} : {} views".format(row.url, row.view_count))
 ```
 
+
+* [predefined roles and permissions](https://cloud.google.com/bigquery/docs/access-control)
+* [https://cloud.google.com/bigquery/pricing](https://cloud.google.com/bigquery/pricing)
+
+## Introduction to BigQuery jobs
+
+* __Permissions__ bigquery.jobs.create permission
+* __roles__ - bigquery.user, bigquery.jobUser, bigquery.admin
+
+### Running jobs programmatically
+
+#### Python
+```py
+from google.cloud import bigquery
+
+# Construct a BigQuery client object.
+client = bigquery.Client()
+
+query_job = client.query(
+    "SELECT country_name from `bigquery-public-data.utility_us.country_code_iso`",
+    # Explicitly force job execution to be routed to a specific processing
+    # location.
+    location="US",
+    # Specify a job configuration to set optional job resource properties.
+    job_config=bigquery.QueryJobConfig(
+        labels={"example-label": "example-value"}, maximum_bytes_billed=1000000
+    ),
+    # The client libraries automatically generate a job ID. Override the
+    # generated ID with either the job_id_prefix or job_id parameters.
+    job_id_prefix="code_sample_",
+)  # Make an API request.
+
+print("Started job: {}".format(query_job.job_id))
+```
+
+### Generating a job ID 
+
+* good to genereate a job ID on jobs inseert
+* must be  (a-z, A-Z) (0-9), underscores (_) - max 1024
+* use symbolic prefix and timestamp daily_import_job_1447971251
+* use [GUID mODULE](https://docs.python.org/2/library/uuid.html#module-uuid) 

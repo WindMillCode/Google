@@ -60,3 +60,4 @@ results = query_job.result()  # Waits for job to complete.
 for row in results:
     print("{} : {} views".format(row.url, row.view_count))
 ```
+
