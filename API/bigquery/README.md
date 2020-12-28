@@ -133,3 +133,134 @@ print("Started job: {}".format(query_job.job_id))
 * must be  (a-z, A-Z) (0-9), underscores (_) - max 1024
 * use symbolic prefix and timestamp daily_import_job_1447971251
 * use [GUID mODULE](https://docs.python.org/2/library/uuid.html#module-uuid) 
+
+## Managing Jobs
+
+* When a job is submitted, it can be in one of three states:
+
+PENDING: scheduled
+RUNNING
+DONE: reported as SUCCESS or FAILURE (if the job completed with error
+
+* It seems that with the python sdk you cant see the jobs
+### Viewing job data
+
+* permissions -  bigquery.jobs.get
+* roles - bigquery.admin
+
+* to view info 
+
+#### Python
+```py
+job_id = "my_query_{}".format(uuid.uuid4())
+query_job = bigquery.job.QueryJob(
+    job_id,
+    "SELECT country_name from `bigquery-public-data.utility_us.country_code_iso`",
+    client
+)
+results = query_job.result()  
+
+query_job = client.get_job(job_id)  # API request
+
+# Print selected job properties
+print("Details for job {} running in {}:".format(job_id, location))
+print(
+    "\tType: {}\n\tState: {}\n\tCreated: {}".format(
+        job.job_type, job.state, job.created
+    )
+)
+```
+
+### Listing jobs
+* goes back for  6 months
+    * omit max_result to go back 6 months
+#### Python
+```py
+
+from google.cloud import bigquery
+
+import datetime
+
+# Construct a BigQuery client object.
+client = bigquery.Client()
+
+print("Last 10 jobs:")
+for job in client.list_jobs(max_results=10):  # API request(s)
+    print("{}".format(job.job_id))
+
+print("Last 10 jobs run by all users:")
+for job in client.list_jobs(max_results=10, all_users=True):
+    print("{} run by user: {}".format(job.job_id, job.user_email))   
+
+print("Last 10 jobs done:")
+for job in client.list_jobs(max_results=10, state_filter="DONE"):
+    print("{}".format(job.job_id))   
+```
+
+
+
+### Cancelling  jobs
+* permissions - bigquery.admin
+* roles - bigquery.user, bigquery.jobUser
+
+if  RUNNING or PENDING
+* error if a job cant be canceled
+```py
+# TODO(developer): Uncomment the lines below and replace with your values.
+# from google.cloud import bigquery
+# client = bigquery.Client()
+# job_id = 'bq-job-123x456-123y123z123c'  # replace with your job ID
+# location = 'us'                         # replace with your location
+
+job = client.cancel_job(job_id, location=location)
+```
+
+
+### Repeating A job
+
+* __permissions__ -bigquery.jobs.create
+* __roles__ - bigquery.user, bigquery.jobUser, bigquery.admin
+
+* you cant use a job id to repeat a job, 
+
+#### Python
+```py
+    # say if you didnt have the query details
+    job_id = "my_query_{}".format(uuid.uuid4())
+    query_job = bigquery.job.QueryJob(
+        job_id,
+        """
+        SELECT start_station_name, FROM
+        `bigquery-public-data.new_york_citibike.citibike_trips` LIMIT 10
+        """
+        ,
+        client
+    )    
+    results = query_job.result() 
+    query_job = client.get_job(job_id)
+    print("Original query \n")
+    for row in results:
+        print(row.start_station_name)
+    #
+
+
+    # repeat the same query
+    repeat_job = bigquery.job.QueryJob(
+        "my_query_{}".format(uuid.uuid4()),
+        query_job.query
+        ,
+        client
+    )   
+    # 
+
+    print("Repeated query \n")
+    results = repeat_job.result() 
+    for row in results:
+        print(row.start_station_name)  
+```
+
+
+### Issues 
+
+* cancel a job, 
+it seems bq jobs run sync only with result() , there is no way to do anything during a job, neither cancel or get it status

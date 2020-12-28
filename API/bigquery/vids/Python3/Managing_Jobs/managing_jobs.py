@@ -1,6 +1,9 @@
 import sys
 import uuid
+import datetime
+import time
 import pprint
+import asyncio
 pp = pprint.PrettyPrinter(indent=4,compact= True,width =1)
 
 sys.path[0] += "\\site-packages"
@@ -17,10 +20,18 @@ client = bigquery.Client()
 # 
 
 
-# run a job
+# view job info
 
 # 
 
-# create UUID 
+# list jobs
+
+#
+
+# cancel a job
 
 # 
+
+# repeat  job
+
+#
