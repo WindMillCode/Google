@@ -370,7 +370,7 @@ print(f"Created transfer config: {transfer_config.name}")
 
 
 ### Controlling access to datasets
-* access control only happens with datasets.insert
+* access control only happens on update , cant do it with create
 
 __permissions__ -  bigquery.datasets.update,bigquery.datasets.get
 __roles__ - bigquery.dataOwner,bigquery.admin

@@ -1,50 +1,43 @@
-## Datasets with Google Bigquery API
+import sys
+import uuid
+import datetime
+import time
+import pprint
+import asyncio
+pp = pprint.PrettyPrinter(indent=4,compact= True,width =1)
 
-* after the lab your file should look like dataset.final.py 
-* if issues copy and paste from dataset.start.py
+sys.path[0] += "\\site-packages"
+# end
 
-### Start the Angular App
 
-* download the frontend [here](https://downgit.github.io/#/home?url=https://github.com/codequickie123/Google/tree/master/API/bigquery/AngularApp)
-open a terminal and head to project root and run this command
-```ps1
-npm install -s
-npx ng serve -c=dataset --open=true
-```
 
-### Setup the Python Backend 
-* download the backend [here](https://downgit.github.io/#/home?url=https://github.com/codequickie123/Google/tree/master/API/bigquery/vids/Python3/Datasets_in_Bigquery)
 
-in a terminal in the folder root
-    * target makes it a local package, do not make it global, it might replace your packages
-    * if you make a mistake or believe a corruption happened delete site-packages and try again
-```ps1
-pip install google-cloud-bigquery google-cloud-bigquery-datatransfer --target .\site-packages
-python build_server.py
-```
-* open dataset.py in your code editor
+# import and intalize the library
+from google.cloud import bigquery
+from google.cloud import bigquery_datatransfer
+client = bigquery.Client()
+# 
 
-### Create a dataset 
-* __permissions__ - bigquery.datasets.create
-* __roles__ - bigquery.dataEditor, bigquery.dataOwner, bigquery.user,bigquery.admin
- * name unique,1024 characters,case-sensitive, no spaces or special chars
 
-* in ' paste env dict here' replace
-```py 
-env = {
-    "create":True,
-    "copy":False,
-    "access_control":False,
-    "list":False,
-    "metadata":False,
-    "update":False,
-    "delete":False
-}
-```
+class my_bigquery_client():
 
-* in create a dataset paste this code
-   
-```py
+    # def __init__(self):
+
+
+    # paste env object here
+    env = {
+        "create":False,
+        "copy":False,
+        "access_control":False,
+        "list":False,
+        "metadata":False,
+        "update":False,
+        "delete":True
+    }
+    #     
+
+    def execute(self,name):
+        # create a dataset
         if(self.env.get("create")):
             dataset_id = self.make_dataset_id(name)
             dataset_init = bigquery.Dataset(dataset_id)
@@ -60,34 +53,9 @@ env = {
                 print("\nlook here\n")
                 print(e)
                 return "Dataset already exists choose another name"   
-```
+        #
 
-### Copying Datasets
-* this feature is in beta
-* need to enable [BigQuery Data Transfer Service](https://cloud.google.com/bigquery/docs/enable-transfer-service)
-* make a destination dataset in a supported [region](https://cloud.google.com/bigquery/docs/copying-datasets#supported_regions) rmbr unique names each GCP project
-* if you overwrite tables both tables must have same partition schema
-* if schedule is not given once, every 24 hours
-    * schedule [syntax](https://cloud.google.com/appengine/docs/flexible/python/scheduling-jobs-with-cron-yaml#cron_yaml_The_schedule_format)
-
-* __permissions__ - bigquery.transfers.update,bigquery.tables.list
-* __roles__ - bigquery.admin, serviceacct.tokenCreator
-
-* in ' paste env dict here' replace
-```py 
-env = {
-    "create":False,
-    "copy":True,
-    "access_control":False,
-    "list":False,
-    "metadata":False,
-    "update":False,
-    "delete":False
-}
-```
-
-* in 'copy a dataset' paste this code
-```py
+        # copy a dataset
         elif(self.env.get("copy")):
             transfer_client = bigquery_datatransfer.DataTransferServiceClient()
 
@@ -128,37 +96,8 @@ env = {
                 print(e)  
                 return "Was not able to make a copy mabye check the terminal where the python server is running"
         #
-```
 
-### Controlling access to datasets
-* access control only happens on update , cant do it with create
-
-__permissions__ -  bigquery.datasets.update,bigquery.datasets.get
-__roles__ - bigquery.dataOwner,bigquery.admin
-        * Google Account email: Grants an individual Google Account access to the dataset.
-        * Google Group: Grants all members of a Google group access to the dataset.
-        * Google Apps Domain: Grants all users and groups in a Google domain access to the dataset.
-        * Service account: Grants a service account access to the dataset.
-        * Anybody: Enter allUsers to grant access to the general public.
-        * All Google accounts: Enter allAuthenticatedUsers to grant access to any user signed in to a Google Account.
-        Authorized views: Grants an authorized view access to the dataset. 
-
-
-* in ' paste env dict here' replace
-```py 
-env = {
-    "create":False,
-    "copy":False,
-    "access_control":True,
-    "list":False,
-    "metadata":False,
-    "update":False,
-    "delete":False
-}
-```
-
-* in 'access control' paste
-```py
+        # access control
         elif(self.env.get("access_control")):
             try:
                 dataset_id =  self.make_dataset_id(name)
@@ -180,30 +119,8 @@ env = {
                 print(e)
                 return "An error occured"
         #
-```
 
-### Listing datasets
-* if you see deleted datasets, wait 6 hours
-
-* __permissions__ - bigquery.datasets.get
-* __roles__ - bigquery.user, bigquery.metadataViewer,bigquery.dataViewer,bigquery.dataOwner,bigquery.dataEditor,bigquery.admin
-
-
-* in ' paste env dict here' replace
-```py 
-env = {
-    "create":False,
-    "copy":False,
-    "access_control":False,
-    "list":True,
-    "metadata":False,
-    "update":False,
-    "delete":False
-}
-```
-
-* in 'list all datsets' paste
-```py
+        # list all datasets
         elif(self.env.get("list")):
             try:
                 datasets = list(client.list_datasets())
@@ -218,29 +135,10 @@ env = {
             except BaseException as e:
                 print("\nlook here\n")
                 print(e)
-                return "An error occured" 
-```
+                return "An error occured"                    
+        #
 
-### Getting information about datasets
-
-* __permissions__ - bigquery.datasets.get
-* __roles__ - bigquery.user, bigquery.metadataViewer,bigquery.dataViewer,bigquery.dataOwner,bigquery.dataEditor,bigquery.admin
-
-* in ' paste env dict here' replace
-```py 
-env = {
-    "create":False,
-    "copy":False,
-    "access_control":False,
-    "list":False,
-    "metadata":True,
-    "update":False,
-    "delete":False
-}
-```
-
-* in 'metadata' paste
-```py
+        # metadata
         elif(self.env.get("metadata")):
             value ="Metadata:\n"
             try:
@@ -280,32 +178,8 @@ env = {
                 print(e)
                 return "An error occured"                
         #
-```
-### Updating dataset properties
 
-* __permissions__ - bigquery.datasets.get
-* __roles__ - bigquery.dataOwner,bigquery.admin
-
-* to update things
-    * can set default table expiration time at the dataset level
-    * to get granaular change the default table expiration on the table
-    * console cant set default partition expiration, however the table value overrides the dataset value
-
-* in ' paste env dict here' replace
-```py 
-env = {
-    "create":False,
-    "copy":False,
-    "access_control":False,
-    "list":False,
-    "metadata":False,
-    "update":True,
-    "delete":False
-}
-```
-
-* in 'update dataset' paste
-```py
+        # update dataset 
         elif(self.env.get("update")):
 
             value = ""
@@ -351,29 +225,8 @@ env = {
                 print(e)
                 return "An error occured"    
         # 
-```
 
-
-
-###  Delete a Dataset
-* __permissions__ - bigquery.datasets.delete, bigquery.tables.delete 
-* __roles__ -   bigquery.dataOwner, bigquery.admin
-
-* in ' paste env dict here' replace
-```py 
-env = {
-    "create":False,
-    "copy":False,
-    "access_control":False,
-    "list":False,
-    "metadata":False,
-    "update":False,
-    "delete":True
-}
-```
-
-* in 'delete dataset' paste
-```py
+        # delete dataset
         elif(self.env.get("delete")):
             try:
                 dataset_id = self.make_dataset_id(name)
@@ -390,5 +243,12 @@ env = {
                 if(e.__class__.__name__ == "NotFound"):
                     return "Could not find dataset with name {} to delete".format(dataset_id)
                 return "An error occured"                      
-        #  
-```
+
+        #      
+
+    def make_dataset_id(self, name):
+        if(name == ""):
+            raise IndexError
+        return "{}.{}".format(client.project,name)
+        
+    
