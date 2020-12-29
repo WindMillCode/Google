@@ -4,7 +4,7 @@ import { HttpClientModule   }    from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormComponent } from './form/form.component';
-import { CreateDirective } from './directive/create.directive';
+import { DatasetDirective } from './directive/dataset.directive';
 // import { FormControlDirective } from './directive/form-control.directive';
 
 
@@ -12,7 +12,7 @@ import { CreateDirective } from './directive/create.directive';
   declarations: [
     AppComponent,
     FormComponent,
-    CreateDirective,
+    DatasetDirective,
     // FormControlDirective,
 
   ],

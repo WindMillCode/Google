@@ -50,7 +50,6 @@ export const environment: any = {
         tracingOrigins:["localhost",/^\//]
     },
     dataset:{
-        create:true
     }
 
 };

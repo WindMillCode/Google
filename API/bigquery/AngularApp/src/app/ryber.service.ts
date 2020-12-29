@@ -987,7 +987,7 @@ export class RyberService {
                 })
             }
 
-            else if(type === "create button"){
+            else if(type === "dataset button"){
 
                 let css = {
                     width:'325px',
@@ -1013,7 +1013,7 @@ export class RyberService {
                     val:key.split("_").reverse()[0] + ' a_p_p_Button',
                     css,
                     extras:{
-                        appCreate:{
+                        appDataset:{
                             confirm:'true'
                         },
                         component,

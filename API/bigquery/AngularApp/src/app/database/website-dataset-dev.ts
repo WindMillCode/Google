@@ -11,7 +11,6 @@ website.convertCMS = [
                 "key": "Body",
                 "type": "body",
                 "stack": "60",
-                "height":"1000",
                 "background": "rgb(255, 179, 204)",
                 "googleSheets": {}
             },
@@ -24,7 +23,7 @@ website.convertCMS = [
             },
             {
                 "key": "Question",
-                "value": "Type in the name of the dataset to create",
+                "value": "Type in the name of the dataset to perform an action",
                 "type": "sub-heading",
                 "split": "9",
                 "text-align":"center",
@@ -43,7 +42,7 @@ website.convertCMS = [
             },
             {
                 "key": "Submit",
-                "type": "create button",
+                "type": "dataset button",
                 "value":"Submit",
                 "next":"true",
                 // "split": "3",
@@ -56,7 +55,7 @@ website.convertCMS = [
                 "value":"Waiting For Submission...",
                 // "next":"true",
                 "split": "6",
-                "fontSize":"60",
+                "fontSize":"40",
                 "height":"250",
                 "googleSheets": {}
             },

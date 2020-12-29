@@ -8,7 +8,7 @@ import datetime
 import time
 import pprint 
 pp = pprint.PrettyPrinter(indent=4,compact= True,width =1)
-from create_dataset import my_bigquery_client
+from dataset import my_bigquery_client
 
 #  your customer biguqery client
 my_client = my_bigquery_client()
@@ -40,7 +40,7 @@ class my_base_handler(http.server.BaseHTTPRequestHandler):
 
         path = ''
         if  urlObj.path == "/":
-            self.wfile.write(my_client.execute(name))
+            self.wfile.write(my_client.execute(name).encode())
         # else:
         #     path = needed[2]
         

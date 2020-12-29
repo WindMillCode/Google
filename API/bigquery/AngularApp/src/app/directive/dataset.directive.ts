@@ -1,5 +1,3 @@
-
-
 import { Directive, ElementRef, HostListener, Input, Renderer2, TemplateRef, ViewContainerRef, ViewRef, EmbeddedViewRef, ViewChildren } from '@angular/core';
 import { RyberService } from '../ryber.service'
 import { fromEvent, from, Subscription, Subscriber, of, combineLatest } from 'rxjs';
@@ -8,12 +6,13 @@ import { catchError, delay } from 'rxjs/operators'
 import { environment as env } from '../../environments/environment'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-@Directive({
-    selector: '[appCreate]'
-  })
-export class CreateDirective {
 
-    @Input() create: any;
+@Directive({
+    selector: '[appDataset]'
+  })
+  export class DatasetDirective {
+
+    @Input() dataset: any;
     extras: any;
 
     constructor(
@@ -41,18 +40,29 @@ export class CreateDirective {
                 }
             )
             .pipe(
-            catchError((error)=>{
-                return of(error)
-            })
+            // catchError()
             )
-            .subscribe((result:any)=>{
-                console.log(result)
-                let update = (document.querySelector(".f_o_r_m_Result") as HTMLElement)
-                update.innerText = result
-                eventDispatcher({
-                    event:'resize',
-                    element:window
-                })
+            .subscribe({
+
+
+                error:(error)=>{
+                    let update = (document.querySelector(".f_o_r_m_Result") as HTMLElement)
+                    update.innerText = "Is the backend running?"
+                    eventDispatcher({
+                        event:'resize',
+                        element:window
+                    })
+                },
+                next:(result:any)=>{
+                    console.log(result)
+                    let update = (document.querySelector(".f_o_r_m_Result") as HTMLElement)
+                    update.innerText = result
+                    eventDispatcher({
+                        event:'resize',
+                        element:window
+                    })
+                }
+
             })
             //
 
@@ -61,7 +71,7 @@ export class CreateDirective {
     }
 
     ngOnInit() {
-        this.extras = this.create
+        this.extras = this.dataset
         if (this.extras?.confirm === 'true') {
             console.log(env.search)
 
