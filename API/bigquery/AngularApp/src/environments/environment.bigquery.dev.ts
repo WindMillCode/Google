@@ -48,6 +48,9 @@ export const environment: any = {
         env:"Bigquery_development",
         defaultIntegrations:true,
         tracingOrigins:["localhost",/^\//]
+    },
+    dataset:{
+        create:true
     }
 
 };

@@ -43,7 +43,8 @@ export class RyberService {
                 options = {}
             }
 
-            let {printGroupType,printGroup,key,type,gap,stack,value,group,count,repeatable,newline,form,multipleGroup,refreshGroup,background,color,fonts,title,fontSize,italics,googleSheets} =devObj.mf
+            let {mf} = devObj
+            let {printGroupType,printGroup,key,type,gap,stack,value,group,count,repeatable,newline,form,multipleGroup,refreshGroup,background,color,fonts,title,fontSize,italics,googleSheets,border} =mf
             let {left,top,height,width,split,next} = devObj.mf
             let component = {left,top,height,width,split,next}
 
@@ -115,19 +116,21 @@ export class RyberService {
 
             else if(type === "input"){
                 let extend: any = {
-                            type:'text',
-                            placeholder:value,
-                            form:'myForm'
-                        }
+                    type:'text',
+                    placeholder:value,
+                    form:'myForm'
+                }
 
                form?.required === undefined ? null:((a)=>{ a.required =form?.required})(extend)
                 let css = {
                     "z-index":4,
                     // display:"table",
-                    "font-size":"30px",
+                    border,
+                    "font-size":fontSize === undefined ? "30px" : fontSize + "px",
                     'background-color':background,
                     color,
-                    "font-family":fonts
+                    "font-family":fonts,
+                    "text-align":mf["text-align"]
                 }
                 options.css === undefined ? undefined :(()=>{
                     css = options.css;
@@ -984,6 +987,41 @@ export class RyberService {
                 })
             }
 
+            else if(type === "create button"){
+
+                let css = {
+                    width:'325px',
+                    "font-size":"48px",
+                    top:"0px",
+                    // height:"75px",
+                    // left:'400px',
+                    "z-index":4,
+                    'background-color':background,
+                    color,
+                    "font-family":fonts,
+                    "font-weight":italics
+                }
+                options.css === undefined ? undefined :(()=>{
+                    css = options.css;
+                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null
+                })()
+
+                symbol = rUD({
+                    co,
+                    bool:'b',
+                    text:value,
+                    val:key.split("_").reverse()[0] + ' a_p_p_Button',
+                    css,
+                    extras:{
+                        appCreate:{
+                            confirm:'true'
+                        },
+                        component,
+                        type
+                    }
+                })
+            }
+
             else if(type === "file button"){
 
 
@@ -1034,631 +1072,6 @@ export class RyberService {
                 })
             }
 
-            else if(type === "printfiles button"){
-
-
-                let css = {
-                    width:'325px',
-                    "font-size":"48px",
-                    top:"0px",
-                    // height:"75px",
-                    // left:'400px',
-                    "z-index":4,
-                    'background-color':background,
-                    color,
-                    "font-family":fonts,
-                    "font-weight":italics,
-                }
-                options.css === undefined ? undefined :(()=>{
-                    css = options.css;
-                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null
-                })()
-                let name = this[co.valueOf()].quantity[1][1].signature + " "+ zCTgen.next().value
-
-                symbol = rUD({
-                    co,
-                    bool:'b',
-                    text:value,
-                    val:key.split("_").reverse()[0] + " a_p_p_Button",
-                    css,
-                    extras:{
-                        appPrintFiles:{
-                            confirm:'true',
-                            name,
-                            co,
-                            printGroup,
-                        },
-                        appInputHandle:{
-                            confirm:'true',
-                            zSymbol :"",// zChildSymbol goes here
-                            co,
-                            name,
-                            googleSheets,
-                            required:form?.required !== undefined ? "file button" :"false",
-                            link:form?.link,
-                            type:"file button"
-                        },
-                        deltaIndex:1,
-                        component,
-                        multipleGroup:printGroup,
-                        type
-                    }
-                })
-            }
-
-            else if(type === "playground"){
-
-
-                let css = {
-                    width:'325px',
-                    "font-size":"48px",
-                    top:"0px",
-                    // height:"75px",
-                    // left:'400px',
-                    "z-index":4,
-                    'background-color':background,
-                    color,
-                    "font-family":fonts,
-                    "font-weight":italics,
-                }
-                options.css === undefined ? undefined :(()=>{
-                    css = options.css;
-                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null
-                })()
-                let name = this[co.valueOf()].quantity[1][1].signature + " "+ zCTgen.next().value
-
-                symbol = rUD({
-                    co,
-                    bool:'b',
-                    text:"Playground",
-                    val:key.split("_").reverse()[0] + " a_p_p_Button",
-                    css,
-                    extras:{
-                        appPlayground:{
-                            confirm:'true',
-                        },
-                        appInputHandle:{
-                            confirm:'true',
-                            zSymbol :"",// zChildSymbol goes here
-                            co,
-                            name,
-                            googleSheets,
-                            required:form?.required !== undefined ? "file button" :"false",
-                            link:form?.link,
-                            type:"file button"
-                        },
-                        deltaIndex:1,
-                        component,
-                        multipleGroup:printGroup,
-                        type
-                    }
-                })
-            }
-
-            else if(type === "upload button"){
-
-
-                let css = {
-                    width:'325px',
-                    "font-size":"48px",
-                    top:"0px",
-                    // height:"75px",
-                    // left:'400px',
-                    "z-index":4,
-                    'background-color':background,
-                    color,
-                    "font-family":fonts,
-                    "font-weight":italics,
-                }
-                options.css === undefined ? undefined :(()=>{
-                    css = options.css;
-                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null
-                })()
-                let name = this[co.valueOf()].quantity[1][1].signature + " "+ zCTgen.next().value
-
-                symbol = rUD({
-                    co,
-                    bool:'b',
-                    text:value,
-                    val:key.split("_").reverse()[0] + " a_p_p_Button",
-                    css,
-                    extras:{
-                        appUpload:{
-                            confirm:'true',
-                        },
-                        appInputHandle:{
-                            confirm:'true',
-                            zSymbol :"",// zChildSymbol goes here
-                            co,
-                            name,
-                            googleSheets,
-                            required:form?.required !== undefined ? "file button" :"false",
-                            link:form?.link,
-                            type:"file button"
-                        },
-                        deltaIndex:1,
-                        component,
-                        multipleGroup:printGroup,
-                        type
-                    }
-                })
-            }
-
-            else if(type === "folders button"){
-
-
-                let css = {
-                    width:'325px',
-                    "font-size":"48px",
-                    top:"0px",
-                    // height:"75px",
-                    // left:'400px',
-                    "z-index":4,
-                    'background-color':background,
-                    color,
-                    "font-family":fonts,
-                    "font-weight":italics,
-                }
-                options.css === undefined ? undefined :(()=>{
-                    css = options.css;
-                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null
-                })()
-                let name = this[co.valueOf()].quantity[1][1].signature + " "+ zCTgen.next().value
-
-                symbol = rUD({
-                    co,
-                    bool:'b',
-                    text:value,
-                    val:key.split("_").reverse()[0] + " a_p_p_Button",
-                    css,
-                    extras:{
-                        appFolders:{
-                            confirm:'true',
-                        },
-                        appInputHandle:{
-                            confirm:'true',
-                            zSymbol :"",// zChildSymbol goes here
-                            co,
-                            name,
-                            googleSheets,
-                            required:form?.required !== undefined ? "file button" :"false",
-                            link:form?.link,
-                            type:"file button"
-                        },
-                        deltaIndex:1,
-                        component,
-                        multipleGroup:printGroup,
-                        type
-                    }
-                })
-            }
-
-            else if(type === "shortcut button"){
-
-
-                let css = {
-                    width:'325px',
-                    "font-size":"48px",
-                    top:"0px",
-                    // height:"75px",
-                    // left:'400px',
-                    "z-index":4,
-                    'background-color':background,
-                    color,
-                    "font-family":fonts,
-                    "font-weight":italics,
-                }
-                options.css === undefined ? undefined :(()=>{
-                    css = options.css;
-                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null
-                })()
-                let name = this[co.valueOf()].quantity[1][1].signature + " "+ zCTgen.next().value
-
-                symbol = rUD({
-                    co,
-                    bool:'b',
-                    text:value,
-                    val:key.split("_").reverse()[0] + " a_p_p_Button",
-                    css,
-                    extras:{
-                        appShortcut:{
-                            confirm:'true',
-                        },
-                        appInputHandle:{
-                            confirm:'true',
-                            zSymbol :"",// zChildSymbol goes here
-                            co,
-                            name,
-                            googleSheets,
-                            required:form?.required !== undefined ? "file button" :"false",
-                            link:form?.link,
-                            type:"file button"
-                        },
-                        deltaIndex:1,
-                        component,
-                        multipleGroup:printGroup,
-                        type
-                    }
-                })
-            }
-
-            else if(type === "lock button"){
-
-
-                let css = {
-                    width:'325px',
-                    "font-size":"48px",
-                    top:"0px",
-                    // height:"75px",
-                    // left:'400px',
-                    "z-index":4,
-                    'background-color':background,
-                    color,
-                    "font-family":fonts,
-                    "font-weight":italics,
-                }
-                options.css === undefined ? undefined :(()=>{
-                    css = options.css;
-                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null
-                })()
-                let name = this[co.valueOf()].quantity[1][1].signature + " "+ zCTgen.next().value
-
-                symbol = rUD({
-                    co,
-                    bool:'b',
-                    text:value,
-                    val:key.split("_").reverse()[0] + " a_p_p_Button",
-                    css,
-                    extras:{
-                        appLock:{
-                            confirm:'true',
-                        },
-                        appInputHandle:{
-                            confirm:'true',
-                            zSymbol :"",// zChildSymbol goes here
-                            co,
-                            name,
-                            googleSheets,
-                            required:form?.required !== undefined ? "file button" :"false",
-                            link:form?.link,
-                            type:"file button"
-                        },
-                        deltaIndex:1,
-                        component,
-                        multipleGroup:printGroup,
-                        type
-                    }
-                })
-            }
-
-            else if(type === "download button"){
-
-
-                let css = {
-                    width:'325px',
-                    "font-size":"48px",
-                    top:"0px",
-                    "z-index":4,
-                    'background-color':background,
-                    color,
-                    "font-family":fonts,
-                    "font-weight":italics,
-                }
-                options.css === undefined ? undefined :(()=>{
-                    css = options.css;
-                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null
-                })()
-                let name = this[co.valueOf()].quantity[1][1].signature + " "+ zCTgen.next().value
-
-                symbol = rUD({
-                    co,
-                    bool:'b',
-                    text:value,
-                    val:key.split("_").reverse()[0] + " a_p_p_Button",
-                    css,
-                    extras:{
-                        appDownload:{
-                            confirm:'true',
-                        },
-                        appInputHandle:{
-                            confirm:'true',
-                            zSymbol :"",// zChildSymbol goes here
-                            co,
-                            name,
-                            googleSheets,
-                            required:form?.required !== undefined ? "file button" :"false",
-                            link:form?.link,
-                            type:"file button"
-                        },
-                        deltaIndex:1,
-                        component,
-                        multipleGroup:printGroup,
-                        type
-                    }
-                })
-            }
-
-            else if(type === "search button"){
-
-
-                let css = {
-                    width:'325px',
-                    "font-size":"48px",
-                    top:"0px",
-                    "z-index":4,
-                    'background-color':background,
-                    color,
-                    "font-family":fonts,
-                    "font-weight":italics,
-                }
-                options.css === undefined ? undefined :(()=>{
-                    css = options.css;
-                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null
-                })()
-                let name = this[co.valueOf()].quantity[1][1].signature + " "+ zCTgen.next().value
-
-                symbol = rUD({
-                    co,
-                    bool:'b',
-                    text:value,
-                    val:key.split("_").reverse()[0] + " a_p_p_Button",
-                    css,
-                    extras:{
-                        appSearch:{
-                            confirm:'true',
-                        },
-                        appInputHandle:{
-                            confirm:'true',
-                            zSymbol :"",// zChildSymbol goes here
-                            co,
-                            name,
-                            googleSheets,
-                            required:form?.required !== undefined ? "file button" :"false",
-                            link:form?.link,
-                            type:"file button"
-                        },
-                        deltaIndex:1,
-                        component,
-                        multipleGroup:printGroup,
-                        type
-                    }
-                })
-            }
-
-            else if(type === "fields button"){
-
-
-                let css = {
-                    width:'325px',
-                    "font-size":"48px",
-                    top:"0px",
-                    "z-index":4,
-                    'background-color':background,
-                    color,
-                    "font-family":fonts,
-                    "font-weight":italics,
-                }
-                options.css === undefined ? undefined :(()=>{
-                    css = options.css;
-                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null
-                })()
-                let name = this[co.valueOf()].quantity[1][1].signature + " "+ zCTgen.next().value
-
-                symbol = rUD({
-                    co,
-                    bool:'b',
-                    text:value,
-                    val:key.split("_").reverse()[0] + " a_p_p_Button",
-                    css,
-                    extras:{
-                        appFields:{
-                            confirm:'true',
-                        },
-                        appInputHandle:{
-                            confirm:'true',
-                            zSymbol :"",// zChildSymbol goes here
-                            co,
-                            name,
-                            googleSheets,
-                            required:form?.required !== undefined ? "file button" :"false",
-                            link:form?.link,
-                            type:"file button"
-                        },
-                        deltaIndex:1,
-                        component,
-                        multipleGroup:printGroup,
-                        type
-                    }
-                })
-            }
-
-            else if(type === "share button"){
-
-
-                let css = {
-                    width:'325px',
-                    "font-size":"48px",
-                    top:"0px",
-                    "z-index":4,
-                    'background-color':background,
-                    color,
-                    "font-family":fonts,
-                    "font-weight":italics,
-                }
-                options.css === undefined ? undefined :(()=>{
-                    css = options.css;
-                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null
-                })()
-                let name = this[co.valueOf()].quantity[1][1].signature + " "+ zCTgen.next().value
-
-                symbol = rUD({
-                    co,
-                    bool:'b',
-                    text:value,
-                    val:key.split("_").reverse()[0] + " a_p_p_Button",
-                    css,
-                    extras:{
-                        appShare:{
-                            confirm:'true',
-                        },
-                        appInputHandle:{
-                            confirm:'true',
-                            zSymbol :"",// zChildSymbol goes here
-                            co,
-                            name,
-                            googleSheets,
-                            required:form?.required !== undefined ? "file button" :"false",
-                            link:form?.link,
-                            type:"file button"
-                        },
-                        deltaIndex:1,
-                        component,
-                        multipleGroup:printGroup,
-                        type
-                    }
-                })
-            }
-
-            else if(type === "adf button"){
-
-
-                let css = {
-                    width:'325px',
-                    "font-size":"48px",
-                    top:"0px",
-                    "z-index":4,
-                    'background-color':background,
-                    color,
-                    "font-family":fonts,
-                    "font-weight":italics,
-                }
-                options.css === undefined ? undefined :(()=>{
-                    css = options.css;
-                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null
-                })()
-                let name = this[co.valueOf()].quantity[1][1].signature + " "+ zCTgen.next().value
-
-                symbol = rUD({
-                    co,
-                    bool:'b',
-                    text:value,
-                    val:key.split("_").reverse()[0] + " a_p_p_Button",
-                    css,
-                    extras:{
-                        appAdf:{
-                            confirm:'true',
-                        },
-                        appInputHandle:{
-                            confirm:'true',
-                            zSymbol :"",// zChildSymbol goes here
-                            co,
-                            name,
-                            googleSheets,
-                            required:form?.required !== undefined ? "file button" :"false",
-                            link:form?.link,
-                            type:"file button"
-                        },
-                        deltaIndex:1,
-                        component,
-                        multipleGroup:printGroup,
-                        type
-                    }
-                })
-            }
-
-            else if(type === "comment button"){
-
-
-                let css = {
-                    width:'325px',
-                    "font-size":"48px",
-                    top:"0px",
-                    "z-index":4,
-                    'background-color':background,
-                    color,
-                    "font-family":fonts,
-                    "font-weight":italics,
-                }
-                options.css === undefined ? undefined :(()=>{
-                    css = options.css;
-                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null
-                })()
-                let name = this[co.valueOf()].quantity[1][1].signature + " "+ zCTgen.next().value
-
-                symbol = rUD({
-                    co,
-                    bool:'b',
-                    text:value,
-                    val:key.split("_").reverse()[0] + " a_p_p_Button",
-                    css,
-                    extras:{
-                        appComment:{
-                            confirm:'true',
-                        },
-                        appInputHandle:{
-                            confirm:'true',
-                            zSymbol :"",// zChildSymbol goes here
-                            co,
-                            name,
-                            googleSheets,
-                            required:form?.required !== undefined ? "file button" :"false",
-                            link:form?.link,
-                            type:"file button"
-                        },
-                        deltaIndex:1,
-                        component,
-                        multipleGroup:printGroup,
-                        type
-                    }
-                })
-            }
-
-            else if(type === "props button"){
-
-
-                let css = {
-                    width:'325px',
-                    "font-size":"48px",
-                    top:"0px",
-                    "z-index":4,
-                    'background-color':background,
-                    color,
-                    "font-family":fonts,
-                    "font-weight":italics,
-                }
-                options.css === undefined ? undefined :(()=>{
-                    css = options.css;
-                    css['font-size'] === undefined ?  (  css['font-size'] = '48px') : null
-                })()
-                let name = this[co.valueOf()].quantity[1][1].signature + " "+ zCTgen.next().value
-
-                symbol = rUD({
-                    co,
-                    bool:'b',
-                    text:value,
-                    val:key.split("_").reverse()[0] + " a_p_p_Button",
-                    css,
-                    extras:{
-                        appProperties:{
-                            confirm:'true',
-                        },
-                        appInputHandle:{
-                            confirm:'true',
-                            zSymbol :"",// zChildSymbol goes here
-                            co,
-                            name,
-                            googleSheets,
-                            required:form?.required !== undefined ? "file button" :"false",
-                            link:form?.link,
-                            type:"file button"
-                        },
-                        deltaIndex:1,
-                        component,
-                        multipleGroup:printGroup,
-                        type
-                    }
-                })
-            }
 
             else if(type === "sign out button"){
 

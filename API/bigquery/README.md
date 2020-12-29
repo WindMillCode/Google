@@ -260,6 +260,43 @@ job = client.cancel_job(job_id, location=location)
 ```
 
 
+## Introduction to datasets
+* __dataset__ - op-level containers that are used to organize and control access to your tables and views. 
+
+* limitation
+    * cant change location
+    * All tables that are referenced in a query must be stored in datasets in the same location.
+    * copy table, source dest same location
+    * dataset names unique for each project
+    [quotas and limits](https://cloud.google.com/bigquery/quotas#dataset_limits)
+* You are not charged for creating, updating, or deleting a dataset.
+
+### Dataset locations 
+* region and multi-region which contain 2 or more regions
+* __regions__ 
+
+![](\images\dataset_regions.PNG)
+
+* __multi-regions__ - EU,US
+* try to keep your application running in the same region or u pay for it
+
+### Creating datasets
+
+* name unique,1024 characters,case-sensitive, no spaces or special chars
+__permissions__ - bigquery.datasets.create
+__roles__ - bigquery.dataEditor, bigquery.dataOwner, bigquery.user,bigquery.admin
+
+#### Python
+```py
+
+```
+
+
+
+
+
+
+
 ### Issues 
 
 * cancel a job, 

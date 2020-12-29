@@ -29,8 +29,31 @@ export class CreateDirective {
 
         if (this.extras?.confirm === 'true') {
 
+            let answer  = (document.querySelector(".f_o_r_m_Dataset-Answer") as HTMLInputElement).value
             //communicate with the python backend
-
+            this.http.get(
+                "http://localhost:3005",
+                {
+                    params:{
+                        name:answer
+                    },
+                    responseType: 'text'
+                }
+            )
+            .pipe(
+            catchError((error)=>{
+                return of(error)
+            })
+            )
+            .subscribe((result:any)=>{
+                console.log(result)
+                let update = (document.querySelector(".f_o_r_m_Result") as HTMLElement)
+                update.innerText = result
+                eventDispatcher({
+                    event:'resize',
+                    element:window
+                })
+            })
             //
 
         }
@@ -41,6 +64,7 @@ export class CreateDirective {
         this.extras = this.create
         if (this.extras?.confirm === 'true') {
             console.log(env.search)
+
             setTimeout(() => {
                 // this.el.nativeElement.click()
             }, 200)

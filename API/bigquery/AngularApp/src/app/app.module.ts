@@ -4,6 +4,7 @@ import { HttpClientModule   }    from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormComponent } from './form/form.component';
+import { CreateDirective } from './directive/create.directive';
 // import { FormControlDirective } from './directive/form-control.directive';
 
 
@@ -11,6 +12,7 @@ import { FormComponent } from './form/form.component';
   declarations: [
     AppComponent,
     FormComponent,
+    CreateDirective,
     // FormControlDirective,
 
   ],
