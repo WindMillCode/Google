@@ -58,8 +58,9 @@ env = {
                 return "Please input a name"
             except BaseException as e:
                 print("\nlook here\n")
-                print(e)
-                return "Dataset already exists choose another name"   
+                if(e.__class__.__name__ == "BadRequest"):
+                    return "name must be unique 1024 characters, no spaces or special chars"
+                return "Dataset already exists choose another name"      
 ```
 
 ### Copying Datasets
@@ -132,7 +133,8 @@ env = {
 
 ### Controlling access to datasets
 * access control only happens on update , cant do it with create
-
+[full property resource](https://googleapis.dev/python/bigquery/latest/generated/google.cloud.bigquery.dataset.AccessEntry.html#google.cloud.bigquery.dataset.AccessEntry)
+[more](https://cloud.google.com/bigquery/docs/reference/rest/v2/datasets#Dataset)
 __permissions__ -  bigquery.datasets.update,bigquery.datasets.get
 __roles__ - bigquery.dataOwner,bigquery.admin
         * Google Account email: Grants an individual Google Account access to the dataset.
@@ -285,7 +287,7 @@ env = {
 
 * __permissions__ - bigquery.datasets.get
 * __roles__ - bigquery.dataOwner,bigquery.admin
-
+[full property resources](https://googleapis.dev/python/bigquery/latest/generated/google.cloud.bigquery.dataset.Dataset.html)
 * to update things
     * can set default table expiration time at the dataset level
     * to get granaular change the default table expiration on the table

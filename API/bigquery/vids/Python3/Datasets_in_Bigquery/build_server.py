@@ -44,14 +44,7 @@ class my_base_handler(http.server.BaseHTTPRequestHandler):
         # else:
         #     path = needed[2]
         
-        # fp = open("./{}".format(path), 'rb')
-        # while True:
-        #     bytes = fp.read(8192)
-        #     if bytes:
-        #         self.wfile.write(bytes)
-        #     else:
-        #         return        
-        # end while
+
 
 
 # configuring web server

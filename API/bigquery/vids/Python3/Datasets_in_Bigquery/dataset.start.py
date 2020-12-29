@@ -27,6 +27,7 @@ class my_bigquery_client():
     #     
 
     def execute(self,name):
+        print("bigquery dataset server started")
         # create a dataset
 
         #
