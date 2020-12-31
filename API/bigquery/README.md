@@ -137,6 +137,9 @@ print("Started job: {}".format(query_job.job_id))
 * use symbolic prefix and timestamp daily_import_job_1447971251
 * use [GUID mODULE](https://docs.python.org/2/library/uuid.html#module-uuid) 
 
+
+### Lab [Running Jobs with Bigquery](./vids/Python3/Running_Jobs/README.md)
+
 ## Managing Jobs
 
 * When a job is submitted, it can be in one of three states:
@@ -226,6 +229,7 @@ job = client.cancel_job(job_id, location=location)
 
 * you cant use a job id to repeat a job, 
 
+### Lab [Managing Jobs With Google Bigquery API](./vids/Python3/Managing_Jobs/README.md)
 #### Python
 ```py
     # say if you didnt have the query details
@@ -263,7 +267,7 @@ job = client.cancel_job(job_id, location=location)
 ```
 
 
-## Introduction to datasets
+## Datasets
 * __dataset__ - op-level containers that are used to organize and control access to your tables and views. 
 
 * limitation
@@ -576,6 +580,129 @@ __hard failure__ - mother nature or crime, data is compromised
 
 * back up yr data off cloud
 
+### Lab [Datasets with Google Bigquery API](./vids/Python3/Datasets_in_Bigquery/README.md)
+
+## Tables
+
+* __table__ contains individual records organized in rows. Each record is composed of columns (also called fields)
+    * __native tables__ - tables in bq
+    * __external tables__ - tables from external sources
+    * __views__ - tables in memory, created for training a ml model training datasets are views
+* __schema__ -defines columns,partitions clustters. ..
+
+* limits - unique per dataset, must reside in same location, 
+
+### Quotas 
+[load jobs](https://cloud.google.com/bigquery/quotas#load_jobs)
+[export jobs](https://cloud.google.com/bigquery/quotas#export_jobs)
+[querying](https://cloud.google.com/bigquery/quotas#query_jobs)
+[copy](https://cloud.google.com/bigquery/quotas#copy_jobs)
+
+### Pricing
+* charged for how much data is stored in the tables, and queries you run against the table
+
+
+### Creating and using tables
+* names upto 1024, and follow [General Category](https://wikipedia.org/wiki/Unicode_character_property#General_Category)
+* anthings valid  table-01, ग्राहक, 00_お客様, étudiant
+__permissions__ -  bigquery.tables.create,bigquery.tables.updateData,bigquery.jobs.create
+__roles__ -bigquery.admin
+
+#### Python
+```py
+try:
+    # create a dataset first
+    dataset_main = self.make_dataset()
+    #
+                    
+    # make a table
+    table_id = "{}.{}.{}".format(client.project, dataset_main, name)
+    schema = [
+        bigquery.SchemaField("full_name", "STRING", mode="REQUIRED"),
+        bigquery.SchemaField("age", "INTEGER", mode="REQUIRED"),
+    ]
+
+    table = bigquery.Table(table_id, schema=schema)
+    table = client.create_table(table)  # Make an API request.
+    return"Created table {}.{}.{}".format(table.project, table.dataset_id, table.table_id)
+    #
+except BaseException as e:
+    print("\nlook here\n")
+    print(e.__class__.__name__)
+    if(e.__class__.__name__ == "Conflict"):
+        return "Table already exists in that dataset choose a different name"
+    print("\n")
+    print(e)
+    return "an error occured check the output from the backend"  
+```
+
+### Table Access Control 
+
+* google uses IAM policy table for granular access control, one person can read a column, another can read a table ...
+* access control here can take 7 mins
+* disable caching
+* if you lost access to the table cant use FOR SYSTEM_TIME AS OF
+    to regain access :)
+* tables copied dont copy the ACL, manually do this
+* __authorized_view__ - share query results with particular users and groups without giving them access to the underlying tables
+
+more [here](https://cloud.google.com/bigquery/docs/table-access-controls-intro)
+
+* __permissions__ -
+    * bigquery.tables.setIamPolicy,
+    * bigquery.tables.getIamPolicy
+* __roles__ - 
+    * bigquery.admin,
+    * bigquery.dataOwner
+* [IAM Policies](https://cloud.google.com/iam/docs/policies) play a part in this
+    * impt to know about this table
+
+
+* a sample IAM policy table
+    * alice@example.com has been granted the role BigQuery Data Owner (roles/bigquery.dataOwner).
+    * bob@example.com has been granted the role BigQuery Data Viewer (roles/bigquery.dataViewer).
+```json
+{
+  "bindings":[
+    {
+      "members":[
+        "user:alice@example.com"
+      ],
+      "role":"roles/bigquery.dataOwner"
+    },
+    {
+      "members":[
+        "user:bob@example.com"
+      ],
+      "role":"roles/bigquery.dataViewer"
+    }
+  ],
+  "etag":"ABAC",
+  "version":1
+}
+```
+* view a tables IAM policy
+
+#### Python
+```py
+```
+
+* test if a user has certain access [here](https://cloud.google.com/iam/docs/testing-permissions)
+
+* set tables IAM policy
+
+#### Python
+```py
+```
+
+* get tables IAM policy
+
+#### Python
+```py
+```
+
+
+pip install --upgrade google-cloud-bigquery google-cloud-bigquery-datatransfer tornado --target .\site-packages
 
 
 ### Issues 

@@ -26,13 +26,13 @@ export class zChildren {
 }
 
 export class componentObject { // not final
-    quantity: any[]; 
+    quantity: any[];
     generator?: Generator;
-    metadata?: Object | any; 
-    init?:any 
+    metadata?: Object | any;
+    init?:any
 }
 
-// let final:any = {}; 
+// let final:any = {};
 
 
 
@@ -58,22 +58,22 @@ export function asyncData<T>(data: T) {
 
 export function asyncError<T>(errorObject: any) {
     return defer(() => Promise.reject(errorObject));
-}  
+}
 
-// The RxJS defer() operator returns an observable. 
-// It takes a factory function that returns either a promise or an observable. 
+// The RxJS defer() operator returns an observable.
+// It takes a factory function that returns either a promise or an observable.
 // When something subscribes to defer's observable,
 //  it adds the subscriber to a new observable created with that factory.
 
 
-// The defer() operator transforms the Promise.resolve() into a new observable that, 
-// like HttpClient, emits once and completes. 
+// The defer() operator transforms the Promise.resolve() into a new observable that,
+// like HttpClient, emits once and completes.
 // Subscribers are unsubscribed after they receive the data value.
 
 
 
 
-export function componentBootstrap(   
+export function componentBootstrap(
     devObj:{
         appElement?:zChildren,
         appTV:any,
@@ -102,7 +102,7 @@ export function componentBootstrap(
         // return x.val.flat(Infinity)[0]
         return flatDeep(x.val,Infinity)[0]
     })
-   
+
     let appZChild = {
         element: document.querySelector('[class=' + devObj.appTV + '],[id^="root"]') as HTMLElement,
         css: devObj.ryber[devObj.appTV].quantity[0][0].ngCss[0][0],
@@ -110,41 +110,41 @@ export function componentBootstrap(
         cssDefault: devObj.ryber[devObj.appTV].quantity[0][0].ngCssDefault[0][0],
         symbol: devObj.ryber[devObj.appTV].quantity[0][0].symbol[0][0],
         // metadata:appMetadata,
-        extras: devObj.zProps.extras === 'true' ?  
-        ( devObj.ryber[devObj.appTV].quantity[0][0].extras !== undefined  ? 
-            devObj.ryber[devObj.appTV].quantity[0][0].extras[0][0] 
-            : undefined) 
+        extras: devObj.zProps.extras === 'true' ?
+        ( devObj.ryber[devObj.appTV].quantity[0][0].extras !== undefined  ?
+            devObj.ryber[devObj.appTV].quantity[0][0].extras[0][0]
+            : undefined)
         : undefined,
-        val: devObj.zProps.val === 'true' ?  
-            ( devObj.ryber[devObj.appTV].quantity[0][0].val !== undefined  ? 
-                devObj.ryber[devObj.appTV].quantity[0][0].val[0][0] 
-                : undefined) 
-            : undefined,   
-        quantity: devObj.zProps.quantity === 'true' ?  
-            ( devObj.ryber[devObj.appTV].quantity[0][0].quantity !== undefined  ? 
-                devObj.ryber[devObj.appTV].quantity[0][0].quantity[0][0] 
-                : undefined) 
-            : undefined,                     
+        val: devObj.zProps.val === 'true' ?
+            ( devObj.ryber[devObj.appTV].quantity[0][0].val !== undefined  ?
+                devObj.ryber[devObj.appTV].quantity[0][0].val[0][0]
+                : undefined)
+            : undefined,
+        quantity: devObj.zProps.quantity === 'true' ?
+            ( devObj.ryber[devObj.appTV].quantity[0][0].quantity !== undefined  ?
+                devObj.ryber[devObj.appTV].quantity[0][0].quantity[0][0]
+                : undefined)
+            : undefined,
     }
     let zChild = {"&#8352":appZChild}
 
     let zGrid = {
-        a:0, 
-        b:0, 
-    }  
-    let zCheckpoint = devObj.myElements.length === 1 ? [0] : [0,1] 
+        a:0,
+        b:0,
+    }
+    let zCheckpoint = devObj.myElements.length === 1 ? [0] : [0,1]
     zCheckpoint.map((y:any,j:any)=>{
         zGrid.a = 0;
         // console.log(devObj.myElements.length === 1 ? devObj.myElements : devObj.myElements.slice(y,zCheckpoint[j+1]));
         (function(){
             return devObj.myElements.length === 1 ? devObj.myElements : devObj.myElements.slice(y,zCheckpoint[j+1])
-        })().map((x:any,i:any)=>{  
-            while(   
-                devObj.ryber[devObj.appTV].quantity[1][j].quantity[zGrid.a][zGrid.b] === undefined &&   
+        })().map((x:any,i:any)=>{
+            while(
+                devObj.ryber[devObj.appTV].quantity[1][j].quantity[zGrid.a][zGrid.b] === undefined &&
                 zGrid.b +1 > devObj.ryber[devObj.appTV].quantity[1][j].quantity[zGrid.a].length
-            ){  
+            ){
                 zGrid.a +=1
-                
+
 
                 if(   devObj.ryber[devObj.appTV].quantity[1][j].quantity[zGrid.a][zGrid.b] === undefined   ){
 
@@ -171,7 +171,7 @@ export function componentBootstrap(
                 },true)  &&
                 devObj.ryber[devObj.appTV].quantity[1][j].val[zGrid.a][zGrid.b] !== undefined
             ){
-                
+
                 // console.log(zClassTarget)
                 zGrid.b += 1
 
@@ -179,7 +179,7 @@ export function componentBootstrap(
                     devObj.ryber[devObj.appTV].quantity[1][j].val[zGrid.a+1] !== undefined
                 ){
 
-                     
+
                     for(   let i in devObj.ryber[devObj.appTV].quantity[1][j].val[zGrid.a+1]   ){
 
 
@@ -189,8 +189,8 @@ export function componentBootstrap(
                             zGrid.a += 1
                             zGrid.b = parseInt(i)
                             break
-                            
-                            
+
+
                         }
 
 
@@ -202,7 +202,7 @@ export function componentBootstrap(
             }
 
 
-            if(   
+            if(
                 x.nativeElement.className.split(" ")
                 .reduce((acc,x,i)=>{
                     if(x === zClassTarget ){
@@ -210,11 +210,11 @@ export function componentBootstrap(
                     }
                     return acc
                 },false)  &&
-                (   
-                    devObj.ryber[devObj.appTV].quantity[1][j].bool[zGrid.a][zGrid.b] !== 'false'   
-                    // true                      
-                )    
-            ){               
+                (
+                    devObj.ryber[devObj.appTV].quantity[1][j].bool[zGrid.a][zGrid.b] !== 'false'
+                    // true
+                )
+            ){
 
 
 
@@ -224,53 +224,53 @@ export function componentBootstrap(
                     innerText: devObj.ryber[devObj.appTV].quantity[1][j].text[zGrid.a][zGrid.b],
                     bool:devObj.ryber[devObj.appTV].quantity[1][j].bool[zGrid.a][zGrid.b],
                     cssDefault:devObj.ryber[devObj.appTV].quantity[1][j].ngCssDefault[zGrid.a][zGrid.b],
-                    extras: devObj.zProps.extras === 'true' ?  
-                        ( devObj.ryber[devObj.appTV].quantity[1][j].extras !== undefined  ? 
-                            devObj.ryber[devObj.appTV].quantity[1][j].extras[zGrid.a][zGrid.b] 
-                            : undefined) 
+                    extras: devObj.zProps.extras === 'true' ?
+                        ( devObj.ryber[devObj.appTV].quantity[1][j].extras !== undefined  ?
+                            devObj.ryber[devObj.appTV].quantity[1][j].extras[zGrid.a][zGrid.b]
+                            : undefined)
                         : undefined,
-                    val: devObj.zProps.val === 'true' ?  
-                        ( devObj.ryber[devObj.appTV].quantity[1][j].val !== undefined  ? 
-                            devObj.ryber[devObj.appTV].quantity[1][j].val[zGrid.a][zGrid.b] 
-                            : undefined) 
-                        : undefined,  
-                    quantity: devObj.zProps.quantity === 'true' ?  
-                        ( devObj.ryber[devObj.appTV].quantity[1][j].quantity !== undefined  ? 
-                            devObj.ryber[devObj.appTV].quantity[1][j].quantity[zGrid.a][zGrid.b] 
-                            : undefined) 
-                        : undefined,                                                
+                    val: devObj.zProps.val === 'true' ?
+                        ( devObj.ryber[devObj.appTV].quantity[1][j].val !== undefined  ?
+                            devObj.ryber[devObj.appTV].quantity[1][j].val[zGrid.a][zGrid.b]
+                            : undefined)
+                        : undefined,
+                    quantity: devObj.zProps.quantity === 'true' ?
+                        ( devObj.ryber[devObj.appTV].quantity[1][j].quantity !== undefined  ?
+                            devObj.ryber[devObj.appTV].quantity[1][j].quantity[zGrid.a][zGrid.b]
+                            : undefined)
+                        : undefined,
                 }
                 // console.log(zChild)
-                
 
-                if(   
-                    devObj.ryber[devObj.appTV].quantity[1][j].quantity[zGrid.a][zGrid.b+1] === undefined   
-                      
+
+                if(
+                    devObj.ryber[devObj.appTV].quantity[1][j].quantity[zGrid.a][zGrid.b+1] === undefined
+
                 ){
 
 
                     zGrid.a += 1
-                    zGrid.b = 0       
-                    
-                    
+                    zGrid.b = 0
+
+
                 }
 
 
-                
+
                 else if(   true   ){
 
 
-                    zGrid.b += 1       
-                    
-                    
+                    zGrid.b += 1
+
+
                 }
 
 
             }
-            
-            
+
+
             else if(
-                devObj.ryber[devObj.appTV].quantity[1][j].bool[zGrid.a][zGrid.b] === 'false' 
+                devObj.ryber[devObj.appTV].quantity[1][j].bool[zGrid.a][zGrid.b] === 'false'
             ){
 
 
@@ -278,102 +278,102 @@ export function componentBootstrap(
 
 
                     zGrid.a += 1
-                    zGrid.b = 0       
-                    
-                    
+                    zGrid.b = 0
+
+
                 }
 
 
-                
+
                 else if(   true   ){
 
 
-                    zGrid.b += 1       
-                    // 
-                    
+                    zGrid.b += 1
+                    //
+
                 }
-                
-                
+
+
             }
-            
+
 
         })
-        
-    })   
+
+    })
     // zChild.forEach((x,i)=>{
     //     console.log(x.symbol)
-    // }) 
-    return zChild  
+    // })
+    return zChild
 }
-/* test 
+/* test
 1. if I can take anything away from the middle
 2. if I can take from a non first subcomponent
-3. if I can take from the end of any subcomponent 
-4. if I can take several at a time 
+3. if I can take from the end of any subcomponent
+4. if I can take several at a time
 5. if you can cancel the end element of a subcomponent element and the beginning element of the next at the same time
 work on 2 and 3
 */
 
 /*
 desc
-zProps, zChild optional props 
+zProps, zChild optional props
  */
 
-/* this function helps calculate 
-the css top of items in a dropdown when those 
+/* this function helps calculate
+the css top of items in a dropdown when those
 options do not have the same height
 
 if fn is irregularWords
-    - that meansn you have a dropdown but the words are not the same length so that can word wrap 
-    this fn deals with all of that, 
-    - for the heightDiff we are working on this but 
-    you must know at what pixel length the browser will word wrap and if if you have 
+    - that meansn you have a dropdown but the words are not the same length so that can word wrap
+    this fn deals with all of that,
+    - for the heightDiff we are working on this but
+    you must know at what pixel length the browser will word wrap and if if you have
     and your x padding will play a role, your y padding is needed alse because it determines the height
-*/ 
+*/
 export function dropdown(   devObj:{
-    font?:Array<any>, 
+    font?:Array<any>,
     heightVal?: number,
     heightDiff? : number,
     stringAssembly?: Array<string>,
     paddingy:Array<number>,
-    fn:'irregularWords' 
+    fn:'irregularWords'
 }   ){
 
-    
+
     if(devObj.fn === 'irregularWords'){
 
 
-        let finalVal = devObj.heightVal 
+        let finalVal = devObj.heightVal
         let  extender = devObj.stringAssembly.length != 1  ?  (()=>{
-            let multiFinal = 1    
-            let controlK = 0                   
-            devObj.stringAssembly.forEach((y,j)=>{ 
-                
-
-                if(j === controlK || controlK === 0 ){ 
+            let multiFinal = 1
+            let controlK = 0
+            devObj.stringAssembly.forEach((y,j)=>{
 
 
-                    let k = j 
+                if(j === controlK || controlK === 0 ){
+
+
+                    let k = j
                     let testingString= ''
                     while(k != devObj.stringAssembly.length){
-                        testingString += devObj.stringAssembly[k] + " "  
-                        
-                        
+                        testingString += devObj.stringAssembly[k] + " "
+
+
                         if(
                             Math.ceil(
                                 getTextWidth({
                                     elementText:testingString.slice(0,-1),
                                     font: devObj.font.join(" ")
-                                })/devObj.heightDiff 
-                            )  >  1 
+                                })/devObj.heightDiff
+                            )  >  1
                         ){
                             // console.log('get j == to',k)
-                            controlK = k 
-                            break 
-                        }      
-                        
-                        
-                        k += 1         
+                            controlK = k
+                            break
+                        }
+
+
+                        k += 1
 
                     }
                     testingString = testingString.slice(0,-1)
@@ -383,15 +383,15 @@ export function dropdown(   devObj:{
                         testingString,
                         getTextWidth({
                             elementText:testingString,
-                            font: devObj.font.join(" ") 
+                            font: devObj.font.join(" ")
                         }),
                         devObj.heightDiff,
                         Math.ceil(
                             getTextWidth({
                                 elementText:testingString,
-                                font: devObj.font.join(" ") 
-                            })/devObj.heightDiff 
-                        )                                                
+                                font: devObj.font.join(" ")
+                            })/devObj.heightDiff
+                        )
                     )
 
 
@@ -399,30 +399,30 @@ export function dropdown(   devObj:{
                         Math.ceil(
                             getTextWidth({
                                 elementText:testingString,
-                                font: devObj.font.join(" ") 
-                            })/devObj.heightDiff 
-                        ) > 1                                                                            
+                                font: devObj.font.join(" ")
+                            })/devObj.heightDiff
+                        ) > 1
                     ){
                         multiFinal += 1
-                    }    
+                    }
 
 
                 }
-                
-                
+
+
             })
             return multiFinal
-            
-        })() : 1   
+
+        })() : 1
         devObj.heightVal += (
             (
                 16 * extender
             ) + (
-                devObj.paddingy.length == 1 ? 
+                devObj.paddingy.length == 1 ?
                 devObj.paddingy[0] * 2 :
                 devObj.paddingy[0] + devObj.paddingy[1]
                 )
-        ) 
+        )
         return [finalVal,devObj.heightVal]
 
 
@@ -439,17 +439,17 @@ export function getTextWidth(   devObj:{elementText:string,font:string}   ){
 }
 
 export function eventDispatcher(   devObj:{event:string,element:HTMLElement | Window | Element}   ){
-    
+
     try {
-        let event0= new Event(devObj.event)   
-        devObj.element.dispatchEvent(event0)  
+        let event0= new Event(devObj.event)
+        devObj.element.dispatchEvent(event0)
         // console.log(event0)
-    } 
+    }
     catch(e){
         let eventLegacy = document.createEvent("Event");
-        eventLegacy.initEvent(devObj.event, false, true);       
+        eventLegacy.initEvent(devObj.event, false, true);
         devObj.element.dispatchEvent(eventLegacy)
-    }  
+    }
 }
 
 export function numberParse(   dimension:any   ){
@@ -465,18 +465,18 @@ export function resize(   devObj:any   ){
     if(   devObj.misc === undefined   ){
         devObj.misc = [.12]
     }
-    
+
 
     if(   devObj.type === 'direct'   ){
 
 
-        result = 
+        result =
         (
             devObj.default -
             (
                 devObj.containDefault   -
-                devObj.containActual    
-            ) * 
+                devObj.containActual
+            ) *
             devObj.misc[0]
         )
 
@@ -487,21 +487,21 @@ export function resize(   devObj:any   ){
     if(   devObj.type === 'nonUniform'   ){
 
 
-        try{ 
+        try{
             devObj.mediaQuery.slice(1)
             .forEach((x,i) => {
                 if(x < devObj.containActual){
-                    result = 
+                    result =
                     (
                         devObj.default -
                         (
                             devObj.containDefault   -
-                            devObj.containActual    
-                        ) * 
+                            devObj.containActual
+                        ) *
                         devObj.misc[i]
-                    )  
+                    )
                     throw(null)
-                    // throw('got my result')              
+                    // throw('got my result')
                 }
             })
         }
@@ -512,7 +512,7 @@ export function resize(   devObj:any   ){
 
 
     }
-    
+
 
     else if(   devObj.type !== 'direct' ){
 
@@ -520,22 +520,22 @@ export function resize(   devObj:any   ){
         result = (
             devObj.default *
             (
-                (   
-                    (  
+                (
+                    (
                         devObj.containActual  /
-                        devObj.containDefault   
+                        devObj.containDefault
                     ) -
-                    devObj.misc[0]   
-                ) 
+                    devObj.misc[0]
+                )
             )
-        ) 
+        )
 
 
     }
 
-    return result = result > devObj.default  ? 
+    return result = result > devObj.default  ?
         devObj.default :
-        result      
+        result
 }
 
 
@@ -546,28 +546,28 @@ export function xPosition(devObj){
 
 
         devObj.containPos = .5
-        
-        
+
+
     }
 
 
     if(   devObj.targetPos === undefined   ){
 
-        
+
         devObj.targetPos = .5
-        
-        
+
+
     }
-    
-    return (    
-        (   devObj.contain*devObj.containPos   ) -  
-        (   devObj.target*devObj.targetPos   )   
-    ) ; 
+
+    return (
+        (   devObj.contain*devObj.containPos   ) -
+        (   devObj.target*devObj.targetPos   )
+    ) ;
 }
 
 export function include (devObj){
     let i = devObj.index
-    
+
     if(   devObj.include !== undefined   ){
         if (typeof(devObj.include) === 'string'){
 
@@ -577,11 +577,11 @@ export function include (devObj){
             }
 
             else{
-                return devObj.item   
+                return devObj.item
             }
         }
 
-        else{ // FIXME check to see if array 
+        else{ // FIXME check to see if array
 
 
             if(   devObj.include[i] === 'f'){
@@ -589,24 +589,24 @@ export function include (devObj){
             }
 
             else{
-                return devObj.item   
+                return devObj.item
             }
         }
-    }                     
-    return  devObj.item   
+    }
+    return  devObj.item
 }
 
-export function minMaxDelta(devObj){ 
+export function minMaxDelta(devObj){
     /*calculates the 1d dimenensions of an entry of objects */
     let delta:any = {
         min:Infinity,
         max:0,
-    }    
+    }
     devObj.items.forEach((x,i)=>{
         let myMin = devObj.min(x)
         let myMax = devObj.max(x)
         if( myMin < delta.min){
-            delta.min = myMin 
+            delta.min = myMin
         }
         if( myMax > delta.max){
             delta.max = myMax
@@ -630,7 +630,7 @@ export function numDigits(
     devObj:{
         x:number
     }
-) {  
+) {
     devObj.x = Number(String(devObj.x).replace(/[^0-9]/g, ''));
     return Math.max(Math.floor(Math.log10(Math.abs(devObj.x))), 0) + 1;
 }
@@ -642,10 +642,10 @@ export function objectCopy(obj){
 
 export function dragElement(elmnt) { // use this code dragElement(zChild.element);
     var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-  
+
     elmnt.onmousedown = dragMouseDown;
-  
-  
+
+
     function dragMouseDown(e) {
       e = e || window.event;
       e.preventDefault();
@@ -656,7 +656,7 @@ export function dragElement(elmnt) { // use this code dragElement(zChild.element
       // call a function whenever the cursor moves:
       document.onmousemove = elementDrag;
     }
-  
+
     function elementDrag(e) {
       e = e || window.event;
       e.preventDefault();
@@ -669,7 +669,7 @@ export function dragElement(elmnt) { // use this code dragElement(zChild.element
       elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
       elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
     }
-  
+
     function closeDragElement() {
       // stop moving when mouse button is released:
       document.onmouseup = null;
@@ -697,20 +697,20 @@ export function esInit (qq,eventSubscriptions){
                     yield (index++).toString();
                 }()
             })()
-        })            
+        })
     })
 }
 
 
 export function coInit (a,componentObjects,additional?) {
-    
+
     componentObjects.forEach((x,i)=>{
         let co = a[x.valueOf()]
-        
+
         // giving a subject representation so components can send data to each component
         componentObjects.forEach((c)=>{
             co.metadata[c.valueOf()] = new Subject<any>()
-        }) 
+        })
         //
 
         //init the subCO data for the app element
@@ -719,7 +719,7 @@ export function coInit (a,componentObjects,additional?) {
                 {
                     signature:"app",
                     quantity:[[3]],
-                    bool:[["true"]], 
+                    bool:[["true"]],
                     val:[
                         [
                             x
@@ -728,13 +728,13 @@ export function coInit (a,componentObjects,additional?) {
                             .split("")
                             .join("_")+"_App"
                         ]
-                    ], 
+                    ],
                     text:[
                             []
                     ],
                     symbol:[["&#8352"]],
                     metadata:{// deprecated use directives and the subCO extras instead
-                        mouseover:[ 
+                        mouseover:[
                             [],
                             [],
                             []
@@ -743,24 +743,24 @@ export function coInit (a,componentObjects,additional?) {
                             [],
                             [],
                             []
-                        ]                            
+                        ]
                     },
                     ngCss:[
                         [
                             {
-                                
+
                                 top:"0px",
                                 width:"100%",
                                 "z-index":componentObjects.length - i
                             }
-                        ]                         
-                    ],                  
+                        ]
+                    ],
                     extras:[
                         [],
                         [],
-                        []                         
+                        []
                     ]
-                } 
+                }
             )
         )
         //
@@ -771,7 +771,7 @@ export function coInit (a,componentObjects,additional?) {
                 co
             })
         }
-        //        
+        //
 
         //providing for cssDefaults
         co.quantity
@@ -796,9 +796,9 @@ export function coInit (a,componentObjects,additional?) {
         //             z.forEach((w,h)=>{
         //                 z[h] = {item:w}
         //             })
-        //         })            
-        //         co.quantity[i][j].ngCssDefault = objectCopy(   co.quantity[i][j].ngCss   )   
-        //     }                    
+        //         })
+        //         co.quantity[i][j].ngCssDefault = objectCopy(   co.quantity[i][j].ngCss   )
+        //     }
         // }
         //
         //
@@ -825,19 +825,19 @@ export function ryberUpdate(
     }
 ){
     let {co,type,css,extras,bool,text,val,signature,symbolStart,spot}= devObj
-    
-    
+
+
     let ryber = this
     if(ryber[co.valueOf()] === undefined){
         let bodySymbol = "&#8353"
         if(   symbolStart === undefined){
-            symbolStart = [8354,8384]   
+            symbolStart = [8354,8384]
         }
 
         else if(   symbolStart[1] === undefined){
-            symbolStart[1] = 8384   
-        }        
-        let generator = { 
+            symbolStart[1] = 8384
+        }
+        let generator = {
             1:function *generator() {
                 var index = symbolStart[0];
                 while (true)
@@ -850,25 +850,25 @@ export function ryberUpdate(
             }()
         }
         ryber[co.valueOf()] = objectCopy(
-            { 
+            {
                 metadata:{
-                },        
+                },
                 quantity:[
                     [],
                     [
                         {
                             signature:"containing",
                             quantity:[[3]],
-                            bool:[["div"]], 
+                            bool:[["div"]],
                             val:[
                                 [
                                     co
                                     .valueOf()
                                     .split("CO")[0]
                                     .split("")
-                                    .join("_")+"_Board"                                    
+                                    .join("_")+"_Board"
                                 ],
-                            ],  
+                            ],
                             text:[
                                 [],
                             ],
@@ -879,28 +879,28 @@ export function ryberUpdate(
                                            if(css !== undefined){
                                                css.width = "100%" //must always be set to this value
                                                return css
-                                           } 
-                                            
+                                           }
+
                                             return {
                                                 height:"400px",
                                                 width:"100%",
                                                 "z-index":"1",
                                                 "background-color":"rgb(255, 241, 204)",
-                                                top:"0px"                                
+                                                top:"0px"
                                             }
-                                    })(),                                                                                                      
-                                ]                    
-                            ],                  
+                                    })(),
+                                ]
+                            ],
                             extras:[
                                 [
                                     (
                                         extras !== undefined ? extras: {}
-                                    ),                                    
+                                    ),
                                 ],
                                 [],
-                                []                      
+                                []
                             ]
-                        },                      
+                        },
                         ...Array.from(Array(1),()=> {
                             return {
                                 signature:(signature !== undefined  ? signature: ""),
@@ -913,12 +913,12 @@ export function ryberUpdate(
                                     [],
                                     [],
                                     []
-                                ], 
+                                ],
                                 val:[
                                     [],
                                     [],
                                     []
-                                ], 
+                                ],
                                 text:[
                                     [],
                                     [],
@@ -928,21 +928,21 @@ export function ryberUpdate(
                                     [],
                                     [],
                                     []
-                                ],                            
+                                ],
                                 ngCss:[
                                     [],
                                     [],
-                                    []                   
-                                ],      
+                                    []
+                                ],
                                 extras:[
                                     [],
                                     [],
-                                    []                      
+                                    []
                                 ]
-                        }})                                                                                                                                                                                                                   
+                        }})
                     ]
-                ],       
-            }            
+                ],
+            }
         )
         ryber[co.valueOf()].generator = generator
         return bodySymbol
@@ -951,11 +951,11 @@ export function ryberUpdate(
     else if(type === undefined){
         type = 'add'
     }
-    
+
     if(type === 'add'){
         let index = 1
         let subCO = ryber[co.valueOf()].quantity[1][1]
-        
+
         // validating bool
         if(bool === undefined){
             bool = "p"
@@ -988,7 +988,7 @@ export function ryberUpdate(
         ){
             bool = 'p'
             index = 1
-        }        
+        }
         //
 
         //validating val
@@ -998,14 +998,14 @@ export function ryberUpdate(
                 .split("CO")[0]
                 .split("")
                 .join("_")
-                
+
             if(subCO.val[index].length === 0){
-                val += "_Heading"  
+                val += "_Heading"
             }
 
             else {
-                val += "_Item"  
-            }            
+                val += "_Item"
+            }
         }
 
         else{
@@ -1033,7 +1033,7 @@ export function ryberUpdate(
                 css["z-index"] = 3
             }
         }
-        //        
+        //
 
         // adding the zChild
             subCO.quantity[index].push(3)
@@ -1058,7 +1058,7 @@ export function ryberUpdate(
                 subCO.extras[index].splice(spot,0,extras)
                 subCO.symbol[index].splice(spot,0,
                     "&#" + symbol
-                )                
+                )
             }
             subCO.signature = signature
         //
@@ -1072,7 +1072,7 @@ export function ryberUpdate(
 
 //Action functions
 
-export function stack(   
+export function stack(
     devObj:{
         zChildKeys?:Array<string>, // the zChild keys
         ref?:ChangeDetectorRef,
@@ -1092,8 +1092,8 @@ export function stack(
             },
             ref:ChangeDetectorRef
         }
-         
-    } 
+
+    }
 ){
 
     if(devObj.zChildCss === undefined){
@@ -1108,7 +1108,7 @@ export function stack(
             return devObj.zChild[x] !== undefined
         })
         // return
-    }  
+    }
 
     if(devObj.type === 'simpleStack'){
 
@@ -1122,52 +1122,52 @@ export function stack(
                 if(   devObj.start !== undefined   ){
 
                     devObj.zChild[x].css['top'] = devObj.start.toString() + "px"
-                }    
-                return 
-            } 
-            
+                }
+                return
+            }
+
             let prev = devObj.zChildKeys[i-1]
             devObj.zChild[x].css['top'] =  (
 
                 (
-                    devObj.zChildCss === 'true' ? 
+                    devObj.zChildCss === 'true' ?
                     (
                         numberParse(      devObj.zChild[prev].css['top']   ) +
                         include({
                             item:numberParse(      devObj.zChild[prev].css['height']   ),
                             include:devObj.heightInclude,
-                            index:i  
+                            index:i
                         })
-                                        
+
                     ):
                     (
                         numberParse(   getComputedStyle(   devObj.zChild[prev].element   )['top']   ) +
                         include({
                             item:numberParse(   getComputedStyle(   devObj.zChild[prev].element   )['height']   ),
                             include:devObj.heightInclude,
-                            index:i  
-                        })                    
-                        
-                    ) 
+                            index:i
+                        })
+
+                    )
                 )
                 +
                 (
-                    typeof(devObj.spacing) === 'number' ?  
-                    devObj.spacing : 
+                    typeof(devObj.spacing) === 'number' ?
+                    devObj.spacing :
                     (
                         devObj.spacing[i] === undefined ?
                         devObj.spacing[devObj.spacing.length-1] :
                         devObj.spacing[i]
                     )
-                    
+
                 )
             ).toString() + "px"
 
             if(   devObj.xAlign !== undefined   ){
-                devObj.zChild[x].css['left'] = typeof(devObj.xAlign) === 'string' ?  
+                devObj.zChild[x].css['left'] = typeof(devObj.xAlign) === 'string' ?
                 devObj.xAlign :
                 (
-                    devObj.xAlign[i] === null ? 
+                    devObj.xAlign[i] === null ?
                     devObj.zChild[x].css['left'] :
                     devObj.xAlign[i]
                 )
@@ -1182,6 +1182,7 @@ export function stack(
 
     else if(devObj.type === 'keepSomeAligned'){
 
+        let {zChildKeys,start} = devObj
         if( devObj.keep === undefined){
             devObj.keep = []
         }
@@ -1197,45 +1198,45 @@ export function stack(
         .zChildKeys
         .forEach((x,i)=>{
 
-            
+
             // console.log("firing",x)
 
             if( i === 0){
 
                 if(   devObj.start !== undefined   ){
 
-                    devObj.zChild[x].css['top'] =  devObj.start.toString() + "px"
-
+                    devObj.zChild[x].css['top'] =  start.toString() + "px"
+                    
                 }
-                return 
-            } 
-          
+                return
+            }
+
             let prev = devObj.zChildKeys[i-1]
             devObj.zChild[x].css['top'] = (
 
                 (
-                    devObj.zChildCss === 'true' ? 
+                    devObj.zChildCss === 'true' ?
                     (
                         numberParse(      devObj.zChild[keep[x.valueOf()] !== undefined ? keep[x.valueOf()] : prev].css['top']   ) +
                         include({
                             item:numberParse(      devObj.zChild[keep[x.valueOf()] !== undefined ? keep[x.valueOf()] : prev].css['height']   ) ,
                             include:devObj.heightInclude,
-                            index:i  
-                        })                   
-                    ):                
+                            index:i
+                        })
+                    ):
                     (
                         numberParse(   getComputedStyle(   devObj.zChild[keep[x.valueOf()] !== undefined ? keep[x.valueOf()] :  prev].element   )['top']   ) +
                         include({
                             item:numberParse(   getComputedStyle(   devObj.zChild[keep[x.valueOf()] !== undefined ? keep[x.valueOf()] :  prev].element   )['height']   ),
                             include:devObj.heightInclude,
-                            index:i  
-                        })   
+                            index:i
+                        })
                     )
                 )
                 +
                 (
-                    typeof(devObj.spacing) === 'number' ?  
-                    devObj.spacing : 
+                    typeof(devObj.spacing) === 'number' ?
+                    devObj.spacing :
                     (
                         devObj.spacing[i] === undefined ?
                         devObj.spacing[devObj.spacing.length-1] :
@@ -1245,24 +1246,24 @@ export function stack(
 
 
 
-            ).toString() + "px"   
+            ).toString() + "px"
             if(   devObj.xAlign !== undefined   ){
-                devObj.zChild[x].css['left'] = typeof(devObj.xAlign) === 'string' ?  
+                devObj.zChild[x].css['left'] = typeof(devObj.xAlign) === 'string' ?
                 devObj.xAlign :
                 (
-                    devObj.xAlign[i] === null ? 
+                    devObj.xAlign[i] === null ?
                     devObj.zChild[x].css['left'] :
                     devObj.xAlign[i]
                 )
             }
-            
+
             // console.log(devObj)
             devObj.ref.detectChanges()
-            
+
         })
 
 
-    }   
+    }
 
 
     else if(devObj.type === 'yPosition'){
@@ -1274,26 +1275,26 @@ export function stack(
             numberParse(moving.top) +
             numberParse(moving.height)
             )
-        )      
-        
+        )
+
         zChild["&#8353"].css["top"] = (
             numberParse(moving.top) +
             numberParse(moving.height)
         ).toString() + "px"
-        ref.detectChanges()  
+        ref.detectChanges()
 
         Object.keys(zChild)
         .slice(2)
         .forEach((x,i)=>{
             zChild[x].css["top"] = (
                 numberParse(zChild[x].css["top"]) +
-                diff 
+                diff
             ).toString() + "px"
         })
         ref.detectChanges()
     }
-    
-    
+
+
 }
 
 /*
@@ -1312,7 +1313,7 @@ export function xContain(
         stops?: any,
         debug? :string  | boolean
         preserve?:{
-            align:Array<string> | Array<string>[] 
+            align:Array<string> | Array<string>[]
             zChild:zChildren[]
             ref:ChangeDetectorRef,
             targetPos?:Array<number>,
@@ -1340,21 +1341,21 @@ export function xContain(
         if I take 80 from total and I want my 2nd and 3rd to to change
             [ 90 , 500 , 570, 1020 ]
         if I take 80 from total and I want my 1nd and 2rd to to change
-            [ 50 , 460 , 570, 1020 ] 
+            [ 50 , 460 , 570, 1020 ]
         if you find the differences  x!= 0 ? [x] - [x-1] : [x] - 0, you will see the dimensions
             of what you needed to stay the same stay the same
         best to use partsTotal and recalate the whole because you might not have gotten it the same but itdowns not
         matter to the fn
     if the total were the same, a decrease in one part would be increas in others so with that rule
         [ 90 , 540 , 650, 1100 ] and I wanted the 3rd to shrink
-        [90 , 540 , 550, 1100 ] 
-        550 - 540 = 10 
-        1100 - 550 = 550 
+        [90 , 540 , 550, 1100 ]
+        550 - 540 = 10
+        1100 - 550 = 550
         see the deifference but browsers look at it like 1, thats what this function does
 
     */
     {
-        
+
         if(devObj.type === 'preserve'){
 
 
@@ -1363,18 +1364,18 @@ export function xContain(
             }
             if( devObj.preserve.containPos === undefined){
                 devObj.preserve.containPos = []
-            }         
+            }
             devObj
             .preserve
             .align
             .forEach((x,i)=>{
-                
+
 
                 // grab the length of the 3 options
                 let OptionsFlex:any = {
                     first:
                     (
-                          devObj.preserve.type === 'center' ? 
+                          devObj.preserve.type === 'center' ?
                         (
                         numberParse(devObj.preserve.zChild[x[x.length-1 ]].cssDefault["left"]) +
                         numberParse(devObj.preserve.zChild[x[x.length-1 ]].cssDefault["width"]) -
@@ -1382,16 +1383,16 @@ export function xContain(
                         ):
                         devObj.preserve.width
                     )
-                } 
+                }
                 //
-        
+
                 // resize as the left get rezie in the beginning val of src
                     // here we take adnavntage of xPosition to make a fake length
                     // to learn how to center better
                 if(devObj.preserve.type !== 'center'){
                     x.push(null)
                 }
-                
+
                 OptionsFlex.lefts = x
                 .reduce((acc,y,j,src)=>{
                     if(j !== 0 && y !== null){
@@ -1399,19 +1400,19 @@ export function xContain(
                             numberParse( devObj.preserve.zChild[y].cssDefault["left"] ) -
                             numberParse( devObj.preserve.zChild[src[j-1]].cssDefault["left"] )
                         )
-                    }   
-                    
+                    }
+
                     else if(j === 0 && y !== null && devObj.preserve.type!== 'center'){
                         acc.push(
                             // 0
                             0,
                             numberParse( devObj.preserve.zChild[y].cssDefault["left"] )
                         )
-                    }                       
-                    
+                    }
+
                     if(j !== 0 && devObj.preserve.type!== 'center'){
-                        
-                        devObj.preserve.zChild[src[j-1]].css["left"]  =  
+
+                        devObj.preserve.zChild[src[j-1]].css["left"]  =
                         acc
                         .slice(0,j+2)
                         .reduce((accc,z,k)=>{
@@ -1419,18 +1420,18 @@ export function xContain(
                                 return accc - devObj.preserve.left
                             }
                             return accc + z
-                        },0).toString() + "px" 
-                    }    
-                    
+                        },0).toString() + "px"
+                    }
+
                     else{
-                        
-                        devObj.preserve.zChild[src[j]].css["left"]  =  
+
+                        devObj.preserve.zChild[src[j]].css["left"]  =
                         acc
                         .slice(0,j+2)
                         .reduce((accc,z,k)=>{
                             return accc + z
-                        },0).toString() + "px" 
-                    }  
+                        },0).toString() + "px"
+                    }
                     return acc
                 },[
                     xPosition({
@@ -1441,16 +1442,16 @@ export function xContain(
                         containPos: devObj.preserve.containPos[i] !== undefined ? devObj.preserve.containPos[i] :.5
                     })
                     // devObj.preserve.left
-                ])     
-                
-                devObj.preserve.ref.detectChanges()           
+                ])
+
+                devObj.preserve.ref.detectChanges()
                 //
 
                 if(devObj.debug === true || devObj.debug === 'true'){
                     console.log(OptionsFlex.lefts)
-                }    
+                }
 
-                
+
             })
 
             devObj
@@ -1458,17 +1459,17 @@ export function xContain(
             .align
             .forEach((x,i)=>{
                 x.pop()
-            })            
+            })
 
-        
-        
-            
-            return 
+
+
+
+            return
         }
 
         //getting the approriate ratios
         devObj.stops.ratio.forEach((x,i)=>{
-            devObj.stops.ratio[i] = x.map((y,j)=>{return y/devObj.stops.points[i]})  
+            devObj.stops.ratio[i] = x.map((y,j)=>{return y/devObj.stops.points[i]})
         })
         //
 
@@ -1482,18 +1483,18 @@ export function xContain(
                 let total  = typeof(devObj.measure) === 'number'? devObj.measure :  numberParse(   getComputedStyle(devObj.measure.element).width   ) +
                 numberParse(   getComputedStyle(devObj.measure.element).left   ) // FIXME  make this an array so I can be more dynamic
                 if( total > x ){
-                    
+
                     let diff:any = {
                         acc:0,
                         cumul : [],
                         newCumul : [],
-                        vals : []                        
+                        vals : []
                     }
                     let partsTotal = 0
                     let start = devObj.stops.points[i]
-                    devObj.stops.ratio[i].forEach((y,j)=>{    
+                    devObj.stops.ratio[i].forEach((y,j)=>{
                             // console.log(y, dims[j %  dims.length],Math.floor(j/2))
-                
+
                         let zChild = devObj.parts[Math.floor(j/2)]
                         let cssVal = dims[j %  dims.length]
                         let real = start * y
@@ -1501,12 +1502,12 @@ export function xContain(
                         // console.log(start)
 
                         diff.cumul.push(diff.cumul.length !== 0 ? diff.cumul[j-1] + real: real )
-                        calcr.push({                     
+                        calcr.push({
                             zChild,
                             cssVal
-                        }) 
-                
-                
+                        })
+
+
                     })
                     diff.delta = (partsTotal - total)/  devObj.stops.actions[i].reduce((y, j) => y + (j === 'c'), 0)
                     devObj.stops.actions[i].forEach((y,j)=>{
@@ -1515,7 +1516,7 @@ export function xContain(
                         if(   y === 'c'   ){
 
 
-                            diff.acc += diff.delta 
+                            diff.acc += diff.delta
                             // if(devObj.stops.control !== undefined){
                             //     diff.acc *=  devObj.stops.control[i][j]
                             // }
@@ -1525,7 +1526,7 @@ export function xContain(
 
                         if(devObj.stops.control !== undefined){
                             diff.acc *=  devObj.stops.control[i][j]
-                        }                        
+                        }
 
 
                         diff.newCumul.push(diff.cumul[j] - diff.acc)
@@ -1534,8 +1535,8 @@ export function xContain(
                         calcr[j].zChild.css[calcr[j].cssVal.valueOf()] =  (diff.vals[j]).toString() + "px"
 
 
-                    })   
-                    
+                    })
+
                     if(devObj.debug === 'true'){
                     console.log(
                         calcr,'\n',
@@ -1543,8 +1544,8 @@ export function xContain(
                         partsTotal,start,diff.newCumul.map((x,i)=>{
                             return i === 0 ?  x -0 : parseFloat(   (x - diff.newCumul[i-1]).toFixed(0)   )
                         })
-                    )   
-                    }                 
+                    )
+                    }
                     throw('error')
 
 
@@ -1552,7 +1553,7 @@ export function xContain(
 
 
             })
-        }   
+        }
         catch(e){}
 
     }
@@ -1560,7 +1561,7 @@ export function xContain(
 }
 
 /*
-helps the app make an element responsive when the 
+helps the app make an element responsive when the
 browser fails to indicate
     // something has to be done about getComputedStyle
 */
@@ -1580,21 +1581,21 @@ export function responsiveMeasure(
     devObj.item.target.forEach((x,i)=>{
 
         devObj.values[i].forEach((y,j)=>{
-            
 
-            if(   
+
+            if(
                 numberParse(getComputedStyle(devObj.measure.target)[devObj.measure.prop.valueOf()])   <
-                y[0]         
+                y[0]
             ){
                 // console.log(y)
                 x.css[
-                    devObj.item.prop[i] === undefined ? 
+                    devObj.item.prop[i] === undefined ?
                     devObj.item.prop[devObj.item.prop.length-1].valueOf() :
-                    devObj.item.prop[i].valueOf() 
-                    
-                ] = y[1].toString()+"px"      
-                // dont we need change  detection   
-            }          
+                    devObj.item.prop[i].valueOf()
+
+                ] = y[1].toString()+"px"
+                // dont we need change  detection
+            }
         })
     })
 }
@@ -1607,7 +1608,7 @@ export function responsiveMeasure(
     data
     elements to copy and organize,
     elements to move
-    * if you add function make sure the ask for vars in their parameters, 
+    * if you add function make sure the ask for vars in their parameters,
         DO NOT HAVE THEM BUILT IN to the function or it will lose its reference
 */
 
@@ -1616,13 +1617,13 @@ export function deltaNode
 (
     devObj?:{
         intent:string,
-        type?:any, 
+        type?:any,
         group?:string | any, //name of delta setup I got going
         elements?:zChildren[], // entries of elements to be added
         moving?:{
             entry:zChildren[],
             type: string,
-            distance?:number 
+            distance?:number
         },
         co?:Partial<componentObject>,
         subCO?: number | string,
@@ -1635,17 +1636,17 @@ export function deltaNode
             index:number,
             stackSpacing:number,
             zChild:zChildren[],
-            positionFn:(value: string, index: number, array: string[]) => void 
+            positionFn:(value: string, index: number, array: string[]) => void
         },
         features?:any,
         move?:{
             group:any,
             zChild:zChildren[],
-            toMove:Function | zChildren[] |  any 
+            toMove:Function | zChildren[] |  any
             // (any) => Array<zChildren> when we understand this better
             moveFn:(value: string, index: number, array: string[]) => void,
             moveFnPost?:Function,
-            heightGetter? : Function             
+            heightGetter? : Function
         }
     }
 ){
@@ -1659,7 +1660,7 @@ export function deltaNode
         numberParse(getComputedStyle(item).height)
     }
 
-    
+
     if(   devObj.intent ==='add' && devObj.hook !== 'prepare'   ){
 
 
@@ -1670,9 +1671,9 @@ export function deltaNode
                     var index = a
                     while (true)
                     yield index++;
-                }(devObj.symbolDeltaStart)                
+                }(devObj.symbolDeltaStart)
             }
-        } 
+        }
         let {deltaNodeSite} = devObj.co.metadata
         //
 
@@ -1685,7 +1686,7 @@ export function deltaNode
         if(   deltaNodeSite[devObj.group.valueOf()] === undefined){
             deltaNodeSite[devObj.group.valueOf()] = {
                 elements:[devObj.elements],
-                intent:[devObj.intent], 
+                intent:[devObj.intent],
                 hook:['done'],
                 subCO:[devObj.subCO],
                 count:0,
@@ -1707,8 +1708,8 @@ export function deltaNode
         // console.log(deltaNodeSite)
         let {count} = deltaNodeSite[devObj.group.valueOf()]
         deltaNodeSite.current ={count}
-        deltaNodeSite.current.group = devObj.group	        
-        deltaNodeSite.current.intent = devObj.intent    
+        deltaNodeSite.current.group = devObj.group
+        deltaNodeSite.current.intent = devObj.intent
         deltaNodeSite.current.hook = 'done'
         //
 
@@ -1722,8 +1723,8 @@ export function deltaNode
             // console.log(
             //     x,
             //     deltaNodeSite[devObj.group.valueOf()].display[i]
-            // )           
-            // adding each element one by one to the DOM 
+            // )
+            // adding each element one by one to the DOM
                 // block represent the whole group elements to be added at one time
                     // say one click event or one loop
             if(deltaNodeSite[devObj.group.valueOf()].display[i] !== 'yes'){
@@ -1758,7 +1759,7 @@ export function deltaNode
                             }
                             return acc
                         },"")
-                    ) 
+                    )
                 })
             }
             deltaNodeSite[devObj.group.valueOf()].display[i] = 'yes'
@@ -1788,8 +1789,8 @@ export function deltaNode
             hook:'done'
         }
         // deltaNodeSite.current.group = devObj.group
-        // deltaNodeSite.current.intent = devObj.intent  
-        // deltaNodeSite.current.hook = 'done'         
+        // deltaNodeSite.current.intent = devObj.intent
+        // deltaNodeSite.current.hook = 'done'
         //
 
         //access the right subCO
@@ -1800,8 +1801,8 @@ export function deltaNode
         deltaNodeSite[devObj.group.valueOf()].symbols[count]
         .forEach((x,i)=>{
             //find where the symbol and all of its data is and properly remove it
-            let sub0 = null 
-            let sub1 = null 
+            let sub0 = null
+            let sub1 = null
             // find the right index
             try{
                 deltaSubCO.symbol.forEach((y,j)=>{
@@ -1826,27 +1827,27 @@ export function deltaNode
                     }
                     catch(e){
                     }
-                })    
-                deltaSubCO.quantity[sub0].splice(sub1,1)            
+                })
+                deltaSubCO.quantity[sub0].splice(sub1,1)
             }
             //
         })
-        // 
+        //
 
         // take the items out of deltaMangement
-        deltaNodeSite[devObj.group.valueOf()].hook[count] = "done" 
+        deltaNodeSite[devObj.group.valueOf()].hook[count] = "done"
         deltaNodeSite[devObj.group.valueOf()].intent[count] = "minus"
         deltaNodeSite[devObj.group.valueOf()].display[count] = "no"
-        
+
         if(count === 0 ){
-            delete deltaNodeSite[devObj.group.valueOf()] 
+            delete deltaNodeSite[devObj.group.valueOf()]
         }
         else if(count !== 0){
-            
+
             Object.keys(deltaNodeSite[devObj.group.valueOf()]).forEach((x,i)=>{
                 try{
                     deltaNodeSite[devObj.group.valueOf()][x.valueOf()].splice(count,1)
-                    // deltaNodeSite[devObj.group.valueOf()][x.valueOf()] = 
+                    // deltaNodeSite[devObj.group.valueOf()][x.valueOf()] =
                     // deltaNodeSite[devObj.group.valueOf()][x.valueOf()].slice(0,count)
                     // .concat(deltaNodeSite[devObj.group.valueOf()][x.valueOf()].slice(count+1))
                 }
@@ -1864,12 +1865,12 @@ export function deltaNode
         let {deltaNodeSite} = devObj.co.metadata
         if(deltaNodeSite[devObj.group.valueOf()] === undefined){
             return
-        }        
+        }
         let {count,subCO} = deltaNodeSite[devObj.group.valueOf()]
         deltaNodeSite.current ={count}
         deltaNodeSite.current.group = devObj.group
         deltaNodeSite.current.intent = devObj.intent
-        deltaNodeSite.current.hook = devObj.hook           
+        deltaNodeSite.current.hook = devObj.hook
         //
 
         //access the right subCO
@@ -1877,8 +1878,8 @@ export function deltaNode
         //
 
         deltaNodeSite[devObj.group.valueOf()].hook[count] = devObj.hook
-        deltaNodeSite[devObj.group.valueOf()].intent[count] = devObj.intent 
-               
+        deltaNodeSite[devObj.group.valueOf()].intent[count] = devObj.intent
+
 
     }
 
@@ -1896,4 +1897,4 @@ export function sCG(devObj?):string{
     }
     char += String.fromCharCode(  ((column -"A".charCodeAt(0)) % alphabet) + ( "A".charCodeAt(0) )     )
     return char
-}  
+}

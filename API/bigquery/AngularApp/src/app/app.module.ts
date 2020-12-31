@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormComponent } from './form/form.component';
 import { DatasetDirective } from './directive/dataset.directive';
+import { RegularTablesDirective } from './directive/regular-tables.directive';
+import { DropDownDirective } from './directive/dropdown.directive';
 // import { FormControlDirective } from './directive/form-control.directive';
 
 
@@ -13,6 +15,8 @@ import { DatasetDirective } from './directive/dataset.directive';
     AppComponent,
     FormComponent,
     DatasetDirective,
+    RegularTablesDirective,
+    DropDownDirective,
     // FormControlDirective,
 
   ],

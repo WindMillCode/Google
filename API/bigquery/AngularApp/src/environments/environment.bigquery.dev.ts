@@ -50,6 +50,13 @@ export const environment: any = {
         tracingOrigins:["localhost",/^\//]
     },
     dataset:{
+    },
+
+    // update tables object here
+    regularTables:{
+        default:false,
+        IAM:true
     }
+    //
 
 };

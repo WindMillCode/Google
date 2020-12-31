@@ -203,6 +203,7 @@
         </ng-template>
         <ng-template #pictureBlock1  >
             <button #myVal
+                appRegularTables [regularTables] = "ryber.appAvailble( a.extras[2][bb], 'appRegularTables')"
                 appDataset [dataset] = "ryber.appAvailble( a.extras[2][bb], 'appDataset')"
                 appInputHandle [inputHandle] = "ryber.appAvailble( a.extras[2][bb], 'appInputHandle')"
                 appFormControl [formControl] = "ryber.appAvailble( a.extras[2][bb], 'appFormControl')"

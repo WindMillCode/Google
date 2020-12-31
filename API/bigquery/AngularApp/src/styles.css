@@ -26,7 +26,7 @@
          url('assets/fonts/fjalla-one-v7-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
          url('assets/fonts/fjalla-one-v7-latin-regular.svg#FjallaOne') format('svg'); /* Legacy iOS */
 }
-  
+
 
 
 
@@ -57,7 +57,7 @@ input {
 
 /* input::-webkit-datetime-edit-fields-wrapper { */
 
-/* } */ 
+/* } */
 
 
 
@@ -88,22 +88,22 @@ html {
 
 .a_p_p_Text{
     font-family : 'Arial';
-    font-weight : 400;    
+    font-weight : 400;
 }
 
 .a_p_p_SubHeading{
     font-family : Fjalla One;
-    font-weight : 400;    
+    font-weight : 400;
 }
 
 .a_p_p_Selection{
     font-family : Fjalla One;
     border: 2px solid black;
-    font-weight : 400;  
+    font-weight : 400;
     background-color: transparent;
-    transition : color 0.5s, background-color 0.5s; 
+    transition : color 0.5s, background-color 0.5s;
     text-align : center;
-    padding : 13px 26px 13px 26px;   
+    padding : 13px 26px 13px 26px;
 }
 
 .a_p_p_Heading{
@@ -115,7 +115,7 @@ html {
 
 .a_p_p_Input{
     background : transparent;
-    font-family : 'Roboto', sans-serif; 
+    font-family : 'Roboto', sans-serif;
     border:0px;
     border-bottom:2px solid black;
 }
@@ -128,7 +128,7 @@ html {
 .a_p_p_TextArea{
     border :2px solid black;
     font-family:"Arial";
-    background-color: transparent;    
+    background-color: transparent;
 }
 
 /* .a_p_p_Input:invalid{
@@ -137,8 +137,8 @@ html {
 
 .a_p_p_Button{
     font-family : 'Roboto', sans-serif;
-    background-color : rgb(0, 123, 255);
-    color : rgb(197, 236, 253);
+    background-color : rgb(94, 255, 0);
+    color : rgb(1, 85, 121);
     font-weight : 400;
     border-radius :  3px 3px 3px 3px
 
@@ -154,14 +154,14 @@ html {
 .a_p_p_DropDownStart{
     padding:13px 26px 13px 26px;
     border-top-left-radius:     10px;
-    border-top-right-radius:    10px;    
+    border-top-right-radius:    10px;
     border :2px solid black;
     font-family:Arial;
     background-color: white;
 }
 
 .a_p_p_DropDownMiddle{
-    padding:13px 26px 13px 26px;   
+    padding:13px 26px 13px 26px;
     border :2px solid black;
     font-family:Arial;
     background-color: white;
@@ -170,7 +170,7 @@ html {
 .a_p_p_DropDownLast{
     padding:13px 26px 13px 26px;
     border-bottom-left-radius:     10px;
-    border-bottom-right-radius:    10px;    
+    border-bottom-right-radius:    10px;
     border :2px solid black;
     font-family:Arial;
     background-color: white;
