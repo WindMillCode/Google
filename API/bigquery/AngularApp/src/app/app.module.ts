@@ -10,6 +10,9 @@ import { DropDownDirective } from './directive/dropdown.directive';
 // import { FormControlDirective } from './directive/form-control.directive';
 
 
+import { AgGridModule } from 'ag-grid-angular';
+import { AgGridHolderComponent } from './ag-grid-holder/ag-grid-holder.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,13 +20,15 @@ import { DropDownDirective } from './directive/dropdown.directive';
     DatasetDirective,
     RegularTablesDirective,
     DropDownDirective,
+    AgGridHolderComponent,
     // FormControlDirective,
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    AgGridModule.withComponents([FormComponent])
   ],
   providers: [],
   bootstrap: [AppComponent]

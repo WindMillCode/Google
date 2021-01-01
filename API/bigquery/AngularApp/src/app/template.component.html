@@ -246,14 +246,35 @@
         <ng-template #pictureBlock5  >
             <mat-progress-spinner
             #myVal
-            *ngIf= "a.bool[2][bb] ==='mat-spinner'"
+            *ngIf= "a.bool[2][bb] ==='mat-spinner' else pictureBlock6"
             class = {{a.val[2][bb]}}
             [ngStyle] ='a.ngCss[2][bb]'
-            appExtend [extend] = "ryber.appAvailble( a.extras[1][bb], 'extend')"
+            appExtend [extend] = "ryber.appAvailble( a.extras[2][bb], 'extend')"
             mode="indeterminate"
             ></mat-progress-spinner>
 
         </ng-template>
+
+        <ng-template #pictureBlock6  >
+            <div
+            #myVal
+            *ngIf= "a.bool[2][bb] ==='ag-grid'"
+            class = {{a.val[2][bb]}}
+            [ngStyle] ='a.ngCss[2][bb]'
+            appExtend [extend] = "ryber.appAvailble( a.extras[2][bb], 'extend')"
+            >
+                <ag-grid-angular
+                style="height: 400px;  width: inherit; "
+                class="ag-theme-blue"
+                [rowData]="a.extras[2][bb].appAgGrid.rowData"
+                [columnDefs]="a.extras[2][bb].appAgGrid.columnDefs"
+                >
+                </ag-grid-angular>
+
+            </div>
+        </ng-template>
     </ng-container>
 
     </ng-container>
+
+

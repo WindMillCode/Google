@@ -14,6 +14,7 @@ export class RegularTablesDirective {
 
     @Input() regularTables: any;
     extras: any;
+    zChildren: any;
 
     constructor(
         private el: ElementRef,
@@ -28,9 +29,10 @@ export class RegularTablesDirective {
 
         if (this.extras?.confirm === 'true') {
 
+
             let update = (document.querySelector(".f_o_r_m_Result") as HTMLElement)
             let validDomains = ["user","group","serviceAccount"]
-            let tableName = (document.querySelector(".f_o_r_m_Table-Answer") as HTMLInputElement).value
+            let tableName = (document.querySelector(".f_o_r_m_Table-Answer") as HTMLInputElement)?.value
             let emailTypes = Array.from(
                 document.querySelectorAll('a[class^="a_p_p_DropDownMiddle f_o_r_m_types-email"]')
             )
@@ -46,22 +48,32 @@ export class RegularTablesDirective {
                 }),
                 tableName
             }
-            try {
-                data.emails.forEach((x:any,i)=>{
-                    if(!validDomains.includes(x[0])){
-                        update.innerText= "Make sure you select an email type and provide an email for each field else use the remove button to provide the amount needed"
-                        eventDispatcher({
-                            event: 'resize',
-                            element: window
-                        })
-                        throw('')
-                    }
-                })
-            }
-            catch (error) {
-                return 
-            }
 
+            // update tables IAM
+            if(env.regularTables.setIAM){
+                try {
+                    data.emails.forEach((x:any,i)=>{
+                        if(!validDomains.includes(x[0])){
+                            update.innerText= "Make sure you select an email type and provide an email for each field else use the remove button to provide the amount needed"
+                            eventDispatcher({
+                                event: 'resize',
+                                element: window
+                            })
+                            throw('')
+                        }
+                    })
+                }
+                catch (error) {
+                    return
+                }
+            }
+            //
+
+            //browsing action
+            if(env.regularTables.browse){
+                data.browse  = (document.querySelector(".a_p_p_DropDownMiddle.f_o_r_m_browsing-action") as HTMLInputElement).innerText
+            }
+            //
             console.log(data)
 
 
@@ -69,14 +81,9 @@ export class RegularTablesDirective {
             //communicate with the python backend
             this.http.post(
                 "http://localhost:3005",
-                {
-                    name: "see me"
-                },
+                data,
                 {
                     responseType: 'text',
-                    headers:{
-                        "Content-Type":"application/octet-stream"
-                    }
                 }
             )
             .subscribe({
@@ -92,7 +99,36 @@ export class RegularTablesDirective {
                 },
                 next: (result: any) => {
                     console.log(result)
-                    update.innerText = result
+
+                    // place the actual tables in ag-Gird
+                    if(data.browse == "10 Rows"){
+                        let  columnDefs = JSON.parse(result)
+                        .schema
+                        .map((x:any,i)=>{
+                            return {field:x}
+                        })
+                        let rowData  = JSON.parse(result)
+                        .rows
+                        .map((x:any,i)=>{
+                            console.log(x)
+                            return Object.fromEntries(x)
+                        })
+                        console.log(rowData)
+                        console.log(columnDefs)
+                        Object.entries(
+                            this.zChildren
+                        )
+                        .filter((x:any,i)=>{
+                            if(x[1].bool === "ag-grid"){
+                                x[1].extras.appAgGrid = {rowData,columnDefs}
+                                console.log(x[1].extras.appAgGrid)
+                            }
+                        })
+                    }
+                    //
+                    else {
+                        update.innerText = result
+                    }
                     eventDispatcher({
                         event: 'resize',
                         element: window
@@ -109,6 +145,12 @@ export class RegularTablesDirective {
     ngOnInit() {
         this.extras = this.regularTables
         if (this.extras?.confirm === 'true') {
+            console.log(this.extras)
+            this.ryber[this.extras.co.valueOf()].metadata.zChildrenSubject
+            .subscribe(()=>{
+                this.zChildren = this.ryber[this.extras.co.valueOf()].metadata.zChildren
+                console.log(this.zChildren)
+            })
             setTimeout(() => {
                 // this.el.nativeElement.click()
             }, 200)

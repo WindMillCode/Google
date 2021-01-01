@@ -10,6 +10,7 @@ pp = pprint.PrettyPrinter(indent=4,compact= True,width =1)
 from tables import my_bigquery_client
 import tornado.ioloop
 import tornado.web
+import json
 
 
 
@@ -18,15 +19,21 @@ my_client = my_bigquery_client()
 
 # web server
 class MainHandler(tornado.web.RequestHandler):
+
+    
+
     def set_default_headers(self):
         self.set_header("Access-Control-Allow-Origin", "*")
         self.set_header("Access-Control-Allow-Headers", "*")
         self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
 
     def post(self):
-        self.set_header("Access-Control-Allow-Origin", "*")
+        data = ""
+        if self.request.headers['Content-Type'] == 'application/json':
+            data = tornado.escape.json_decode(self.request.body)  
+            print(data.get("tableName"))
         self.set_header("Content-Type", "text/plain")
-        self.write("Hello, world")
+        self.write(my_client.execute(data))
 
     def options(self):
         self.set_status(204)

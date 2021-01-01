@@ -59,7 +59,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                     return
                 }
 
-
+                
                 let zChild = this.zChildInit()
                 let staticZKeys = this.staticZKeysGen(zChild)
                 if(environment.component.zChild) console.log(zChild);

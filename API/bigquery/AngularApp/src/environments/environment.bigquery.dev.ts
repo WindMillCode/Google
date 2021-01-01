@@ -55,8 +55,12 @@ export const environment: any = {
     // update tables object here
     regularTables:{
         default:false,
-        IAM:true
+        IAM:false,
+        setIAM:false,
+        browse:true
     }
     //
 
 };
+
+// Jahreek_Table

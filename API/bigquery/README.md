@@ -681,10 +681,13 @@ more [here](https://cloud.google.com/bigquery/docs/table-access-controls-intro)
   "version":1
 }
 ```
-* view a tables IAM policy
+* get a tables IAM policy
 
 #### Python
 ```py
+        table = client.get_table(table_id)
+        policy =client.get_iam_policy(table)
+        return str(policy.bindings)
 ```
 
 * test if a user has certain access [here](https://cloud.google.com/iam/docs/testing-permissions)
@@ -693,13 +696,151 @@ more [here](https://cloud.google.com/bigquery/docs/table-access-controls-intro)
 
 #### Python
 ```py
+    table = client.get_table(table_id)
+    emails = set(["{}:{}".format(x[0],x[1]) for x in emails])
+    print(emails)
+    return "working"
+    policy =client.get_iam_policy(table)
+    policy.bindings = [
+        {
+            "role": "roles/owner",
+            # "members": {user, serviceAccount} # this is a python set
+            "members":emails
+        },
+        {
+            "role": "roles/editor",
+            "members": {"allAuthenticatedUsers"}
+        },
+        {
+            "role": "roles/viewer",
+            "members": {"allUsers"},
+            # "condition": {  # doesnt work  all the time 
+            #     "title": "request_time",
+            #     "description": "Requests made before 2021-01-01T00:00:00Z",
+            #     "expression": "request.time < timestamp("2021-01-01T00:00:00Z")"
+            # }                        
+        }
+    ]  
+    client.set_iam_policy(table,policy) 
+    return "IAM policy sucessfully created/updated" 
 ```
 
-* get tables IAM policy
+### Updating table properties
+
+* __permissions__ - bigquery.tables.update,bigquery.tables.get
+* __roles__ - bigquery.dataEditor,bigquery.dataOwner,bigquery.admin
+
+* update table desc
 
 #### Python
 ```py
+assert table.description == "Original description."
+table.description = "Updated description."
+
+table = client.update_table(table, ["description"])  # API request
+
+assert table.description == "Updated description."
 ```
+
+* update table expiration time
+
+#### Python
+```py
+import datetime
+import pytz
+
+assert table.expires is None
+
+# set table to expire 5 days from now
+expiration = datetime.datetime.now(pytz.utc) + datetime.timedelta(days=5)
+table.expires = expiration
+table = client.update_table(table, ["expires"])  # API request
+
+# expiration is stored in milliseconds
+margin = datetime.timedelta(microseconds=1000)
+assert expiration - margin <= table.expires <= expiration + margin
+```
+
+* copying a table
+    * this is also how you rename a table
+
+* __permissions__ bigquery.tables.get,bigquery.tables.getData,bigquery.tables.create
+* __roles__    - bigquery.admin
+
+* subject to quota policy
+* unique,
+* to do anything fancy, no cros-region multi -table <-->, async pwa, you need GCP storage
+* very restricted in cloud console, if not in cloud console, everything works, overwritting some fancy stuff
+
+* copy a single table
+    * if you repeat overwrites the table
+#### Python 
+```py
+source_table_id = table_id
+destination_table_id = "{}.{}".format(dataset_main, "Copied_Table") 
+job = client.copy_table(source_table_id, destination_table_id)
+job.result()  # Wait for the job to complete.
+return "A copy of the table created."   
+```
+
+* copy many tables
+#### Python 
+```py
+table_ids = [
+    table_id,
+    "bigquery-public-data.census_utility.fips_codes_states"
+]
+dest_table_id = "{}.{}".format(dataset_main, "Merged_Table") 
+job = client.copy_table(table_ids, dest_table_id)  
+job.result()  # Wait for the job to complete.
+return "The tables {} have been appended to {}".format(table_ids, dest_table_id)   
+```
+
+### Deleting tables
+* __permissions__  -  bigquery.tables.delete,bigquery.tables.get
+* __roles__ - bigquery.dataOwner,bigquery.dataEditor,bigquery.admin
+
+* to delete a table
+#### Python
+```py
+client.delete_table(table_id, not_found_ok=True)  # Make an API request.
+print("Deleted table '{}'.".format(table_id))
+```
+    
+* to restore a deleted table
+#### Python
+```py
+recovered_table_id = "{}.{}".format(dataset_main, "Recovered_Table") 
+snapshot_epoch = int(time.time() * 1000) # current time in milliseconds
+client.delete_table(table_id)
+snapshot_table_id = "{}@{}".format(table_id, snapshot_epoch)
+job = client.copy_table(
+    snapshot_table_id,
+    recovered_table_id,
+    # Must match the source and destination tables location.
+    location="US",
+)        
+job.result()
+return "Copied data from deleted table {} to {}".format(table_id, recovered_table_id) 
+```
+
+### Managing table data
+
+* to browse table data
+* __permissions__ - bigquery.tables.getData
+* __roles__ - bigquery.dataViewer,bigquery.dataEditor,bigquery.dataOwner,bigquery.admin
+
+#### Python
+```py
+
+
+```
+
+
+
+
+
+
 
 
 pip install --upgrade google-cloud-bigquery google-cloud-bigquery-datatransfer tornado --target .\site-packages

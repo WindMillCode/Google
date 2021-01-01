@@ -628,6 +628,49 @@ export class RyberService {
                 })
             }
 
+            else if(type === "simpleTable"){
+
+
+                let css = {
+                    // "z-index":4,
+                    // "position":"relative",
+                    // 'background-color':background,
+                    // color,
+                    height:"250px",
+                    width:"500px"
+                }
+                options.css === undefined ? undefined :(()=>{
+                    css = options.css;
+                })()
+
+                let extend = {
+                    // mode:"indeterminate",
+                    // color:"primary"
+                }
+
+                // component.height =  component?.height === undefined ? 100:   component.height
+                // component.width =  component?.height === undefined ? 100:   component.height  // widht is not allowed here it will break the mat-spinner
+
+                symbol = rUD({
+                    co,
+                    bool:'ag-grid',
+                    val:key.split("_").reverse()[0],
+                    css,
+                    extras:{
+                        deltaIndex:1,
+                        component,
+                        multipleGroup,
+                        type,
+                        extend,
+                        appAgGrid:{
+                            rowData: [],
+                            columnDefs: [],
+                            confirm:"true"
+                        }
+                    }
+                })
+            }
+
             else if(type === "sub-heading"){
 
 
@@ -1049,7 +1092,8 @@ export class RyberService {
                     css,
                     extras:{
                         appRegularTables:{
-                            confirm:'true'
+                            confirm:'true',
+                            co
                         },
                         component,
                         type

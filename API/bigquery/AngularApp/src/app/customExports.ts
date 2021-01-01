@@ -962,7 +962,7 @@ export function ryberUpdate(
         }
 
         else if(
-            ['div','img','b','embed','video','audio','mat-spinner']
+            ['div','img','b','embed','video','audio','mat-spinner','ag-grid']
             .includes(bool)
         ){
             index = 2
@@ -1206,7 +1206,7 @@ export function stack(
                 if(   devObj.start !== undefined   ){
 
                     devObj.zChild[x].css['top'] =  start.toString() + "px"
-                    
+
                 }
                 return
             }

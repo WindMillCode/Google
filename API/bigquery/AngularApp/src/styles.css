@@ -1,3 +1,7 @@
+@import "../node_modules/ag-grid-community/dist/styles/ag-grid.css";
+@import "../node_modules/ag-grid-community/dist/styles/ag-theme-blue.css";
+
+
 /* libre-franklin-regular - latin */
 @font-face {
     font-family: 'Libre Franklin';
@@ -26,7 +30,6 @@
          url('assets/fonts/fjalla-one-v7-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
          url('assets/fonts/fjalla-one-v7-latin-regular.svg#FjallaOne') format('svg'); /* Legacy iOS */
 }
-
 
 
 
@@ -62,7 +65,14 @@ input {
 
 
 
-app-root * {
+/* app-root * {
+
+    position: absolute;
+    margin : 0px;
+    transition: top 2s, left 2s, font-size 3s;
+} */
+
+app-root :not([class^='ag']) {
 
     position: absolute;
     margin : 0px;

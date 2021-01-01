@@ -8,6 +8,9 @@
             "schematics": {
                 "@schematics/angular:directive": {
                     "skipTests": true
+                },
+                "@schematics/angular:component": {
+                    "skipTests": true
                 }
             },
             "root": "",
@@ -37,7 +40,10 @@
                         "assets": [],
                         "styles": [
                             "src/styles.css",
-                            "src/assets/styles/pikaday.css"
+                            "src/assets/styles/pikaday.css",
+                            // "src/assets/styles/ag-theme-alpine.css",
+                            // "src/assets/styles/ag-theme-alpine-dark.css",
+                            // "src/assets/styles/ag-grid.css"
                         ],
                         "scripts": [
                             "backend/modernizr/modernizr.js",

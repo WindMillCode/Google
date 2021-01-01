@@ -9,8 +9,8 @@ import { environment } from 'src/environments/environment';
 
 declare global {
     interface Window { Modernizr: any; }
-    // not let or else local to this file 
-    var gapi:any 
+    // not let or else local to this file
+    var gapi:any
     var Modernizr:any
     var SignaturePad:any
     var seeeb:any
@@ -38,11 +38,11 @@ export class AppComponent implements OnInit,OnDestroy {
     CO$:Subscription
 
 
-        
+
     ngOnInit(){
         if(environment.lifecycleHooks) console.log('app ngOnInit fires on mount');
 
-        
+
         //gapi && datepicker setup
         [
         "https://apis.google.com/js/api.js",
@@ -62,11 +62,11 @@ export class AppComponent implements OnInit,OnDestroy {
             const fakerScript = this.renderer2.createElement('script');
             fakerScript.type = 'text/javascript';
             fakerScript.src = "https://cdn.rawgit.com/Marak/faker.js/master/examples/browser/js/faker.js"; // Defines someGlobalObject
-            this.renderer2.appendChild(window.document.body, fakerScript);        
+            this.renderer2.appendChild(window.document.body, fakerScript);
         }
-        //  
+        //
 
-        
+
         /* App Setup*/
         esInit(this.ryber,this.ryber.appCO0.metadata.ES)
 
@@ -88,21 +88,22 @@ export class AppComponent implements OnInit,OnDestroy {
                     .pipe(
                         tap((val)=>{
                             co.metadata.zChildren = val.directivesZChild
-                            co.metadata.zChildren$ = of(val.directivesZChild)                    
+                            co.metadata.zChildren$ = of(val.directivesZChild)
                         }),
-                    ) 
+                    )
                 })
-            )          
+            )
         })
+        
         // console.log(this.ryber)
-    
-        
-        
 
-        if(   
+
+
+
+        if(
         window.name !== '/'   &&
-            window.name !== '/home'                            
-        ){   
+            window.name !== '/home'
+        ){
 
 
             window.name = '/home'
@@ -114,14 +115,14 @@ export class AppComponent implements OnInit,OnDestroy {
         if(   this.ryber.appReloaded === 'true'   ){
 
 
-            this.ryber.appCurrentNav = window.name 
+            this.ryber.appCurrentNav = window.name
 
 
-        }            
-            
+        }
+
         this.ryber.appViewComplete.subscribe(()=>{
-            
-            
+
+
             if(   window.name === ''   ){
 
 
@@ -129,7 +130,7 @@ export class AppComponent implements OnInit,OnDestroy {
 
 
             }
-    
+
 
             if(   this.ryber.appReloaded !== 'true'){
 
@@ -137,29 +138,29 @@ export class AppComponent implements OnInit,OnDestroy {
                 window.name = this.ryber.appCurrentNav
 
 
-            }            
+            }
 
 
             // async the navigation
             if(   ['/home','/'].includes(this.ryber.appCurrentNav)   ){
 
 
-                
+
                 this.routeDispatch({
                     arr:[...this.ryber["formCO"]].sort(),
                 })
 
-                
-                
+
+
             }
             //
 
 
-                
-            
-        })     
 
-        
+
+        })
+
+
         // console.log(location.pathname)
     }
 
@@ -173,10 +174,10 @@ export class AppComponent implements OnInit,OnDestroy {
         this.ryber.appViewCompleteArray = this.ryber.appViewCompleteArray.sort()
         if(
             arr
-            .filter((x,i) =>{ 
-                return this.ryber.appViewCompleteArray[i] !== x 
+            .filter((x,i) =>{
+                return this.ryber.appViewCompleteArray[i] !== x
             })
-            .length === 0 && 
+            .length === 0 &&
             arr.length === this.ryber.appViewCompleteArray.length
         ){
 
@@ -186,7 +187,7 @@ export class AppComponent implements OnInit,OnDestroy {
             eventDispatcher({
                 element:window,
                 event:'resize'
-            })        
+            })
 
 
             this.ryber.appViewCompleteArray = []
@@ -198,10 +199,10 @@ export class AppComponent implements OnInit,OnDestroy {
                 this.ryber.appReloaded = 'false'
 
 
-            } 
-            
+            }
 
-        }    
+
+        }
 
     }
 

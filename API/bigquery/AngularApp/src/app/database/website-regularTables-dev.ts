@@ -34,7 +34,7 @@ if(env.regularTables.default){
                     "googleSheets": {}
                 },
                 {
-                    "key": "Dataset-Answer",
+                    "key": "Table-Answer",
                     "value": "",
                     "type": "input",
                     "border":"1px solid black",
@@ -46,7 +46,7 @@ if(env.regularTables.default){
                 },
                 {
                     "key": "Submit",
-                    "type": "dataset button",
+                    "type": "regularTables button",
                     "value":"Submit",
                     "next":"true",
                     // "split": "3",
@@ -185,7 +185,103 @@ else if(env.regularTables.IAM){
             ]
         },
     ]
+
 }
+else if(env.regularTables.browse){
+    website.convertCMS = [
+
+        {
+            "title": "present_drive_files",
+            "type_slug": "forms",
+            "metafields": [
+
+                {
+                    "key": "Body",
+                    "type": "body",
+                    "stack": "60",
+                    "gap":"20",
+                    "background": "rgb(255, 179, 204)",
+                    "googleSheets": {}
+                },
+                {
+                    "key": "Heading",
+                    "value": "Welcome to the BigQuery Management Page",
+                    "type": "title",
+                    "split": "9",
+                    "googleSheets": {}
+                },
+                {
+                    "key": "Question",
+                    "value": "choose an action",
+                    "type": "sub-heading",
+                    "split": "9",
+                    "text-align":"center",
+                    "googleSheets": {}
+                },
+                // {
+                //     "key": "Table-Answer",
+                //     "value": "",
+                //     "type": "input",
+                //     "border":"1px solid black",
+                //     "fontSize":"60",
+                //     "background":"white",
+                //     "split": "9",
+                //     "text-align":"center",
+                //     "googleSheets": {},
+                // },
+                {
+                    "key": "browsing-action",
+                    "value": "browsing action",
+                    "type": "dropdown",
+                    "form": {},
+                    "next":"true",
+                    "googleSheets": {},
+                    "left":250,
+                    "newline": [
+                        "All Rows",
+                        "Count Rows",
+                        "10 Rows",
+                        "Selected Fields",
+                        "Pretty Print"
+                    ],
+                    "split":6,
+
+                },
+                {
+                    "key": "Submit",
+                    "type": "regularTables button",
+                    "value":"Submit",
+                    "next":"true",
+                    // "split": "3",
+                    "height":"250",
+                    "googleSheets": {}
+                },
+                {
+                    "key": "Result",
+                    "type": "text",
+                    "value":"Waiting For Submission...",
+                    // "next":"true",
+                    "split": "6",
+                    "fontSize":"40",
+                    "height":"250",
+                    "googleSheets": {}
+                },
+                {
+                    "key": "Ag-Table",
+                    "type": "simpleTable",
+                    "value":"",
+                    // "next":"true",
+                    "split": "9",
+                    "fontSize":"40",
+                    "height":"250",
+                    // "width":"00",
+                    "googleSheets": {}
+                },
+            ]
+        },
+    ]
+}
+
 
 
 
