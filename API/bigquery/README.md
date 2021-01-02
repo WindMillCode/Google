@@ -833,11 +833,147 @@ return "Copied data from deleted table {} to {}".format(table_id, recovered_tabl
 #### Python
 ```py
 
+table_id = "bigquery-public-data.census_utility.fips_codes_states"
+action = data.get("browse")
+print(action)
+# Download all rows from a table.
+if(action =="All Rows"):
+    rows_iter = client.list_rows(table_id)  
+    print(rows_iter)
+    return "Was able to receive all rows check terminal for output"
 
+# Iterate over rows to make the API requests to fetch row data.
+elif(action =="Count Rows"):
+    rows_iter = client.list_rows(table_id)  
+    rows = list(rows_iter)
+    return "Downloaded {} rows from table {}".format(len(rows), table_id)
+
+# Download at most 10 rows.
+elif(action =="10 Rows"):
+    rows_iter = client.list_rows(table_id, max_results=10)
+    rows = list(rows_iter)    
+    schema_column_names = [field.to_api_repr().get("name") for field in rows_iter.schema]
+    result_data = {
+        "rows":[[[schema_column_names[index] ,value] for index,value in enumerate(list(row))] for row in rows] , 
+        "schema":[field.to_api_repr().get("name") for field in rows_iter.schema]
+    }
+    print(result_data)
+    return json.dumps(result_data)
+
+# Specify selected fields to limit the results to certain columns.
+elif(action =="Selected Fields"):                
+    table = client.get_table(table_id)  # Make an API request.
+    fields = table.schema[:2]  # First two columns.
+    rows_iter = client.list_rows(table_id, selected_fields=fields, max_results=10)
+    rows = list(rows_iter)
+    print("Selected {} columns from table {}.".format(len(rows_iter.schema), table_id))
+    print("Downloaded {} rows from table {}".format(len(rows), table_id))
+
+# Print row data in tabular format.
+elif(action =="Pretty Print"): 
+    table = client.get_table(table_id) 
+    rows = client.list_rows(table, max_results=10)
+    format_string = "{!s:<16} " * len(rows.schema)
+    field_names = [field.name for field in rows.schema]
+    print(format_string.format(*field_names))  # Prints column headers.
+    for row in rows:
+        print(format_string.format(*row))  # Prints row data. 
+
+else:
+    return "please choose a browsing action"   
+
+return "Sucess check the server output in the terminal"  
+```
+
+* to query table data
+
+* __interactive__- executed ASAP
+* __batch__ - executed when resources are availble
+
+#### Python
+```py
+query_job = client.query(
+    """
+    SELECT
+      CONCAT(
+        'https://stackoverflow.com/questions/',
+        CAST(id as STRING)) as url,
+      view_count
+    FROM `bigquery-public-data.stackoverflow.posts_questions`
+    WHERE tags like '%google-bigquery%'
+    ORDER BY view_count DESC
+    LIMIT 10"""
+)
+
+results = query_job.result()  # Waits for job to complete.
+for row in results:
+    print("{} : {} views".format(row.url, row.view_count))
+```
+
+* to export table data
+    * bigquery can only do 1GB, use wildcard to export to multiple files
+    * on export to cloud storage
+    * arrays and structs (repreated and nested) only for Avro and JSON
+    * GZIP
+    * make sure everything in the same region
+
+* __permissions__ - bigquery.tables.export,bigquery.jobs.create,storage.objects.create,storage.objects.delete
+* __roles__ - bigquery.admin AND storage.objectAdmin,storage.admin
+* [Optional] The exported file format. Possible values include CSV, NEWLINE_DELIMITED_JSON or AVRO for tables and ML_TF_SAVED_MODEL or ML_XGBOOST_BOOSTER for models, default is CSV
+
+#### Python
+* create a storage bucket
+in cloud console
+navigation > storage
+enable the API
+
+|property|value|data|
+|:------|:------:|------:|
+|name|export_table_bucket_[choose any number]||
+|location|northamerical-northeast1||
+|storage class|standard||
+|Access cotnrol|unfomrm||
+
+* give the service acct storage.objectAdmin role
+```py
+    bucket_name = name
+    project = "bigquery-public-data"
+    dataset_id = "samples"
+    table_id = "shakespeare"
+
+    destination_uri = "gs://{}/{}".format(bucket_name, "shakespeare.csv")
+    dataset_ref = bigquery.DatasetReference(project, dataset_id)
+    table_ref = dataset_ref.table(table_id)
+
+    extract_job = client.extract_table(
+        table_ref,
+        destination_uri,
+        job_config= bigquery.job.ExtractJobConfig(
+            destination_format="CSV",
+            # default CSV, NEWLINE_DELIMITED_JSON or AVRO
+            # compression = bigquery.Compression.GZIP
+        ),        
+        location="US",
+    )  # API request
+
+    extract_job.result()  # Waits for job to complete.
+    return "Exported {}:{}.{} to {}".format(project, dataset_id, table_id, destination_uri) 
 ```
 
 
+### Accessing historical data using time traveL
+* the query
+```sql
+SELECT *
+FROM `mydataset.mytable`
+  FOR SYSTEM_TIME AS OF TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 1 HOUR);
+```
 
+* restore  a table from the a previous data
+    * refer to recover a table in delete a table
+
+
+### Lab [Regular Tables in Bigquery (Python)](./vids/Python3/Regular_Tables_in_Bigquery/README.md)
 
 
 

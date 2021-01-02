@@ -665,7 +665,12 @@ export class RyberService {
                         appAgGrid:{
                             rowData: [],
                             columnDefs: [],
-                            confirm:"true"
+                            confirm:"true",
+                            defaultColDef: {
+                                resizable: true,
+                                flex:1,
+                                suppressSizeToFit: true,
+                            },
                         }
                     }
                 })

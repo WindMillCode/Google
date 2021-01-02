@@ -11,7 +11,6 @@ import { DropDownDirective } from './directive/dropdown.directive';
 
 
 import { AgGridModule } from 'ag-grid-angular';
-import { AgGridHolderComponent } from './ag-grid-holder/ag-grid-holder.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +19,6 @@ import { AgGridHolderComponent } from './ag-grid-holder/ag-grid-holder.component
     DatasetDirective,
     RegularTablesDirective,
     DropDownDirective,
-    AgGridHolderComponent,
     // FormControlDirective,
 
   ],

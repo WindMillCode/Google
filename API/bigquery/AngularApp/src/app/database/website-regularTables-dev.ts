@@ -27,7 +27,7 @@ if(env.regularTables.default){
                 },
                 {
                     "key": "Question",
-                    "value": "Type in the name of the table to perform an action",
+                    "value": "Type in the name of the table,dataset or storage bucket to perform an action",
                     "type": "sub-heading",
                     "split": "9",
                     "text-align":"center",

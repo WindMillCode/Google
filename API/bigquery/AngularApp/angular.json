@@ -40,10 +40,7 @@
                         "assets": [],
                         "styles": [
                             "src/styles.css",
-                            "src/assets/styles/pikaday.css",
-                            // "src/assets/styles/ag-theme-alpine.css",
-                            // "src/assets/styles/ag-theme-alpine-dark.css",
-                            // "src/assets/styles/ag-grid.css"
+                            "src/assets/styles/pikaday.css"
                         ],
                         "scripts": [
                             "backend/modernizr/modernizr.js",

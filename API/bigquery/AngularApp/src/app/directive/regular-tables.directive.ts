@@ -101,7 +101,7 @@ export class RegularTablesDirective {
                     console.log(result)
 
                     // place the actual tables in ag-Gird
-                    if(data.browse == "10 Rows"){
+                    if(data.browse === "10 Rows" || env.regularTables.query){
                         let  columnDefs = JSON.parse(result)
                         .schema
                         .map((x:any,i)=>{
@@ -113,17 +113,24 @@ export class RegularTablesDirective {
                             console.log(x)
                             return Object.fromEntries(x)
                         })
-                        console.log(rowData)
-                        console.log(columnDefs)
+                        // console.log(rowData)
+                        // console.log(columnDefs)
                         Object.entries(
                             this.zChildren
                         )
                         .filter((x:any,i)=>{
                             if(x[1].bool === "ag-grid"){
                                 x[1].extras.appAgGrid = {rowData,columnDefs}
-                                console.log(x[1].extras.appAgGrid)
+                                // console.log(x[1].extras.appAgGrid)
                             }
                         })
+                    }
+                    else  if(env.regularTables.IAM && !env.regularTables.setIAM){
+                        update.innerText = JSON.stringify(
+                            JSON.parse(result),
+                            null,
+                            4
+                        )
                     }
                     //
                     else {
@@ -145,11 +152,11 @@ export class RegularTablesDirective {
     ngOnInit() {
         this.extras = this.regularTables
         if (this.extras?.confirm === 'true') {
-            console.log(this.extras)
+            // console.log(this.extras)
             this.ryber[this.extras.co.valueOf()].metadata.zChildrenSubject
             .subscribe(()=>{
                 this.zChildren = this.ryber[this.extras.co.valueOf()].metadata.zChildren
-                console.log(this.zChildren)
+                // console.log(this.zChildren)
             })
             setTimeout(() => {
                 // this.el.nativeElement.click()
