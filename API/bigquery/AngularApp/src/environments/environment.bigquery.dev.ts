@@ -57,7 +57,7 @@ export const environment: any = {
         default:false,
 
         IAM:true,
-        setIAM:false,
+        setIAM:true,
 
         browse:false,
         query:false

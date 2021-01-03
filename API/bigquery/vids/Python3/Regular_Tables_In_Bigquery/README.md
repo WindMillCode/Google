@@ -1,4 +1,6 @@
-## Tables in Bigquery (Python)
+## Tables and the Bigquery API (Python)
+
+<!-- ### [Youtube Walkthrough]() -->
 
 * after the lab your file should look like tables.final.py 
 * if issues copy and paste from tables.start.py
@@ -35,8 +37,8 @@ in a terminal in the folder root
     * target makes it a local package, do not make it global, it might replace your packages
     * if you make a mistake or believe a corruption happened delete site-packages and try again
 ```ps1
-pip install google-cloud-bigquery google-cloud-bigquery-datatransfer tornado --target .\site-packages
-python build_server.py
+pip install -r requirements.txt --upgrade --target .\site-packages
+python .\tornado_server.py
 ```
 
 * open tables.py and in your code editor,

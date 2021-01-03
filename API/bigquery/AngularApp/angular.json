@@ -11,6 +11,9 @@
                 },
                 "@schematics/angular:component": {
                     "skipTests": true
+                },
+                "@schematics/angular": {
+                    "skipTests": true
                 }
             },
             "root": "",

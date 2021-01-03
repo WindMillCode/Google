@@ -2,7 +2,7 @@
 
 * after the lab your file should look like dataset.final.py 
 * if issues copy and paste from dataset.start.py
-
+### [Youtube Walkthrough](https://www.youtube.com/watch?v=KMC1pfl4EZ8)
 ### Start the Angular App
 
 * download the frontend [here](https://downgit.github.io/#/home?url=https://github.com/codequickie123/Google/tree/master/API/bigquery/AngularApp)
