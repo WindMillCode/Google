@@ -23,9 +23,25 @@ class my_bigquery_client():
     def __init__(self):
         self.client = client
         self.bigquery = bigquery
+        self.datetime = datetime
+        self.pytz = pytz
+        self.time = time 
 
     # paste env dict here
-
+    env=  {
+        "create": False,
+        "setIAM":False,
+        "getIAM":False,
+        "updateDesc":False,
+        "updateExpiration":False,
+        "copySingle":False,
+        "copyMultiple":False,
+        "delete":False,
+        "recover":False,
+        "querySDK":False,
+        "querySQL":False,
+        "export":True
+    }
     #
 
     # setup
@@ -40,6 +56,9 @@ class my_bigquery_client():
         #setup 
         client = self.client
         bigquery = self.bigquery
+        datetime = self.datetime 
+        pytz = self.pytz        
+        time = self.time 
         name = data.get("tableName")
         emails = data.get("emails")
         table = ""
@@ -58,7 +77,7 @@ class my_bigquery_client():
 
 
         # create a table       
-
+        
         #
 
         # set table's IAM policy table
@@ -66,43 +85,43 @@ class my_bigquery_client():
         #                        
 
         # get tables IAM policy table                        
-
+        
         #
 
         # update table description
-
+        
         #
 
         # update table expiration
-
+        
         #
 
         # copy a single table
-
+        
         #
 
         # copy  multiple tables
-
+        
         #
 
         # delete a table
-
+        
         #
 
         # recover a table
-
-        # 
+        
+        #
 
         #  query using the SDK
         
         #
         
         # query using SQL
-
-        # 
+        
+        #
 
         # export the table
-
+        
         #          
 
     def make_dataset(self):
