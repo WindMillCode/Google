@@ -51,7 +51,7 @@ def createHandler(client):
             data = ""
             if self.request.headers['Content-Type'] == 'application/json':
                 data = tornado.escape.json_decode(self.request.body)
-                print(data.get("tableName"))
+                # print(data.get("tableName"))
             self.set_header("Content-Type", "text/plain")
             self.write(client.execute(client,data))
 
@@ -73,21 +73,20 @@ def assign_me():
 
 def start_app(*args, **kwargs):
     loading_error = True
-    my_bigquery_client  = None
     my_bigquery_client_code = None
     while loading_error:
         try:
             reload(tables)
             my_bigquery_client_code = tables.my_bigquery_client().execute.__code__
             my_client.env = tables.my_bigquery_client().env
-            print(tables.my_bigquery_client().execute.__class__)
             loading_error = False
-        except:
+        except Exception as e:
+            print("fix the error in the code you have modifed\n")
+            print(e)
             time.sleep(1)
     # my_bigquery_client = tables.my_bigquery_client
     assign_me.__code__ = my_bigquery_client_code 
     my_client.execute = assign_me    
-    print(my_client.execute.__code__)
     application = tornado.web.Application([
         (r"/", createHandler(my_client)),
     ])

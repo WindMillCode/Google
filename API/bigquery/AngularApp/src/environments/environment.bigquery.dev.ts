@@ -54,10 +54,10 @@ export const environment: any = {
 
     // update tables object here
     regularTables:{
-        default:false,
+        default:true,
 
-        IAM:true,
-        setIAM:true,
+        IAM:false,
+        setIAM:false,
 
         browse:false,
         query:false

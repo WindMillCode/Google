@@ -1,6 +1,5 @@
 import sys
 sys.path[0] += "\\site-packages"
-
 from google.cloud import bigquery_datatransfer
 from google.cloud import bigquery
 import uuid
@@ -13,18 +12,17 @@ import datetime
 import pytz
 import time
 pp = pprint.PrettyPrinter(indent=4, compact=True, width=1)
-
-
 # end
-
 
 # import and intalize the library
 client = bigquery.Client()
 #
 
-
 class my_bigquery_client():
 
+    def __init__(self):
+        self.client = client
+        self.bigquery = bigquery
 
     # paste env dict here
 
@@ -36,12 +34,16 @@ class my_bigquery_client():
     ]
     #
 
+
     def execute(self, data):
-        print("bigquery tables server running")
+
         #setup 
+        client = self.client
+        bigquery = self.bigquery
         name = data.get("tableName")
         emails = data.get("emails")
         table = ""
+        #
 
         # create a dataset first
         dataset_main = self.make_dataset()
@@ -54,28 +56,29 @@ class my_bigquery_client():
             pass    
         # 
 
+
         # create a table       
- 
+
         #
 
         # set table's IAM policy table
-        
-        #                           
+
+        #                        
 
         # get tables IAM policy table                        
 
-        # 
+        #
 
         # update table description
 
-        #      
+        #
 
         # update table expiration
 
         #
 
         # copy a single table
-        
+
         #
 
         # copy  multiple tables
@@ -118,6 +121,10 @@ class my_bigquery_client():
         if(name == ""):
             raise IndexError
         return "{}.{}".format(client.project, name)
+
+
+
+
 
 
 

@@ -13,6 +13,45 @@
 
 * limits - unique per dataset, must reside in same location, 
 
+## An Aside 
+* open up tornado_server.py
+what allows live reload to take places as you edit tables.py is the module finder you can learn more of in resources, and from the ```__code__``` property on methods
+
+* this code allows us to reload methods from classes let alone fuctions because
+in memory, the actual code is stored seperately from the function reference meaning I cant simply make a method call from a new instance or function call, it would call the old code, dont get thrown away by the globals and IOLoop, what enables for this logic to work in the scenario, is that reload() did reload the module but there are extra steps to bring the new code into the current thread which can be found in the start_server function
+```py
+reload(tables)
+my_bigquery_client_method_updated_code_ = tables.my_bigquery_client().execute.__code__
+my_client.env = tables.my_bigquery_client().env
+loading_error = False
+```
+
+* in python your variable are not the actual data, they serve as pointers to the actual data, (C logic the low level of Python). there are more steps than reload that make a python app the app you know. Here it means self is undefined and when you use reload, you must pass self as a argument to the method. this can be seen in the the post method of the MainHandler class
+```py
+def assign_me():
+    pass  
+assign_me.__code__ = my_bigquery_client_code  # need this interim step beccause for a deprecation you cant set my_client.execute.__code__,  because you need to pass self again to the method
+my_client.execute = assign_me    
+client.execute(client,data)
+#  the method definition in the class def execute(self,data):
+
+```
+* also, if the class implements modules you must attach them to self before they get lost
+
+```py
+# file tables.py
+# module code retainment
+    def __init__(self):
+        self.client = client # arguable if needed because mabye client is self . self is not client
+        self.bigquery = bigquery
+        self.datetime = datetime
+        self.pytz = pytz
+        self.time = time 
+# 
+```
+
+
+
 ### Quotas 
 [load jobs](https://cloud.google.com/bigquery/quotas#load_jobs)
 [export jobs](https://cloud.google.com/bigquery/quotas#export_jobs)
@@ -43,6 +82,8 @@ python .\tornado_server.py
 
 * open tables.py and in your code editor,
 * open AngularApp/src/environments/environment.bigquery.dev.ts in your code editor
+
+
 
 
 
@@ -249,7 +290,7 @@ regularTables:{
 * in 'get tables IAM policy table' paste
 ```py
 # file: tables.py
-        if(self.env.get("getIAM")):
+        elif(self.env.get("getIAM")):
             try:            
                 policy =client.get_iam_policy(table)
                 for x in policy.bindings:
@@ -445,7 +486,7 @@ regularTables:{
                 destination_table_id = "{}.{}".format(dataset_main, "Copied_Table") 
                 job = client.copy_table(source_table_id, destination_table_id)
                 job.result()  # Wait for the job to complete.
-                return "A copy of the table created."               
+                return "A copy of the table created to Copied_Table"               
             except BaseException as e:
                 print('my custom error\n')
                 print(e.__class__.__name__)
@@ -825,14 +866,13 @@ uuid.uuid4()
 ```
 * give the service acct used for this lab storage.objectAdmin role
 console.developers.google.com -> IAM & Admin -> IAM -> Pencil Icon -> Add Storage Object Admin role
-* create a storage bucket
-in cloud console
-navigation > storage
+* [create a storage bucket here](https://console.cloud.google.com/storage)
 enable the API
+
 |property|value|data|
 |:------|:------:|------:|
 |name|export_table_bucket_[uuid_value]||
-|location|northamerical-northeast1||
+|location|closest region/zone/multi-region||
 |storage class|standard||
 |Access cotnrol|unfomrm||
 
@@ -903,6 +943,8 @@ regularTables:{
                 print(e.__class__.__name__)
                 print('\n')
                 print(e)
+                if(e.__class__.__name__ == "NotFound"):
+                    return(str(e))                 
                 return 'an error occured check the output from the backend'  
 ```
 
@@ -921,5 +963,5 @@ FROM `mydataset.mytable`
 [tornado web framework](https://www.tornadoweb.org/en/stable/web.html)
 [google IAM](https://googleapis.dev/python/google-api-core/1.23.0/iam.html?highlight=iam#module-google.api_core.iam)
 [google bigquery](https://googleapis.dev/python/bigquery/latest/index.html)
-
+[module finder](https://github.com/codequickie123/custom_vids/tree/master/watchdog_python_file_watcher)
 
