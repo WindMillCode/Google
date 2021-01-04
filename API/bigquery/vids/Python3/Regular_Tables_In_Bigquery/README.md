@@ -1,6 +1,6 @@
 ## Tables and the Bigquery API (Python)
 
-<!-- ### [Youtube Walkthrough]() -->
+### [Youtube Walkthrough](https://youtu.be/GbjLNo98fNw)
 
 * after the lab your file should look like tables.final.py 
 * if issues copy and paste from tables.start.py
@@ -944,8 +944,10 @@ regularTables:{
                 print('\n')
                 print(e)
                 if(e.__class__.__name__ == "NotFound"):
-                    return(str(e))                 
-                return 'an error occured check the output from the backend'  
+                    return(str(e))  
+                elif(e.__class__.__name__ == "Forbidden"):
+                    return("You do not have access to this storage bucket, Please make sure the bucket is TYPED CORRECTLY FOR YOUR SECURITY. You dont want this attempt to succeed and send data to a hackers bucket")                           
+                return 'an error occured check the output from the backend' 
 ```
 
 

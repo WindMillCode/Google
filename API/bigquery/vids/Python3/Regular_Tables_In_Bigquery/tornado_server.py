@@ -68,6 +68,7 @@ server = ""
 ioloop = tornado.ioloop.IOLoop.current()
 restart_server = False
 my_client = my_bigquery_client()  
+
 def assign_me():
     pass
 
