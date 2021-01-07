@@ -61,9 +61,14 @@ export const environment: any = {
 
         browse:false,
         query:false
+    },
+    //
+
+    //update table Schemas object here
+    tableSchemas:{
+
     }
     //
 
 };
 
-// Jahreek_Table

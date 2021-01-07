@@ -6,13 +6,14 @@
         "AngularApp": {
             "projectType": "application",
             "schematics": {
+                "@schematics/angular:component": {
+                    "style": "scss",
+                    "skipTests": true
+                },
                 "@schematics/angular:directive": {
                     "skipTests": true
                 },
-                "@schematics/angular:component": {
-                    "skipTests": true
-                },
-                "@schematics/angular": {
+                "@schematics/angular:service": {
                     "skipTests": true
                 }
             },
@@ -23,8 +24,7 @@
                 "bigquery": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/Bigquery",
-                        "baseHref": "",
+                        "outputPath": "dist/AngularApp",
                         "fileReplacements": [
                             {
                                 "replace": "src/app/website.ts",
@@ -42,8 +42,7 @@
                         "aot": true,
                         "assets": [],
                         "styles": [
-                            "src/styles.css",
-                            "src/assets/styles/pikaday.css"
+                            "src/styles.scss"
                         ],
                         "scripts": [
                             "backend/modernizr/modernizr.js",
@@ -62,11 +61,7 @@
                             "fileReplacements": [
                                 {
                                     "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.drive.prod.ts"
-                                },
-                                {
-                                    "replace": "src/app/website.ts",
-                                    "with": "src/app/database/website-bigquery-prod.ts"
+                                    "with": "src/environments/environment.prod.ts"
                                 }
                             ],
                             "optimization": true,
@@ -87,32 +82,7 @@
                                     "maximumWarning": "6kb",
                                     "maximumError": "10kb"
                                 }
-                            ],
-                            "assets": []
-                        },
-                        "development": {
-                            "optimization": false,
-                            "sourceMap": false,
-                            "poll": 2500,
-                            "verbose": false,
-                            "watch": true
-                        },
-                        "bigquery": {
-                            "fileReplacements": [
-                                {
-                                    "replace": "src/app/website.ts",
-                                    "with": "src/app/database/website-bigquery-dev.ts"
-                                },
-                                {
-                                    "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.bigquery.dev.ts"
-                                }
-                            ],
-                            "optimization": false,
-                            "sourceMap": true,
-                            "poll": 2500,
-                            "verbose": false,
-                            "watch": true
+                            ]
                         },
                         "play": {
                             "fileReplacements": [
@@ -124,12 +94,7 @@
                                     "replace": "src/environments/environment.ts",
                                     "with": "src/environments/environment.bigquery.dev.ts"
                                 }
-                            ],
-                            "optimization": false,
-                            "sourceMap": true,
-                            "poll": 2500,
-                            "verbose": false,
-                            "watch": true
+                            ]
                         },
                         "dataset": {
                             "fileReplacements": [
@@ -141,12 +106,7 @@
                                     "replace": "src/environments/environment.ts",
                                     "with": "src/environments/environment.bigquery.dev.ts"
                                 }
-                            ],
-                            "optimization": false,
-                            "sourceMap": true,
-                            "poll": 2500,
-                            "verbose": false,
-                            "watch": true
+                            ]
                         },
                         "regularTables": {
                             "fileReplacements": [
@@ -158,19 +118,26 @@
                                     "replace": "src/environments/environment.ts",
                                     "with": "src/environments/environment.bigquery.dev.ts"
                                 }
-                            ],
-                            "optimization": false,
-                            "sourceMap": true,
-                            "poll": 2500,
-                            "verbose": false,
-                            "watch": true
+                            ]
+                        },
+                        "tableSchemas": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/app/website.ts",
+                                    "with": "src/app/database/website-tableSchemas-dev.ts"
+                                },
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.bigquery.dev.ts"
+                                }
+                            ]
                         }
                     }
                 },
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "AngularApp:build:development",
+                        "browserTarget": "AngularApp:bigquery:play",
                         "port": 8000,
                         "liveReload": true,
                         "hmr": false
@@ -178,9 +145,6 @@
                     "configurations": {
                         "production": {
                             "browserTarget": "AngularApp:bigquery:production"
-                        },
-                        "development": {
-                            "browserTarget": "AngularApp:bigquery:development"
                         },
                         "play": {
                             "browserTarget": "AngularApp:bigquery:play"
@@ -190,6 +154,9 @@
                         },
                         "regularTables": {
                             "browserTarget": "AngularApp:bigquery:regularTables"
+                        },
+                        "tableSchemas": {
+                            "browserTarget": "AngularApp:bigquery:tableSchemas"
                         }
                     }
                 },
@@ -204,7 +171,6 @@
                     "options": {
                         "tsConfig": [
                             "tsconfig.app.json",
-                            "tsconfig.spec.json",
                             "e2e/tsconfig.json"
                         ],
                         "exclude": [
@@ -217,6 +183,6 @@
     },
     "defaultProject": "AngularApp",
     "cli": {
-        "analytics": "6fac06b6-fb10-4fba-ab5c-c36f335cf9fb"
+        "analytics": false
     }
 }

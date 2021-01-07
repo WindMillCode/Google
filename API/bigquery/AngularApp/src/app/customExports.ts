@@ -866,7 +866,7 @@ export function ryberUpdate(
                                     .valueOf()
                                     .split("CO")[0]
                                     .split("")
-                                    .join("_")+"_Board"
+                                    .join("_")+"_Board a_p_p_Board",
                                 ],
                             ],
                             text:[

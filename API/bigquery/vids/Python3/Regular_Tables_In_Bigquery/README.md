@@ -13,7 +13,7 @@
 
 * limits - unique per dataset, must reside in same location, 
 
-## An Aside 
+### An Aside 
 * open up tornado_server.py
 what allows live reload to take places as you edit tables.py is the module finder you can learn more of in resources, and from the ```__code__``` property on methods
 

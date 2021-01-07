@@ -1,6 +1,34 @@
+// from config
+$bg-color-1 : rgb(255, 179, 204);
+
+:root{ // very upset if you have css variables avaible to you update the space and use them instead of keep yr own smh
+    --bg-color_1: rgb(255, 179, 204);
+    --font_2 : Fjalla One
+}
+
+// so sass and css color can work together
+@function color($color-name) {
+    @return var(#{$color-name});
+}
+
+// Set text color based on bg
+@function set-text-color($color) {
+    @if(lightness($color) > 50) {
+      @return #333;
+    } @else {
+      @return #fff;
+    }
+  }
+
+// h1,p {
+//     color: color(--bg-color_1)
+// }
+//
+
+
 @import "../node_modules/ag-grid-community/dist/styles/ag-grid.css";
 @import "../node_modules/ag-grid-community/dist/styles/ag-theme-blue.css";
-
+@import "assets/styles/pikaday.css";
 
 /* libre-franklin-regular - latin */
 @font-face {
@@ -42,6 +70,13 @@
 
 }
 
+html {
+
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+
+}
+
 body {
 
     margin: 0;
@@ -52,6 +87,8 @@ input {
     padding: 0px 0px 0px 0px;
 }
 
+
+
 /* input::-webkit-calendar-picker-indicator{
     /* width:100%;  */
     /* opacity:0; */
@@ -61,8 +98,6 @@ input {
 /* input::-webkit-datetime-edit-fields-wrapper { */
 
 /* } */
-
-
 
 
 /* app-root * {
@@ -78,14 +113,8 @@ app-root :not([class^='ag']) {
     margin : 0px;
     /* transition: top 2s, left 2s, font-size 3s; */
 }
-
-
-
-html {
-
-    line-height: 1.15;
-    -webkit-text-size-adjust: 100%;
-
+.a_p_p_Board{
+    background-color: $bg-color-1;
 }
 
 .a_p_p_BackStageProp{
@@ -99,15 +128,17 @@ html {
 .a_p_p_Text{
     font-family : 'Arial';
     font-weight : 400;
+    color:  set-text-color( $bg-color-1);
 }
 
 .a_p_p_SubHeading{
-    font-family : Fjalla One;
+    font-family : var(--font_2);
     font-weight : 400;
+    color:  set-text-color( $bg-color-1);
 }
 
 .a_p_p_Selection{
-    font-family : Fjalla One;
+    font-family : var(--font_2);
     border: 2px solid black;
     font-weight : 400;
     background-color: transparent;
@@ -117,8 +148,9 @@ html {
 }
 
 .a_p_p_Heading{
-    font-family : Fjalla One;
-    color:black;
+    font-family : var(--font_2);
+    // color:black;
+    color: set-text-color( $bg-color-1);
     font-weight: 400;
     text-align: center;
 }

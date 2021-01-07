@@ -15,7 +15,7 @@ if(env.regularTables.default){
                     "key": "Body",
                     "type": "body",
                     "stack": "60",
-                    "background": "rgb(255, 179, 204)",
+                    // "background": "rgb(255, 179, 204)",
                     "googleSheets": {}
                 },
                 {
@@ -80,7 +80,7 @@ else if(env.regularTables.IAM){
                     "type": "body",
                     "stack": "60",
                     "gap":"20",
-                    "background": "rgb(255, 179, 204)",
+                    // "background": "rgb(255, 179, 204)",
                     "googleSheets": {}
                 },
                 {
@@ -200,7 +200,7 @@ else if(env.regularTables.browse){
                     "type": "body",
                     "stack": "60",
                     "gap":"20",
-                    "background": "rgb(255, 179, 204)",
+                    // "background": "rgb(255, 179, 204)",
                     "googleSheets": {}
                 },
                 {

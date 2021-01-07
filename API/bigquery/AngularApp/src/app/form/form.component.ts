@@ -1,22 +1,23 @@
-import {   Component, OnInit,Input,ViewChildren,AfterViewInit,Inject, OnDestroy,ChangeDetectorRef,ChangeDetectionStrategy, Renderer2, ElementRef} from '@angular/core';
-import {   RyberService   } from '../ryber.service';
-import {   fromEvent,interval, of,from, Observable,merge, Subject,BehaviorSubject, combineLatest } from 'rxjs';
-import {   catchError,take,timeout,mapTo, debounceTime,distinctUntilChanged, debounce,first, ignoreElements,tap    } from 'rxjs/operators';
-import {   zChildren,getTextWidth,numberParse,
-    xPosition,resize,componentBootstrap,deltaNode,
-    eventDispatcher,dropdown,dragElement,stack,xContain,minMaxDelta,
-    objectCopy,responsiveMeasure,flatDeep
+import { Component, OnInit, Input, ViewChildren, AfterViewInit, Inject, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, Renderer2, ElementRef } from '@angular/core';
+import { RyberService } from '../ryber.service';
+import { fromEvent, interval, of, from, Observable, merge, Subject, BehaviorSubject, combineLatest } from 'rxjs';
+import { catchError, take, timeout, mapTo, debounceTime, distinctUntilChanged, debounce, first, ignoreElements, tap } from 'rxjs/operators';
+import {
+    zChildren, getTextWidth, numberParse,
+    xPosition, resize, componentBootstrap, deltaNode,
+    eventDispatcher, dropdown, dragElement, stack, xContain, minMaxDelta,
+    objectCopy, responsiveMeasure, flatDeep
 } from '../customExports'
-import {environment} from '../../environments/environment'
-
+import { environment as env } from '../../environments/environment'
 
 @Component({
-  selector: 'app-form',
-  templateUrl: '../template.component.html',
-  styleUrls: ['./form.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-form',
+    templateUrl: '../template.component.html',
+    // styleUrls: ['./form.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
+
 
     @ViewChildren('myVal', {read:ElementRef}) templateMyElements: any;
 
@@ -37,20 +38,17 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
         }()
     })()
 
-
     ngOnInit():void {
-        if(environment.lifecycleHooks) console.log(this.appTV+ 'ngOnInit fires on mount')
-
+        if(env.lifecycleHooks) console.log(this.appTV+ 'ngOnInit fires on mount')
     }
 
     ngAfterViewInit(): void {
-        if(environment.inputHandle.options) console.groupEnd()
-        if(environment.lifecycleHooks) console.log( this.appTV+ 'ngAfterViewInit fires one remount')
+        // indicating where we are in the code
+        if(env.inputHandle.options) console.groupEnd()
+        if(env.lifecycleHooks) console.log( this.appTV+ 'ngAfterViewInit fires one remount')
+        //
 
-
-        // console.log(this.ryber['formCO'])
-
-
+        // FPM for each component
         this.ryber['formCO']
         .forEach((xx,ii)=>{ // just becuase massive refactoring will take place so lets be gentle and use xx ii instead of x i
 
@@ -59,11 +57,9 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                     return
                 }
 
-                
                 let zChild = this.zChildInit()
                 let staticZKeys = this.staticZKeysGen(zChild)
-                if(environment.component.zChild) console.log(zChild);
-                //     console.log(this.templateMyElements)
+                if(env.component.zChild) console.log(zChild);
 
 
                 // drags elements for you
@@ -159,7 +155,6 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                         }
 
                     })
-                    // console.log(component)
 
 
                     zChild[x].css["height"] = (component.height !== undefined) ?  (component.height).toString() + "px" : zChild[x].cssDefault["height"]
@@ -193,7 +188,6 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                         this.ref.detectChanges()
                     }
 
-                    // console.log(myTotal);
 
                     //stacking context
                     if((myTotal  > section.width && i !== Object.keys(zChild).slice(2).length -1) || (component.next === "true" && i !== Object.keys(zChild).slice(2).length -1 )){
@@ -487,11 +481,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                                         },
                                         type:'preserve'
                                     })
-                                    // this.ref.detectChanges()
                                     //
-
-
-
 
                                     if(group !== undefined && deltaNodeSite !== undefined){
                                         // console.log(group)
@@ -771,8 +761,6 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                                     this.ref.detectChanges()
                                     //
 
-
-
                                     //responsive height
                                     staticZKeys
                                     .forEach((x,i)=> {
@@ -784,8 +772,6 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                                         }
                                     })
                                     //
-
-
 
                                     let responsiveMeasureTargets =cmsZKeys
                                     .reduce((acc,x,i)=>{
@@ -1016,7 +1002,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
 
 
                         // so you wont have to find the panel
-                        if(ii === environment.component?.[this.appTV.split("C")[0].valueOf()]?.panelView){
+                        if(ii === env.component?.[this.appTV.split("C")[0].valueOf()]?.panelView){
                             this.currentScroll(zChild)
                         }
                         //
@@ -1086,7 +1072,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                                 })
                             })
 
-                            if(!environment.production){
+                            if(!env.production){
                                 // let addCount =  Math.floor(Math.random()*10/2)
                                 // addCount = addCount > 7 ? 7 : addCount
                                 // let addInterval = setInterval(()=>{
@@ -1158,11 +1144,8 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                                     })
 
 
-
                                     this.ref.detectChanges()
                                     zChild = this.zChildInit()
-                                    // console.log(zChild)
-                                    // console.log(this.ryber[this.appTV].quantity[1][1])
                                 })
                             })
                         }
@@ -1173,17 +1156,19 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                 //
 
         })
+        //
 
-
+        // help app.component.ts trigger and make the website using the FPM for each component
         this.ryber.appViewComplete.next(
             (function(qq){
                 qq.ryber.appViewCompleteArray.push(   qq.appTV   )
             })(this)
         )
+        //
     }
 
     ngOnDestroy(): void {
-        if(environment.lifecycleHooks) console.log(this.appTV+ '  ngOnDestroy fires on dismount')
+        if(env.lifecycleHooks) console.log(this.appTV+ '  ngOnDestroy fires on dismount')
         Object
         .values(this.ryber[this.typesES])
         .forEach((x:any,i)=>{
@@ -1519,13 +1504,4 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
         }
         scrollTo(0,numberParse(getComputedStyle(staticZChild[current === null ? "&#8353" :current].element).top)-30)
     }
-
-
 }
-
-
-
-
-
-
-

@@ -1,1 +1,0 @@
-usdl = require('usdl-regex')

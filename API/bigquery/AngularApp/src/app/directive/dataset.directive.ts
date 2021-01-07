@@ -9,8 +9,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Directive({
     selector: '[appDataset]'
-  })
-  export class DatasetDirective {
+})
+export class DatasetDirective {
 
     @Input() dataset: any;
     extras: any;
@@ -28,42 +28,42 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
         if (this.extras?.confirm === 'true') {
 
-            let answer  = (document.querySelector(".f_o_r_m_Dataset-Answer") as HTMLInputElement).value
+            let answer = (document.querySelector(".f_o_r_m_Dataset-Answer") as HTMLInputElement).value
             //communicate with the python backend
             this.http.get(
                 "http://localhost:3005",
                 {
-                    params:{
-                        name:answer
+                    params: {
+                        name: answer
                     },
                     responseType: 'text'
                 }
             )
-            .pipe(
-            // catchError()
-            )
-            .subscribe({
+                .pipe(
+                    // catchError()
+                )
+                .subscribe({
 
 
-                error:(error)=>{
-                    let update = (document.querySelector(".f_o_r_m_Result") as HTMLElement)
-                    update.innerText = "Is the backend running?"
-                    eventDispatcher({
-                        event:'resize',
-                        element:window
-                    })
-                },
-                next:(result:any)=>{
-                    console.log(result)
-                    let update = (document.querySelector(".f_o_r_m_Result") as HTMLElement)
-                    update.innerText = result
-                    eventDispatcher({
-                        event:'resize',
-                        element:window
-                    })
-                }
+                    error: (error) => {
+                        let update = (document.querySelector(".f_o_r_m_Result") as HTMLElement)
+                        update.innerText = "Is the backend running?"
+                        eventDispatcher({
+                            event: 'resize',
+                            element: window
+                        })
+                    },
+                    next: (result: any) => {
+                        console.log(result)
+                        let update = (document.querySelector(".f_o_r_m_Result") as HTMLElement)
+                        update.innerText = result
+                        eventDispatcher({
+                            event: 'resize',
+                            element: window
+                        })
+                    }
 
-            })
+                })
             //
 
         }
@@ -73,7 +73,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
     ngOnInit() {
         this.extras = this.dataset
         if (this.extras?.confirm === 'true') {
-            console.log(env.search)
+            console.log(env.dataset)
 
             setTimeout(() => {
                 // this.el.nativeElement.click()
@@ -92,4 +92,3 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
         }
     }
 }
-

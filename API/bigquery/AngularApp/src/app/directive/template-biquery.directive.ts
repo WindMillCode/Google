@@ -8,12 +8,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 @Directive({
-    selector: '[appDataset]'
-  })
-  export class DatasetDirective {
+    selector: '[appRegularTables]'
+})
+export class RegularTablesDirective {
 
-    @Input() dataset: any;
+    @Input() regularTables: any;
     extras: any;
+    zChildren: any;
 
     constructor(
         private el: ElementRef,
@@ -28,38 +29,116 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
         if (this.extras?.confirm === 'true') {
 
-            let answer  = (document.querySelector(".f_o_r_m_Dataset-Answer") as HTMLInputElement).value
-            //communicate with the python backend
-            this.http.get(
-                "http://localhost:3005",
-                {
-                    params:{
-                        name:answer
-                    },
-                    responseType: 'text'
-                }
+
+            let update = (document.querySelector(".f_o_r_m_Result") as HTMLElement)
+            let validDomains = ["user","group","serviceAccount"]
+            let tableName = (document.querySelector(".f_o_r_m_Table-Answer") as HTMLInputElement)?.value
+            let emailTypes = Array.from(
+                document.querySelectorAll('a[class^="a_p_p_DropDownMiddle f_o_r_m_types-email"]')
             )
-            .pipe(
-            // catchError()
+            .filter((x:any,i)=>{
+                return i % 3 == 0
+            })
+            let emails:Array<HTMLInputElement> = Array.from(
+                document.querySelectorAll('[class^="a_p_p_Input f_o_r_m_email"]')
+            )
+            let data:any = {
+                emails:emailTypes.map((x:any,i)=>{
+                    return[x.innerText ,  emails[i].value]
+                }),
+                tableName
+            }
+
+            // update tables IAM
+            if(env.regularTables.setIAM){
+                try {
+                    data.emails.forEach((x:any,i)=>{
+                        if(!validDomains.includes(x[0])){
+                            update.innerText= "Make sure you select an email type and provide an email for each field else use the remove button to provide the amount needed"
+                            eventDispatcher({
+                                event: 'resize',
+                                element: window
+                            })
+                            throw('')
+                        }
+                    })
+                }
+                catch (error) {
+                    return
+                }
+            }
+            //
+
+            //browsing action
+            if(env.regularTables.browse){
+                data.browse  = (document.querySelector(".a_p_p_DropDownMiddle.f_o_r_m_browsing-action") as HTMLInputElement).innerText
+            }
+            //
+            console.log(data)
+
+
+
+            //communicate with the python backend
+            this.http.post(
+                "http://localhost:3005",
+                data,
+                {
+                    responseType: 'text',
+                }
             )
             .subscribe({
 
 
-                error:(error)=>{
-                    let update = (document.querySelector(".f_o_r_m_Result") as HTMLElement)
+                error: (error) => {
+
                     update.innerText = "Is the backend running?"
                     eventDispatcher({
-                        event:'resize',
-                        element:window
+                        event: 'resize',
+                        element: window
                     })
                 },
-                next:(result:any)=>{
+                next: (result: any) => {
                     console.log(result)
-                    let update = (document.querySelector(".f_o_r_m_Result") as HTMLElement)
-                    update.innerText = result
+
+                    // place the actual tables in ag-Gird
+                    if(data.browse === "10 Rows" || env.regularTables.query){
+                        let  columnDefs = JSON.parse(result)
+                        .schema
+                        .map((x:any,i)=>{
+                            return {field:x}
+                        })
+                        let rowData  = JSON.parse(result)
+                        .rows
+                        .map((x:any,i)=>{
+                            console.log(x)
+                            return Object.fromEntries(x)
+                        })
+                        // console.log(rowData)
+                        // console.log(columnDefs)
+                        Object.entries(
+                            this.zChildren
+                        )
+                        .filter((x:any,i)=>{
+                            if(x[1].bool === "ag-grid"){
+                                x[1].extras.appAgGrid = {rowData,columnDefs}
+                                // console.log(x[1].extras.appAgGrid)
+                            }
+                        })
+                    }
+                    else  if(env.regularTables.IAM && !env.regularTables.setIAM){
+                        update.innerText = JSON.stringify(
+                            JSON.parse(result),
+                            null,
+                            4
+                        )
+                    }
+                    //
+                    else {
+                        update.innerText = result
+                    }
                     eventDispatcher({
-                        event:'resize',
-                        element:window
+                        event: 'resize',
+                        element: window
                     })
                 }
 
@@ -71,10 +150,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
     }
 
     ngOnInit() {
-        this.extras = this.dataset
+        this.extras = this.regularTables
         if (this.extras?.confirm === 'true') {
-            console.log(env.search)
-
+            // console.log(this.extras)
+            this.ryber[this.extras.co.valueOf()].metadata.zChildrenSubject
+            .subscribe(()=>{
+                this.zChildren = this.ryber[this.extras.co.valueOf()].metadata.zChildren
+                // console.log(this.zChildren)
+            })
             setTimeout(() => {
                 // this.el.nativeElement.click()
             }, 200)

@@ -975,11 +975,415 @@ FROM `mydataset.mytable`
 
 ### Lab [Regular Tables in Bigquery (Python)](./vids/Python3/Regular_Tables_in_Bigquery/README.md)
 
+## Table Schemas 
+
+### Specifying a schema
+
+* specify or use auto detection
+* need column name and data type
+* colum names cant be prefixed with "_TABLE_","_FILE_","_PARTITION"
+* case-sensitive, Column1 === column1
+* max 1024
 
 
 
 
-pip install --upgrade google-cloud-bigquery google-cloud-bigquery-datatransfer tornado --target .\site-packages
+Name|Data type|Description
+|:------|:------:|:------|
+|Integer                 |INT64|        Numeric values without fractional components |
+|Floating point          |FLOAT64|        Approximate numeric values with fractional components |
+|Numeric                 |NUMERIC|        Exact numeric values with fractional components |
+|BigNumeric (Preview)    |BIGNUMERIC|        Exact numeric values with fractional components |
+|Boolean                 |BOOL|        TRUE or FALSE (case insensitive) |
+|String                  |STRING|        Variable-length character (Unicode) data |
+|Bytes                   |BYTES|        Variable-length binary data |
+|Date                    |DATE|        A logical calendar date |
+|Date/Time               |DATETIME|        "A year, month, day, hour, minute, second, and subsecond" |
+|Time                    |TIME|        "A time, independent of a specific date" |
+|Timestamp               |TIMESTAMP|        "An absolute point in time, with microsecond precision" |
+|Struct (Record)         |STRUCT|        Container of ordered fields each with a type (required) and field name (optional) |
+|Geography               |GEOGRAPHY|        "A pointset on the Earth's surface (a set of points, lines and polygons on the WGS84 reference spheroid, with geodesic edges)" |
+
+
+Mode | Description |
+|:------|:------:|
+Nullable | Column allows NULL values (default) |
+Required | NULL values are not allowed |
+Repeated | Column contains an array of values of the specified type |
+
+* custom schema
+    * if you repeat,it doesnt get mad if the table exists it appended the loaded data
+
+#### Python
+```py
+job_config = bigquery.LoadJobConfig(
+    schema=[
+        bigquery.SchemaField("name", "STRING"),
+        bigquery.SchemaField("post_abbr", "STRING"),
+    ],
+    source_format=bigquery.SourceFormat.NEWLINE_DELIMITED_JSON,
+)
+uri = "gs://cloud-samples-data/bigquery/us-states/us-states.json"   
+
+load_job = client.load_table_from_uri(
+    uri,
+    table_id,
+    location="US",  # Must match the destination dataset location.
+    job_config=job_config,
+)  # Make an API request.
+
+load_job.result()  # Waits for the job to complete.
+
+destination_table = client.get_table(table_id)
+return "Loaded {} rows.".format(destination_table.num_rows) 
+```
+
+### Specifying nested and repeated columns
+* cant be over 15 levels
+
+* create nested rows
+
+#### JSON 
+```json
+[
+    {
+        "name": "id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "first_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "last_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "dob",
+        "type": "DATE",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "addresses",
+        "type": "RECORD",
+        "mode": "REPEATED",
+        "fields": [
+            {
+                "name": "status",
+                "type": "STRING",
+                "mode": "NULLABLE"
+            },
+            {
+                "name": "address",
+                "type": "STRING",
+                "mode": "NULLABLE"
+            },
+            {
+                "name": "city",
+                "type": "STRING",
+                "mode": "NULLABLE"
+            },
+            {
+                "name": "state",
+                "type": "STRING",
+                "mode": "NULLABLE"
+            },
+            {
+                "name": "zip",
+                "type": "STRING",
+                "mode": "NULLABLE"
+            },
+            {
+                "name": "numberOfYears",
+                "type": "STRING",
+                "mode": "NULLABLE"
+            }
+        ]
+    }
+]
+```
+
+#### Python
+```py
+# from google.cloud import bigquery
+# client = bigquery.Client()
+# project = client.project
+# dataset_ref = bigquery.DatasetReference(project, 'my_dataset')
+
+schema = [
+    bigquery.SchemaField("id", "STRING", mode="NULLABLE"),
+    bigquery.SchemaField("first_name", "STRING", mode="NULLABLE"),
+    bigquery.SchemaField("last_name", "STRING", mode="NULLABLE"),
+    bigquery.SchemaField("dob", "DATE", mode="NULLABLE"),
+    bigquery.SchemaField(
+        "addresses",
+        "RECORD",
+        mode="REPEATED",
+        fields=[
+            bigquery.SchemaField("status", "STRING", mode="NULLABLE"),
+            bigquery.SchemaField("address", "STRING", mode="NULLABLE"),
+            bigquery.SchemaField("city", "STRING", mode="NULLABLE"),
+            bigquery.SchemaField("state", "STRING", mode="NULLABLE"),
+            bigquery.SchemaField("zip", "STRING", mode="NULLABLE"),
+            bigquery.SchemaField("numberOfYears", "STRING", mode="NULLABLE"),
+        ],
+    ),
+]
+table_ref = dataset_ref.table("my_table")
+table = bigquery.Table(table_ref, schema=schema)
+table = client.create_table(table)  # API request
+
+print("Created table {}".format(table.full_table_id))
+```
+
+### Using schema auto-detection
+* Avro, Parquet, and ORC formats, or with Firestore export files or Datastore export files are not auto detected. the have a soruce schema file
+* define if you want to use a schema or not
+* if bigquery does not recongize as a DATE,TIME or TIMESTAMP, it will say its a string
+* with json,csv
+
+#### Python
+```py
+job_config = bigquery.LoadJobConfig(
+    autodetect=True, source_format=bigquery.SourceFormat.NEWLINE_DELIMITED_JSON
+)
+uri = "gs://cloud-samples-data/bigquery/us-states/us-states.json"
+load_job = client.load_table_from_uri(
+    uri, table_id, job_config=job_config
+)  # Make an API request.
+load_job.result()  # Waits for the job to complete.
+destination_table = client.get_table(table_id)
+return "Loaded {} rows.".format(destination_table.num_rows)  
+```
+
+### Modifying table schemas
+
+#### Manually adding an empty column
+* cant add one with mode=REQUIRED
+* for RECORDS, try to see if you can add a struct or aray, and try to add to that struct
+
+
+##### Python
+```py
+
+original_schema = table.schema
+new_schema = original_schema[:]  # Creates a copy of the schema.
+new_schema.append(bigquery.SchemaField("phone", "STRING"))
+
+table.schema = new_schema
+table = client.update_table(table, ["schema"])  # Make an API request.
+
+if len(table.schema) == len(original_schema) + 1 == len(new_schema):
+    print("A new column has been added.")
+else:
+    print("The column has not been added.")
+```
+
+#### Add a column in a sdk append job
+
+```py
+
+
+# Retrieves the destination table and checks the length of the schema
+table_id = "my_table"
+table_ref = dataset_ref.table(table_id)
+table = client.get_table(table_ref)
+print("Table {} contains {} columns.".format(table_id, len(table.schema)))
+
+
+job_config = bigquery.LoadJobConfig()
+job_config.write_disposition = bigquery.WriteDisposition.WRITE_APPEND
+job_config.schema_update_options = [
+    bigquery.SchemaUpdateOption.ALLOW_FIELD_ADDITION
+]
+
+job_config.schema = [
+    bigquery.SchemaField("full_name", "STRING", mode="REQUIRED"),
+    bigquery.SchemaField("age", "INTEGER", mode="NULLABLE"),
+]
+job_config.source_format = bigquery.SourceFormat.CSV
+job_config.skip_leading_rows = 1
+
+with open(filepath, "rb") as source_file:
+    job = client.load_table_from_file(
+        source_file,
+        table_ref,
+        location="US",  # Must match the destination dataset location.
+        job_config=job_config,
+    )  # API request
+
+job.result()  # Waits for table load to complete.
+print(
+    "Loaded {} rows into {}:{}.".format(
+        job.output_rows, dataset_id, table_ref.table_id
+    )
+)
+
+# Checks the updated length of the schema
+table = client.get_table(table)
+print("Table {} now contains {} columns.".format(table_id, len(table.schema)))
+```
+
+#### Add a column in a SQL append job
+
+```py
+
+table = client.get_table(table_id)  # Make an API request.
+print("Table {} contains {} columns".format(table_id, len(table.schema)))
+
+# Configures the query to append the results to a destination table,
+# allowing field addition.
+job_config = bigquery.QueryJobConfig(
+    destination=table_id,
+    schema_update_options=[bigquery.SchemaUpdateOption.ALLOW_FIELD_ADDITION],
+    write_disposition=bigquery.WriteDisposition.WRITE_APPEND,
+)
+
+# Start the query, passing in the extra configuration.
+query_job = client.query(
+
+    'SELECT "Timmy" as full_name, 85 as age, "Blue" as favorite_color;',
+    job_config=job_config,
+)  
+query_job.result()  # Wait for the job to complete.
+
+table = client.get_table(table_id)  # Make an API request.
+print("Table {} now contains {} columns".format(table_id, len(table.schema)))
+```
+
+
+####  Relaxing a column's mode
+* only change from REQUIRED TO NULLABLE
+
+##### Python
+```py
+
+original_schema = [
+    bigquery.SchemaField("full_name", "STRING", mode="REQUIRED"),
+    bigquery.SchemaField("age", "INTEGER", mode="REQUIRED"),
+]
+
+dataset_ref = bigquery.DatasetReference(project, dataset_id)
+table_ref = dataset_ref.table(table_id)
+table = bigquery.Table(table_ref, schema=original_schema)
+table = client.create_table(table)
+assert all(field.mode == "REQUIRED" for field in table.schema)
+
+
+relaxed_schema = [
+    bigquery.SchemaField("full_name", "STRING", mode="NULLABLE"),
+    bigquery.SchemaField("age", "INTEGER", mode="NULLABLE"),
+]
+table.schema = relaxed_schema
+table = client.update_table(table, ["schema"])
+
+assert all(field.mode == "NULLABLE" for field in table.schema)
+```
+
+* using SDK
+#### Python
+```py
+
+# Retrieves the destination table and checks the number of required fields
+table_id = "my_table"
+table_ref = dataset_ref.table(table_id)
+table = client.get_table(table_ref)
+original_required_fields = sum(field.mode == "REQUIRED" for field in table.schema)
+# In this example, the existing table has 3 required fields.
+print("{} fields in the schema are required.".format(original_required_fields))
+
+# Configures the load job to append the data to a destination table,
+# allowing field relaxation
+job_config = bigquery.LoadJobConfig()
+job_config.write_disposition = bigquery.WriteDisposition.WRITE_APPEND
+job_config.schema_update_options = [
+    bigquery.SchemaUpdateOption.ALLOW_FIELD_RELAXATION
+]
+# In this example, the existing table contains three required fields
+# ('full_name', 'age', and 'favorite_color'), while the data to load
+# contains only the first two fields.
+job_config.schema = [
+    bigquery.SchemaField("full_name", "STRING", mode="REQUIRED"),
+    bigquery.SchemaField("age", "INTEGER", mode="REQUIRED"),
+]
+job_config.source_format = bigquery.SourceFormat.CSV
+job_config.skip_leading_rows = 1
+
+with open(filepath, "rb") as source_file:
+    job = client.load_table_from_file(
+        source_file,
+        table_ref,
+        location="US",  # Must match the destination dataset location.
+        job_config=job_config,
+    )  # API request
+
+job.result()  # Waits for table load to complete.
+print(
+    "Loaded {} rows into {}:{}.".format(
+        job.output_rows, dataset_id, table_ref.table_id
+    )
+)
+
+# Checks the updated number of required fields
+table = client.get_table(table)
+current_required_fields = sum(field.mode == "REQUIRED" for field in table.schema)
+print("{} fields in the schema are now required.".format(current_required_fields))
+```
+
+* using SQL
+```py
+# Retrieves the destination table and checks the number of required fields.
+table = client.get_table(table_id)  # Make an API request.
+original_required_fields = sum(field.mode == "REQUIRED" for field in table.schema)
+
+# In this example, the existing table has 2 required fields.
+print("{} fields in the schema are required.".format(original_required_fields))
+
+# Configures the query to append the results to a destination table,
+# allowing field relaxation.
+job_config = bigquery.QueryJobConfig(
+    destination=table_id,
+    schema_update_options=[bigquery.SchemaUpdateOption.ALLOW_FIELD_RELAXATION],
+    write_disposition=bigquery.WriteDisposition.WRITE_APPEND,
+)
+
+# Start the query, passing in the extra configuration.
+query_job = client.query(
+    # In this example, the existing table contains 'full_name' and 'age' as
+    # required columns, but the query results will omit the second column.
+    'SELECT "Beyonce" as full_name;',
+    job_config=job_config,
+)  # Make an API request.
+query_job.result()  # Wait for the job to complete.
+
+# Checks the updated number of required fields.
+table = client.get_table(table_id)  # Make an API request.
+current_required_fields = sum(field.mode == "REQUIRED" for field in table.schema)
+print("{} fields in the schema are now required.".format(current_required_fields))
+```
+
+### Manually changing table schemas
+
+#### Changing a column's name
+* you need to make a new table
+
+#### Changing a column's data type
+* you need to make a new table
+
+#### Deleting a column
+* you need to make a new table
+
+
+
+
+
+
+
+
+pip install --upgrade google-cloud-bigquery google-cloud-bigquery-datatransfer tornado watchdog --target .\site-packages
 
 
 ### Issues 
@@ -989,3 +1393,5 @@ it seems bq jobs run sync only with result() , there is no way to do anything du
 
 * copy datset 
 * fail to mention need to install google-cloud-bigquery-datatransfer
+
+* follow up on gitter.im on getting css vars to values
