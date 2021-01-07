@@ -1,6 +1,6 @@
 ## Tables Schemas in Bigquery (Python)
 
-<!-- ### [Youtube Walkthrough]() -->
+### [Youtube Walkthrough](https://youtu.be/u--gYnQpYO8)
 
 * after the lab your file should look like table_schemas.final.py 
 * if issues copy and paste from table_schemas.start.py
@@ -17,7 +17,7 @@ npx ng serve -c=tableSchemas --open=true
 
 
 ### Setup the Python Backend 
-* download the backend [here]()
+* download the backend [here](https://downgit.github.io/#/home?url=https://github.com/codequickie123/Google/tree/master/API/bigquery/vids/Python3/Table_Schemas_In_Bigquery)
 in a terminal in the folder root
     * target makes it a local package, do not make it global, it might replace your packages
     * if you make a mistake or believe a corruption happened delete site-packages and try again
@@ -198,4 +198,61 @@ in 'auto detect json,csv' paste
                 print(e)
                 return 'an error occured check the output from the backend'
         # 
+```
+
+### Challenge Modify Table schema
+* only change from mode required to mode nullable
+
+
+* 
+```py
+original_schema = [
+    bigquery.SchemaField("full_name", "STRING", mode="REQUIRED"),
+    bigquery.SchemaField("age", "INTEGER", mode="REQUIRED"),
+]
+
+dataset_ref = bigquery.DatasetReference(project, dataset_id)
+table_ref = dataset_ref.table(table_id)
+table = bigquery.Table(table_ref, schema=original_schema)
+table = client.create_table(table)
+assert all(field.mode == "REQUIRED" for field in table.schema)
+
+# SchemaField properties cannot be edited after initialization.
+# To make changes, construct new SchemaField objects.
+relaxed_schema = [
+    bigquery.SchemaField("full_name", "STRING", mode="NULLABLE"),
+    bigquery.SchemaField("age", "INTEGER", mode="NULLABLE"),
+]
+table.schema = relaxed_schema
+table = client.update_table(table, ["schema"])
+
+assert all(field.mode == "NULLABLE" for field in table.schema)
+```
+
+* adding rows
+```py
+original_required_fields = sum(field.mode == "REQUIRED" for field in table.schema)
+
+# In this example, the existing table has 2 required fields. full_name,age
+print("{} fields in the schema are required.".format(original_required_fields))
+
+
+job_config = bigquery.QueryJobConfig(
+    destination=table_id,
+    schema_update_options=[bigquery.SchemaUpdateOption.ALLOW_FIELD_RELAXATION],
+    write_disposition=bigquery.WriteDisposition.WRITE_APPEND,
+)
+
+
+query_job = client.query(
+    #  since age is omitted the fieeld now becomes nullable
+    'SELECT "Beyonce" as full_name;',
+    job_config=job_config,
+)  # Make an API request.
+query_job.result()  # Wait for the job to complete.
+
+# Checks the updated number of required fields.
+table = client.get_table(table_id)  # Make an API request.
+current_required_fields = sum(field.mode == "REQUIRED" for field in table.schema)
+print("{} fields in the schema are now required.".format(current_required_fields))
 ```

@@ -1284,7 +1284,7 @@ assert all(field.mode == "NULLABLE" for field in table.schema)
 ```
 
 * using SDK
-#### Python
+##### Python
 ```py
 
 # Retrieves the destination table and checks the number of required fields
