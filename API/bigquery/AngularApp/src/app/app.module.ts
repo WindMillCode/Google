@@ -12,6 +12,7 @@ import { DropDownDirective } from './directive/dropdown.directive';
 
 import { AgGridModule } from 'ag-grid-angular';
 import { TableSchemasDirective } from './directive/table-schemas.directive';
+import { NestDirective } from './directive/nest.directive';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { TableSchemasDirective } from './directive/table-schemas.directive';
     RegularTablesDirective,
     DropDownDirective,
     TableSchemasDirective,
+    NestDirective,
     // FormControlDirective,
 
   ],

@@ -29,6 +29,7 @@ export class componentObject { // not final
     quantity: any[];
     generator?: Generator;
     metadata?: Object | any;
+    // sectionDefault props must be numbers
     init?:any
 }
 

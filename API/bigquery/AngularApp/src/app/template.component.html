@@ -92,11 +92,12 @@
         <ng-template #elseBlock8  >
             <p
             #myVal
+            appNest [nest] = "ryber.appAvailble( a.extras[2][bb], 'appNest')"
             *ngIf= "a.bool[1][bb] ==='p' else elseBlock9"
             class = {{a.val[1][bb]}}
             [ngStyle] = 'a.ngCss[1][bb]'
             [innerHTML] = 'a.text[1][bb].item'>
-        </p>
+            </p>
         </ng-template>
         <ng-template #elseBlock9  >
             <code
@@ -189,6 +190,7 @@
     <ng-container *ngFor = 'let aa of a.quantity[2];let bb = index; ' >
         <div
             #myVal
+            appNest [nest] = "ryber.appAvailble( a.extras[2][bb], 'appNest')"
             *ngIf= "a.bool[2][bb] ==='div'   else pictureBlock0"
             class = {{a.val[2][bb]}}
             [ngStyle] = 'a.ngCss[2][bb]' >
@@ -259,13 +261,14 @@
         <ng-template #pictureBlock6  >
             <div
             #myVal
+            appNest [nest] = "ryber.appAvailble( a.extras[2][bb], 'appNest')"
             *ngIf= "a.bool[2][bb] ==='ag-grid'"
             class = {{a.val[2][bb]}}
             [ngStyle] ='a.ngCss[2][bb]'
             appExtend [extend] = "ryber.appAvailble( a.extras[2][bb], 'extend')"
             >
                 <ag-grid-angular
-                style="height: 400px;  width: inherit; "
+                style="height: inherit;  width: inherit; "
                 class="ag-theme-blue"
                 [rowData]="a.extras[2][bb].appAgGrid.rowData"
                 [columnDefs]="a.extras[2][bb].appAgGrid.columnDefs"

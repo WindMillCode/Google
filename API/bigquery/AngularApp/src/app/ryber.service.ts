@@ -44,7 +44,7 @@ export class RyberService {
             }
 
             let { mf } = devObj
-            let { printGroupType, printGroup, key, type, gap, stack, value, group, count, repeatable, newline, form, multipleGroup, refreshGroup, background, color, fonts, title, fontSize, italics, googleSheets, border } = mf
+            let { nestUnder,nest,nestGroup,printGroupType, printGroup, key, type, gap, stack, value, group, count, repeatable, newline, form, multipleGroup, refreshGroup, background, color, fonts, title, fontSize, italics, googleSheets, border } = mf
             let { left, top, height, width, split, next } = devObj.mf
             let component = { left, top, height, width, split, next }
 
@@ -645,8 +645,6 @@ export class RyberService {
                 })()
 
                 let extend = {
-                    // mode:"indeterminate",
-                    // color:"primary"
                 }
 
                 // component.height =  component?.height === undefined ? 100:   component.height
@@ -664,14 +662,74 @@ export class RyberService {
                         type,
                         extend,
                         appAgGrid: {
-                            rowData: [],
-                            columnDefs: [],
+                            rowData: [
+                                { make: 'Toyota', model: 'Celica', price: 35000 },
+                                { make: 'Ford', model: 'Mondeo', price: 32000 },
+                                { make: 'Porsche', model: 'Boxter', price: 72000 }
+                            ],
+                            columnDefs: [
+                                { field: 'make' },
+                                { field: 'model' },
+                                { field: 'price' }
+                            ],
                             confirm: "true",
                             defaultColDef: {
                                 resizable: true,
                                 flex: 1,
                                 suppressSizeToFit: true,
                             },
+                        },
+                        appNest: {
+                            confirm: "true",
+                            co,
+                            nestGroup,
+                            nestUnder,
+                            nest,
+                        }
+                    }
+                })
+            }
+
+            else if (type === "nester") { // for now a better use of divs?
+
+
+                let css = {
+                    // "z-index":4,
+                    // "position":"relative",
+                    'background-color':background,
+                    // color,
+                    // height: "250px",
+                    // width: "500px"
+                }
+                options.css === undefined ? undefined : (() => {
+                    css = options.css;
+                })()
+
+                let extend = {
+                    // mode:"indeterminate",
+                    // color:"primary"
+                }
+
+                // component.height =  component?.height === undefined ? 100:   component.height
+                // component.width =  component?.height === undefined ? 100:   component.height  // widht is not allowed here it will break the mat-spinner
+
+                symbol = rUD({
+                    co,
+                    bool: 'div',
+                    val: key.split("_").reverse()[0]+ ' a_p_p_Nester',
+                    css,
+                    extras: {
+                        deltaIndex: 1,
+                        component,
+                        multipleGroup,
+                        type,
+                        extend,
+                        appNest: {
+                            confirm: "true",
+                            co,
+                            nestGroup,
+                            nestUnder,
+                            nest,
                         }
                     }
                 })
@@ -704,7 +762,14 @@ export class RyberService {
                         deltaIndex: 1,
                         component,
                         multipleGroup,
-                        type
+                        type,
+                        appNest: {
+                            confirm: "true",
+                            co,
+                            nestGroup,
+                            nestUnder,
+                            nest,
+                        }
                     }
                 })
             }
@@ -1848,6 +1913,9 @@ export class RyberService {
     // appCO  extra metadata object
     appCO0: Partial<componentObject> = {
         metadata: {
+            component:{
+                responsiveHeightExclude:["mat-spinner","ta","c","div","ag-grid"]
+            },
             ES: [], //eventSubscriptions
             CO: [],
             formCentral: {

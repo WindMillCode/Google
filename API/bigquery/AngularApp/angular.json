@@ -88,7 +88,7 @@
                             "fileReplacements": [
                                 {
                                     "replace": "src/app/website.ts",
-                                    "with": "src/app/database/website-bigquery-dev.ts"
+                                    "with": "src/app/database/website-play-dev.ts"
                                 },
                                 {
                                     "replace": "src/environments/environment.ts",

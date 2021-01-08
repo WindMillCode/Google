@@ -59,7 +59,9 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
 
                 let zChild = this.zChildInit()
                 let staticZKeys = this.staticZKeysGen(zChild)
-                if(env.component.zChild) console.log(zChild);
+                if(env.component.form.zChild === ii){
+                    console.log(zChild);
+                }
 
 
                 // drags elements for you
@@ -108,8 +110,8 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
 
                 else{
                     let sectionDefault :any = objectCopy(this.ryber.appCO0.metadata.ryber.sectionDefault)
-                    section['gap'] !== undefined ? section['gap'] : sectionDefault.gap
-                    section['left'] !== undefined ? section['left'] : sectionDefault.left
+                    section['gap'] !== undefined ?   section['gap'] :   sectionDefault.gap
+                    section['left'] !== undefined ?  section['left'] :  sectionDefault.left
                     section['width'] !== undefined ? section['width'] : sectionDefault.width
                     section['split'] !== undefined ? section['split'] : sectionDefault.split
                     section['stack'] !== undefined ? section['stack'] : sectionDefault.stack
@@ -189,6 +191,8 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                     }
 
 
+
+
                     //stacking context
                     if((myTotal  > section.width && i !== Object.keys(zChild).slice(2).length -1) || (component.next === "true" && i !== Object.keys(zChild).slice(2).length -1 )){
                         // console.log('a')
@@ -251,6 +255,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
 
 
                 })
+
                 align
                 .forEach((x,i)=>{
                     let gaps =
@@ -301,6 +306,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                     zChild[x].cssDefault["top"] = zChild[x].css["top"]
                 })
                 this.ref.detectChanges()
+
                 //
 
                 //init   buttons
@@ -370,6 +376,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                 })
                 //
 
+
                 this.ryber.appEvents({
                     typesES:this.typesES,
                     event:'resize',
@@ -435,17 +442,18 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                                     .keys(zChild)
                                     .slice(2)
                                     .forEach((x,i)=>{
-                                         zChild[x].css["height"] = zChild[x].cssDefault["height"]
-                                         zChild[x].css["width"] = zChild[x].cssDefault["width"]
-                                         zChild[x].css["font-size"] = zChild[x].cssDefault["font-size"]
+                                        zChild[x].css["height"] = zChild[x].cssDefault["height"]
+                                        zChild[x].css["width"] = zChild[x].cssDefault["width"]
+                                        zChild[x].css["font-size"] = zChild[x].cssDefault["font-size"]
                                     })
                                     this.ref.detectChanges()
                                     //
 
+
                                     //responsive height
                                     staticZKeys
                                     .forEach((x,i)=> {
-                                        if(!["mat-spinner","ta","c"].includes(zChild[x].bool )){
+                                        if(!this.ryber.appCO0.metadata.component.responsiveHeightExclude.includes(zChild[x].bool )){
                                             zChild[x].css["height"] = null
                                             zChild[x].css["display"] = "table"
                                             this.ref.detectChanges()
@@ -453,6 +461,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                                         }
                                     })
                                     //
+
 
                                     stack({
                                         zChildKeys:[
@@ -764,7 +773,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                                     //responsive height
                                     staticZKeys
                                     .forEach((x,i)=> {
-                                        if(!["mat-spinner","ta","c"].includes(zChild[x].bool )){
+                                        if(!this.ryber.appCO0.metadata.component.responsiveHeightExclude.includes(zChild[x].bool )){
                                             zChild[x].css["height"] = null
                                             zChild[x].css["display"] = "table"
                                             this.ref.detectChanges()
@@ -888,7 +897,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                                                     //responsive height
                                                     y
                                                     .forEach((z,k)=> {
-                                                        if(!["mat-spinner","ta","c"].includes(zChild[z].bool )){
+                                                        if(!this.ryber.appCO0.metadata.component.responsiveHeightExclude.includes(zChild[z].bool )){
                                                             zChild[z].css["height"] = null
                                                             zChild[z].css["display"] = "table"
                                                             this.ref.detectChanges()
@@ -1322,6 +1331,9 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
             if(directivesZChild[x].extras !== undefined && directivesZChild[x].extras !== null ){
                 if( directivesZChild[x].extras.appInputHandle !== undefined){
                     directivesZChild[x].extras.appInputHandle.zSymbol = x
+                }
+                if( directivesZChild[x].extras.appNest !== undefined){
+                    directivesZChild[x].extras.appNest.zSymbol = x
                 }
                 if( directivesZChild[x].extras.appDropDown !== undefined){
                     if(   directivesZChild[x].extras.appDropDown.change !== "dropdowns"){
