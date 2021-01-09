@@ -26,8 +26,12 @@ export class NestDirective {
 
     ngOnInit() {
         this.extras = this.nest
+        // return
         if (this.extras?.confirm === 'true') {
             // console.log(this.extras)
+            // keep track of how many elements been nested
+            this.extras.nestCount = this.extras.nestCount === undefined ? 0 : this.extras.nestCount +1
+            //
             this.ryber[this.extras.co.valueOf()].metadata.zChildrenSubject
             .pipe(first())
             .subscribe(() => {
@@ -45,6 +49,8 @@ export class NestDirective {
                         //actual nesting
                             // this happens only once, should continue to happen if application
                             // requires element to have new parents
+                            // set the order so it doesnt follow template order
+                            // FIX ME, figure better logic for the order, should be flex-order
 
                         if(x[1].extras.appNest.nest === this.extras.nestUnder){
 
@@ -52,6 +58,17 @@ export class NestDirective {
                                 x[1].element,
                                 this.el.nativeElement
                             )
+                            this.renderer2.setStyle(
+                                this.el.nativeElement,
+                                "position",
+                                "static"
+                            )
+                            // this.renderer2.setStyle(
+                            //     this.el.nativeElement,
+                            //     "order",
+                            //     this.extras.nestCount
+                            // )
+
                             this.extras.newBoard= x[0]
                         }
                         //
@@ -72,7 +89,7 @@ export class NestDirective {
         if (this.extras?.confirm === 'true') {
             Object.values(this)
             .forEach((x: any, i) => {
-                console.log(x instanceof Subscriber)
+                // console.log(x instanceof Subscriber)
                 x.unsubscribe?.()
             })
         }

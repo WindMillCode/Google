@@ -127,19 +127,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
 
 
                 //grabbing the values how the browser renders them
-                    //nesting modification here too
-                let topLevelZChild = this.zChildInit()
-                this.ryber[this.appTV.valueOf()].metadata.order = this.ryber[this.appTV.valueOf()].metadata.order
-                .filter((x:any,i)=>{
-                    if(zChild[x].extras.appNest !== undefined){
-                        if(zChild[x].extras.appNest.nestUnder !== undefined){
-                            delete topLevelZChild[x]
-                            return false
-                        }
-                    }
-                    return true
-                })
-                console.log(this.ryber[this.appTV.valueOf()].metadata.order)
+                // console.log(this.ryber[this.appTV.valueOf()].metadata.order)
                 this.ryber[this.appTV.valueOf()].metadata.order
                 .forEach((x,i)=>{
                     let defaultClientRect = zChild[x].element.getBoundingClientRect()
@@ -206,17 +194,17 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
 
 
                     //stacking context
-                    if((myTotal  > section.width && i !== Object.keys(topLevelZChild).slice(2).length -1) || (component.next === "true" && i !== Object.keys(topLevelZChild).slice(2).length -1 )){
+                    if((myTotal  > section.width && i !== Object.keys(zChild).slice(2).length -1) || (component.next === "true" && i !== Object.keys(zChild).slice(2).length -1 )){
                         // console.log('a')
                         // mySplit = 0
-                        myTotal =  numberParse(topLevelZChild[x].css["width"])
+                        myTotal =  numberParse(zChild[x].css["width"])
                         let a = keepCurrent.pop()
                         keep.push(...keepCurrent)
                         keepLast = keepCurrent
                         .reduce((acc,y,j)=>{
-                            // console.log(y[0],topLevelZChild[y[0]].css["height"],acc)
-                            if(numberParse(topLevelZChild[y[0]].css["height"])   > acc[1]){
-                                acc = [y[0],numberParse(topLevelZChild[y[0]].css["height"])]
+                            // console.log(y[0],zChild[y[0]].css["height"],acc)
+                            if(numberParse(zChild[y[0]].css["height"])   > acc[1]){
+                                acc = [y[0],numberParse(zChild[y[0]].css["height"])]
                             }
                             return acc
                         },["",0])[0]
@@ -228,15 +216,15 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                         alignCurrent = [b]
                     }
 
-                    else if( (myTotal  < section.width  && i === Object.keys(topLevelZChild).slice(2).length -1) && ( component.next !== "true"  )  ){
+                    else if( (myTotal  < section.width  && i === Object.keys(zChild).slice(2).length -1) && ( component.next !== "true"  )  ){
                         // mySplit = 0
                         // console.log('b')
-                        myTotal =   numberParse(topLevelZChild[x].css["width"])
+                        myTotal =   numberParse(zChild[x].css["width"])
                         keep.push(...keepCurrent)
                         keepLast = keepCurrent
                         .reduce((acc,y,j)=>{
-                            return numberParse(topLevelZChild[y[0]].css["height"]) > acc[1] ?
-                            [y[0],numberParse(topLevelZChild[y[0]].css["height"])] :
+                            return numberParse(zChild[y[0]].css["height"]) > acc[1] ?
+                            [y[0],numberParse(zChild[y[0]].css["height"])] :
                             acc
                         },["",0])[0]
                         keepCurrent = []
@@ -244,15 +232,15 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                         alignCurrent = []
                     }
 
-                    else if( (i === Object.keys(topLevelZChild).slice(2).length -1) || (component.next === "true" )){
+                    else if( (i === Object.keys(zChild).slice(2).length -1) || (component.next === "true" )){
                         // console.log('c')
-                        myTotal  =  numberParse(topLevelZChild[x].css["width"])
+                        myTotal  =  numberParse(zChild[x].css["width"])
                         let a = keepCurrent.pop()
                         keep.push(...keepCurrent)
                         keepLast = keepCurrent
                         .reduce((acc,y,j)=>{
-                            return numberParse(topLevelZChild[y[0]].css["height"]) > acc[1] ?
-                            [y[0],numberParse(topLevelZChild[y[0]].css["height"])] :
+                            return numberParse(zChild[y[0]].css["height"]) > acc[1] ?
+                            [y[0],numberParse(zChild[y[0]].css["height"])] :
                             acc
                         },["",0])[0]
                         // console.log(keepLast)
@@ -373,7 +361,6 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                 //
 
                 //stack spacing setup
-                console.log(align)
                 let spacing =  [null,
                     ...Array.from(align[0],(x,i)=> {return 50}),
                     ...Array.from(align[1] !== undefined && align[0].length <= 1 ? align[1] : Array(0) ,(x,i)=> {return 50}),section.stack
@@ -463,7 +450,6 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                                     //
 
 
-
                                     //responsive height
                                     staticZKeys
                                     .forEach((x,i)=> {
@@ -475,7 +461,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                                         }
                                     })
                                     //
-                                    
+
 
                                     stack({
                                         zChildKeys:[
@@ -650,11 +636,10 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                                 {
 
 
-                                    // console.log(topLevelZChild)
                                     stack({
                                         type:"yPosition",
                                         yPosition:{
-                                            zChild:topLevelZChild,
+                                            zChild,
                                             moving:{
                                                 top:moving.boardTop,
                                                 height:moving.boardHeight
@@ -709,7 +694,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
 
 
                                     // position board
-                                    this.positionBoard({zChild:topLevelZChild,current,deltaNodeSite});
+                                    this.positionBoard({zChild,current,deltaNodeSite});
                                     //
 
 
@@ -742,8 +727,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
 
 
                                     // same start
-                                    // staticZKeys
-                                    cmsZKeys
+                                    staticZKeys
                                     .forEach((x,i)=>{
                                         zChild[x].css["width"] = (
                                             .9 * numberParse(getComputedStyle(zChild["&#8353"].element).width)
@@ -949,7 +933,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                                     stack({
                                         type:"yPosition",
                                         yPosition:{
-                                            zChild:topLevelZChild,
+                                            zChild,
                                             moving:{
                                                 top:moving.boardTop,
                                                 height:moving.boardHeight
@@ -1007,7 +991,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
 
 
                                     // position board
-                                    this.positionBoard({zChild:topLevelZChild,current,deltaNodeSite});
+                                    this.positionBoard({zChild,current,deltaNodeSite});
                                     //
 
 

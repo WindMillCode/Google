@@ -38,15 +38,17 @@ export class RyberService {
             options?: any
         }): any {
 
-            let { co, options } = devObj
+            let { co } = devObj
+
+
+            let { mf } = devObj
+            let { options,nestUnder,nest,nestGroup,printGroupType, printGroup, key, type, gap, stack, value, group, count, repeatable, newline, form, multipleGroup, refreshGroup, background, color, fonts, title, fontSize, italics, googleSheets, border } = mf
+            let { left, top, height, width, split, next } = devObj.mf
+            let component = { left, top, height, width, split, next }
+
             if (options === undefined) {
                 options = {}
             }
-
-            let { mf } = devObj
-            let { nestUnder,nest,nestGroup,printGroupType, printGroup, key, type, gap, stack, value, group, count, repeatable, newline, form, multipleGroup, refreshGroup, background, color, fonts, title, fontSize, italics, googleSheets, border } = mf
-            let { left, top, height, width, split, next } = devObj.mf
-            let component = { left, top, height, width, split, next }
 
 
 
@@ -134,7 +136,7 @@ export class RyberService {
                     "text-align": mf["text-align"]
                 }
                 options.css === undefined ? undefined : (() => {
-                    css = options.css;
+                    css = {...css,...options.css}
                     css['font-size'] === undefined ? (css['font-size'] = '30px') : null
                 })()
 
@@ -158,6 +160,13 @@ export class RyberService {
                             name: this[co.valueOf()].quantity[1][1].signature + " " + zCTgen.next().value,
                             googleSheets,
                             link: form?.link
+                        },
+                        appNest: {
+                            confirm: "true",
+                            co,
+                            nestGroup,
+                            nestUnder,
+                            nest,
                         },
                         component,
                         multipleGroup,
@@ -603,7 +612,7 @@ export class RyberService {
                     "text-align": devObj.mf["text-align"]
                 }
                 options.css === undefined ? undefined : (() => {
-                    css = options.css;
+                    css = {...css,...options.css}
                 })()
 
                 let extend = {
@@ -641,7 +650,7 @@ export class RyberService {
                     width: "500px"
                 }
                 options.css === undefined ? undefined : (() => {
-                    css = options.css;
+                    css = {...css,...options.css}
                 })()
 
                 let extend = {
@@ -694,15 +703,12 @@ export class RyberService {
 
 
                 let css = {
-                    // "z-index":4,
-                    // "position":"relative",
                     'background-color':background,
-                    // color,
-                    // height: "250px",
-                    // width: "500px"
+                    color,
                 }
+                console.log(options.css)
                 options.css === undefined ? undefined : (() => {
-                    css = options.css;
+                    css = {...css,...options.css}
                 })()
 
                 let extend = {
@@ -739,17 +745,16 @@ export class RyberService {
 
 
                 let css = {
-                    "font-size": fontSize !== undefined ? fontSize + "px" : "30px",
                     "z-index": 4,
                     'background-color': background,
                     color,
                     "font-weight": italics,
                     "font-family": fonts,
-                    "text-align": devObj.mf["text-align"]
+                    "font-size":"30px",
+                    "text-align": mf["text-align"]
                 }
                 options.css === undefined ? undefined : (() => {
-                    css = options.css;
-                    css['font-size'] === undefined ? (css['font-size'] = '30px') : null
+                    css = {...css,...options.css}
                 })()
 
                 symbol = rUD({
@@ -1376,7 +1381,7 @@ export class RyberService {
                     "border-radius": Modernizr.borderradius ? "20px 20px 20px 20px" : null
                 }
                 options.css === undefined ? undefined : (() => {
-                    css = options.css;
+                    css = {...css,...options.css}
                 })()
 
                 component.height = component?.height === undefined ? 1200 : component.height
@@ -1587,145 +1592,146 @@ export class RyberService {
 
             // setup sheet metadata given form the cms
             cmsData.objects
-                .forEach((x, i) => {
-                    if (x.type_slug === "google-sheets") {
+            .forEach((x, i) => {
+                if (x.type_slug === "google-sheets") {
 
-                        x.metafields
-                            .forEach((y, j) => {
+                    x.metafields
+                        .forEach((y, j) => {
 
-                                y.children
-                                    .forEach((z: any, k) => {
+                            y.children
+                                .forEach((z: any, k) => {
 
-                                        if (z.title === "subsheet titles") {
-                                            this.appCO0.metadata["google-sheets"] = objectCopy(z.options)
-                                        }
+                                    if (z.title === "subsheet titles") {
+                                        this.appCO0.metadata["google-sheets"] = objectCopy(z.options)
+                                    }
 
-                                        else if (z.title === "office fields") {
-                                            z.children
-                                                .forEach((w: any, h) => {
-                                                    if (w.title === "applicant_id") {
-                                                        this.appCO0.metadata["applicant_id"] = objectCopy(w.options)
+                                    else if (z.title === "office fields") {
+                                        z.children
+                                            .forEach((w: any, h) => {
+                                                if (w.title === "applicant_id") {
+                                                    this.appCO0.metadata["applicant_id"] = objectCopy(w.options)
 
-                                                    }
-                                                })
-                                        }
+                                                }
+                                            })
+                                    }
 
-                                    })
+                                })
 
-                            })
+                        })
 
-                    }
+                }
 
-                })
+            })
 
             if (this.appCO0.metadata["google-sheets"] !== undefined) {
                 this.appCO0.metadata["google-sheets-mapping"] =
-                    Object.fromEntries(
-                        this.appCO0.metadata["google-sheets"]
-                            .map((x: any, i) => {
-                                return [x.key, x.value]
-                            })
-                    )
+                Object.fromEntries(
+                this.appCO0.metadata["google-sheets"]
+                .map((x: any, i) => {
+                    return [x.key, x.value]
+                })
+                )
             }
             this.appCO0.metadata["applicant_id_mapping"] = this.appCO0.metadata["applicant_id"]
-                ?.map((x: any, i) => {
-                    let conversionKey = this.appCO0.metadata["applicant_id"][i].key
-                    return {
-                        key: this.appCO0.metadata["google-sheets-mapping"][conversionKey.valueOf()] === undefined ? x.key : this.appCO0.metadata["google-sheets-mapping"][conversionKey.valueOf()],
-                        value: x.value
-                    }
-                })
+            ?.map((x: any, i) => {
+                let conversionKey = this.appCO0.metadata["applicant_id"][i].key
+                return {
+                    key: this.appCO0.metadata["google-sheets-mapping"][conversionKey.valueOf()] === undefined ? x.key : this.appCO0.metadata["google-sheets-mapping"][conversionKey.valueOf()],
+                    value: x.value
+                }
+            })
             //
 
             //frontend from the cms
             convertCMS = cmsData
-                .objects
-                .filter((x: any, i) => {
-                    return x.type_slug !== "google-sheets"
-                })
-                .map((x, i) => {
-                    let contentMetafields =
-                        x.metafields
-                            .map((x: any, i) => {
-                                let myContent =
-                                    objectCopy(
-                                        x.children
-                                            .filter((y: any, j) => {
-                                                return y.title === "content"
-                                            })[0]
-                                    )
-                                myContent.key = x.key
-                                return myContent
-                            })
-                    return {
-                        title: x.title,
-                        type_slug: x.type_slug,
-                        metafields: contentMetafields
-                            .map((y, j) => {
+            .objects
+            .filter((x: any, i) => {
+                return x.type_slug !== "google-sheets"
+            })
+            .map((x, i) => {
+                let contentMetafields =
+                    x.metafields
+                    .map((x: any, i) => {
+                        let myContent =
+                        objectCopy(
+                            x.children
+                            .filter((y: any, j) => {
+                                return y.title === "content"
+                            })[0]
+                        )
+                        myContent.key = x.key
+                        return myContent
+                    })
+                return {
+                    title: x.title,
+                    type_slug: x.type_slug,
+                    metafields: contentMetafields
+                    .map((y, j) => {
 
-                                let newline = []
-                                let googleSheets = {}
+                        let newline = []
+                        let googleSheets = {}
 
-                                let options =
-                                    y.options
-                                        .map((z, k) => {
+                        let options =
+                        y.options
+                        .map((z, k) => {
 
 
-                                            if (z.key === 'newline') {
-                                                newline.push(z.value)
-                                                return null
-                                            }
+                            if (z.key === 'newline') {
+                                newline.push(z.value)
+                                return null
+                            }
 
-                                            else {
-                                                return Object.values(y.options[k])
-                                            }
+                            else {
+                                return Object.values(y.options[k])
+                            }
 
+                        })
+                        .filter((z, k) => {
+                            return z !== null
+                        })
+
+
+                        x.metafields[j].children
+                        .filter((z: any, k) => {
+                            return z.title === "google subsheets"
+                        })
+                        .forEach((z: any, k) => {
+                            z.children
+                                .forEach((w: any, h) => {
+                                    let googleSheetOptions = objectCopy(w.options)
+                                    googleSheetOptions
+                                        .forEach((xx: any, ii) => {
+                                            delete xx?.selected
+                                            googleSheetOptions[ii] = Object.values(xx)
                                         })
-                                        .filter((z, k) => {
-                                            return z !== null
-                                        })
-
-
-                                x.metafields[j].children
-                                    .filter((z: any, k) => {
-                                        return z.title === "google subsheets"
-                                    })
-                                    .forEach((z: any, k) => {
-                                        z.children
-                                            .forEach((w: any, h) => {
-                                                let googleSheetOptions = objectCopy(w.options)
-                                                googleSheetOptions
-                                                    .forEach((xx: any, ii) => {
-                                                        delete xx?.selected
-                                                        googleSheetOptions[ii] = Object.values(xx)
-                                                    })
-                                                // console.log(googleSheetOptions)
-                                                googleSheets[this.appCO0.metadata["google-sheets-mapping"][w.key].valueOf()] = googleSheetOptions
-                                            })
-                                    })
+                                    // console.log(googleSheetOptions)
+                                    googleSheets[this.appCO0.metadata["google-sheets-mapping"][w.key].valueOf()] = googleSheetOptions
+                                })
+                        })
 
 
 
-                                options = Object.fromEntries(options)
-                                options.googleSheets = objectCopy(googleSheets)
-                                options["background"] !== undefined ? options["background"] = options["background"]?.split(" ").join("") : null
-                                options["color"] !== undefined ? options["color"] = options["color"]?.split(" ").join("") : null
-                                let result = {
-                                    key: y.key,
-                                    ...options,
-                                }
-                                newline.length !== 0 ? result.newline = newline : null
-                                Object.keys(googleSheets).length !== 0 ? result.googleSheets = googleSheets : null
-                                return result
-                            })
-                    }
-                })
-                .filter((x, i) => {
-                    if (x.type_slug === "google-sheets") {
-                        return false
-                    }
-                    return true
-                })
+                        options = Object.fromEntries(options)
+                        options.googleSheets = objectCopy(googleSheets)
+                        options["background"] !== undefined ? options["background"] = options["background"]?.split(" ").join("") : null
+                        options["color"] !== undefined ? options["color"] = options["color"]?.split(" ").join("") : null
+                        let result = {
+                            key: y.key,
+                            ...options,
+                        }
+                        newline.length !== 0 ? result.newline = newline : null
+                        Object.keys(googleSheets).length !== 0 ? result.googleSheets = googleSheets : null
+                        return result
+                    })
+                }
+
+            })
+            .filter((x, i) => {
+                if (x.type_slug === "google-sheets") {
+                    return false
+                }
+                return true
+            })
             //
 
             // TODO when the app is online  and you change the cms data
@@ -1746,91 +1752,91 @@ export class RyberService {
         // content setup
         let track = {}
         myCMS = Object
-            .fromEntries(
-                convertCMS
-                    .map((x, i) => {
+        .fromEntries(
+            convertCMS
+                .map((x, i) => {
 
-                        // tracking different components
-                        let mySlug = x.type_slug.split("s")[0]
-                        if (track[mySlug + 'CO'.valueOf()] === undefined) {
-                            //co setup
-                            track[mySlug + 'CO'.valueOf()] = 0
-                            this[mySlug + 'CO'.valueOf()] = []
-                            this[mySlug + 'CO$'.valueOf()] = new ReplaySubject<any>(1)
-                            this.appCO0.metadata.CO.push(mySlug + 'CO$'.valueOf())
-                            //
-
-                            //es setup
-                            this[mySlug + 'ES'.valueOf()] = {
-                                resize: {
-                                },
-                                click: {
-                                },
-                                load: {
-                                },
-                                input: {
-                                }
-                            }
-                            this.appCO0.metadata.ES.push(mySlug + 'ES'.valueOf())
-                            //
-
-                        }
-                        else {
-                            track[mySlug + 'CO'.valueOf()] += 1
-                        }
-                        let co = mySlug + 'CO' + track[x.type_slug.split("s")[0] + 'CO'.valueOf()] // if a slug starts with s ????? FIXME
-                        this[mySlug + 'CO'.valueOf()].push(co)
-                        this[mySlug + 'CO$'.valueOf()].next(this[mySlug + 'CO'.valueOf()])
+                    // tracking different components
+                    let mySlug = x.type_slug.split("s")[0]
+                    if (track[mySlug + 'CO'.valueOf()] === undefined) {
+                        //co setup
+                        track[mySlug + 'CO'.valueOf()] = 0
+                        this[mySlug + 'CO'.valueOf()] = []
+                        this[mySlug + 'CO$'.valueOf()] = new ReplaySubject<any>(1)
+                        this.appCO0.metadata.CO.push(mySlug + 'CO$'.valueOf())
                         //
-                        let x$ = of(x)
+
+                        //es setup
+                        this[mySlug + 'ES'.valueOf()] = {
+                            resize: {
+                            },
+                            click: {
+                            },
+                            load: {
+                            },
+                            input: {
+                            }
+                        }
+                        this.appCO0.metadata.ES.push(mySlug + 'ES'.valueOf())
+                        //
+
+                    }
+                    else {
+                        track[mySlug + 'CO'.valueOf()] += 1
+                    }
+                    let co = mySlug + 'CO' + track[x.type_slug.split("s")[0] + 'CO'.valueOf()] // if a slug starts with s ????? FIXME
+                    this[mySlug + 'CO'.valueOf()].push(co)
+                    this[mySlug + 'CO$'.valueOf()].next(this[mySlug + 'CO'.valueOf()])
+                    //
+                    let x$ = of(x)
 
 
-                        let coOrderArray = []
-                        this.appCO0.metadata.ryber.CO$.push(
+                    let coOrderArray = []
+                    this.appCO0.metadata.ryber.CO$.push(
 
-                            x$
-                                .subscribe((item) => {
-                                    let coArray: any = this[mySlug + 'CO'.valueOf()]
+                        x$
+                        .subscribe((item) => {
+                            let coArray: any = this[mySlug + 'CO'.valueOf()]
 
-                                    x.metafields
-                                        .forEach((y, j) => {
+                            x.metafields
+                            .forEach((y, j) => {
 
 
-                                            // they forgot to create a new component fail gracefully and given them a board
-                                            if (j === 0) {
-                                                if (y.type !== "body") {
-                                                    coOrderArray.push(
-                                                        zCT({
-                                                            co: coArray[coArray.length - 1],
-                                                            mf: {
-                                                                key: "a_p_p_Board",
-                                                                type: "body",
-                                                                background: ["lightgrey", "white"][i % 2],
-                                                                title: x.title
-                                                            }
-
-                                                        })
-                                                    )
+                                // they forgot to create a new component fail gracefully and given them a board
+                                if (j === 0) {
+                                    if (y.type !== "body") {
+                                        coOrderArray.push(
+                                            zCT({
+                                                co: coArray[coArray.length - 1],
+                                                mf: {
+                                                    key: "a_p_p_Board",
+                                                    type: "body",
+                                                    background: ["lightgrey", "white"][i % 2],
+                                                    title: x.title
                                                 }
-                                                // debugger
-                                            }
-                                            //
 
-                                            coOrderArray.push(
-                                                zCT({
-                                                    co: coArray[coArray.length - 1],
-                                                    mf: j === 0 ? { ...y, title: x.title } : y
-                                                })
-                                            )
-                                        })
-                                    this[co.valueOf()].metadata.order = coOrderArray.splice(1)
-                                    coOrderArray = []
-                                })
-                        )
+                                            })
+                                        )
+                                    }
+                                    // debugger
+                                }
+                                //
 
-                        return [co, x]
-                    })
-            )
+                                coOrderArray.push(
+                                    zCT({
+                                        co: coArray[coArray.length - 1],
+                                        mf: j === 0 ? { ...y, title: x.title } : y
+                                    })
+                                )
+                            })
+                            this[co.valueOf()].metadata.order = coOrderArray.splice(1)
+                            coOrderArray = []
+                        })
+                    )
+
+                    return [co, x]
+                })
+        )
         //
 
         // console.log(myCMS)
@@ -1914,7 +1920,7 @@ export class RyberService {
     appCO0: Partial<componentObject> = {
         metadata: {
             component:{
-                responsiveHeightExclude:["mat-spinner","ta","c","div","ag-grid"]
+                responsiveHeightExclude:["mat-spinner","ta","c","div","ag-grid","i"]
             },
             ES: [], //eventSubscriptions
             CO: [],
