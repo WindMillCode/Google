@@ -731,7 +731,7 @@ export class RyberService {
                         type,
                         extend,
                         appNest: {
-                            confirm: "true",
+                            confirm:nestGroup === undefined ? "false": "true",
                             co,
                             nestGroup,
                             nestUnder,
@@ -769,7 +769,7 @@ export class RyberService {
                         multipleGroup,
                         type,
                         appNest: {
-                            confirm: "true",
+                            confirm:nestGroup === undefined ? "false": "true",
                             co,
                             nestGroup,
                             nestUnder,
@@ -921,7 +921,14 @@ export class RyberService {
                     extras: {
                         component,
                         multipleAdd: multipleGroup,
-                        type
+                        type,
+                        appNest: {
+                            confirm:nestGroup === undefined ? "false": "true",
+                            co,
+                            nestGroup,
+                            nestUnder,
+                            nest,
+                        }
                     }
                 })
 
@@ -1051,7 +1058,14 @@ export class RyberService {
                     extras: {
                         component,
                         multipleRemove: multipleGroup,
-                        type
+                        type,
+                        appNest: {
+                            confirm:nestGroup === undefined ? "false": "true",
+                            co,
+                            nestGroup,
+                            nestUnder,
+                            nest,
+                        }
                     }
                 })
 
@@ -1920,7 +1934,7 @@ export class RyberService {
     appCO0: Partial<componentObject> = {
         metadata: {
             component:{
-                responsiveHeightExclude:["mat-spinner","ta","c","div","ag-grid","i"]
+                responsiveHeightExclude:["mat-spinner","ta","c","div","ag-grid","i","b"]
             },
             ES: [], //eventSubscriptions
             CO: [],

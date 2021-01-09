@@ -32,13 +32,14 @@ website.convertCMS = [
                 "nestGroup":"schemas",
                 "nest":"A1",
                 "width":"1600",
-                "height":"350",
+                "height":"700",
                 "googleSheets": {},
                 "options":{
                     "css":{
                         display:"flex",
                         "flex-direction":"row",
                         "justify-content":"space-around",
+                        "align-items":"flex-start",
                         "flex-wrap":"wrap"
                     }
                 }
@@ -52,7 +53,7 @@ website.convertCMS = [
                 "nestUnder":"A1",
                 "nest":"B1",
                 "width":"1600",
-                "height":"250",
+                // "height":"250",
                 "googleSheets": {},
                 "text-align":"center",
                 "options":{
@@ -94,6 +95,7 @@ website.convertCMS = [
                 "nestGroup":"schemas",
                 "nestUnder":"B1",
                 "nest":"C1",
+                "multipleGroup":"schemasInput",
                 // "split": "3",
                 // "width":"300",
                 // "height":"250",
@@ -102,6 +104,7 @@ website.convertCMS = [
                     "css":{
                         // "justify-self":"flex-start",
                         // "flex-grow":"1"
+                        order:-2,
                         "background":"white",
                         "height":"30px",
                         "width":"400px",
@@ -110,8 +113,33 @@ website.convertCMS = [
             },
             {
                 "key": "my-input",
-                "type": "input",
-                "value":"",
+                "type": "add button",
+                "value":"Add Another",
+                "nestGroup":"schemas",
+                "multipleGroup":"schemasInput",
+                "nestUnder":"B1",
+                "nest":"C1",
+                // "split": "3",
+                // "width":"300",
+                // "height":"250",
+                "googleSheets": {},
+                "options":{
+                    "css":{
+                        // "justify-self":"flex-start",
+                        // "flex-grow":"1"
+                        order:-1,
+
+                        // "background":"white",
+                        // "height":"30px",
+                        // "width":"400px",
+                    }
+                }
+            },
+            {
+                "key": "my-input",
+                "type": "remove button",
+                "value":"Remove Another",
+                "multipleGroup":"schemasInput",
                 "nestGroup":"schemas",
                 "nestUnder":"B1",
                 "nest":"C1",
@@ -123,32 +151,10 @@ website.convertCMS = [
                     "css":{
                         // "justify-self":"flex-start",
                         // "flex-grow":"1"
-
-                        "background":"white",
-                        "height":"30px",
-                        "width":"400px",
-                    }
-                }
-            },
-            {
-                "key": "my-input",
-                "type": "input",
-                "value":"",
-                "nestGroup":"schemas",
-                "nestUnder":"B1",
-                "nest":"C1",
-                // "split": "3",
-                // "width":"300",
-                // "height":"250",
-                "googleSheets": {},
-                "options":{
-                    "css":{
-                        // "justify-self":"flex-start",
-                        // "flex-grow":"1"
-
-                        "background":"white",
-                        "height":"30px",
-                        "width":"400px",
+                        order:0,
+                        // "background":"white",
+                        // "height":"30px",
+                        // "width":"400px",
                     }
                 }
             },
@@ -161,13 +167,14 @@ website.convertCMS = [
                 "nestGroup":"schemas",
                 "nest":"B1",
                 "nestUnder":"A1",
-                "width":"1200",
+                // "width":"1200",
                 "height":"350",
                 "googleSheets": {},
                 "options":{
                     "css":{
                         order:2,
-                        "width":"500px",
+                        // "width":"75%",
+                        "width":"800px",
                         "height":"300px",
                         display:"flex",
                         "flex-direction":"column",

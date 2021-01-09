@@ -141,7 +141,7 @@
                         "port": 8000,
                         "liveReload": true,
                         "hmr": true,
-                        "verbose":true
+                        // "verbose":true
                     },
                     "configurations": {
                         "production": {
