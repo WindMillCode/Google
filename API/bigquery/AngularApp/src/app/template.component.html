@@ -4,14 +4,14 @@
     <ng-container *ngFor = 'let aa of a.quantity[0];let bb = index;'  >
         <div
         #myVal
-        *ngIf= "a.bool[0][bb] ==='div' else boardBlock0"
+        *ngIf= "a.bool[0][bb] ==='divBoard' else boardBlock0"
         class = {{a.val[0][bb]}}
         [ngStyle] = 'a.ngCss[0][bb]' >
         </div>
         <ng-template #boardBlock0  >
             <img
             #myVal
-            *ngIf= "a.bool[0][bb] ==='img' else boardBlock1"
+            *ngIf= "a.bool[0][bb] ==='imgBoard' else boardBlock1"
             class = {{a.val[2][bb]}}
             [ngStyle] = 'a.ngCss[2][bb]'
             />
@@ -19,7 +19,7 @@
         <ng-template #boardBlock1  >
             <video
             #myVal
-            *ngIf= "a.bool[0][bb] ==='video' "
+            *ngIf= "a.bool[0][bb] ==='videoBoard' "
             class = {{a.val[2][bb]}}
             [ngStyle] = 'a.ngCss[2][bb]'  >
             </video>
@@ -92,7 +92,7 @@
         <ng-template #elseBlock8  >
             <p
             #myVal
-            appNest [nest] = "ryber.appAvailble( a.extras[2][bb], 'appNest')"
+            appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
             *ngIf= "a.bool[1][bb] ==='p' else elseBlock9"
             class = {{a.val[1][bb]}}
             [ngStyle] = 'a.ngCss[1][bb]'
@@ -128,6 +128,7 @@
         </ng-template>
         <ng-template #elseBlock12  >
             <input
+            appLatch [latch] = "ryber.appAvailble( a.extras[1][bb], 'appLatch')"
             appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
             appExtend [extend] = "ryber.appAvailble( a.extras[1][bb], 'extend')"
             appInputHandle [inputHandle] = "ryber.appAvailble( a.extras[1][bb], 'appInputHandle')"
@@ -180,30 +181,31 @@
         <ng-template #elseBlock17  >
             <form
             #myVal
-            *ngIf= "a.bool[1][bb] ==='f'"
+            *ngIf= "a.bool[1][bb] ==='f' else elseBlock18"
             class = {{a.val[1][bb]}}
             [ngStyle] = 'a.ngCss[1][bb]'
             [innerHTML] = 'a.text[1][bb].item'
             appExtend [extend] = "ryber.appAvailble( a.extras[1][bb], 'extend')" ></form>
         </ng-template>
+        <ng-template #elseBlock18  >
+        <div
+            #myVal
+            appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
+            *ngIf= "a.bool[1][bb] ==='div'   else pictureBlock0"
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]' >
+        </div>
+        </ng-template>
     </ng-container>
 
     <ng-container *ngFor = 'let aa of a.quantity[2];let bb = index; ' >
-        <div
-            #myVal
-            appNest [nest] = "ryber.appAvailble( a.extras[2][bb], 'appNest')"
-            *ngIf= "a.bool[2][bb] ==='div'   else pictureBlock0"
-            class = {{a.val[2][bb]}}
-            [ngStyle] = 'a.ngCss[2][bb]' >
-        </div>
-        <ng-template #pictureBlock0  >
+
             <img
                 #myVal
                 *ngIf= "a.bool[2][bb] ==='img' else pictureBlock1"
                 class = {{a.val[2][bb]}}
                 [ngStyle] = 'a.ngCss[2][bb]'
             />
-        </ng-template>
         <ng-template #pictureBlock1  >
             <button #myVal
                 appNest [nest] = "ryber.appAvailble( a.extras[2][bb], 'appNest')"

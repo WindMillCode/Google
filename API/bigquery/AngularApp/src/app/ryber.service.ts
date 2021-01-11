@@ -161,8 +161,12 @@ export class RyberService {
                             googleSheets,
                             link: form?.link
                         },
+                        appLatch:{
+                            confirm:"true",
+                            co
+                        },
                         appNest: {
-                            confirm: "true",
+                            confirm:nestGroup === undefined ? "false": "true",
                             co,
                             nestGroup,
                             nestUnder,
@@ -555,6 +559,17 @@ export class RyberService {
                             googleSheets,
                             link: form?.link
                         },
+                        appLatch:{
+                            confirm:"true",
+                            co
+                        },
+                        appNest: {
+                            confirm:nestGroup === undefined ? "false": "true",
+                            co,
+                            nestGroup,
+                            nestUnder,
+                            nest,
+                        },
                         component,
                         multipleGroup,
                         appDateClick: {
@@ -705,8 +720,8 @@ export class RyberService {
                 let css = {
                     'background-color':background,
                     color,
+                    overflow:"scroll"
                 }
-                console.log(options.css)
                 options.css === undefined ? undefined : (() => {
                     css = {...css,...options.css}
                 })()
@@ -1535,7 +1550,14 @@ export class RyberService {
                         multipleGroup,
                         deltaIndex: 1,
                         delta: { type: "increment" },
-                        type
+                        type,
+                        appNest: {
+                            confirm:nestGroup === undefined ? "false": "true",
+                            co,
+                            nestGroup,
+                            nestUnder,
+                            nest,
+                        },
                     }
                 })
 
@@ -1768,88 +1790,88 @@ export class RyberService {
         myCMS = Object
         .fromEntries(
             convertCMS
-                .map((x, i) => {
+            .map((x, i) => {
 
-                    // tracking different components
-                    let mySlug = x.type_slug.split("s")[0]
-                    if (track[mySlug + 'CO'.valueOf()] === undefined) {
-                        //co setup
-                        track[mySlug + 'CO'.valueOf()] = 0
-                        this[mySlug + 'CO'.valueOf()] = []
-                        this[mySlug + 'CO$'.valueOf()] = new ReplaySubject<any>(1)
-                        this.appCO0.metadata.CO.push(mySlug + 'CO$'.valueOf())
-                        //
-
-                        //es setup
-                        this[mySlug + 'ES'.valueOf()] = {
-                            resize: {
-                            },
-                            click: {
-                            },
-                            load: {
-                            },
-                            input: {
-                            }
-                        }
-                        this.appCO0.metadata.ES.push(mySlug + 'ES'.valueOf())
-                        //
-
-                    }
-                    else {
-                        track[mySlug + 'CO'.valueOf()] += 1
-                    }
-                    let co = mySlug + 'CO' + track[x.type_slug.split("s")[0] + 'CO'.valueOf()] // if a slug starts with s ????? FIXME
-                    this[mySlug + 'CO'.valueOf()].push(co)
-                    this[mySlug + 'CO$'.valueOf()].next(this[mySlug + 'CO'.valueOf()])
+                // tracking different components
+                let mySlug = x.type_slug.split("s")[0]
+                if (track[mySlug + 'CO'.valueOf()] === undefined) {
+                    //co setup
+                    track[mySlug + 'CO'.valueOf()] = 0
+                    this[mySlug + 'CO'.valueOf()] = []
+                    this[mySlug + 'CO$'.valueOf()] = new ReplaySubject<any>(1)
+                    this.appCO0.metadata.CO.push(mySlug + 'CO$'.valueOf())
                     //
-                    let x$ = of(x)
+
+                    //es setup
+                    this[mySlug + 'ES'.valueOf()] = {
+                        resize: {
+                        },
+                        click: {
+                        },
+                        load: {
+                        },
+                        input: {
+                        }
+                    }
+                    this.appCO0.metadata.ES.push(mySlug + 'ES'.valueOf())
+                    //
+
+                }
+                else {
+                    track[mySlug + 'CO'.valueOf()] += 1
+                }
+                let co = mySlug + 'CO' + track[x.type_slug.split("s")[0] + 'CO'.valueOf()] // if a slug starts with s ????? FIXME
+                this[mySlug + 'CO'.valueOf()].push(co)
+                this[mySlug + 'CO$'.valueOf()].next(this[mySlug + 'CO'.valueOf()])
+                //
+                let x$ = of(x)
 
 
-                    let coOrderArray = []
-                    this.appCO0.metadata.ryber.CO$.push(
+                let coOrderArray = []
+                this.appCO0.metadata.ryber.CO$.push(
 
-                        x$
-                        .subscribe((item) => {
-                            let coArray: any = this[mySlug + 'CO'.valueOf()]
+                    x$
+                    .subscribe((item) => {
+                        let coArray: any = this[mySlug + 'CO'.valueOf()]
 
-                            x.metafields
-                            .forEach((y, j) => {
+                        x.metafields
+                        .forEach((y, j) => {
 
 
-                                // they forgot to create a new component fail gracefully and given them a board
-                                if (j === 0) {
-                                    if (y.type !== "body") {
-                                        coOrderArray.push(
-                                            zCT({
-                                                co: coArray[coArray.length - 1],
-                                                mf: {
-                                                    key: "a_p_p_Board",
-                                                    type: "body",
-                                                    background: ["lightgrey", "white"][i % 2],
-                                                    title: x.title
-                                                }
+                            // they forgot to create a new component fail gracefully and given them a board
+                            if (j === 0) {
+                                if (y.type !== "body") {
+                                    coOrderArray.push(
+                                        zCT({
+                                            co: coArray[coArray.length - 1],
+                                            mf: {
+                                                key: "a_p_p_Board",
+                                                type: "body",
+                                                background: ["lightgrey", "white"][i % 2],
+                                                title: x.title
+                                            }
 
-                                            })
-                                        )
-                                    }
-                                    // debugger
+                                        })
+                                    )
                                 }
-                                //
+                                // debugger
+                            }
+                            //
 
-                                coOrderArray.push(
-                                    zCT({
-                                        co: coArray[coArray.length - 1],
-                                        mf: j === 0 ? { ...y, title: x.title } : y
-                                    })
-                                )
-                            })
-                            this[co.valueOf()].metadata.order = coOrderArray.splice(1)
-                            coOrderArray = []
+                            coOrderArray.push(
+                                zCT({
+                                    co: coArray[coArray.length - 1],
+                                    mf: j === 0 ? { ...y, title: x.title } : y
+                                })
+                            )
                         })
-                    )
+                        this[co.valueOf()].metadata.order = coOrderArray.splice(1)
+                        coOrderArray = []
+                    })
+                )
 
-                    return [co, x]
-                })
+                return [co, x]
+            })
         )
         //
 

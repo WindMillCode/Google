@@ -13,6 +13,9 @@ import { DropDownDirective } from './directive/dropdown.directive';
 import { AgGridModule } from 'ag-grid-angular';
 import { TableSchemasDirective } from './directive/table-schemas.directive';
 import { NestDirective } from './directive/nest.directive';
+import { LatchDirective } from './directive/latch.directive';
+import { InputHandleDirective } from './directive/input-handle.directive';
+import { DateClickDirective } from './directive/date-click.directive';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,9 @@ import { NestDirective } from './directive/nest.directive';
     DropDownDirective,
     TableSchemasDirective,
     NestDirective,
+    LatchDirective,
+    InputHandleDirective,
+    DateClickDirective,
     // FormControlDirective,
 
   ],

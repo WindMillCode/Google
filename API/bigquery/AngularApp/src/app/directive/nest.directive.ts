@@ -6,6 +6,7 @@ import { catchError, delay,first } from 'rxjs/operators'
 import { environment as env } from '../../environments/environment'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+
 @Directive({
     selector: '[appNest]'
 })
@@ -27,12 +28,11 @@ export class NestDirective {
     ngOnInit() {
         this.extras = this.nest
         // return
+        // console.log(this.extras?.confirm)
         if (this.extras?.confirm === 'true' ) {
             // console.log(this.extras)
-
-            this.ryber[this.extras.co.valueOf()].metadata.zChildrenSubject
-            .pipe(first())
-            .subscribe(() => {
+            let nestInit = () => {
+                // console.log('fire')
 
                 //gather all elements involved in the nesting operation
                 this.zChildren = this.ryber[this.extras.co.valueOf()].metadata.zChildren
@@ -52,7 +52,13 @@ export class NestDirective {
 
 
                         if(x[1].extras.appNest.nest === this.extras.nestUnder){
-
+                            // so the children elements can be added along as well
+                                //FIXME, needs to be compared to multipleGroupTop, not its parent
+                            if(x[1].extras.multipleGroup !== undefined){
+                                this.zChildren[this.extras.zSymbol].extras.multipleGroup =
+                                x[1].extras.multipleGroup
+                            }
+                            //
                             this.renderer2.appendChild(
                                 x[1].element,
                                 this.el.nativeElement
@@ -79,17 +85,24 @@ export class NestDirective {
                 })
 
 
-            })
+            }
+
+            this.ryber[this.extras.co.valueOf()].metadata.zChildrenSubject
+            .pipe(first())
+            .subscribe(nestInit)
+
         }
     }
 
 
     ngOnDestroy() {
-        if (this.extras?.confirm === 'true' ) {
+        if (this.extras?.confirm === 'true') {
             Object.values(this)
             .forEach((x: any, i) => {
-                // console.log(x instanceof Subscriber)
-                x.unsubscribe?.()
+                if(x instanceof Subscriber){
+                    x.unsubscribe?.()
+                }
+
             })
         }
     }

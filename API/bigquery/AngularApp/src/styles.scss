@@ -100,18 +100,17 @@ input {
 /* } */
 
 
-/* app-root * {
+// app-root * {
 
-    position: absolute;
-    margin : 0px;
-    transition: top 2s, left 2s, font-size 3s;
-} */
+
+//     transition: top 2s, left 2s, font-size 3s;
+// }
 
 app-root :not([class^='ag']) {
 
     position: absolute;
     margin : 0px;
-    /* transition: top 2s, left 2s, font-size 3s; */
+    // transition: top 2s, left 2s, font-size 3s;
 }
 .a_p_p_Board{
     background-color: $bg-color-1;

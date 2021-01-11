@@ -168,10 +168,12 @@ export class RegularTablesDirective {
     ngOnDestroy() {
         if (this.extras?.confirm === 'true') {
             Object.values(this)
-                .forEach((x: any, i) => {
-                    console.log(x instanceof Subscriber)
+            .forEach((x: any, i) => {
+                if(x instanceof Subscriber){
                     x.unsubscribe?.()
-                })
+                }
+
+            })
         }
     }
 }

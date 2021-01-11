@@ -790,22 +790,6 @@ export function coInit (a,componentObjects,additional?) {
         })
         //
 
-        // dont delete yet make sure abovce code block works
-        // for(let i = 0; i !== co.quantity.length; i++){
-        //     for(let j = 0; j !== co.quantity[i].length; j++){
-        //         co.quantity[i][j].text.forEach((z,k)=>{
-        //             z.forEach((w,h)=>{
-        //                 z[h] = {item:w}
-        //             })
-        //         })
-        //         co.quantity[i][j].ngCssDefault = objectCopy(   co.quantity[i][j].ngCss   )
-        //     }
-        // }
-        //
-        //
-
-
-
     })
 
 }
@@ -860,7 +844,7 @@ export function ryberUpdate(
                         {
                             signature:"containing",
                             quantity:[[3]],
-                            bool:[["div"]],
+                            bool:[["divBoard"]],
                             val:[
                                 [
                                     co
@@ -963,7 +947,7 @@ export function ryberUpdate(
         }
 
         else if(
-            ['div','img','b','embed','video','audio','mat-spinner','ag-grid']
+            ['img','b','embed','video','audio','mat-spinner','ag-grid']
             .includes(bool)
         ){
             index = 2
@@ -983,7 +967,8 @@ export function ryberUpdate(
                 'c',
                 'l',
                 'f',
-                'u'
+                'u',
+                'div'
             ]
             .includes(bool)
         ){

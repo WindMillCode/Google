@@ -216,9 +216,10 @@ def stagingTest
 		end
     end
 
-    RSpec.feature %{ui}    do
+     # works only on play
+    RSpec.feature %{ui}  do
 
-		scenario %{When I hit add and remove buttons I get what I need} do
+		scenario %{When I hit add and remove buttons I get what I need},:skip => true do
 
             # for the multiples pressing the add & button random times
             adding = rand(6..9)
@@ -235,7 +236,27 @@ def stagingTest
             expect(result -1 ).to eq (adding - removing)
             #
 
-		end
+        end
+
+
+        scenario %{the subtitle is nested appropriately},:skip => true do
+            sub_heading = first %{.a_p_p_SubHeading}
+            p sub_heading
+            expect(sub_heading.find(:xpath, '..')[:className]).to start_with(%{a_p_p_Nester})
+        end
+
+        scenario %{when i add nested items in div, they are duplicated as intended} do
+            # as this version of Judima, only direct children get copied properly, if an item
+            # to be copied has indirect zChildren errors might occur
+            add_button = first %{.f_o_r_m_add-schema}
+            add_button.select_option
+            all_inputs = all %{[class*="f_o_r_m_form-item-container"]}
+            # expect there to be a duplicate
+            expect(all_inputs.length).to eq 2
+            # expect the elements in the form item to be 2
+            expect(  (all_inputs.at 1).all(%{*})   ).to eq
+
+        end
     end
 
 end
