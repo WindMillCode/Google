@@ -72,24 +72,28 @@ export class AppComponent implements OnInit, OnDestroy {
                 return this.ryber[x.valueOf()]
             })
         )
-            .subscribe((coArray: any) => {
-                coInit(
-                    this.ryber,
-                    coArray,
-                    ((devObj) => {
-                        let { co } = devObj
-                        co.metadata.formData = {}
-                        co.metadata.refresh = {}
-                        co.metadata.zChildrenSubject = new Subject<any>()
-                            .pipe(
-                                tap((val) => {
-                                    co.metadata.zChildren = val.directivesZChild
-                                    co.metadata.zChildren$ = of(val.directivesZChild)
-                                }),
-                            )
-                    })
-                )
-            })
+        .subscribe((coArray: any) => {
+            coInit(
+                this.ryber,
+                coArray,
+                ((devObj) => {
+                    let { co } = devObj
+                    co.metadata.formData = {}
+                    co.metadata.refresh = {}
+                    co.metadata.latch = {
+                        updateZChild : new Subject<any>(),
+                        zChild:{}
+                    }
+                    co.metadata.zChildrenSubject = new Subject<any>()
+                        .pipe(
+                            tap((val) => {
+                                co.metadata.zChildren = val.directivesZChild
+                                co.metadata.zChildren$ = of(val.directivesZChild)
+                            }),
+                        )
+                })
+            )
+        })
 
         // console.log(this.ryber)
 

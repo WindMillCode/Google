@@ -42,7 +42,7 @@ export class RyberService {
 
 
             let { mf } = devObj
-            let { options,nestUnder,nest,nestGroup,printGroupType, printGroup, key, type, gap, stack, value, group, count, repeatable, newline, form, multipleGroup, refreshGroup, background, color, fonts, title, fontSize, italics, googleSheets, border } = mf
+            let { latch,options,nestUnder,nest,nestGroup,printGroupType, printGroup, key, type, gap, stack, value, group, count, repeatable, newline, form, multipleGroup, refreshGroup, background, color, fonts, title, fontSize, italics, googleSheets, border } = mf
             let { left, top, height, width, split, next } = devObj.mf
             let component = { left, top, height, width, split, next }
 
@@ -162,8 +162,9 @@ export class RyberService {
                             link: form?.link
                         },
                         appLatch:{
-                            confirm:"true",
-                            co
+                            confirm:latch === undefined ?"false":"true",
+                            co,
+                            latch
                         },
                         appNest: {
                             confirm:nestGroup === undefined ? "false": "true",
@@ -1485,8 +1486,7 @@ export class RyberService {
                     "font-weight": italics,
                 }
                 options.css === undefined ? undefined : (() => {
-                    css = options.css;
-
+                    css = {...css,...options.css}
                 })()
 
                 symbol = rUD({
@@ -1632,28 +1632,28 @@ export class RyberService {
                 if (x.type_slug === "google-sheets") {
 
                     x.metafields
-                        .forEach((y, j) => {
+                    .forEach((y, j) => {
 
-                            y.children
-                                .forEach((z: any, k) => {
+                        y.children
+                        .forEach((z: any, k) => {
 
-                                    if (z.title === "subsheet titles") {
-                                        this.appCO0.metadata["google-sheets"] = objectCopy(z.options)
+                            if (z.title === "subsheet titles") {
+                                this.appCO0.metadata["google-sheets"] = objectCopy(z.options)
+                            }
+
+                            else if (z.title === "office fields") {
+                                z.children
+                                .forEach((w: any, h) => {
+                                    if (w.title === "applicant_id") {
+                                        this.appCO0.metadata["applicant_id"] = objectCopy(w.options)
+
                                     }
-
-                                    else if (z.title === "office fields") {
-                                        z.children
-                                            .forEach((w: any, h) => {
-                                                if (w.title === "applicant_id") {
-                                                    this.appCO0.metadata["applicant_id"] = objectCopy(w.options)
-
-                                                }
-                                            })
-                                    }
-
                                 })
+                            }
 
                         })
+
+                    })
 
                 }
 
@@ -1803,16 +1803,7 @@ export class RyberService {
                     //
 
                     //es setup
-                    this[mySlug + 'ES'.valueOf()] = {
-                        resize: {
-                        },
-                        click: {
-                        },
-                        load: {
-                        },
-                        input: {
-                        }
-                    }
+                    this[mySlug + 'ES'.valueOf()] = objectCopy(this.appES)
                     this.appCO0.metadata.ES.push(mySlug + 'ES'.valueOf())
                     //
 
@@ -1908,7 +1899,8 @@ export class RyberService {
         load: {
         },
         input: {
-        }
+        },
+        latchUpdate:{}
     }
     appSubscriptionArray: Subscription[] = []
     appViewComplete: Subject<any> = new Subject<any>()

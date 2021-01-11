@@ -10,13 +10,16 @@ declare global {
 
 
 
+export class zChildText {
+    item:string
+}
 
 export class zChildren {
     element:  HTMLElement;
     css:Object | any;
     cssDefault?:Object;
     bool?:string;
-    innerText?:null | string;
+    innerText?:null | string | zChildText ;
     link?:string;
     quantity?:any;
     mouseover?:any;
@@ -24,6 +27,8 @@ export class zChildren {
     Ielement?:any;
     symbol?:Symbol|String
 }
+
+
 
 export class componentObject { // not final
     quantity: any[];
@@ -636,7 +641,6 @@ export function numDigits(
     return Math.max(Math.floor(Math.log10(Math.abs(devObj.x))), 0) + 1;
 }
 
-
 export function objectCopy(obj){
     return JSON.parse(   JSON.stringify(   obj  )   )
 }
@@ -767,14 +771,14 @@ export function coInit (a,componentObjects,additional?) {
         //
 
         // additional things you want to do for all components
-        if(additional !== undefined){
+        if(additional instanceof Function){
             additional({
                 co
             })
         }
         //
 
-        //providing for cssDefaults
+        //providing for cssDefaults and text
         co.quantity
         .forEach((y,j)=>{
             co.quantity[j]
@@ -800,16 +804,17 @@ export function ryberUpdate(
         co:string,
         type?:string,
         css?:any | CSSRuleList,
+        cssDefault?:any |CSSRuleList
         extras?:any,
         bool?:string,
-        text?:string,
+        text?:any | zChildText | string,
         val?:string,
         signature?:string,
         spot?:number,
         symbolStart?:Array<number>
     }
 ){
-    let {co,type,css,extras,bool,text,val,signature,symbolStart,spot}= devObj
+    let {co,type,css,cssDefault,extras,bool,text,val,signature,symbolStart,spot}= devObj
 
 
     let ryber = this
@@ -1021,6 +1026,14 @@ export function ryberUpdate(
         }
         //
 
+        //validating text
+        // if(!("item" in text) ){
+        //     text = {item:text}
+        // }
+        //
+
+
+
         // adding the zChild
             subCO.quantity[index].push(3)
 
@@ -1034,6 +1047,9 @@ export function ryberUpdate(
                 subCO.symbol[index].push(
                     "&#" + symbol
                 )
+                // if(cssDefault !== undefined){
+                //     subCO.ngCssDefault[index].push(cssDefault)
+                // }
             }
 
             else{
@@ -1045,6 +1061,9 @@ export function ryberUpdate(
                 subCO.symbol[index].splice(spot,0,
                     "&#" + symbol
                 )
+                // if(cssDefault !== undefined){
+                //     subCO.ngCssDefault[index].splice(spot,0,cssDefault)
+                // }
             }
             subCO.signature = signature
         //
@@ -1343,7 +1362,6 @@ export function xContain(
     {
 
         if(devObj.type === 'preserve'){
-
 
             if( devObj.preserve.targetPos === undefined){
                 devObj.preserve.targetPos = []

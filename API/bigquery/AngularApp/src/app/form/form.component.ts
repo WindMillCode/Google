@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChildren, AfterViewInit, Inject, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, Renderer2, ElementRef } from '@angular/core';
 import { RyberService } from '../ryber.service';
 import { fromEvent, interval, of, from, Observable, merge, Subject, BehaviorSubject, combineLatest } from 'rxjs';
-import { catchError, take, timeout, mapTo, debounceTime, distinctUntilChanged, debounce, first, ignoreElements, tap } from 'rxjs/operators';
+import { catchError, take, timeout, mapTo, debounceTime, distinctUntilChanged, debounce, first, ignoreElements, tap, delay } from 'rxjs/operators';
 import {
     zChildren, getTextWidth, numberParse,
     xPosition, resize, componentBootstrap, deltaNode,
@@ -75,7 +75,8 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                 // giving inputHandle what it needs
                 this.directivesSendData({
                     directivesZChild:zChild,
-                    random:Math.random()
+                    random:Math.random(),
+                    templateMyElements:this.templateMyElements
                 })
                 //
 
@@ -129,6 +130,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                 //grabbing the values how the browser renders them
                     //nesting modification here too
                 let topLevelZChild = this.zChildInit()
+                let latchZChild
                 this.ryber[this.appTV.valueOf()].metadata.order = this.ryber[this.appTV.valueOf()].metadata.order
                 .filter((x:any,i)=>{
                     if(zChild[x].extras.appNest !== undefined){
@@ -374,6 +376,8 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                 })
                 //
 
+
+
                 //stack spacing setup
                 // console.log(align)
                 let spacing =  [null,
@@ -391,6 +395,62 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                 })
                 //
 
+                //latch setup
+                this.ryber.appEvents({
+                    typesES:this.typesES,
+                    event:'latchUpdate',
+                    of:combineLatest([
+                        this.ryber[this.appTV].metadata.latch.updateZChild,
+                        this.templateMyElements.changes
+                    ])
+                    .subscribe((a)=>{
+                        //fix the component object before continuing
+                        let co = this.ryber[this.appTV]
+                        co.quantity
+                        .forEach((y,j)=>{
+                            co.quantity[j]
+                            .forEach((z,k)=>{
+                                z.text
+                                .forEach((w,h)=>{
+                                    w.forEach((xx,ii)=>{
+                                        if(!(w[ii]?.hasOwnProperty("item")) ){
+                                            w[ii] = {item:xx}
+                                        }
+                                    })
+                                })
+                                // remember we just cant overwrite the cssDefaults find the missing
+                                // cssDefault
+                                z.ngCss
+                                .forEach((w:any,h)=>{
+                                    w.forEach((xx:any,ii)=>{
+                                        if(z.ngCssDefault[h]?.[ii] === undefined){
+                                            z.ngCssDefault[h].splice(ii,0,objectCopy(xx))
+                                        }
+                                    })
+                                })
+                                //
+                            })
+                        })
+                        zChild = this.zChildInit()
+                        latchZChild = this.ryber[this.appTV].metadata.latch.zChild = this.zChildInit()
+                        Object.keys(latchZChild)
+                        .filter((x:any,i)=>{
+                            if(latchZChild[x]?.extras?.judima?.format === "false"){
+                                delete latchZChild[x]
+                            }
+                        })
+                        this.directivesSendData({
+                            directivesZChild:zChild,
+                            random:Math.random()
+                        })
+                        eventDispatcher({
+                            event:'resize',
+                            element:window
+                        })
+                    })
+                })
+
+                //
 
                 this.ryber.appEvents({
                     typesES:this.typesES,
@@ -457,9 +517,13 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                                     .keys(zChild)
                                     .slice(2)
                                     .forEach((x,i)=>{
-                                        zChild[x].css["height"] = zChild[x].cssDefault["height"]
-                                        zChild[x].css["width"] = zChild[x].cssDefault["width"]
-                                        zChild[x].css["font-size"] = zChild[x].cssDefault["font-size"]
+                                        if(zChild[x]?.extras?.judima?.format !== "false"){
+
+
+                                            zChild[x].css["height"] = zChild[x].cssDefault["height"]
+                                            zChild[x].css["width"] = zChild[x].cssDefault["width"]
+                                            zChild[x].css["font-size"] = zChild[x].cssDefault["font-size"]
+                                        }
                                     })
                                     this.ref.detectChanges()
                                     //
@@ -477,7 +541,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                                         }
                                     })
                                     //
-
+                                    // debugger
 
                                     stack({
                                         zChildKeys:[
@@ -494,19 +558,22 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                                     this.ref.detectChanges()
 
 
-                                    // debugger
+
                                     // align options
+
                                     xContain({
                                         preserve:{
                                             align,
-                                            zChild,
+                                            // zChild,
+                                            zChild:latchZChild === undefined ? zChild:latchZChild,
                                             ref:this.ref,
                                             width:section.width,
                                             left:section.left
                                         },
-                                        type:'preserve'
+                                        type:'preserve',
                                     })
                                     //
+
 
                                     if(group !== undefined && deltaNodeSite !== undefined){
                                         // console.log(group)
@@ -1336,11 +1403,12 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
     private directivesSendData(devObj?:{
         directivesZChild:zChildren,
         random?:any,
+        templateMyElements?:any,
         duplicate?
     }):void{
 
 
-        let {directivesZChild,random,duplicate} = devObj
+        let {directivesZChild,random,duplicate,templateMyElements} = devObj
         // subjects meeded for input handle to work
         Object
         .keys(directivesZChild)
@@ -1362,7 +1430,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                 }
             }
         })
-        this.ryber[this.appTV.valueOf()].metadata.zChildrenSubject.next(({directivesZChild,random}))
+        this.ryber[this.appTV.valueOf()].metadata.zChildrenSubject.next(({directivesZChild,random,templateMyElements}))
 
     }
 

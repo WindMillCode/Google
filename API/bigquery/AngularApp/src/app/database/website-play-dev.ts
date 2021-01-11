@@ -3,7 +3,7 @@ let website:any = {}
 website.convertCMS = [
 
     {
-        "title": "present_drive_files",
+        "title": "play",
         "type_slug": "forms",
         "metafields": [
 
@@ -239,8 +239,14 @@ website.convertCMS = [
             {
                 "key": "schema-mode",
                 "type": "input",
-                "value":"",
+                "value":"Mode Type",
+                "newline":[
+                    "REPEATED",
+                    "REQUIRED",
+                    "NULLABLE"
+                ],
                 "fontSize":"120",
+                "latch":"",
                 // "multipleGroup":"schemasInput",
                 // "split": "3",
                 // "width":"300",
@@ -257,6 +263,7 @@ website.convertCMS = [
                     }
                 }
             },
+
 
         ]
     },
