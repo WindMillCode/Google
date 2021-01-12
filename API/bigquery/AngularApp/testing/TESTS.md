@@ -11,3 +11,7 @@
 
 * when items are added in multiple Group and they have an item inside another, make sure only the proper items are properly duplicated
 * latching items, should be positioned as intented and contain items as intended, mabye not going along with the formatting from component.ts
+    * toggle, 
+    * move with targetzChild
+    * populate like nest    
+    * make sure board moves if nest extends the page

@@ -58,6 +58,8 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                 }
 
                 let zChild = this.zChildInit()
+                let topLevelZChild = this._topLevelZChildInit()
+                let latchZChild
                 let staticZKeys = this.staticZKeysGen(zChild)
                 if(env.component.form.zChild === ii){
                     console.log(zChild);
@@ -76,7 +78,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                 this.directivesSendData({
                     directivesZChild:zChild,
                     random:Math.random(),
-                    templateMyElements:this.templateMyElements
+                    templateMyElements:this.templateMyElements,
                 })
                 //
 
@@ -128,16 +130,12 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
 
 
                 //grabbing the values how the browser renders them
-                    //nesting modification here too
-                let topLevelZChild = this.zChildInit()
-                let latchZChild
                 this.ryber[this.appTV.valueOf()].metadata.order = this.ryber[this.appTV.valueOf()].metadata.order
                 .filter((x:any,i)=>{
                     if(zChild[x].extras.appNest !== undefined){
                         if( zChild[x].extras.appNest.nestUnder !== undefined &&
                             zChild[x].extras.appNest.nestGroup !== undefined
                         ){
-                            delete topLevelZChild[x]
                             return false
                         }
                     }
@@ -424,6 +422,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                                 .forEach((w:any,h)=>{
                                     w.forEach((xx:any,ii)=>{
                                         if(z.ngCssDefault[h]?.[ii] === undefined){
+                                            xx.left ="0px"
                                             z.ngCssDefault[h].splice(ii,0,objectCopy(xx))
                                         }
                                     })
@@ -432,13 +431,8 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                             })
                         })
                         zChild = this.zChildInit()
-                        latchZChild = this.ryber[this.appTV].metadata.latch.zChild = this.zChildInit()
-                        Object.keys(latchZChild)
-                        .filter((x:any,i)=>{
-                            if(latchZChild[x]?.extras?.judima?.format === "false"){
-                                delete latchZChild[x]
-                            }
-                        })
+                        topLevelZChild = this._topLevelZChildInit()
+                        latchZChild = this.ryber[this.appTV].metadata.latch.zChild = this._latchZChildInit()
                         this.directivesSendData({
                             directivesZChild:zChild,
                             random:Math.random()
@@ -560,7 +554,6 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
 
 
                                     // align options
-
                                     xContain({
                                         preserve:{
                                             align,
@@ -1323,6 +1316,32 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
         this.ref.detectChanges();
     }
 
+    private _topLevelZChildInit (){
+        let topLevelZChild = this.zChildInit()
+        Object.keys(topLevelZChild)
+        .forEach((x:any,i)=>{
+            if(topLevelZChild[x]?.extras?.appNest !== undefined){
+                if( topLevelZChild[x].extras.appNest.nestUnder !== undefined &&
+                    topLevelZChild[x].extras.appNest.nestGroup !== undefined
+                ){
+                    delete topLevelZChild[x]
+                }
+            }
+        })
+        return topLevelZChild
+    }
+
+    private _latchZChildInit(){
+        let latchZChild = this.zChildInit()
+        Object.keys(latchZChild)
+        .filter((x:any,i)=>{
+            if(latchZChild[x]?.extras?.judima?.format === "false"){
+                delete latchZChild[x]
+            }
+        })
+        return latchZChild
+    }
+
     private dropDownInit(devObj) {
 
 
@@ -1404,11 +1423,12 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
         directivesZChild:zChildren,
         random?:any,
         templateMyElements?:any,
+        ref?:any,
         duplicate?
     }):void{
 
 
-        let {directivesZChild,random,duplicate,templateMyElements} = devObj
+        let {directivesZChild,random,duplicate,templateMyElements,ref} = devObj
         // subjects meeded for input handle to work
         Object
         .keys(directivesZChild)
@@ -1430,7 +1450,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                 }
             }
         })
-        this.ryber[this.appTV.valueOf()].metadata.zChildrenSubject.next(({directivesZChild,random,templateMyElements}))
+        this.ryber[this.appTV.valueOf()].metadata.zChildrenSubject.next(({directivesZChild,random,templateMyElements,ref}))
 
     }
 

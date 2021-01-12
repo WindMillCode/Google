@@ -263,6 +263,33 @@ website.convertCMS = [
                     }
                 }
             },
+            {
+                "key": "schema-mode",
+                "type": "dropdown",
+                "value":"Mode Type",
+                "newline":[
+                    "REPEATED",
+                    "REQUIRED",
+                    "NULLABLE"
+                ],
+                "fontSize":"120",
+                "latch":"",
+                // "multipleGroup":"schemasInput",
+                // "split": "3",
+                // "width":"300",
+                "height":"250",
+                "googleSheets": {},
+                "options":{
+                    "css":{
+                        // "justify-self":"flex-start",
+                        // "flex-grow":"1"
+                        order:-2,
+                        "background":"white",
+                        "height":"50px",
+                        "width":"400px",
+                    }
+                }
+            },
 
 
         ]

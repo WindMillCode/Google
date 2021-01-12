@@ -1,7 +1,7 @@
-import { Directive, ElementRef, HostListener, Input, Renderer2, TemplateRef, ViewContainerRef, ViewRef, EmbeddedViewRef, ViewChildren, Host } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, Renderer2, TemplateRef, ViewContainerRef, ViewRef, EmbeddedViewRef, ViewChildren, Host,ChangeDetectorRef } from '@angular/core';
 import { RyberService } from '../ryber.service'
-import { fromEvent, from, Subscription, Subscriber, of, combineLatest } from 'rxjs';
-import { deltaNode, eventDispatcher, numberParse, objectCopy,ryberUpdate } from '../customExports'
+import { fromEvent, from, Subscription, Subscriber, of, combineLatest, Observable } from 'rxjs';
+import { deltaNode, eventDispatcher, numberParse, objectCopy,ryberUpdate,xContain,stack, zChildren } from '../customExports'
 import { catchError, delay } from 'rxjs/operators'
 import { environment as env } from '../../environments/environment'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -19,6 +19,7 @@ export class LatchDirective {
     zChildren: any;
     zSymbols:Array<string /*zSymbol*/>
     newZChildren:Subscription
+    moveWithTarget:Subscription
     templateMyElements:any
 
     constructor(
@@ -35,7 +36,6 @@ export class LatchDirective {
             if(zChild.element.value === "REPEAT"){
 
                 if(this.zSymbols === undefined){
-                    console.log("adding elements")
                     // try to add elements to the dom
                         //  the first element, should be the element we want to toggle out
                     this.zSymbols = [
@@ -44,30 +44,80 @@ export class LatchDirective {
                             bool: 'div',
                             val: 'mode-handler a_p_p_Nester',
                             css:{
-                                height:"300px",
-                                width:"300px",
-                                "background-color":"lightgreen"
+                                height:"600px",
+                                width: "1200px",
+                                border:"1px dotted lightgreen",
+                                "z-index":zChildren[this.extras.zSymbol].css["z-index"] + 1,
+                                "display":"flex"
                             },
                             extras:{
                                 judima:{
                                     format:"false"
                                 },
-                                component:{
-                                    left:"50"
+                                appNest: {
+                                    confirm:"true",
+                                    co,
+                                    nestGroup:"modeQuestions",
+                                    nest:"A1",
+                                }
+                            }
+                        }),
+                        ryberUpdate.call(this.ryber,{
+                            co,
+                            bool: 'b',
+                            text:'Add Input',
+                            val: 'add-value a_p_p_Button',
+                            css:{
+                                "z-index":zChildren[this.extras.zSymbol].css["z-index"] + 1,
+                                "height":"100px",
+                                "width":"200px"
+                            },
+                            extras:{
+                                judima:{
+                                    format:"false"
+                                },
+                                appNest: {
+                                    confirm:"true",
+                                    co,
+                                    nestGroup:"modeQuestions",
+                                    nestUnder:"A1",
+                                    nest:"B1",
+                                }
+                            }
+                        }),
+                        ryberUpdate.call(this.ryber,{
+                            co,
+                            bool: 'b',
+                            text:'Remove Input',
+                            val: 'remove-value a_p_p_Button',
+                            css:{
+                                "z-index":zChildren[this.extras.zSymbol].css["z-index"] + 1,
+                                "height":"100px",
+                                "width":"200px"
+                            },
+                            extras:{
+                                judima:{
+                                    format:"false"
+                                },
+                                appNest: {
+                                    confirm:"true",
+                                    co,
+                                    nestGroup:"modeQuestions",
+                                    nestUnder:"A1",
+                                    nest:"B1",
                                 }
                             }
                         })
                     ]
-                    console.log(this.zSymbols,this.ryber[co])
+                    // console.log(this.zSymbols,this.ryber[co])
 
                 }
-
 
             }
 
             //FIXME, ViewChildren has not changed yet it somehow manages to fire
             else{
-                console.log("trying to trigger")
+                // console.log("trying to trigger")
                 // this.templateMyElements.notifyOnChanges()
             }
             //trigger directivesSendData
@@ -119,6 +169,26 @@ export class LatchDirective {
                         })
 
                     }
+                    //
+
+                }
+                //
+            })
+            this.moveWithTarget = fromEvent(window,"resize")
+            .pipe(
+            catchError((error)=>{
+                return of(error)
+            })
+            ).subscribe((result:any)=>{
+                // attempt to place element in stack
+                if(this.zSymbols !== undefined){
+                    let align = [[this.extras.zSymbol,this.zSymbols[0]]]
+                    //FIX ME, make more responsive for several TLD
+                    this.zChildren[this.zSymbols[0]].css.top =(
+                        numberParse(this.zChildren[this.extras.zSymbol].css.top) +
+                        numberParse(this.zChildren[this.extras.zSymbol].css.height)
+                    ).toString() + "px"
+                    this.zChildren[this.zSymbols[0]].css.left =this.zChildren[this.extras.zSymbol].css.left
                     //
 
                 }
