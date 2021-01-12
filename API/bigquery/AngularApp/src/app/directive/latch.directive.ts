@@ -21,6 +21,7 @@ export class LatchDirective {
     newZChildren:Subscription
     moveWithTarget:Subscription
     templateMyElements:any
+    ref:ChangeDetectorRef
 
     constructor(
         private el: ElementRef,
@@ -46,7 +47,7 @@ export class LatchDirective {
                             css:{
                                 height:"600px",
                                 width: "1200px",
-                                border:"1px dotted lightgreen",
+                                border:"5px dotted lightgreen",
                                 "z-index":zChildren[this.extras.zSymbol].css["z-index"] + 1,
                                 "display":"flex"
                             },
@@ -57,7 +58,7 @@ export class LatchDirective {
                                 appNest: {
                                     confirm:"true",
                                     co,
-                                    nestGroup:"modeQuestions",
+                                    nestGroup:"modeQuestions" + this.extras.zSymbol,
                                     nest:"A1",
                                 }
                             }
@@ -79,7 +80,7 @@ export class LatchDirective {
                                 appNest: {
                                     confirm:"true",
                                     co,
-                                    nestGroup:"modeQuestions",
+                                    nestGroup:"modeQuestions" + this.extras.zSymbol,
                                     nestUnder:"A1",
                                     nest:"B1",
                                 }
@@ -102,7 +103,7 @@ export class LatchDirective {
                                 appNest: {
                                     confirm:"true",
                                     co,
-                                    nestGroup:"modeQuestions",
+                                    nestGroup:"modeQuestions" + this.extras.zSymbol,
                                     nestUnder:"A1",
                                     nest:"B1",
                                 }
@@ -144,6 +145,9 @@ export class LatchDirective {
                 if(devObj.templateMyElements !== undefined){
                     this.templateMyElements = devObj.templateMyElements
                 }
+                if(devObj.ref !== undefined){
+                    this.ref = devObj.ref
+                }
                 this.zChildren = this.ryber[this.extras.co.valueOf()].metadata.zChildren
                 // console.log(this.zChildren)
 
@@ -174,11 +178,11 @@ export class LatchDirective {
                 }
                 //
             })
-            this.moveWithTarget = fromEvent(window,"resize")
+            this.moveWithTarget = this.ryber[this.co].metadata.ngAfterViewInitFinished
             .pipe(
-            catchError((error)=>{
-                return of(error)
-            })
+                catchError((error)=>{
+                    return of(error)
+                }),
             ).subscribe((result:any)=>{
                 // attempt to place element in stack
                 if(this.zSymbols !== undefined){
@@ -189,6 +193,7 @@ export class LatchDirective {
                         numberParse(this.zChildren[this.extras.zSymbol].css.height)
                     ).toString() + "px"
                     this.zChildren[this.zSymbols[0]].css.left =this.zChildren[this.extras.zSymbol].css.left
+                    this.ref.detectChanges()
                     //
 
                 }

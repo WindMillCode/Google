@@ -170,6 +170,7 @@ export function componentBootstrap(
             while(
                 x.nativeElement.className.split(" ")
                 .reduce((acc,x,i)=>{
+                    // console.log(x,zClassTarget)
                     if(x === zClassTarget ){
                         acc = false
                     }

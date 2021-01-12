@@ -217,9 +217,9 @@ def stagingTest
     end
 
      # works only on play
-    RSpec.feature %{ui}  do
+    RSpec.feature %{ latching}, :skip => true  do
 
-		scenario %{When I hit add and remove buttons I get what I need},:skip => true do
+		scenario %{When I hit add and remove buttons I get what I need} do
 
             # for the multiples pressing the add & button random times
             adding = rand(6..9)
@@ -239,13 +239,13 @@ def stagingTest
         end
 
 
-        scenario %{the subtitle is nested appropriately},:skip => true do
+        scenario %{the subtitle is nested appropriately} do
             sub_heading = first %{.a_p_p_SubHeading}
             p sub_heading
             expect(sub_heading.find(:xpath, '..')[:className]).to start_with(%{a_p_p_Nester})
         end
 
-        scenario %{when i add nested items in div, they are duplicated as intended} do
+        scenario %{when i add nested items in div, they are duplicated as intended}  do
             # as this version of Judima, only direct children get copied properly, if an item
             # to be copied has indirect zChildren errors might occur
             add_button = first %{.f_o_r_m_add-schema}
@@ -257,9 +257,146 @@ def stagingTest
             expect(  (all_inputs.at 1).all(%{*})   ).to eq
 
         end
+
+
+    end
+
+    RSpec.feature %{latching} do
+        scenario %{latching items should exist} , :skip=>true do
+            latch_elements = all %{[class*="f_o_r_m_schema-mode"]}
+            latch_elements[0].send_keys %{REPEAT}
+            latch_elements[1].send_keys %{}
+            sleep 2
+            latch_attached_elements = all %{.f_o_r_m_mode-handler}
+            expect(latch_attached_elements).to be_truthy
+
+        end
+
+        scenario %{latching items should be positioned as intended}, :skip=>true  do
+            # here the latched elements should be below the element
+            latch ={
+                :elements => (all %{[class*="f_o_r_m_schema-mode"]}),
+                :style => nil,
+                :value => 0
+            }
+            latch[:elements][0].send_keys %{REPEAT}
+            latch[:elements][1].send_keys %{}
+            sleep 2
+            # grab the css for the target and its attachment
+            latch_attached = {
+                :elements => (all %{.f_o_r_m_mode-handler}),
+                :style => nil,
+                :value => 0
+            }
+            latch[:style] = latch[:elements][0].style %{height},%{top}
+            latch_attached[:style] = latch_attached[:elements][0].style %{top}
+            #
+
+            # calculate the values when ther are supposed to be next to each other
+            latch[:style].each do |k,v|
+
+                latch[:value] += (numberParse :dimension => v).to_f
+            end
+            latch_attached[:style].each do |k,v|
+
+                latch_attached[:value] += (numberParse :dimension => v).to_f
+            end
+            #
+
+            # test
+            expect(latch[:value]).to eq latch_attached[:value]
+            #
+
+
+        end
+
+        scenario %{window resize latch attachment moves with the target}, :skip=>true do
+            widths = %w{300  1020  1510}.collect &:to_i
+            # here the latched elements should be below the element
+            latch ={
+                :elements => (all %{[class*="f_o_r_m_schema-mode"]}),
+                :style => nil,
+                :value => 0
+            }
+            latch[:elements][0].send_keys %{REPEAT}
+            latch[:elements][1].send_keys %{}
+            sleep 2
+            # grab the css for the target and its attachment
+            latch_attached = {
+                :elements => (all %{.f_o_r_m_mode-handler}),
+                :style => nil,
+                :value => 0
+            }
+            #
+
+            widths.each_with_index do |width,i|
+                # page.fullscreen
+
+                begin
+                    page.current_window.resize_to width, 800
+                rescue => e
+                    execute_script %Q{
+                        resizeTo(#{width},800)
+                    }
+                end
+                # see if the values match up
+                latch[:style] = latch[:elements][0].style %{height},%{top}
+                latch_attached[:style] = latch_attached[:elements][0].style %{top}
+                # calculate the values when ther are supposed to be next to each other
+                latch[:style].each do |k,v|
+                    latch[:value] += (numberParse :dimension => v).to_f
+                end
+                latch_attached[:style].each do |k,v|
+
+                    latch_attached[:value] += (numberParse :dimension => v).to_f
+                end
+                #
+
+                # test
+                expect(latch[:value]).to eq latch_attached[:value]
+                #
+
+            end
+
+        end
+
+
+
+        scenario %{mutliple and or toggle are supported } do
+            latch ={
+                :elements => (all %{[class*="f_o_r_m_schema-mode"]}),
+                :style => nil,
+                :value => 0
+            }
+            # remember latchDirective specifcally works on blur
+            latch[:elements][0].send_keys %{REPEAT}
+            latch[:elements][1].send_keys %{REPEAT}
+            latch[:elements][0].select_option
+            sleep 2
+            # grab the css for the target and its attachment
+            latch_attached = {
+                :elements => (all %{.f_o_r_m_mode-handler}),
+                :style => [],
+                :value => 0
+            }
+            expect(latch_attached[:elements].length).to eq 2
+
+            latch[:elements][0].send_keys %{REEAT}
+            latch[:elements][1].send_keys %{REEAT}
+            latch[:elements][0].select_option
+            latch_attached[:elements].each.with_index do |x|
+                expect((x.style %{display})[%{display}]).to eq %{none}
+            end
+        end
     end
 
 end
 
+
+
+def numberParse  devObj
+    dimension = devObj[:dimension]
+    (dimension.split %{px}).at 0
+end
 
 stagingTest

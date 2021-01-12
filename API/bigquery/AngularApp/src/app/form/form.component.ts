@@ -79,6 +79,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                     directivesZChild:zChild,
                     random:Math.random(),
                     templateMyElements:this.templateMyElements,
+                    ref:this.ref
                 })
                 //
 
@@ -401,6 +402,9 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                         this.ryber[this.appTV].metadata.latch.updateZChild,
                         this.templateMyElements.changes
                     ])
+                    .pipe(
+                        delay(2)
+                    )
                     .subscribe((a)=>{
                         //fix the component object before continuing
                         let co = this.ryber[this.appTV]
@@ -423,6 +427,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                                     w.forEach((xx:any,ii)=>{
                                         if(z.ngCssDefault[h]?.[ii] === undefined){
                                             xx.left ="0px"
+                                            xx.top ="0px"
                                             z.ngCssDefault[h].splice(ii,0,objectCopy(xx))
                                         }
                                     })
@@ -430,6 +435,10 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                                 //
                             })
                         })
+                        // console.log(
+                        //     this.ryber,
+                        //     this.templateMyElements._results
+                        // )
                         zChild = this.zChildInit()
                         topLevelZChild = this._topLevelZChildInit()
                         latchZChild = this.ryber[this.appTV].metadata.latch.zChild = this._latchZChildInit()
@@ -779,6 +788,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
 
 
                                     // position board
+                                    this.ryber[this.appTV].metadata.ngAfterViewInitFinished.next("")
                                     this.positionBoard({zChild:topLevelZChild,current,deltaNodeSite});
                                     //
 
@@ -1086,6 +1096,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
 
 
                                     // position board
+                                    this.ryber[this.appTV].metadata.ngAfterViewInitFinished.next("")
                                     this.positionBoard({zChild:topLevelZChild,current,deltaNodeSite});
                                     //
 
@@ -1118,6 +1129,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                             boardHeight:zChild["&#8353"].css["height"]
                         })
                         //
+
 
                     })
                 })

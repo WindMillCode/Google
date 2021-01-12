@@ -85,12 +85,13 @@ export class AppComponent implements OnInit, OnDestroy {
                         zChild:{}
                     }
                     co.metadata.zChildrenSubject = new Subject<any>()
-                        .pipe(
-                            tap((val) => {
-                                co.metadata.zChildren = val.directivesZChild
-                                co.metadata.zChildren$ = of(val.directivesZChild)
-                            }),
-                        )
+                    .pipe(
+                        tap((val) => {
+                            co.metadata.zChildren = val.directivesZChild
+                            co.metadata.zChildren$ = of(val.directivesZChild)
+                        }),
+                    )
+                    co.metadata.ngAfterViewInitFinished = new Subject<any>()
                 })
             )
         })

@@ -250,126 +250,120 @@ export class DropDownDirective {
             })
 
 
-            this.ddOptionSub = fromEvent(window,'resize')
+            this.ddOptionSub = this.ryber[this.extras.co].metadata.ngAfterViewInitFinished
             .subscribe(()=>{
 
-                setTimeout(()=>{
+                if(this.dropDownClick === 'close'){
+                    this.extras.options?.symbols
+                    .forEach((y,j)=>{
+                        this.renderer
+                        .setStyle(
+                            this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].element,
+                            "width",
+                            "0px"
+                        )
+                        this.renderer
+                        .setStyle(
+                            this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].element,
+                            "height",
+                            "0px"
+                        )
+                        this.renderer
+                        .setStyle(
+                            this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].element,
+                            "opacity",
+                            0
+                        )
+                        this.renderer
+                        .setStyle(
+                            this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].element,
+                            "top",
+                            this.ryber[this.extras.co.valueOf()].metadata.zChildren[this.zChild[0]].css["top"]
+                        )
+                        this.renderer
+                        .setStyle(
+                            this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].element,
+                            "z-index",
+                            this.ryber[this.extras.co.valueOf()].metadata.zChildren[this.zChild[0]].css["z-index"] -1
+                        )
+                        this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].css["width"] = "0px"
+                        this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].css["height"] = "0px"
+                        this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].css["opacity"] = 0
+                        this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].css["top"] = this.ryber[this.extras.co.valueOf()].metadata.zChildren[this.zChild[0]].css["top"]
+                        this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].css["z-index"] = this.ryber[this.extras.co.valueOf()].metadata.zChildren[this.zChild[0]].css["z-index"] -1
+
+                    })
+                    // this.dropDownClick = 'close'
+
+                }
 
 
-                    if(this.dropDownClick === 'close'){
-                        this.extras.options?.symbols
-                        .forEach((y,j)=>{
-                            this.renderer
-                            .setStyle(
-                                this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].element,
-                                "width",
-                                "0px"
-                            )
-                            this.renderer
-                            .setStyle(
-                                this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].element,
-                                "height",
-                                "0px"
-                            )
-                            this.renderer
-                            .setStyle(
-                                this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].element,
-                                "opacity",
-                                0
-                            )
-                            this.renderer
-                            .setStyle(
-                                this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].element,
-                                "top",
-                                this.ryber[this.extras.co.valueOf()].metadata.zChildren[this.zChild[0]].css["top"]
-                            )
-                            this.renderer
-                            .setStyle(
-                                this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].element,
-                                "z-index",
-                                this.ryber[this.extras.co.valueOf()].metadata.zChildren[this.zChild[0]].css["z-index"] -1
-                            )
-                            this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].css["width"] = "0px"
-                            this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].css["height"] = "0px"
-                            this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].css["opacity"] = 0
-                            this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].css["top"] = this.ryber[this.extras.co.valueOf()].metadata.zChildren[this.zChild[0]].css["top"]
-                            this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].css["z-index"] = this.ryber[this.extras.co.valueOf()].metadata.zChildren[this.zChild[0]].css["z-index"] -1
+                else if(this.dropDownClick === 'open'){
 
-                        })
-                        // this.dropDownClick = 'close'
-
+                    let vals = {
+                        width:this.ryber[this.extras.co.valueOf()].metadata.zChildren[this.zChild[0]].css["width"],
+                        height:this.ryber[this.extras.co.valueOf()].metadata.zChildren[this.zChild[0]].css["height"],
+                        opacity:(this.ryber[this.extras.co.valueOf()].metadata.zChildren[this.zChild[0]].css["opacity"] === undefined ? 1 : this.ryber[this.extras.co.valueOf()].metadata.zChildren[this.zChild[0]].css["opacity"]),
+                        top:"",
+                        left:         this.ryber[this.extras.co.valueOf()].metadata.zChildren[this.zChild[0]].css["left"],
+                        "z-index":        this.ryber[this.extras.co.valueOf()].metadata.zChildren[this.zChild[0]].css["z-index"]
                     }
+                    this.extras.options?.symbols
+                    .forEach((y,j)=>{
 
-
-                    else if(this.dropDownClick === 'open'){
-
-                        let vals = {
-                            width:this.ryber[this.extras.co.valueOf()].metadata.zChildren[this.zChild[0]].css["width"],
-                            height:this.ryber[this.extras.co.valueOf()].metadata.zChildren[this.zChild[0]].css["height"],
-                            opacity:(this.ryber[this.extras.co.valueOf()].metadata.zChildren[this.zChild[0]].css["opacity"] === undefined ? 1 : this.ryber[this.extras.co.valueOf()].metadata.zChildren[this.zChild[0]].css["opacity"]),
-                            top:"",
-                            left:         this.ryber[this.extras.co.valueOf()].metadata.zChildren[this.zChild[0]].css["left"],
-                            "z-index":        this.ryber[this.extras.co.valueOf()].metadata.zChildren[this.zChild[0]].css["z-index"]
-                        }
-                        this.extras.options?.symbols
-                        .forEach((y,j)=>{
-
-                            this.renderer
-                            .setStyle(
-                                this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].element,
-                                "width",
-                                vals["width"]
+                        this.renderer
+                        .setStyle(
+                            this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].element,
+                            "width",
+                            vals["width"]
+                        )
+                        this.renderer
+                        .setStyle(
+                            this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].element,
+                            "height",
+                            vals["height"]
+                        )
+                        this.renderer
+                        .setStyle(
+                            this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].element,
+                            "opacity",
+                            vals["opacity"]
+                        )
+                        vals.top =                         (
+                            numberParse(this.ryber[this.extras.co.valueOf()].metadata.zChildren[this.zChild[0]].css["top"]) +
+                            (
+                                numberParse(this.ryber[this.extras.co.valueOf()].metadata.zChildren[this.zChild[0]].css["height"]) *
+                                (j+1)-
+                                (10*j)
                             )
-                            this.renderer
-                            .setStyle(
-                                this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].element,
-                                "height",
-                                vals["height"]
-                            )
-                            this.renderer
-                            .setStyle(
-                                this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].element,
-                                "opacity",
-                                vals["opacity"]
-                            )
-                            vals.top =                         (
-                                numberParse(this.ryber[this.extras.co.valueOf()].metadata.zChildren[this.zChild[0]].css["top"]) +
-                                (
-                                    numberParse(this.ryber[this.extras.co.valueOf()].metadata.zChildren[this.zChild[0]].css["height"]) *
-                                    (j+1)-
-                                    (10*j)
-                                )
-                            ).toString() + "px"
-                            this.renderer
-                            .setStyle(
-                                this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].element,
-                                "top",
-                                vals["top"]
-                            )
-                            this.renderer
-                            .setStyle(
-                                this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].element,
-                                "left",
-                                vals["left"]
-                            )
-                            this.renderer
-                            .setStyle(
-                                this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].element,
-                                "z-index",
-                                vals["z-index"]
-                            )
-                            this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].css["width"] = vals["width"]
-                            this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].css["height"] = vals["height"]
-                            this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].css["opacity"] = vals["opacity"]
-                            this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].css["top"] = vals["top"]
-                            this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].css["left"] = vals["left"]
-                            this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].css["z-index"] = vals["z-index"]
-                        })
-                        // this.dropDownClick = 'open'
-                    }
-
-
-                },100)
+                        ).toString() + "px"
+                        this.renderer
+                        .setStyle(
+                            this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].element,
+                            "top",
+                            vals["top"]
+                        )
+                        this.renderer
+                        .setStyle(
+                            this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].element,
+                            "left",
+                            vals["left"]
+                        )
+                        this.renderer
+                        .setStyle(
+                            this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].element,
+                            "z-index",
+                            vals["z-index"]
+                        )
+                        this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].css["width"] = vals["width"]
+                        this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].css["height"] = vals["height"]
+                        this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].css["opacity"] = vals["opacity"]
+                        this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].css["top"] = vals["top"]
+                        this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].css["left"] = vals["left"]
+                        this.ryber[this.extras.co.valueOf()].metadata.zChildren[y].css["z-index"] = vals["z-index"]
+                    })
+                    // this.dropDownClick = 'open'
+                }
 
             })
 

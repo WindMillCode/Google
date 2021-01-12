@@ -14,4 +14,6 @@
     * toggle, 
     * move with targetzChild
     * populate like nest    
-    * make sure board moves if nest extends the page
+    * make sure board moves if nest extends the page, and collaspes if necessary
+    * multiple should be supported
+
