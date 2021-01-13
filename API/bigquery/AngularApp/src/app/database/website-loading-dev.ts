@@ -3,7 +3,7 @@ let website:any = {}
 website.convertCMS = [
 
     {
-        "title": "bigquery",
+        "title": "loading",
         "type_slug": "forms",
         "metafields": [
 
@@ -11,24 +11,25 @@ website.convertCMS = [
                 "key": "Body",
                 "type": "body",
                 "stack": "60",
-                "gap":20,
-                "split":10,
-                "background": "rgb(255, 179, 204)",
+                // "height":"1000",
+                // "background": "rgb(255, 179, 204)",
                 "googleSheets": {}
             },
             {
                 "key": "Heading",
                 "value": "Welcome to the BigQuery Management Page",
                 "type": "title",
-                "split": "10",
+                "split": "9",
+                // "width":"420",
                 "googleSheets": {}
             },
             {
-                "key": "main-question",
-                "value": "Type in the name of the table,dataset,project as according to the backend ",
+                "key": "Heading",
+                "value": "Type in the name of the table,dataset,project as according to the backend",
                 "type": "sub-heading",
-                "split": "10",
                 "text-align":"center",
+                "split": "9",
+                // "width":"420",
                 "googleSheets": {}
             },
             {
@@ -38,17 +39,17 @@ website.convertCMS = [
                 "border":"1px solid black",
                 "fontSize":"60",
                 "background":"white",
-                "split": "10",
+                "split": "9",
                 "text-align":"center",
                 "googleSheets": {}
             },
             {
                 "key": "Submit",
-                "type": "tableSchemas button",
+                "type": "loading button",
                 "value":"Submit",
                 "next":"true",
-                // "split": "3",
-                "height":"250",
+                "split": "3",
+                "height":"80",
                 "googleSheets": {}
             },
             {
@@ -61,6 +62,8 @@ website.convertCMS = [
                 "height":"250",
                 "googleSheets": {}
             },
+
+
         ]
     },
 ]

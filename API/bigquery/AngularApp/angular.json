@@ -131,6 +131,18 @@
                                     "with": "src/environments/environment.bigquery.dev.ts"
                                 }
                             ]
+                        },
+                        "loading": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/app/website.ts",
+                                    "with": "src/app/database/website-loading-dev.ts"
+                                },
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.bigquery.dev.ts"
+                                }
+                            ]
                         }
                     }
                 },
@@ -140,7 +152,7 @@
                         "browserTarget": "AngularApp:bigquery:play",
                         "port": 8000,
                         "liveReload": true,
-                        "hmr": true,
+                        "hmr": false,
                         // "verbose":true
                     },
                     "configurations": {
@@ -162,6 +174,9 @@
                         "tableSchemas": {
                             "port": 8003,
                             "browserTarget": "AngularApp:bigquery:tableSchemas"
+                        },
+                        "loading": {
+                            "browserTarget": "AngularApp:bigquery:loading"
                         }
                     }
                 },

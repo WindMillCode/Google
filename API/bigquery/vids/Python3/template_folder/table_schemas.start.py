@@ -27,26 +27,15 @@ class my_bigquery_client():
         self.pytz = pytz
         self.time = time 
 
-    # paste env dict here
+    # paste env dictionary here
     env=  {
-        "create": False,
-        "setIAM":False,
-        "getIAM":False,
-        "updateDesc":False,
-        "updateExpiration":False,
-        "copySingle":False,
-        "copyMultiple":False,
-        "delete":False,
-        "recover":False,
-        "querySDK":False,
-        "querySQL":False,
-        "export":True
+
     }
     #
 
     # setup
     dataset_names = [
-        "Tables_Dataset"
+        "Table_Schema_Dataset"
     ]
     #
 
@@ -59,7 +48,7 @@ class my_bigquery_client():
         datetime = self.datetime 
         pytz = self.pytz        
         time = self.time 
-        name = data.get("tableName")
+        name = data.get("titleName")
         emails = data.get("emails")
         table = ""
         #
@@ -68,14 +57,35 @@ class my_bigquery_client():
         dataset_main = self.make_dataset()
         table_id = "{}.{}".format(dataset_main, name) 
         #    
-                
-        try:
-            table = client.get_table(table_id)    
-        except:
-            pass    
-        # 
 
-     
+        #create a table if needed
+        table= self.make_table(table_id)
+        #
+                
+
+        # task 1
+        if(self.env.get("action")):
+            try:
+            
+            except BaseException as e:
+                print('my custom error\n')
+                print(e.__class__.__name__)
+                print('\n')
+                print(e)
+                return 'an error occured check the output from the backend'
+        #
+
+        return "Check the backend env dictionary you did set it so the backend didnt do anything"
+
+
+    def make_table(self,id):
+        try:
+            table_ref = bigquery.Table(id)
+            return client.create_table(table_ref)  # Make an API request.
+        except BaseException:
+            "table exists"
+            return client.get_table(id)
+        # return"Created table {}.{}.{}".format(table.project, table.dataset_id, table.table_id)        
 
     def make_dataset(self):
         try:
@@ -84,9 +94,9 @@ class my_bigquery_client():
             dataset_init = bigquery.Dataset(dataset_id)
             dataset = client.create_dataset(dataset_init, timeout=30)
         except BaseException:
-            "dataset exists"
+            print("dataset exists")
         finally:
-            return dataset_main
+            return "{}.{}".format(client.project,dataset_main)
 
 
     def make_dataset_id(self, name):

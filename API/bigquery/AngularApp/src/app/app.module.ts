@@ -16,6 +16,7 @@ import { NestDirective } from './directive/nest.directive';
 import { LatchDirective } from './directive/latch.directive';
 import { InputHandleDirective } from './directive/input-handle.directive';
 import { DateClickDirective } from './directive/date-click.directive';
+import { LoadingDirective } from './directive/loading.directive';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { DateClickDirective } from './directive/date-click.directive';
     LatchDirective,
     InputHandleDirective,
     DateClickDirective,
+    LoadingDirective,
     // FormControlDirective,
 
   ],

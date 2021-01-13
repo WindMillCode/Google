@@ -1377,13 +1377,175 @@ print("{} fields in the schema are now required.".format(current_required_fields
 * you need to make a new table
 
 
+## Loading data into bigquery
+
+* batch loading, load data with single BQ operation
+    * free
+    * make sure file is clean
+    * high latency
+    * use UTF-8 
+    * supported data formats
+    * Avro
+    * JSON (newline delimited)
+    * ORC
+    * Parquet
+    * Datastore exports
+    * Firestore exports    
+* [bigquery data transfer service](https://cloud.google.com/bigquery-transfer/docs/transfer-service-overview)
+    * gets data from
+        *Google Software as a Service (SaaS) apps
+        * Campaign Manager
+        * Cloud Storage
+        * Google Ad Manager
+        * Google Ads
+        * Google Merchant Center (beta)
+        * Google Play
+        * Search Ads 360 (beta)
+        * YouTube Channel reports
+        * YouTube Content Owner reports
+        * External cloud storage providers
+        * Amazon S3
+        * Data warehouses
+        * Teradata
+        * Amazon Redshift
+        * streaming
+        * SQL
+        * 3rd Party Apps
+* streaming
+    * not free
+    * easier to clean up errors
+    * take up to 90 min to work with data
+
+[quotas](https://cloud.google.com/bigquery/quotas)
+
+
+### Batch loading data
+
+* __permissions__ - bigquery.tables.create,bigquery.tables.updateData,bigquery.jobs.create,storage.objects.list,storage.objects.get
+* __roles__ - bigquery.dataEditor,bigquery.dataOwner,bigquery.admin, 
+and  storage.objectViewer if needed
+* must be in same region, if dataset in US multi-region, load data from anywhere
+* always check the data
+* if you want to get 
+```
+fed-sample000001.csv
+fed-sample000002.csv
+fed-sample000003.csv
+```
+you can use
+```
+gs://mybucket/fed-sample*
+```
+* to  load batch data
+    * always try to gzip your data 
+    * you can only add new fields, or make them non-required
+    * loading batch data to bigquery is free 
+    * [source formats](https://googleapis.dev/python/bigquery/latest/generated/google.cloud.bigquery.job.SourceFormat.html#google.cloud.bigquery.job.SourceFormat)
+    * [load sources](https://googleapis.dev/python/bigquery/latest/generated/google.cloud.bigquery.client.Client.html#google.cloud.bigquery.client.Client.load_table_from_dataframe) and scroll down form there
+```py
+job_config = bigquery.LoadJobConfig(
+    source_format=bigquery.SourceFormat.CSV, #same logic for AVRO ...
+    skip_leading_rows=1,
+    autodetect=True,
+)            
+
+file_path =os.path.join(
+    os.getcwd(),
+    list(filter(lambda x: x == 'your_data.csv',os.listdir()))[0],
+)
+
+with open(file_path, "rb") as source_file:
+    job = client.load_table_from_file(source_file, table_id, job_config=job_config)  
+
+job.result()  
+
+table = client.get_table(table_id)  # Make an API request.
+return "Loaded {} rows and {} columns to {}".format(
+        table.num_rows, len(table.schema), table_id
+    )   
+```
+
+* to stream data
+    * supply insertId, so bigquery can dedupe the rows with the same row, not 100% guaranteed
+
+```py
+        elif (self.env.get("stream")):
+            try:
+                # u means you have unicode strings
+                errors = []
+                for x in range(3):
+                    rows_to_insert = [
+                        {
+                            u"First_name" : u"Latisha",u"Last_Name" : u"Eudy",u"Gender": u"LGBTQ",
+                            u"Country" : u"Mexico",u"Age" : 52
+                        },
+                        {
+                            u"First_name" : u"Manique",u"Last_Name" : u"Chrisa",u"Gender": u"Male",
+                            u"Country" : u"Mexico",u"Age" : 52
+                        }
+                    ]
+
+                    errors.extend( 
+                        client.insert_rows_json(
+                            table_id, 
+                            rows_to_insert,
+                            # to avoid  having ids sending comment this code  
+                            # row_ids=[None for x in rows_to_insert ]
+                            row_ids=[ind for ind,x in enumerate(rows_to_insert) ]
+                        ) 
+                    )
+                print(errors)
+                if errors == []:
+                    return "New rows have been added."
+                else:
+                    return "Encountered errors while inserting rows: {}".format(errors)             
+            except BaseException as e:
+                print('my custom error\n')
+                print(e.__class__.__name__)
+                print('\n')
+                print(e)
+                return 'an error occured check the output from the backend'
+        
+```
+
+
+* to remove duplicates
+```sql
+#standardSQL
+SELECT
+  MAX(count) FROM(
+  SELECT
+    ID_COLUMN,
+    count(*) as count
+  FROM
+    `TABLE_NAME`
+  GROUP BY
+    ID_COLUMN)
+
+#standardSQL
+SELECT
+  * EXCEPT(row_number)
+FROM (
+  SELECT
+    *,
+    ROW_NUMBER()
+          OVER (PARTITION BY ID_COLUMN) row_number
+  FROM
+    `TABLE_NAME`)
+WHERE
+  row_number = 1    
+```
+
+
+```
 
 
 
 
 
 
-pip install --upgrade google-cloud-bigquery google-cloud-bigquery-datatransfer tornado watchdog --target .\site-packages
+### Setup
+pip install -r requirements.txt --upgrade --target .\site-packages
 
 
 ### Issues 

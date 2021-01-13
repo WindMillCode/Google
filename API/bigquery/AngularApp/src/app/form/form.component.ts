@@ -426,22 +426,19 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                                 .forEach((w:any,h)=>{
                                     w.forEach((xx:any,ii)=>{
                                         if(z.ngCssDefault[h]?.[ii] === undefined){
-                                            xx.left ="0px"
-                                            xx.top ="0px"
-                                            z.ngCssDefault[h].splice(ii,0,objectCopy(xx))
+                                            z.ngCss[h][ii] = {...{left:"0px",top:"0px"},...xx}
+                                            z.ngCssDefault[h].splice(ii,0,objectCopy(z.ngCss[h][ii]))
                                         }
                                     })
                                 })
                                 //
                             })
                         })
-                        // console.log(
-                        //     this.ryber,
-                        //     this.templateMyElements._results
-                        // )
                         zChild = this.zChildInit()
                         topLevelZChild = this._topLevelZChildInit()
                         latchZChild = this.ryber[this.appTV].metadata.latch.zChild = this._latchZChildInit()
+
+
                         this.directivesSendData({
                             directivesZChild:zChild,
                             random:Math.random()

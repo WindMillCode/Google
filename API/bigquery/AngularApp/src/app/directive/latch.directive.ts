@@ -47,7 +47,8 @@ export class LatchDirective {
                             css:{
                                 height:"600px",
                                 width: "1200px",
-                                border:"5px dotted lightgreen",
+                                // background:"yellow",
+                                border:"10px dotted blue",
                                 "z-index":zChildren[this.extras.zSymbol].css["z-index"] + 1,
                                 "display":"flex"
                             },
