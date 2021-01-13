@@ -65,11 +65,75 @@ class my_bigquery_client():
         #
         
         # load batch data into bigquery
-        
+        if(self.env.get("batch")):
+            try:
+                job_config = bigquery.LoadJobConfig(
+                    source_format=bigquery.SourceFormat.CSV, skip_leading_rows=1, autodetect=True,
+                )            
+            
+                file_path =os.path.join(
+                    os.getcwd(),
+                    list(filter(lambda x: x == 'demographics.csv',os.listdir()))[0],
+                )
+                
+                with open(file_path, "rb") as source_file:
+                    job = client.load_table_from_file(source_file, table_id, job_config=job_config)  
+
+                job.result()  
+
+                table = client.get_table(table_id)  # Make an API request.
+                return "Loaded {} rows and {} columns to {}".format(
+                        table.num_rows, len(table.schema), table_id
+                    )             
+            except BaseException as e:
+                print('my custom error\n')
+                print(e.__class__.__name__)
+                print('\n')
+                print(e)
+                return 'an error occured check the output from the backend'                    
+        #            
         #
 
         # stream data into bigquery
-        
+        elif (self.env.get("stream")):
+            try:
+                # u means you have unicode strings
+                errors = []
+                for x in range(3):
+                    rows_to_insert = [
+                        {
+                            u"First_name" : u"Latisha",u"Last_Name" : u"Eudy",u"Gender": u"LGBTQ",
+                            u"Country" : u"Mexico",u"Age" : 52,u"Id":2424
+                        },
+                        {
+                            u"First_name" : u"Manique",u"Last_Name" : u"Chrisa",u"Gender": u"Male",
+                            u"Country" : u"Mexico",u"Age" : 52,u"Id":4242
+                        }
+                    ]
+
+                    errors.extend( 
+                        client.insert_rows_json(
+                            table_id, 
+                            rows_to_insert,
+                            # to avoid  having ids sending comment this code  
+                            # row_ids=[None for x in rows_to_insert ]
+                            row_ids=[ind for ind,x in enumerate(rows_to_insert) ]
+                        ) 
+                    )
+                print(errors)
+                table =  client.get_table(table_id)
+                if errors == []:
+                    return "There are now {} rows in the table".format(
+                        table.num_rows, table_id
+                    ) 
+                else:
+                    return "Encountered errors while inserting rows: {}".format(errors)             
+            except BaseException as e:
+                print('my custom error\n')
+                print(e.__class__.__name__)
+                print('\n')
+                print(e)
+                return 'an error occured check the output from the backend'        
         #
 
         return "Check the backend env dictionary you did set it so the backend didnt do anything"

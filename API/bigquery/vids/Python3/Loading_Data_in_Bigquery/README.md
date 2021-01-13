@@ -1,6 +1,6 @@
 # Loading Data into Bigquery
 
-<!-- ## [Youtube Walkthrough]() -->
+## [Youtube Walkthrough](https://youtu.be/bCBaoEGb6g4)
 
 
 * after the lab your file should look like loading.final.py 
@@ -17,7 +17,7 @@ npx ng serve -c=loading --open=true
 ```
 
 ### Setup the Python Backend 
-* download the backend [here]()
+* download the backend [here](https://downgit.github.io/#/home?url=https://github.com/codequickie123/Google/tree/master/API/bigquery/vids/Python3/Loading_Data_in_Bigquery)
 in a terminal in the folder root
     * target makes it a local package, do not make it global, it might replace your packages
     * if you make a mistake or believe a corruption happened delete site-packages and try again
@@ -71,7 +71,7 @@ in 'load batch data into bigquery' paste
         #
 ```
 
-### Batch Stream
+###  Stream load
 * supply insertId, so bigquery can dedupe the rows with the same row, not 100% guaranteed
 * use sql to get unique rows and place the data in another table
 * with streaming data you dont get to work with it quickly
@@ -111,7 +111,10 @@ in 'load batch data into bigquery' paste
                         ) 
                     )
                 print(errors)
+                table =  client.get_table(table_id)
                 if errors == []:
+                    # with stream data the sdk does not update properly
+                    # always try to use SQL over the SDK
                     return "There are now {} rows in the table".format(
                         table.num_rows, table_id
                     ) 
