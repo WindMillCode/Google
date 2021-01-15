@@ -1,6 +1,6 @@
 # Querying Native Tables in Bigquery
 
-<!-- ## [Youtube Walkthrough]() -->
+## [Youtube Walkthrough](https://youtu.be/tNDBmviiHEc)
 
 
 * after the lab your file should look like loading.final.py 
@@ -17,7 +17,7 @@ npx ng serve -c=loading --open=true
 ```
 
 ### Setup the Python Backend 
-* download the backend [here]()
+* download the backend [here](https://downgit.github.io/#/home?url=https://github.com/codequickie123/Google/tree/master/API/bigquery/vids/Python3/Querying_Native_Tables_in_Bigquery)
 in a terminal in the folder root
     * target makes it a local package, do not make it global, it might replace your packages
     * if you make a mistake or believe a corruption happened delete site-packages and try again
@@ -590,6 +590,8 @@ __FILE:native_query.py__
 
 ### Scheduled Query
 * when using bigquery datatranfer,we see the dataset and table names are standalone
+* it may not immediately execute we can use manaual run to get it to work,
+* if further issues use a backend or 3rd party solution
 * in 'paste env dictionary here' replace
 ```py
     env=  {
@@ -813,3 +815,6 @@ elif(self.env.get("scheduled_delete")):
         return 'an error occured check the output from the backend'            
 #
 ```
+
+### Resources
+schedule [syntax](https://cloud.google.com/appengine/docs/flexible/nodejs/scheduling-jobs-with-cron-yaml#formatting_the_schedule)

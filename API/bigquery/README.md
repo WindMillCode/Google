@@ -1877,7 +1877,7 @@ can use run_time and run_date
 * create a scheduled query
     * write_dispositon:WRITE_TRUNCATE to overwrite
     WRITE_APPEND to append
-    schedula [syntax](https://cloud.google.com/appengine/docs/flexible/nodejs/scheduling-jobs-with-cron-yaml#formatting_the_schedule)
+    schedule [syntax](https://cloud.google.com/appengine/docs/flexible/nodejs/scheduling-jobs-with-cron-yaml#formatting_the_schedule)
 #### Python 
 ```py
 transfer_client = bigquery_datatransfer.DataTransferServiceClient()
