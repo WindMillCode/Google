@@ -672,9 +672,6 @@ export class RyberService {
                 let extend = {
                 }
 
-                // component.height =  component?.height === undefined ? 100:   component.height
-                // component.width =  component?.height === undefined ? 100:   component.height  // widht is not allowed here it will break the mat-spinner
-
                 symbol = rUD({
                     co,
                     bool: 'ag-grid',
@@ -687,16 +684,10 @@ export class RyberService {
                         type,
                         extend,
                         appAgGrid: {
-                            rowData: [
-                                { make: 'Toyota', model: 'Celica', price: 35000 },
-                                { make: 'Ford', model: 'Mondeo', price: 32000 },
-                                { make: 'Porsche', model: 'Boxter', price: 72000 }
-                            ],
-                            columnDefs: [
-                                { field: 'make' },
-                                { field: 'model' },
-                                { field: 'price' }
-                            ],
+                            co,
+                            zSymbolNeeded:"true",
+                            rowData: [],
+                            columnDefs: [],
                             confirm: "true",
                             defaultColDef: {
                                 resizable: true,
@@ -705,7 +696,7 @@ export class RyberService {
                             },
                         },
                         appNest: {
-                            confirm: "true",
+                            confirm:nestGroup === undefined ? "false": "true",
                             co,
                             nestGroup,
                             nestUnder,
@@ -1271,6 +1262,42 @@ export class RyberService {
                     css,
                     extras: {
                         appLoading: {
+                            confirm: 'true',
+                            co
+                        },
+                        component,
+                        type
+                    }
+                })
+            }
+
+            else if (type === "nativeQuery button") {
+
+                let css = {
+                    width: '325px',
+                    "font-size": "48px",
+                    top: "0px",
+                    // height:"75px",
+                    // left:'400px',
+                    "z-index": 4,
+                    'background-color': background,
+                    color,
+                    "font-family": fonts,
+                    "font-weight": italics
+                }
+                options.css === undefined ? undefined : (() => {
+                    css = options.css;
+                    css['font-size'] === undefined ? (css['font-size'] = '48px') : null
+                })()
+
+                symbol = rUD({
+                    co,
+                    bool: 'b',
+                    text: value,
+                    val: key.split("_").reverse()[0] + ' a_p_p_Button',
+                    css,
+                    extras: {
+                        appNativeQuery: {
                             confirm: 'true',
                             co
                         },

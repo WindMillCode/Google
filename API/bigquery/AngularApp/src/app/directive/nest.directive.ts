@@ -27,8 +27,6 @@ export class NestDirective {
 
     ngOnInit() {
         this.extras = this.nest
-        // return
-        // console.log(this.extras?.confirm)
         if (this.extras?.confirm === 'true' ) {
             // console.log(this.extras)
             let nestInit = () => {

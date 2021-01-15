@@ -17,6 +17,9 @@ import { LatchDirective } from './directive/latch.directive';
 import { InputHandleDirective } from './directive/input-handle.directive';
 import { DateClickDirective } from './directive/date-click.directive';
 import { LoadingDirective } from './directive/loading.directive';
+import { NativeQueryDirective } from './directive/native-query.directive';
+import { AgGridDirective } from './directive/ag-grid.directive';
+import { ExtendDirective } from './directive/extend.directive';
 
 @NgModule({
   declarations: [
@@ -31,6 +34,9 @@ import { LoadingDirective } from './directive/loading.directive';
     InputHandleDirective,
     DateClickDirective,
     LoadingDirective,
+    NativeQueryDirective,
+    AgGridDirective,
+    ExtendDirective,
     // FormControlDirective,
 
   ],

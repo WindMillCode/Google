@@ -1457,6 +1457,13 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                         directivesZChild[x].extras.appDropDown.zSymbol = x
                     }
                 }
+                // if zSymbolNeeded is "true" provide the zSymbol
+                    // above is deprecated
+                Object.values(directivesZChild[x].extras)
+                .forEach((y:any,j)=>{
+                    y?.zSymbolNeeded === "true" ? y.zSymbol = x : null
+                })
+                //
             }
         })
         this.ryber[this.appTV.valueOf()].metadata.zChildrenSubject.next(({directivesZChild,random,templateMyElements,ref}))

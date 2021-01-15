@@ -84,6 +84,9 @@ export class AppComponent implements OnInit, OnDestroy {
                         updateZChild : new Subject<any>(),
                         zChild:{}
                     }
+                    co.metadata.agGrid = {
+                        zSymbol: new Subject<any>(),
+                    }
                     co.metadata.zChildrenSubject = new Subject<any>()
                     .pipe(
                         tap((val) => {
