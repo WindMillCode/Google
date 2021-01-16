@@ -1,0 +1,5 @@
+google-cloud-bigquery 
+google-cloud-bigquery-datatransfer 
+tornado
+watchdog 
+google-auth

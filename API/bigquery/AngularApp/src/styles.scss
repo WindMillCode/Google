@@ -45,6 +45,14 @@ $bg-color-1 : rgb(255, 179, 204);
          url('assets/fonts/libre-franklin-v4-latin-regular.svg#LibreFranklin') format('svg'); /* Legacy iOS */
 }
 
+@font-face {
+    font-family: 'BeteNoirNF';
+    font-style: normal;
+    font-weight: 400;
+    src: url('assets/fonts/BeteNoirNF.otf'); /* IE9 Compat Modes */
+    src: local('BeteNoirNF'),
+         url('assets/fonts/BeteNoirNF.ttf') format('truetype'), /* Safari, Android, iOS */
+}
 
 /* fjalla-one-regular - latin */
 @font-face {

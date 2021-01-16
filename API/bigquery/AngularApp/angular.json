@@ -155,7 +155,20 @@
                                     "with": "src/environments/environment.bigquery.dev.ts"
                                 }
                             ]
+                        },
+                        "externalQuery": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/app/website.ts",
+                                    "with": "src/app/database/website-externalQuery-dev.ts"
+                                },
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.bigquery.dev.ts"
+                                }
+                            ]
                         }
+
                     }
                 },
                 "serve": {
@@ -192,6 +205,9 @@
                         },
                         "nativeQuery": {
                             "browserTarget": "AngularApp:bigquery:nativeQuery"
+                        },
+                        "externalQuery": {
+                            "browserTarget": "AngularApp:bigquery:externalQuery"
                         }
                     }
                 },

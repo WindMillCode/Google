@@ -1989,6 +1989,156 @@ else:
     print(f"Deleted transfer config: {transfer_config_name}")
 ```
 
+### Lab [Querying Native Tables in Bigquery](./vids/Python3/Querying_Native_Tables_in_Bigquery/README.md)
+
+## External data sources
+__External data source__ - federated data source, query from bigTable, Storage, Drive,Cloud SQL
+
+* formats
+Avro
+CSV
+JSON (newline delimited only)
+ORC
+Parquet
+
+* make sure there are no changes to the data source while querying
+* performance isnt good
+* cant export from extenral table
+* region in us and eu
+
+### Querying Cloud Storage data
+* external data source must have a table
+* __permissions__ - bigquery.tables.create,bigquery.tables.getData,bigquery.jobs.create,storage.objects.list,storage.objects.get
+*__roles__ bigquery.admin
+
+* to create an external tabble
+```py
+# Configure the external data source
+dataset_id = dataset_main
+table_id = "{}.{}".format(dataset_main, "us_states") 
+schema = [
+    bigquery.SchemaField("name", "STRING"),
+    bigquery.SchemaField("post_abbr", "STRING"),
+]
+table = bigquery.Table(table_id, schema=schema)
+external_config = bigquery.ExternalConfig("CSV")
+external_config.source_uris = [
+    "gs://cloud-samples-data/bigquery/us-states/us-states.csv"
+]
+external_config.options.skip_leading_rows = 1  # optionally skip header row
+table.external_data_configuration = external_config
+
+# Create a permanent table linked to the GCS file
+table = client.create_table(table)  # API request
+
+# Example query to find states starting with 'W'
+sql = 'SELECT * FROM `{}` WHERE name LIKE "W%"'.format( table_id)
+
+query_job = client.query(sql)  # API request
+
+w_states = list(query_job)  # Waits for query to finish
+return "There are {} states with names starting with W. we pulled the data from us-states.csv in cloud storage".format(len(w_states))            
+```
+
+* to query an temp external table
+```py
+                schema = ["filename","name"]
+                # Configure the external data source and query job.
+                external_config = bigquery.ExternalConfig("CSV")
+                external_config.source_uris = [
+                    "gs://cloud-samples-data/bigquery/us-states/us-states.csv"
+                ]
+                external_config.schema = [
+                    bigquery.SchemaField("name", "STRING"),
+                    bigquery.SchemaField("post_abbr", "STRING"),
+                ]
+                external_config.options.skip_leading_rows = 1
+                table_id = "us_states"
+                job_config = bigquery.QueryJobConfig(table_definitions={table_id: external_config})
+
+                # Example query to find states starting with 'W'.
+                sql = """
+                SELECT _FILE_NAME AS {},{} FROM `{}` WHERE name LIKE "W%"
+                
+                """.format(schema[0],schema[1],table_id)
+                query_job = client.query(sql, job_config=job_config)  # Make an API request.
+                query_job.result()
+                return json.dumps({
+                    "schema":[{"field":x} for x in schema],
+                    "data":[
+                        # Row values can be accessed by field name or index.
+                        {
+                            schema[0]:row[schema[0]],
+                            schema[1]:row[schema[1]] 
+                        }
+                        for row in query_job
+                    ]
+                })
+```
+
+### Querying Drive data
+* query shared,Comma-separated values (CSV)
+Newline-delimited JSON
+Avro
+Sheets
+
+* to query to permanaent table
+    * first drive access works by scopes not roles give yourself drive access
+```py
+credentials = service_account.Credentials.from_service_account_file(
+    os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
+)
+
+credentials = credentials.with_scopes(
+    [
+        "https://www.googleapis.com/auth/drive",
+        "https://www.googleapis.com/auth/bigquery",
+        "https://www.googleapis.com/auth/spreadsheets",
+        "https://www.googleapis.com/auth/drive.file"
+    ]
+)
+```
+
+```py
+                dataset_id = dataset_main
+
+                # Configure the external data source.
+                dataset = client.get_dataset(dataset_id)
+                table_id = query
+                schema = [
+                    bigquery.SchemaField("name", "STRING"),
+                    bigquery.SchemaField("post_abbr", "STRING"),
+                ]
+                table = bigquery.Table(dataset.table(table_id), schema=schema)
+                external_config = bigquery.ExternalConfig("GOOGLE_SHEETS")
+                # Use a shareable link or grant viewing access to the email address you
+                # used to authenticate with BigQuery (this example Sheet is public).
+                sheet_url = (
+                    "https://docs.google.com/spreadsheets/d/1i_QCL-7HcSyUZmIbP9E6lO_T5u3HnpLe7dnpHaijg_E/edit?usp=sharing"
+                )
+                external_config.source_uris = [sheet_url]
+                external_config.options.skip_leading_rows = 1  # Optionally skip header row.
+                external_config.options.range = (
+                    "us-states!A20:B49"  # Optionally set range of the sheet to query from.
+                )
+                table.external_data_configuration = external_config
+
+                # Create a permanent table linked to the Sheets file.
+                table = client.create_table(table)  # Make an API request.
+
+                # Example query to find states starting with "W".
+                sql = 'SELECT * FROM `{}.{}` WHERE name LIKE "W%"'.format(dataset_id, table_id)
+
+                query_job = client.query(sql)  # Make an API request.
+
+                # Wait for the query to complete.
+                w_states = list(query_job)
+                return "There are {} states with names starting with W in the selected range. this data came from google drive".format(
+                        len(w_states)
+                    )
+```
+
+
 
 
 ### Setup

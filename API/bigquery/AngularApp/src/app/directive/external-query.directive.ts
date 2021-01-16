@@ -14,9 +14,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class ExternalQueryDirective {
 
-    @Input() loading: any;
+    @Input() externalQuery: any;
     extras: any;
     zChildren: any;
+    agGrid:any = {
+        zSymbol:""
+    }
 
     constructor(
         private el: ElementRef,
@@ -66,7 +69,19 @@ export class ExternalQueryDirective {
                 },
                 next: (result: any) => {
                     console.log(result)
-                    update.innerText = result
+                    switch (true) {
+                        case env.externalQuery.createTempTable:
+                            result = JSON.parse(result)
+                            this.zChildren[this.agGrid.zSymbol].extras.appAgGrid.rowData = result.data
+                            this.zChildren[this.agGrid.zSymbol].extras.appAgGrid.columnDefs  = result.schema
+                            update.innerText = "The query data was returned"
+                            break;
+
+                        default:
+                            update.innerText = result
+                            break;
+                    }
+
 
                     eventDispatcher({
                         event: 'resize',
@@ -82,14 +97,19 @@ export class ExternalQueryDirective {
     }
 
     ngOnInit() {
-        this.extras = this.loading
+        this.extras = this.externalQuery
         if (this.extras?.confirm === 'true') {
             // console.log(this.extras)
-            this.ryber[this.extras.co.valueOf()].metadata.zChildrenSubject
-                .subscribe(() => {
-                    this.zChildren = this.ryber[this.extras.co.valueOf()].metadata.zChildren
-                    // console.log(this.zChildren)
-                })
+            combineLatest([
+                this.ryber[this.extras.co.valueOf()].metadata.agGrid.zSymbol,
+                this.ryber[this.extras.co.valueOf()].metadata.zChildrenSubject
+            ])
+            .subscribe((result) => {
+                // console.log(result)
+                this.agGrid.zSymbol = result[0]
+                this.zChildren = this.ryber[this.extras.co.valueOf()].metadata.zChildren
+                // console.log(this.zChildren)
+            })
             setTimeout(() => {
                 // this.el.nativeElement.click()
             }, 200)

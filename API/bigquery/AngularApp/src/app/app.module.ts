@@ -20,6 +20,7 @@ import { LoadingDirective } from './directive/loading.directive';
 import { NativeQueryDirective } from './directive/native-query.directive';
 import { AgGridDirective } from './directive/ag-grid.directive';
 import { ExtendDirective } from './directive/extend.directive';
+import { ExternalQueryDirective } from './directive/external-query.directive';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ExtendDirective } from './directive/extend.directive';
     NativeQueryDirective,
     AgGridDirective,
     ExtendDirective,
+    ExternalQueryDirective,
     // FormControlDirective,
 
   ],

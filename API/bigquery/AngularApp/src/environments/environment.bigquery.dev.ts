@@ -68,6 +68,12 @@ export const environment: any = {
     nativeQuery:{
         interactive:false,
         parameterized:false
+    },
+    //
+
+    //update external query object here
+    externalQuery:{
+        createTempTable:true
     }
     //
 
