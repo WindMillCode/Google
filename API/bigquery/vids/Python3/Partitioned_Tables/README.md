@@ -1,4 +1,4 @@
-# Loading Data into Bigquery
+# Partitioned tables in Bigquery
 
 <!-- ## [Youtube Walkthrough]() -->
 

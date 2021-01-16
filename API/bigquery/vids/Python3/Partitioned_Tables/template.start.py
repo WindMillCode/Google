@@ -2,9 +2,7 @@ import sys
 sys.path[0] += "\\site-packages"
 from google.cloud import bigquery_datatransfer
 from google.cloud import bigquery
-from google.oauth2 import service_account
 import uuid
-import google.auth
 import datetime
 import time
 import pprint
@@ -13,11 +11,10 @@ import json
 import datetime
 import pytz
 import time
-import os
 pp = pprint.PrettyPrinter(indent=4, compact=True, width=1)
 # end
 
-# import and intalize the library also give youself drive access
+# import and intalize the library
 client = bigquery.Client()
 #
 
@@ -32,13 +29,12 @@ class my_bigquery_client():
 
     # paste env dictionary here
     env=  {
-
     }
     #
 
     # setup
     dataset_names = [
-        "External_Query_Dataset"
+        "Partitioned_Tables_Dataset"
     ]
     #
 
@@ -53,7 +49,6 @@ class my_bigquery_client():
         time = self.time 
         name = data.get("titleName")
         emails = data.get("emails")
-        query = data.get("query")
         table = ""
         #
 
@@ -62,23 +57,18 @@ class my_bigquery_client():
         table_id = "{}.{}".format(dataset_main, name) 
         #    
 
+        #create a table if needed
+        # table= self.make_table(table_id)
+        #
+                
 
-        # create external table
+        # craete time parttitoned table
 
         #
 
-        # create temp external table
-
+        # create integer partitioned table
+        
         #
-
-        # drive create external table
-
-        #
-
-        # drive create temp external table
-
-        #
-
 
         return "Check the backend env dictionary you did set it so the backend didnt do anything"
 

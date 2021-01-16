@@ -1,5 +1,3 @@
-
-
 import { Directive, ElementRef, HostListener, Input, Renderer2, TemplateRef, ViewContainerRef, ViewRef, EmbeddedViewRef, ViewChildren } from '@angular/core';
 import { RyberService } from '../ryber.service'
 import { fromEvent, from, Subscription, Subscriber, of, combineLatest } from 'rxjs';
@@ -10,11 +8,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 @Directive({
-    selector: '[appExternalQuery]'
-})
-export class ExternalQueryDirective {
+    selector: '[appPartitionedTable]'
+  })
+  export class PartitionedTableDirective {
 
-    @Input() externalQuery: any;
+    @Input() partitionedTable: any;
     extras: any;
     zChildren: any;
     agGrid:any = {
@@ -38,10 +36,11 @@ export class ExternalQueryDirective {
 
             let update = (document.querySelector(".f_o_r_m_Result") as HTMLElement)
             let validDomains = ["user", "group", "serviceAccount"]
+            let titleName = (document.querySelector(".f_o_r_m_Title") as HTMLInputElement)?.value
             let query = (document.querySelector(".f_o_r_m_Answer") as HTMLInputElement)?.value
 
             let data: any = {
-                titleName:"Jalen",
+                titleName,
                 query
             }
 
@@ -69,19 +68,7 @@ export class ExternalQueryDirective {
                 },
                 next: (result: any) => {
                     console.log(result)
-                    switch (true) {
-                        case env.externalQuery.createTempTable:
-                            result = JSON.parse(result)
-                            this.zChildren[this.agGrid.zSymbol].extras.appAgGrid.rowData = result.data
-                            this.zChildren[this.agGrid.zSymbol].extras.appAgGrid.columnDefs  = result.schema
-                            update.innerText = "The query data was returned"
-                            break;
-
-                        default:
-                            update.innerText = result
-                            break;
-                    }
-
+                    update.innerText = result
 
                     eventDispatcher({
                         event: 'resize',
@@ -97,9 +84,9 @@ export class ExternalQueryDirective {
     }
 
     ngOnInit() {
-        this.extras = this.externalQuery
+        this.extras = this.partitionedTable
         if (this.extras?.confirm === 'true') {
-            // console.log(this.extras)
+            console.log(this.extras)
             combineLatest([
                 this.ryber[this.extras.co.valueOf()].metadata.agGrid.zSymbol,
                 this.ryber[this.extras.co.valueOf()].metadata.zChildrenSubject

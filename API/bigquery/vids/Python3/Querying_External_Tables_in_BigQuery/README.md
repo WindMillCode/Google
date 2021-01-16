@@ -3,8 +3,8 @@
 <!-- ## [Youtube Walkthrough]() -->
 
 
-* after the lab your file should look like loading.final.py 
-* if issues copy and paste from loading.start.py
+* after the lab your file should look like external_query.final.py 
+* if issues copy and paste from external_query.start.py
 
 
 ### Start the Angular App
@@ -17,7 +17,7 @@ npx ng serve -c=loading --open=true
 ```
 
 ### Setup the Python Backend 
-* download the backend [here]()
+* download the backend [here](https://github.com/WindMillCode/Google/tree/master/API/bigquery/vids/Python3/Querying_External_Tables_in_BigQuery)
 in a terminal in the folder root
     * target makes it a local package, do not make it global, it might replace your packages
     * if you make a mistake or believe a corruption happened delete site-packages and try again
@@ -118,14 +118,14 @@ __FILE:  externalQuery.py__
                     bigquery.SchemaField("post_abbr", "STRING"),
                 ]
                 external_config.options.skip_leading_rows = 1
-                temp_table_id = "usa_states"
+                table_id = "usa_states"
                 job_config = bigquery.QueryJobConfig(table_definitions={table_id: external_config})
 
                 # Example query to find states starting with 'W'.
                 sql = """
                 SELECT _FILE_NAME AS {},{} FROM `{}` WHERE name LIKE "W%"
                 
-                """.format(schema[0],schema[1],temp_table_id)
+                """.format(schema[0],schema[1],table_id)
                 query_job = client.query(sql, job_config=job_config)  # Make an API request.
                 query_job.result()
                 return json.dumps({
@@ -247,7 +247,7 @@ __FILE:  AngularApp\src\environments\environment.bigquery.dev.ts__
 * in 'update external query object here'
 ```ts
     externalQuery:{
-        createTempTable:false
+        createTempTable:true
     }
 ```
 

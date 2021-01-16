@@ -167,6 +167,18 @@
                                     "with": "src/environments/environment.bigquery.dev.ts"
                                 }
                             ]
+                        },
+                        "partitionedTable": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/app/website.ts",
+                                    "with": "src/app/database/website-partitionedTable-dev.ts"
+                                },
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.bigquery.dev.ts"
+                                }
+                            ]
                         }
 
                     }
@@ -208,6 +220,9 @@
                         },
                         "externalQuery": {
                             "browserTarget": "AngularApp:bigquery:externalQuery"
+                        },
+                        "partitionedTable": {
+                            "browserTarget": "AngularApp:bigquery:partitionedTable"
                         }
                     }
                 },

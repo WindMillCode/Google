@@ -2100,43 +2100,138 @@ credentials = credentials.with_scopes(
 ```
 
 ```py
-                dataset_id = dataset_main
+    dataset_id = dataset_main
 
-                # Configure the external data source.
-                dataset = client.get_dataset(dataset_id)
-                table_id = query
-                schema = [
-                    bigquery.SchemaField("name", "STRING"),
-                    bigquery.SchemaField("post_abbr", "STRING"),
-                ]
-                table = bigquery.Table(dataset.table(table_id), schema=schema)
-                external_config = bigquery.ExternalConfig("GOOGLE_SHEETS")
-                # Use a shareable link or grant viewing access to the email address you
-                # used to authenticate with BigQuery (this example Sheet is public).
-                sheet_url = (
-                    "https://docs.google.com/spreadsheets/d/1i_QCL-7HcSyUZmIbP9E6lO_T5u3HnpLe7dnpHaijg_E/edit?usp=sharing"
-                )
-                external_config.source_uris = [sheet_url]
-                external_config.options.skip_leading_rows = 1  # Optionally skip header row.
-                external_config.options.range = (
-                    "us-states!A20:B49"  # Optionally set range of the sheet to query from.
-                )
-                table.external_data_configuration = external_config
+    # Configure the external data source.
+    dataset = client.get_dataset(dataset_id)
+    table_id = query
+    schema = [
+        bigquery.SchemaField("name", "STRING"),
+        bigquery.SchemaField("post_abbr", "STRING"),
+    ]
+    table = bigquery.Table(dataset.table(table_id), schema=schema)
+    external_config = bigquery.ExternalConfig("GOOGLE_SHEETS")
+    # Use a shareable link or grant viewing access to the email address you
+    # used to authenticate with BigQuery (this example Sheet is public).
+    sheet_url = (
+        "https://docs.google.com/spreadsheets/d/1i_QCL-7HcSyUZmIbP9E6lO_T5u3HnpLe7dnpHaijg_E/edit?usp=sharing"
+    )
+    external_config.source_uris = [sheet_url]
+    external_config.options.skip_leading_rows = 1  # Optionally skip header row.
+    external_config.options.range = (
+        "us-states!A20:B49"  # Optionally set range of the sheet to query from.
+    )
+    table.external_data_configuration = external_config
 
-                # Create a permanent table linked to the Sheets file.
-                table = client.create_table(table)  # Make an API request.
+    # Create a permanent table linked to the Sheets file.
+    table = client.create_table(table)  # Make an API request.
 
-                # Example query to find states starting with "W".
-                sql = 'SELECT * FROM `{}.{}` WHERE name LIKE "W%"'.format(dataset_id, table_id)
+    # Example query to find states starting with "W".
+    sql = 'SELECT * FROM `{}.{}` WHERE name LIKE "W%"'.format(dataset_id, table_id)
 
-                query_job = client.query(sql)  # Make an API request.
+    query_job = client.query(sql)  # Make an API request.
 
-                # Wait for the query to complete.
-                w_states = list(query_job)
-                return "There are {} states with names starting with W in the selected range. this data came from google drive".format(
-                        len(w_states)
-                    )
+    # Wait for the query to complete.
+    w_states = list(query_job)
+    return "There are {} states with names starting with W in the selected range. this data came from google drive".format(
+            len(w_states)
+        )
 ```
+
+##  Partitioned tables
+__partitioned table__ - is a special table that is divided into segments, called partitions, that make it easier to manage and query your data. 
+* only partition tables by Ingestion time, Date/timestamp/datetime, Integer Range
+### Injestion Partioned 
+
+### Date Partitioned
+* they have a column _PARTITIONTIME
+__NULL__ and __UNPARTITIONED__ are used the to help the query avoid unnecessary rows
+
+### Time Partitioned
+* column_name- start,end,interval, that how the table gets chopped up
+__NULL__ and __UNPARTITIONED__ are used the to help the query avoid unnecessary rows
+
+__permissions__ - bigquery.tables.create, bigquery.tables.updateData,bigquery.jobs.create
+__roles__ - bigquery.admin
+
+* managing partitioned has the same rules as managing a regular table they are not menat to be deleted or chagned
+
+### Querying Partitoned tables
+* columns
+    __ __PARTITIONTIME,_PARTITIONDATE
+
+```sql
+_PARTITIONTIME >= "2018-01-29 00:00:00" AND _PARTITIONTIME < "2018-01-30 00:00:00"
+_PARTITIONDATE BETWEEN '2016-01-01' AND '2016-01-02'
+```
+
+### Create Time partioned 
+* we can see the results in the UI, 
+    * if you want to add results to a certain partition add like so
+```py
+table_name$20160501
+```
+#### Python
+```py
+    table_ref = table_id
+    schema = [
+        bigquery.SchemaField("name", "STRING"),
+        bigquery.SchemaField("post_abbr", "STRING"),
+        bigquery.SchemaField("date", "DATE"),
+    ]
+    table = bigquery.Table(table_ref, schema=schema)
+    table.time_partitioning = bigquery.TimePartitioning(
+        type_=bigquery.TimePartitioningType.DAY,
+        field="date",  # name of column to use for partitioning
+        expiration_ms=7776000000,
+    )  # 90 days
+
+    table = client.create_table(table)
+
+    return "Created table {}, partitioned on column {}".format(
+            table.table_id, table.time_partitioning.field
+        )
+```
+
+### Create Integer Ranged Partition
+* if you want to add results to a certain partition add like so
+```py
+table_name$0
+```
+#### Python 
+```py
+        elif(self.env.get("integer_partitioned_table")):
+            try:
+
+                schema = [
+                    bigquery.SchemaField("full_name", "STRING"),
+                    bigquery.SchemaField("city", "STRING"),
+                    bigquery.SchemaField("zipcode", "INTEGER"),
+                ]
+
+                table = bigquery.Table(table_id, schema=schema)
+                table.range_partitioning = bigquery.RangePartitioning(
+                    # To use integer range partitioning, select a top-level REQUIRED /
+                    # NULLABLE column with INTEGER / INT64 data type.
+                    field="zipcode",
+                    range_=bigquery.PartitionRange(start=0, end=100000, interval=10),
+                )
+                table = client.create_table(table)  # Make an API request.
+                return "Created table {}, partitioned on column {}".format(
+                        table.table_id, table.range_partitioning.field
+                    )
+                                
+            except BaseException as e:
+                print('my custom error\n')
+                print(e.__class__.__name__)
+                print('\n')
+                print(e)
+                return 'an error occured check the output from the backend'
+        
+```
+
+
+
 
 
 
