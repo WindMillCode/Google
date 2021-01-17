@@ -1102,6 +1102,8 @@ export function stack(
     }
 ){
 
+    let {ref}= devObj
+
     if(devObj.zChildCss === undefined){
         devObj.zChildCss = 'true'
     }
@@ -1218,18 +1220,34 @@ export function stack(
             }
 
             let prev = devObj.zChildKeys[i-1]
+            // devObj.zChild[x].css['top'] = devObj.zChild[x].cssDefault['top']
+            // ref.detectChanges()
+
             devObj.zChild[x].css['top'] = (
 
                 (
-                    devObj.zChildCss === 'true' ?
-                    (
-                        numberParse(      devObj.zChild[keep[x.valueOf()] !== undefined ? keep[x.valueOf()] : prev].css['top']   ) +
-                        include({
-                            item:numberParse(      devObj.zChild[keep[x.valueOf()] !== undefined ? keep[x.valueOf()] : prev].css['height']   ) ,
-                            include:devObj.heightInclude,
-                            index:i
-                        })
-                    ):
+                    devObj.zChildCss === 'true' ?(()=>{
+                        // console.log(
+                        //     x,
+                        //     (
+                        //         numberParse(      devObj.zChild[keep[x.valueOf()] !== undefined ? keep[x.valueOf()] : prev].css['top']   ) +
+                        //         include({
+                        //             item:numberParse(      devObj.zChild[keep[x.valueOf()] !== undefined ? keep[x.valueOf()] : prev].css['height']   ) ,
+                        //             include:devObj.heightInclude,
+                        //             index:i
+                        //         })
+                        //     )
+                        // )
+                        return                     (
+                            numberParse(      devObj.zChild[keep[x.valueOf()] !== undefined ? keep[x.valueOf()] : prev].css['top']   ) +
+                            include({
+                                item:numberParse(      devObj.zChild[keep[x.valueOf()] !== undefined ? keep[x.valueOf()] : prev].css['height']   ) ,
+                                include:devObj.heightInclude,
+                                index:i
+                            })
+                        )
+                    })()
+                    :
                     (
                         numberParse(   getComputedStyle(   devObj.zChild[keep[x.valueOf()] !== undefined ? keep[x.valueOf()] :  prev].element   )['top']   ) +
                         include({
@@ -1241,13 +1259,30 @@ export function stack(
                 )
                 +
                 (
-                    typeof(devObj.spacing) === 'number' ?
-                    devObj.spacing :
-                    (
-                        devObj.spacing[i] === undefined ?
-                        devObj.spacing[devObj.spacing.length-1] :
-                        devObj.spacing[i]
-                    )
+                    (()=>{
+                        // console.log(
+                        //     x,
+                        //     typeof(devObj.spacing) === 'number' ?
+                        //     devObj.spacing :
+                        //     (
+                        //         devObj.spacing[i] === undefined ?
+                        //         devObj.spacing[devObj.spacing.length-1] :
+                        //         devObj.spacing[i]
+                        //     )
+                        // )
+                        return typeof(devObj.spacing) === 'number' ?
+                        devObj.spacing :
+                        (
+                            devObj.spacing[i] === undefined ?
+                            devObj.spacing[devObj.spacing.length-1] :
+                            devObj.spacing[i]
+                        )
+                    })()
+                )
+                +
+                (
+                    0
+                    // numberParse(devObj.zChild[x].cssDefault['top'])
                 )
 
 

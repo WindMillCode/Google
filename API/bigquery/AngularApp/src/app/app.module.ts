@@ -23,6 +23,7 @@ import { ExtendDirective } from './directive/extend.directive';
 import { ExternalQueryDirective } from './directive/external-query.directive';
 import { PartitionedTableDirective } from './directive/partitioned-table.directive';
 import { ClusteredTableDirective } from './directive/clustered-table.directive';
+import { ViewDirective } from './directive/view.directive';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { ClusteredTableDirective } from './directive/clustered-table.directive';
     ExternalQueryDirective,
     PartitionedTableDirective,
     ClusteredTableDirective,
+    ViewDirective,
     // FormControlDirective,
 
   ],

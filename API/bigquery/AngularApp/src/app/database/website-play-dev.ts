@@ -291,6 +291,74 @@ website.convertCMS = [
                 }
             },
             {
+                "key": "counter",
+                "type": "count",
+                "value":"1.",
+                "multipleGroup":"view",
+                // "split": "3",
+                // "width":"300",
+                // "height":"250",
+                "googleSheets": {},
+                "options":{
+                    "css":{
+                        // "justify-self":"flex-start",
+                        // "flex-grow":"1"
+                        // order:-3,
+                        "width":"10px"
+                        // "background":"white",
+                        // "height":"30px",
+                        // "width":"400px",
+                    }
+                }
+            },
+            {
+                "key": "add",
+                "type": "add button",
+                "value":"Add ",
+                "multipleGroup":"view",
+                // "nestUnder":"A1",
+                // "nest":"B3",
+                "split": "3",
+                // "left":"0",
+                // "width":"300",
+                // "height":"250",
+                "googleSheets": {},
+                "options":{
+                    "css":{
+                        // "justify-self":"flex-start",
+                        // "flex-grow":"1"
+                        // order:-1,
+
+                        // "background":"white",
+                        // "height":"30px",
+                        // "width":"100%",
+                    }
+                }
+            },
+            {
+                "key": "remove",
+                "type": "remove button",
+                "value":"Remove",
+                "multipleGroup":"view",
+                // "nestGroup":"view",
+                // "nestUnder":"A1",
+                // "nest":"B4",
+                "split": "3",
+                // "width":"300",
+                // "height":"250",
+                "googleSheets": {},
+                "options":{
+                    "css":{
+                        // "justify-self":"flex-start",
+                        // "flex-grow":"1"
+                        order:0,
+                        // "background":"white",
+                        // "height":"30px",
+                        // "width":"100%",
+                    }
+                }
+            },
+            {
                 "key": "schema-dropdown",
                 "type": "dropdown",
                 "value":"Mode Type",

@@ -2321,6 +2321,41 @@ CLUSTER BY column1, column2;
 SELECT column_name, clustering_ordinal_position
 FROM myDataset.INFORMATION_SCHEMA.COLUMNS;
 ```
+### Lab [Clustered tables with Bigquery](./vids/Python3/Clustered_Tables/README.md)
+
+## Introduction to views
+* __view__ - a virtual table made from a SQL query, 
+* cant use query params
+* must manually update view
+* cant use wildcards
+* cant use temp tables
+* cant do anything special with views
+
+### Creating Views
+*Up to 1,024 characters
+*Letters (uppercase or lowercase), numbers, and underscores
+* __permissions__ -bigquery.tables.create,bigquery.datasets.create
+* __roles__ - bigquery.dataOwner,bigquery.admin
+
+
+* to create a view
+#### Python
+```py
+view_id = "{}.{}".format(dataset_main, "My_View") 
+source_id = table_id
+view = bigquery.Table(view_id)
+
+view.view_query = #ENTER YOUR QUERY HERE
+f"SELECT name, post_abbr FROM `{source_id}` WHERE name LIKE 'W%'"
+
+# Make an API request to create the view.
+view = client.create_table(view)
+return f"Created {view.table_type}: {str(view.reference)}"   
+```
+
+### Creating authorized views
+__authorized view__ - allow ppl to look at data from the view, and not table where the query came from
+
 
 ### Setup
 pip install -r requirements.txt --upgrade --target .\site-packages

@@ -191,6 +191,18 @@
                                     "with": "src/environments/environment.bigquery.dev.ts"
                                 }
                             ]
+                        },
+                        "view": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/app/website.ts",
+                                    "with": "src/app/database/website-view-dev.ts"
+                                },
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.bigquery.dev.ts"
+                                }
+                            ]
                         }
 
                     }
@@ -237,6 +249,9 @@
                         },
                         "clusteredTable": {
                             "browserTarget": "AngularApp:bigquery:clusteredTable"
+                        },
+                        "view": {
+                            "browserTarget": "AngularApp:bigquery:view"
                         }
 
                     }

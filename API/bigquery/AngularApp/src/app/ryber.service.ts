@@ -42,7 +42,7 @@ export class RyberService {
 
 
             let { mf } = devObj
-            let { latch,options,nestUnder,nest,nestGroup,printGroupType, printGroup, key, type, gap, stack, value, group, count, repeatable, newline, form, multipleGroup, refreshGroup, background, color, fonts, title, fontSize, italics, googleSheets, border } = mf
+            let { imageURL,latch,options,nestUnder,nest,nestGroup,printGroupType, printGroup, key, type, gap, stack, value, group, count, repeatable, newline, form, multipleGroup, refreshGroup, background, color, fonts, title, fontSize, italics, googleSheets, border } = mf
             let { left, top, height, width, split, next } = devObj.mf
             let component = { left, top, height, width, split, next }
 
@@ -1415,8 +1415,79 @@ export class RyberService {
                 })
             }
 
+            else if (type === "view button") {
+
+                let css = {
+                    width: '325px',
+                    "font-size": "48px",
+                    top: "0px",
+                    // height:"75px",
+                    // left:'400px',
+                    "z-index": 4,
+                    'background-color': background,
+                    color,
+                    "font-family": fonts,
+                    "font-weight": italics
+                }
+                options.css === undefined ? undefined : (() => {
+                    css = options.css;
+                    css['font-size'] === undefined ? (css['font-size'] = '48px') : null
+                })()
+
+                symbol = rUD({
+                    co,
+                    bool: 'b',
+                    text: value,
+                    val: key.split("_").reverse()[0] + ' a_p_p_Button',
+                    css,
+                    extras: {
+                        appView: {
+                            confirm: 'true',
+                            co
+                        },
+                        component,
+                        type
+                    }
+                })
+            }
+
             //
 
+            else if (type === "image") { // for now a better use of divs?
+
+
+                let css = {
+                }
+                options.css === undefined ? undefined : (() => {
+                    css = {...css,...options.css}
+                })()
+
+                let extend = {
+                    src : "./assets/media/" + imageURL
+                }
+
+
+                symbol = rUD({
+                    co,
+                    bool: 'img',
+                    val: key.split("_").reverse()[0]+ ' a_p_p_Image',
+                    css,
+                    extras: {
+                        deltaIndex: 1,
+                        component,
+                        multipleGroup,
+                        type,
+                        extend,
+                        appNest: {
+                            confirm:nestGroup === undefined ? "false": "true",
+                            co,
+                            nestGroup,
+                            nestUnder,
+                            nest,
+                        }
+                    }
+                })
+            }
 
             else if (type === "file button") {
 

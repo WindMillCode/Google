@@ -6,7 +6,7 @@ import {
     zChildren, getTextWidth, numberParse,
     xPosition, resize, componentBootstrap, deltaNode,
     eventDispatcher, dropdown, dragElement, stack, xContain, minMaxDelta,
-    objectCopy, responsiveMeasure, flatDeep
+    objectCopy, responsiveMeasure, flatDeep, zChildText
 } from '../customExports'
 import { environment as env } from '../../environments/environment'
 
@@ -67,7 +67,9 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
 
 
                 // drags elements for you
-                // this.toPlace(zChild)
+                if(env.component.form?.drag?.includes( ii)){
+                    this.toPlace(zChild)
+                }
                 //
 
                 // highlights
@@ -541,7 +543,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                                         }
                                     })
                                     //
-                                    // debugger
+
 
                                     stack({
                                         zChildKeys:[
@@ -780,9 +782,6 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                                         section,
                                         keep:movingKeep
                                     })
-
-
-
 
                                     // position board
                                     this.ryber[this.appTV].metadata.ngAfterViewInitFinished.next("")
@@ -1071,14 +1070,18 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                                         zChildKeys:movingZKeys,
                                         type:'custom',
                                         customFn:((devObj)=>{
+                                            let zChildKeys =[
+                                                // devObj.attach, //mabye a good fix idek man
+                                                ...movingZKeys,
+                                            ]
+                                            .filter((z:any,k)=>{
+                                                // all nested not top level
+                                                return !(
+                                                    zChild[z].extras?.appNest?.confirm === "true" && zChild[z].extras?.appNest?.nestUnder !== undefined
+                                                )
+                                            })
                                             stack({
-                                                zChildKeys:[
-                                                    // devObj.attach, //mabye a good fix idek man
-                                                    ...movingZKeys,
-                                                ]
-                                                .filter((z:any,k)=>{
-                                                    return zChild[z].extras?.appNest?.confirm !== "true"
-                                                }),
+                                                zChildKeys,
                                                 ref: this.ref,
                                                 zChild,
                                                 spacing:[null,section.stack],
@@ -1490,7 +1493,8 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
         }
     }
 
-    private dynamicPosition(devObj:{
+    private dynamicPosition(
+    devObj:{
         deltaDiff:number, // spacing between dynamics
         group:any,// deltaNode group
         zChild:zChildren,
@@ -1500,7 +1504,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
         zChildKeys:Array<string>
         type?:string,
         section?:any
-        keep?:any
+        keep?:any,
         customFn?:Function
     }):any{
         let {keep,section,deltaDiff,group,zChild,current,attachVal,type,zChildKeys,customFn,deltaNodeSite} = devObj
@@ -1515,6 +1519,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                     myGroup
                     .symbols
                     .forEach((y,j)=>{
+
                         let {delta} = minMaxDelta({
                             items:myGroup.elements[j]
                             .filter((z:any,k)=>{
@@ -1568,17 +1573,29 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                     if(type === 'stack' || type === undefined){
 
 
+                        let zChildKeys =zChildMovingKeys
+                        .filter((z:any,k)=>{
+                            return zChild[z].extras?.appNest?.confirm !== "true"
+                        })
                         stack({
-                            zChildKeys:zChildMovingKeys
-                            .filter((z:any,k)=>{
-                                return zChild[z].extras?.appNest?.confirm !== "true"
-                            }),
+                            zChildKeys,
                             ref: this.ref,
                             zChild,
-                            spacing:[null,section.stack],
+                            spacing:[null,...Array.from(Array(zChildKeys.length),(z,k)=> {
+                                if(
+                                    zChild[zChildKeys[k+1]]?.cssDefault?.top !== "0px" &&
+                                    zChild[zChildKeys[k+1]]?.cssDefault?.top !== undefined
+                                ){
+                                    return numberParse(zChild[zChildKeys[k+1]]?.cssDefault?.top)
+                                }
+                                return section.stack
+                            })],
+                            // spacing:[null,section.stack],
                             keep,
                             type:'keepSomeAligned',
-                            heightInclude:[null,...Array.from(Array(14),(x,i)=> {return 't'})]
+                            heightInclude:[null,...Array.from(Array(zChildKeys.length),(z,k)=> {
+                                return 't'
+                            })]
                         })
                         this.ref.detectChanges()
                     }
