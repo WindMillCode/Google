@@ -2283,31 +2283,31 @@ TIMESTAMP
 
 * load a clustered table
 ```py
-                job_config = bigquery.LoadJobConfig(
-                    skip_leading_rows=1,
-                    source_format=bigquery.SourceFormat.CSV,
-                    schema=[
-                        bigquery.SchemaField("timestamp", bigquery.SqlTypeNames.TIMESTAMP),
-                        bigquery.SchemaField("origin", bigquery.SqlTypeNames.STRING),
-                        bigquery.SchemaField("destination", bigquery.SqlTypeNames.STRING),
-                        bigquery.SchemaField("amount", bigquery.SqlTypeNames.NUMERIC),
-                    ],
-                    time_partitioning=bigquery.TimePartitioning(field="timestamp"),
-                    clustering_fields=["origin", "destination"],
-                )
+job_config = bigquery.LoadJobConfig(
+skip_leading_rows=1,
+source_format=bigquery.SourceFormat.CSV,
+schema=[
+    bigquery.SchemaField("timestamp", bigquery.SqlTypeNames.TIMESTAMP),
+    bigquery.SchemaField("origin", bigquery.SqlTypeNames.STRING),
+    bigquery.SchemaField("destination", bigquery.SqlTypeNames.STRING),
+    bigquery.SchemaField("amount", bigquery.SqlTypeNames.NUMERIC),
+],
+time_partitioning=bigquery.TimePartitioning(field="timestamp"),
+clustering_fields=["origin", "destination"],
+)
 
-                job = client.load_table_from_uri(
-                    ["gs://cloud-samples-data/bigquery/sample-transactions/transactions.csv"],
-                    table_id,
-                    job_config=job_config,
-                )
+job = client.load_table_from_uri(
+["gs://cloud-samples-data/bigquery/sample-transactions/transactions.csv"],
+table_id,
+job_config=job_config,
+)
 
-                job.result()  # Waits for the job to complete.
+job.result()  # Waits for the job to complete.
 
-                table = client.get_table(table_id)  # Make an API request.
-                return "Loaded {} rows and {} columns to {}".format(
-                        table.num_rows, len(table.schema), table_id
-                    )    
+table = client.get_table(table_id)  # Make an API request.
+return "Loaded {} rows and {} columns to {}".format(
+    table.num_rows, len(table.schema), table_id
+)    
 ```
 
 * using sql
