@@ -29,6 +29,8 @@ class my_bigquery_client():
 
     # paste env dictionary here
     env=  {
+        "create_time_partitioned":False,
+        "integer_partitioned_table":True
     }
     #
 
@@ -63,11 +65,65 @@ class my_bigquery_client():
                 
 
         # craete time parttitoned table
+        if(self.env.get("create_time_partitioned")):
+            try:
 
+                table_ref = table_id
+                schema = [
+                    bigquery.SchemaField("name", "STRING"),
+                    bigquery.SchemaField("post_abbr", "STRING"),
+                    bigquery.SchemaField("date", "DATE"),
+                ]
+                table = bigquery.Table(table_ref, schema=schema)
+                table.time_partitioning = bigquery.TimePartitioning(
+                    type_=bigquery.TimePartitioningType.DAY,
+                    field="date",  # name of column to use for partitioning
+                    expiration_ms=7776000000,
+                )  # 90 days
+
+                table = client.create_table(table)
+
+                return "Created table {}, partitioned on column {}".format(
+                        table.table_id, table.time_partitioning.field
+                    )
+                        
+            except BaseException as e:
+                print('my custom error\n')
+                print(e.__class__.__name__)
+                print('\n')
+                print(e)
+                return 'an error occured check the output from the backend'
+        #        
         #
 
         # create integer partitioned table
-        
+        elif(self.env.get("integer_partitioned_table")):
+            try:
+
+                schema = [
+                    bigquery.SchemaField("full_name", "STRING"),
+                    bigquery.SchemaField("city", "STRING"),
+                    bigquery.SchemaField("zipcode", "INTEGER"),
+                ]
+
+                table = bigquery.Table(table_id, schema=schema)
+                table.range_partitioning = bigquery.RangePartitioning(
+                    # To use integer range partitioning, select a top-level REQUIRED /
+                    # NULLABLE column with INTEGER / INT64 data type.
+                    field="zipcode",
+                    range_=bigquery.PartitionRange(start=0, end=100000, interval=10),
+                )
+                table = client.create_table(table)  # Make an API request.
+                return "Created table {}, partitioned on column {}".format(
+                        table.table_id, table.range_partitioning.field
+                    )
+                                
+            except BaseException as e:
+                print('my custom error\n')
+                print(e.__class__.__name__)
+                print('\n')
+                print(e)
+                return 'an error occured check the output from the backend'        
         #
 
         return "Check the backend env dictionary you did set it so the backend didnt do anything"

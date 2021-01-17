@@ -2138,6 +2138,8 @@ credentials = credentials.with_scopes(
         )
 ```
 
+### Lab [External Data Sources in Bigquer]((./vids/Python3/Querying_External_Tables_in_BigQuery/README.md))
+
 ##  Partitioned tables
 __partitioned table__ - is a special table that is divided into segments, called partitions, that make it easier to manage and query your data. 
 * only partition tables by Ingestion time, Date/timestamp/datetime, Integer Range
@@ -2235,6 +2237,90 @@ table_name$0
 
 
 
+
+### Lab [Partitoned Tables in BigQuery](.\vids\Python3\Partitioned_Tables)
+
+## Clustered Tables
+* helpes with filter and aggregate queries
+* column is impt
+* a step above partitioning
+* can better estimate dry runs
+* only 4 columns at a time
+[free operations](https://cloud.google.com/bigquery/pricing#free)
+* can only occur on the following data types
+```
+DATE
+BOOL
+GEOGRAPHY
+INT64
+NUMERIC
+STRING
+TIMESTAMP
+```
+* __permissions__ bigquery.tables.create,bigquery.tables.updateData,bigquery.jobs.create,bigquery.tables.getData
+
+* __roles__ - bigquery.admin
+
+* to create a clustererd table
+```py
+            try:
+                table_id 
+
+                schema = [
+                    bigquery.SchemaField("full_name", "STRING"),
+                    bigquery.SchemaField("city", "STRING"),
+                    bigquery.SchemaField("zipcode", "INTEGER"),
+                ]
+
+                table = bigquery.Table(table_id, schema=schema)
+                table.clustering_fields = ["city", "zipcode"]
+                table = client.create_table(table)  # Make an API request.
+                return "Created clustered table {}.{}.{} clustered by {}".format(
+                        table.project, table.dataset_id, table.table_id,str(table.clustering_fields)
+                    )
+
+```
+
+* load a clustered table
+```py
+                job_config = bigquery.LoadJobConfig(
+                    skip_leading_rows=1,
+                    source_format=bigquery.SourceFormat.CSV,
+                    schema=[
+                        bigquery.SchemaField("timestamp", bigquery.SqlTypeNames.TIMESTAMP),
+                        bigquery.SchemaField("origin", bigquery.SqlTypeNames.STRING),
+                        bigquery.SchemaField("destination", bigquery.SqlTypeNames.STRING),
+                        bigquery.SchemaField("amount", bigquery.SqlTypeNames.NUMERIC),
+                    ],
+                    time_partitioning=bigquery.TimePartitioning(field="timestamp"),
+                    clustering_fields=["origin", "destination"],
+                )
+
+                job = client.load_table_from_uri(
+                    ["gs://cloud-samples-data/bigquery/sample-transactions/transactions.csv"],
+                    table_id,
+                    job_config=job_config,
+                )
+
+                job.result()  # Waits for the job to complete.
+
+                table = client.get_table(table_id)  # Make an API request.
+                return "Loaded {} rows and {} columns to {}".format(
+                        table.num_rows, len(table.schema), table_id
+                    )    
+```
+
+* using sql
+```sql
+-- Set up a table with clustering.
+CREATE TABLE myDataset.data (column1 INT64, column2 INT64)
+PARTITION BY _PARTITIONDATE
+CLUSTER BY column1, column2;
+
+-- This query returns 1 for column1 and 2 for column2.
+SELECT column_name, clustering_ordinal_position
+FROM myDataset.INFORMATION_SCHEMA.COLUMNS;
+```
 
 ### Setup
 pip install -r requirements.txt --upgrade --target .\site-packages

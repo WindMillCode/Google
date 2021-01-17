@@ -1,4 +1,4 @@
-# Loading Data into Bigquery
+# Clustered Tables in Bigquery
 
 <!-- ## [Youtube Walkthrough]() -->
 
@@ -26,7 +26,7 @@ pip install -r requirements.txt --upgrade --target .\site-packages
 python .\tornado_server.py
 ```
 
-* open table_schemas.py and in your code editor,
+* open template.py and in your code editor,
 
 
 ### Task 1 

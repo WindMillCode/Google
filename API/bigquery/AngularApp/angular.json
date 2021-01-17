@@ -179,6 +179,18 @@
                                     "with": "src/environments/environment.bigquery.dev.ts"
                                 }
                             ]
+                        },
+                        "clusteredTable": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/app/website.ts",
+                                    "with": "src/app/database/website-clusteredTable-dev.ts"
+                                },
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.bigquery.dev.ts"
+                                }
+                            ]
                         }
 
                     }
@@ -189,8 +201,7 @@
                         "browserTarget": "AngularApp:bigquery:play",
                         "port": 8000,
                         "liveReload": true,
-                        "hmr": false,
-                        // "verbose":true
+                        // "hmr": true,
                     },
                     "configurations": {
                         "production": {
@@ -223,7 +234,11 @@
                         },
                         "partitionedTable": {
                             "browserTarget": "AngularApp:bigquery:partitionedTable"
+                        },
+                        "clusteredTable": {
+                            "browserTarget": "AngularApp:bigquery:clusteredTable"
                         }
+
                     }
                 },
                 "extract-i18n": {
@@ -237,7 +252,6 @@
                     "options": {
                         "tsConfig": [
                             "tsconfig.app.json",
-                            "e2e/tsconfig.json"
                         ],
                         "exclude": [
                             "**/node_modules/**"

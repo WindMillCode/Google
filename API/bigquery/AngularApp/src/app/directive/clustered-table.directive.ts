@@ -1,5 +1,3 @@
-
-
 import { Directive, ElementRef, HostListener, Input, Renderer2, TemplateRef, ViewContainerRef, ViewRef, EmbeddedViewRef, ViewChildren } from '@angular/core';
 import { RyberService } from '../ryber.service'
 import { fromEvent, from, Subscription, Subscriber, of, combineLatest } from 'rxjs';
@@ -10,11 +8,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 @Directive({
-    selector: '[appExternalQuery]'
-})
-export class ExternalQueryDirective {
+    selector: '[appClusteredTable]'
+  })
+  export class ClusteredTableDirective {
 
-    @Input() externalQuery: any;
+    @Input() clusteredTable: any;
     extras: any;
     zChildren: any;
     agGrid:any = {
@@ -33,6 +31,8 @@ export class ExternalQueryDirective {
 
 
         if (this.extras?.confirm === 'true') {
+
+
 
             let update = (document.querySelector(".f_o_r_m_Result") as HTMLElement)
             let validDomains = ["user", "group", "serviceAccount"]
@@ -69,7 +69,7 @@ export class ExternalQueryDirective {
                 next: (result: any) => {
                     console.log(result)
                     switch (true) {
-                        case env.externalQuery.createTempTable:
+                        case env?.clusteredTable?.createTempTable:
                             result = JSON.parse(result)
                             this.zChildren[this.agGrid.zSymbol].extras.appAgGrid.rowData = result.data
                             this.zChildren[this.agGrid.zSymbol].extras.appAgGrid.columnDefs  = result.schema
@@ -96,7 +96,7 @@ export class ExternalQueryDirective {
     }
 
     ngOnInit() {
-        this.extras = this.externalQuery
+        this.extras = this.clusteredTable
         if (this.extras?.confirm === 'true') {
             // console.log(this.extras)
             combineLatest([

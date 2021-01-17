@@ -22,6 +22,7 @@ import { AgGridDirective } from './directive/ag-grid.directive';
 import { ExtendDirective } from './directive/extend.directive';
 import { ExternalQueryDirective } from './directive/external-query.directive';
 import { PartitionedTableDirective } from './directive/partitioned-table.directive';
+import { ClusteredTableDirective } from './directive/clustered-table.directive';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { PartitionedTableDirective } from './directive/partitioned-table.directi
     ExtendDirective,
     ExternalQueryDirective,
     PartitionedTableDirective,
+    ClusteredTableDirective,
     // FormControlDirective,
 
   ],
