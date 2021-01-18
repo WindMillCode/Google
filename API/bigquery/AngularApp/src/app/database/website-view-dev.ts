@@ -118,7 +118,7 @@ website.convertCMS = [
                 }
             },
             {
-                "key": "my-input",
+                "key": "my-email-input",
                 "type": "input",
                 "value":"EMAIL",
                 "nestGroup":"view",

@@ -30,13 +30,16 @@ class my_bigquery_client():
     # paste env dictionary here
     env=  {
         "create_view":False,
-        "create_authorized_view":True
+        "create_authorized_view":False,
+        "list_views":False,
+        "update_views":True
     }
     #
 
     # setup
     dataset_names = [
-        "Views_Dataset"
+        "Views_Dataset",
+        "Authorized_Views_Dataset"
     ]
     #
 
@@ -49,16 +52,17 @@ class my_bigquery_client():
         datetime = self.datetime 
         pytz = self.pytz        
         time = self.time 
-        name = data.get("titleName")
+        name = data.get("titleName") 
         emails = data.get("emails")
         query = data.get("query")
         source_url = data.get("sourceURL")
+        emails = data.get("emails")
         table = ""
         #
 
         # create a dataset first if needed
         dataset_main = self.make_dataset()
-        table_id = "{}.{}".format(dataset_main, name) 
+        table_id = "{}.{}".format(dataset_main[0], name) 
         #    
 
         #create a table if needed
@@ -69,7 +73,7 @@ class my_bigquery_client():
         # create a view
         if(self.env.get("create_view")):
             try:
-                view_id = "{}.{}".format(dataset_main, "My_View") 
+                view_id = "{}.{}".format(dataset_main[1], "My_View") 
                 source_id = table_id
                 view = bigquery.Table(view_id)
 
@@ -86,39 +90,29 @@ class my_bigquery_client():
                 return 'an error occured check the output from the backend'
         #
 
-        # create an anuthorized
-        if(self.env.get("create_authorized_view")):
+        # create an anuthorized view
+        elif(self.env.get("create_authorized_view")):
             try:
 
-                # To use a view, the analyst requires ACLs to both the view and the source
-                # table. Create an authorized view to allow an analyst to use a view
-                # without direct access permissions to the source table.
-                view_dataset_id = dataset_main
-                # Make an API request to get the view dataset ACLs.
+                view_dataset_id = dataset_main[1]
                 view_dataset = client.get_dataset(view_dataset_id)
 
-                analyst_group_email = "data_analysts@example.com"
                 access_entries = view_dataset.access_entries
-                access_entries.append(
-                    bigquery.AccessEntry("READER", "groupByEmail", analyst_group_email)
-                )
+                for email in emails:                
+                    access_entries.append(
+                        bigquery.AccessEntry("READER", "userByEmail", email)
+                    )
                 view_dataset.access_entries = access_entries
 
-                # Make an API request to update the ACLs property of the view dataset.
                 view_dataset = client.update_dataset(view_dataset, ["access_entries"])
                 
-
-                # Group members of "data_analysts@example.com" now have access to the view,
-                # but they require access to the source table to use it. To remove this
-                # restriction, authorize the view to access the source dataset.
-                source_dataset_id =view_dataset_id
-                # Make an API request to set the source dataset ACLs.
+                source_dataset_id = dataset_main[0]
                 source_dataset = client.get_dataset(source_dataset_id)
 
                 view_reference = {
                     "projectId": client.project,
                     "datasetId": self.dataset_names[0],
-                    "tableId": "my_authorized_view",
+                    "tableId": name,
                 }
                 access_entries = source_dataset.access_entries
                 access_entries.append(bigquery.AccessEntry(None, "view", view_reference))
@@ -126,9 +120,12 @@ class my_bigquery_client():
 
                 # Make an API request to update the ACLs property of the source dataset.
                 source_dataset = client.update_dataset(source_dataset, ["access_entries"])
+                emailList = ""
+                for email in emails:
+                    emailList += email +", "
                 return f"""
-                Access to view: {view_dataset.access_entries}")
-                Access to source: {source_dataset.access_entries}
+                Access to view : {emailList}, and the view has access to the source table, 
+                which means who has access can use the view
                 """        
             except BaseException as e:
                 print('my custom error\n')
@@ -136,15 +133,63 @@ class my_bigquery_client():
                 print('\n')
                 print(e)
                 return 'an error occured check the output from the backend'
-        #        
+        #   
+         
+        # list views
+        elif(self.env.get("list_views")):
+            try:
+                dataset_id = dataset_main[0]
+                for view in ["view_1","view_2","view_3"]:
+                    view_id = "{}.{}".format(dataset_main[0], view) 
+                    source_id = table_id
+                    view = bigquery.Table(view_id)
 
+                    view.view_query = query or f"SELECT name, post_abbr FROM `{source_id}` WHERE name LIKE 'W%'"
+
+                    # Make an API request to create the view.
+                    view = client.create_table(view)                    
+                tables = client.list_tables(dataset_id)  # Make an API request.
+
+                print("Tables contained in '{}':".format(dataset_id))
+                views = ""
+                for table in tables:
+                    if(table.table_type =="VIEW"):
+                        views += table.table_id +" ,"
+                return "List of views in the dataset {}".format(views)          
+            except BaseException as e:
+                print('my custom error\n')
+                print(e.__class__.__name__)
+                print('\n')
+                print(e)
+                return 'an error occured check the output from the backend'
+        #      
+
+        # update view query
+        elif(self.env.get("update_views")):
+            try:
+                view_id = "{}.{}".format(dataset_main[1], "My_View") 
+                source_id = table_id
+                view = bigquery.Table(view_id)
+
+
+                view.view_query = f"SELECT name FROM `{source_id}` WHERE name LIKE 'M%'"
+
+
+                view = client.update_table(view, ["view_query"])
+                return f"Updated {view.table_type}: {str(view.reference)}"                
+            except BaseException as e:
+                print('my custom error\n')
+                print(e.__class__.__name__)
+                print('\n')
+                print(e)
+                return 'an error occured check the output from the backend'
+        #
 
 
         return "Check the backend env dictionary you did set it so the backend didnt do anything"
 
 
-
-    def make_table(self,id,type=None):
+    def make_table(self,id,type=None,source_url=None):
         try:
             table_ref = bigquery.Table(id)
             if(type == "load"):
@@ -174,14 +219,18 @@ class my_bigquery_client():
 
     def make_dataset(self):
         try:
-            dataset_main = self.dataset_names[0]      
-            dataset_id = self.make_dataset_id(dataset_main)
-            dataset_init = bigquery.Dataset(dataset_id)
-            dataset = client.create_dataset(dataset_init, timeout=30)
+            for dataset_main in self.dataset_names:  
+                try:
+                    dataset_id = self.make_dataset_id(dataset_main)
+                    dataset_init = bigquery.Dataset(dataset_id)
+                    dataset = client.create_dataset(dataset_init, timeout=30)
+                except:
+                    pass
         except BaseException:
             print("dataset exists")
         finally:
-            return "{}.{}".format(client.project,dataset_main)
+            # print(["{}.{}".format(client.project,self.make_dataset_id(dataset_main)) for dataset_main in self.dataset_names ])
+            return [self.make_dataset_id(dataset_main) for dataset_main in self.dataset_names ]
 
 
     def make_dataset_id(self, name):

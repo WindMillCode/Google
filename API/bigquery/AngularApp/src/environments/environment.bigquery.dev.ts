@@ -17,7 +17,7 @@ export const environment: any = {
             lifecycleHooks: false,
             zChildView:-1,
             zChild:0,
-            drag:[0],
+            drag:[-1],
         },
         dialog: {
             panelView: -1,

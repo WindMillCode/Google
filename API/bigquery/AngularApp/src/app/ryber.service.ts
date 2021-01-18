@@ -903,7 +903,7 @@ export class RyberService {
                     "font-size": "48px",
                     top: "0px",
                     // height:"75px",
-                    left: '400px',
+                    // left: '400px',
                     "z-index": 4,
                     'background-color': background,
                     color,
@@ -916,7 +916,7 @@ export class RyberService {
                 })()
 
 
-                component.left = component?.left === undefined ? 500 : component.left
+                // component.left = component?.left === undefined ? 500 : component.left
 
 
                 symbol = rUD({
@@ -1054,7 +1054,7 @@ export class RyberService {
                     css['font-size'] === undefined ? (css['font-size'] = '48px') : null
                 })()
 
-                component.left = component?.left === undefined ? 900 : component.left
+                // component.left = component?.left === undefined ? 900 : component.left
 
                 symbol = rUD({
                     co,

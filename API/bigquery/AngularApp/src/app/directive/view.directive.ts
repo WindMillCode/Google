@@ -9,8 +9,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Directive({
     selector: '[appView]'
-  })
-  export class ViewDirective {
+})
+export class ViewDirective {
 
 
     @Input() view: any;
@@ -38,11 +38,18 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
             let titleName = (document.querySelector(".f_o_r_m_Title") as HTMLInputElement)?.value
             let query = (document.querySelector(".f_o_r_m_Answer") as HTMLInputElement)?.value
             let sourceURL = (document.querySelector(".f_o_r_m_SourceURL") as HTMLInputElement)?.value
+            let emails = Array.from(
+                document.querySelectorAll('[class*="f_o_r_m_my-email-input"]'),
+                (x)=>{
+                    return (x as HTMLInputElement).value
+                }
+            )
 
             let data: any = {
                 titleName,
                 query,
-                sourceURL
+                sourceURL,
+                emails
             }
 
             console.log(data)
@@ -100,6 +107,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
         this.extras = this.view
         if (this.extras?.confirm === 'true') {
             // console.log(this.extras)
+            (document.querySelector(".f_o_r_m_Title") as HTMLInputElement).value = "My_Target_Table"
             combineLatest([
                 this.ryber[this.extras.co.valueOf()].metadata.agGrid.zSymbol,
                 this.ryber[this.extras.co.valueOf()].metadata.zChildrenSubject

@@ -2357,6 +2357,95 @@ return f"Created {view.table_type}: {str(view.reference)}"
 __authorized view__ - allow ppl to look at data from the view, and not table where the query came from
 
 
+* to create
+    * the view and the source table must be in different datasets, or the end user will have access to both
+    * also the end user needs the bigquery job user role, and bigquery.jobs.create to query the view
+```py
+                view_dataset_id = dataset_main[1]
+                view_dataset = client.get_dataset(view_dataset_id)
+
+                access_entries = view_dataset.access_entries
+                for email in emails:                
+                    access_entries.append(
+                        bigquery.AccessEntry("READER", "userByEmail", email)
+                    )
+                view_dataset.access_entries = access_entries
+
+                view_dataset = client.update_dataset(view_dataset, ["access_entries"])
+                
+                source_dataset_id = dataset_main[0]
+                source_dataset = client.get_dataset(source_dataset_id)
+
+                view_reference = {
+                    "projectId": client.project,
+                    "datasetId": self.dataset_names[0],
+                    "tableId": name,
+                }
+                access_entries = source_dataset.access_entries
+                access_entries.append(bigquery.AccessEntry(None, "view", view_reference))
+                source_dataset.access_entries = access_entries
+
+                # Make an API request to update the ACLs property of the source dataset.
+                source_dataset = client.update_dataset(source_dataset, ["access_entries"])
+                emailList = ""
+                for email in emails:
+                    emailList += email +", "
+                return f"""
+                Access to view : {emailList}, and the view has access to the source table, 
+                which means who has access can use the view
+                """    
+```
+* to restrict to individual rows make another column for user emails and user SESSION_USER() like so
+    * use struct instead of arrays when dealing with several accts
+```sql
+SELECT
+  COLUMN_1,
+  COLUMN_2
+FROM
+  `dataset.view`
+WHERE
+  allowed_viewer = SESSION_USER()
+```
+
+### Lisiting Views
+* __permissions__ -bigquery.user,bigquery.metadataViewer,bigquery.dataViewer,bigquery.dataOwner,bigquery.dataEditor,bigquery.admin
+```py
+    dataset_id = dataset_main[0]
+    for view in ["view_1","view_2","view_3"]:
+        view_id = "{}.{}".format(dataset_main[0], view) 
+        source_id = table_id
+        view = bigquery.Table(view_id)
+
+        view.view_query = query or f"SELECT name, post_abbr FROM `{source_id}` WHERE name LIKE 'W%'"
+
+        # Make an API request to create the view.
+        view = client.create_table(view)                    
+    tables = client.list_tables(dataset_id)  # Make an API request.
+
+    print("Tables contained in '{}':".format(dataset_id))
+    views = ""
+    for table in tables:
+        if(table.table_type =="VIEW"):
+            views += table.table_id +" ,"
+    return "List of views in the dataset {}".format(views) 
+```
+
+### Updating the View Query
+* luckliy one flexible thing about Views is that you can change the view query
+    * updating other properties is just like updating a regular table
+* __permissions__ - bigquery.tables.update,bigquery.tables.get
+* __roles__ - bigquery.dataEditor,bigquery.dataOwner
+```py
+    view_id = "{}.{}".format(dataset_main[1], "My_View") 
+    source_id = table_id
+    view = bigquery.Table(view_id)
+    view.view_query = f"SELECT name FROM `{source_id}` WHERE name LIKE 'M%'"
+    view = client.update_table(view, ["view_query"])
+    return f"Updated {view.table_type}: {str(view.reference)}" 
+```
+
+
+
 ### Setup
 pip install -r requirements.txt --upgrade --target .\site-packages
 

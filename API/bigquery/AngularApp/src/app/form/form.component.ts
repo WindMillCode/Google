@@ -1140,13 +1140,12 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
 
 
                     Object.keys(group)
-                    .slice(0,1)
                     .forEach((x,i)=>{
                         let a = staticZKeys
                         .filter((y,j)=>{
                             return zChild[y].extras.multipleGroup === x
                         })
-                        // console.log(a)
+
                         // console.log(this.ryber[this.appTV].quantity[1][1])
 
                         if(group[x].add !== undefined){
@@ -1577,6 +1576,9 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                         .filter((z:any,k)=>{
                             return zChild[z].extras?.appNest?.confirm !== "true"
                         })
+                        // console.log(zChildKeys)
+                        // console.log(keep)
+                        // console.log(zChild)
                         stack({
                             zChildKeys,
                             ref: this.ref,

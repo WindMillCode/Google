@@ -267,17 +267,12 @@ website.convertCMS = [
                 "key": "schema-mode-1",
                 "type": "input",
                 "value":"Mode Type",
-                "newline":[
-                    "REPEATED",
-                    "REQUIRED",
-                    "NULLABLE"
-                ],
                 "fontSize":"120",
                 "latch":"",
                 // "multipleGroup":"schemasInput",
-                "split": "3",
+                "split": "5",
                 // "width":"300",
-                "height":"250",
+                "height":"550",
                 "googleSheets": {},
                 "options":{
                     "css":{
@@ -294,9 +289,11 @@ website.convertCMS = [
                 "key": "counter",
                 "type": "count",
                 "value":"1.",
-                "multipleGroup":"view",
-                // "split": "3",
+                // "multipleGroup":"view",
+                "next":"true",
+                "split": "1",
                 // "width":"300",
+                "top":-200,
                 // "height":"250",
                 "googleSheets": {},
                 "options":{
@@ -311,53 +308,54 @@ website.convertCMS = [
                     }
                 }
             },
-            {
-                "key": "add",
-                "type": "add button",
-                "value":"Add ",
-                "multipleGroup":"view",
-                // "nestUnder":"A1",
-                // "nest":"B3",
-                "split": "3",
-                // "left":"0",
-                // "width":"300",
-                // "height":"250",
-                "googleSheets": {},
-                "options":{
-                    "css":{
-                        // "justify-self":"flex-start",
-                        // "flex-grow":"1"
-                        // order:-1,
+            // {
+            //     "key": "add",
+            //     "type": "add button",
+            //     "value":"Add ",
+            //     "multipleGroup":"view",
+            //     "next":"true",
+            //     // "nestUnder":"A1",
+            //     // "nest":"B3",
+            //     "split": "3",
+            //     // "left":"0",
+            //     // "width":"300",
+            //     // "height":"250",
+            //     "googleSheets": {},
+            //     "options":{
+            //         "css":{
+            //             // "justify-self":"flex-start",
+            //             // "flex-grow":"1"
+            //             // order:-1,
 
-                        // "background":"white",
-                        // "height":"30px",
-                        // "width":"100%",
-                    }
-                }
-            },
-            {
-                "key": "remove",
-                "type": "remove button",
-                "value":"Remove",
-                "multipleGroup":"view",
-                // "nestGroup":"view",
-                // "nestUnder":"A1",
-                // "nest":"B4",
-                "split": "3",
-                // "width":"300",
-                // "height":"250",
-                "googleSheets": {},
-                "options":{
-                    "css":{
-                        // "justify-self":"flex-start",
-                        // "flex-grow":"1"
-                        order:0,
-                        // "background":"white",
-                        // "height":"30px",
-                        // "width":"100%",
-                    }
-                }
-            },
+            //             // "background":"white",
+            //             // "height":"30px",
+            //             // "width":"100%",
+            //         }
+            //     }
+            // },
+            // {
+            //     "key": "remove",
+            //     "type": "remove button",
+            //     "value":"Remove",
+            //     "multipleGroup":"view",
+            //     // "nestGroup":"view",
+            //     // "nestUnder":"A1",
+            //     // "nest":"B4",
+            //     "split": "3",
+            //     // "width":"300",
+            //     // "height":"250",
+            //     "googleSheets": {},
+            //     "options":{
+            //         "css":{
+            //             // "justify-self":"flex-start",
+            //             // "flex-grow":"1"
+            //             order:0,
+            //             // "background":"white",
+            //             // "height":"30px",
+            //             // "width":"100%",
+            //         }
+            //     }
+            // },
             {
                 "key": "schema-dropdown",
                 "type": "dropdown",
@@ -369,6 +367,7 @@ website.convertCMS = [
                 ],
                 "fontSize":"120",
                 "latch":"",
+                "top":-200,
                 // "multipleGroup":"schemasInput",
                 "split": "3",
                 // "width":"300",
@@ -378,8 +377,8 @@ website.convertCMS = [
                     "css":{
                         // "justify-self":"flex-start",
                         // "flex-grow":"1"
-                        order:-2,
-                        "background":"white",
+                        // order:-2,
+                        "background":"blue",
                         "height":"50px",
                         // "width":"400px",
                     }
