@@ -24,6 +24,7 @@ import { ExternalQueryDirective } from './directive/external-query.directive';
 import { PartitionedTableDirective } from './directive/partitioned-table.directive';
 import { ClusteredTableDirective } from './directive/clustered-table.directive';
 import { ViewDirective } from './directive/view.directive';
+import { GISDirective } from './directive/gis.directive';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { ViewDirective } from './directive/view.directive';
     PartitionedTableDirective,
     ClusteredTableDirective,
     ViewDirective,
+    GISDirective,
     // FormControlDirective,
 
   ],

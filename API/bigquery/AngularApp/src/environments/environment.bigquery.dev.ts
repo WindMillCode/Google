@@ -75,8 +75,13 @@ export const environment: any = {
     //update external query object here
     externalQuery:{
         createTempTable:true
-    }
+    },
     //
 
+
+    // update gis object here
+    gis:{
+        intro:false
+    }
 };
 

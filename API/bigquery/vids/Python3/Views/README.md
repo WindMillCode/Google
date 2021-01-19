@@ -1,6 +1,6 @@
 # Views in Bigquery
 
-<!-- ## [Youtube Walkthrough]() -->
+## [Youtube Walkthrough](https://youtu.be/Mn6wjxiwVWo)
 
 
 * after the lab your file should look like template.final.py 

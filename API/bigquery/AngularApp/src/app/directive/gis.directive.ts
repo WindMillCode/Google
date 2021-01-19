@@ -1,5 +1,4 @@
 
-
 import { Directive, ElementRef, HostListener, Input, Renderer2, TemplateRef, ViewContainerRef, ViewRef, EmbeddedViewRef, ViewChildren } from '@angular/core';
 import { RyberService } from '../ryber.service'
 import { fromEvent, from, Subscription, Subscriber, of, combineLatest } from 'rxjs';
@@ -10,11 +9,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 @Directive({
-    selector: '[appExternalQuery]'
+    selector: '[appGIS]'
 })
-export class ExternalQueryDirective {
+export class GISDirective {
 
-    @Input() externalQuery: any;
+    @Input() gis: any;
     extras: any;
     zChildren: any;
     agGrid:any = {
@@ -77,8 +76,12 @@ export class ExternalQueryDirective {
                 },
                 next: (result: any) => {
                     console.log(result)
+                    if(result === "an error occured check the output from the backend"){
+                        update.innerText = result
+                        return 
+                    }
                     switch (true) {
-                        case env?.externalQuery?.createTempTable:
+                        case env?.gis?.intro:
                             result = JSON.parse(result)
                             this.zChildren[this.agGrid.zSymbol].extras.appAgGrid.rowData = result.data
                             this.zChildren[this.agGrid.zSymbol].extras.appAgGrid.columnDefs  = result.schema
@@ -105,9 +108,10 @@ export class ExternalQueryDirective {
     }
 
     ngOnInit() {
-        this.extras = this.externalQuery
+        this.extras = this.gis
         if (this.extras?.confirm === 'true') {
             // console.log(this.extras)
+            (document.querySelector(".f_o_r_m_Title") as HTMLInputElement).value = "My_Target_Table"
             combineLatest([
                 this.ryber[this.extras.co.valueOf()].metadata.agGrid.zSymbol,
                 this.ryber[this.extras.co.valueOf()].metadata.zChildrenSubject

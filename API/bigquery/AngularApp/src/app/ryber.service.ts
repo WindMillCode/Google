@@ -1451,6 +1451,42 @@ export class RyberService {
                 })
             }
 
+            else if (type === "gis button") {
+
+                let css = {
+                    width: '325px',
+                    "font-size": "48px",
+                    top: "0px",
+                    // height:"75px",
+                    // left:'400px',
+                    "z-index": 4,
+                    'background-color': background,
+                    color,
+                    "font-family": fonts,
+                    "font-weight": italics
+                }
+                options.css === undefined ? undefined : (() => {
+                    css = options.css;
+                    css['font-size'] === undefined ? (css['font-size'] = '48px') : null
+                })()
+
+                symbol = rUD({
+                    co,
+                    bool: 'b',
+                    text: value,
+                    val: key.split("_").reverse()[0] + ' a_p_p_Button',
+                    css,
+                    extras: {
+                        appGIS: {
+                            confirm: 'true',
+                            co
+                        },
+                        component,
+                        type
+                    }
+                })
+            }
+
             //
 
             else if (type === "image") { // for now a better use of divs?

@@ -203,6 +203,18 @@
                                     "with": "src/environments/environment.bigquery.dev.ts"
                                 }
                             ]
+                        },
+                        "gis": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/app/website.ts",
+                                    "with": "src/app/database/website-gis-dev.ts"
+                                },
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.bigquery.dev.ts"
+                                }
+                            ]
                         }
 
                     }
@@ -252,6 +264,9 @@
                         },
                         "view": {
                             "browserTarget": "AngularApp:bigquery:view"
+                        },
+                        "gis": {
+                            "browserTarget": "AngularApp:bigquery:gis"
                         }
 
                     }

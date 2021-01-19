@@ -2443,8 +2443,158 @@ WHERE
     view = client.update_table(view, ["view_query"])
     return f"Updated {view.table_type}: {str(view.reference)}" 
 ```
+### Lab [Views in Bigquery](./vids/Python3/Views/README.md)
+
+## BigQuery GIS
+* only with standardSQL
+* ST_GeogPoint(longitude, latitude) is a function that takes 2 coordinates represenative of a point on earth and coverts to a geography type which gcp api can work  
+```py
+                schema = ["WKT","num_bikes_available"]
+                """
+                query = 
+                SELECT
+                ST_GeogPoint(longitude, latitude)  AS WKT,
+                num_bikes_available
+                FROM
+                `bigquery-public-data.new_york.citibike_stations`
+                WHERE num_bikes_available > 30
+                LIMIT 10
+                """                
+                query_job = client.query(query)
+
+                results = query_job.result()  # Waits for job to complete.
+                return json.dumps({
+                    "schema":[{"field":x} for x in schema],
+                    "data":[
+                        # Row values can be accessed by field name or index.
+                        {
+                            schema[0]:row[schema[0]],
+                            schema[1]:row[schema[1]] 
+                        }
+                        for row in query_job
+                    ]
+                })      
+```
+
+* head to the  [Biguery GeoViz Tool](https://bigquerygeoviz.appspot.com/)
+* authenticate, choose a project and use the same query as before
+
+* __geometry__ - surface area of Eath
+* __spatial feature__ - logical spatial object
+* __GEOMETRY__ - A bigquery GIS type
+    * to represent spatial features use a table with a GEOGRAPHY column plus attriibutes
+[geopgrahical function](https://cloud.google.com/bigquery/docs/reference/standard-sql/geography_functions)
+#### Python
+```py
+        if(self.env.get("intro")):
+            try:
+                schema = ["WKT","num_bikes_available"]
+                """
+                query = 
+                SELECT
+                ST_GeogPoint(longitude, latitude)  AS WKT,
+                num_bikes_available
+                FROM
+                `bigquery-public-data.new_york.citibike_stations`
+                WHERE num_bikes_available > 30
+                LIMIT 10
+                """                
+                query_job = client.query(query)
+
+                results = query_job.result()  # Waits for job to complete.
+                return json.dumps({
+                    "schema":[{"field":x} for x in schema],
+                    "data":[
+                        # Row values can be accessed by field name or index.
+                        {
+                            schema[0]:row[schema[0]],
+                            schema[1]:row[schema[1]] 
+                        }
+                        for row in query_job
+                    ]
+                })           
+            except BaseException as e:
+                print('my custom error\n')
+                print(e.__class__.__name__)
+                print('\n')
+                print(e)
+                return 'an error occured check the output from the backend' 
+        #
+```
+* data types
+Well-known text (WKT)
+Well-known binary (WKB)
+GeoJSON
+
+### WKT
+__WKT__ - a text format for describing individual geometry shapes
+```py
+# Use the Shapely library to generate WKT of a line from LAX to
+# JFK airports. Alternatively, you may define WKT data directly.
+my_geography = shapely.geometry.LineString(
+    [(-118.4085, 33.9416), (-73.7781, 40.6413)]
+)
+rows = [
+    # Convert data into a WKT string.
+    {"geo": shapely.wkt.dumps(my_geography)},
+]
+
+#  table already exists and has a column
+# named "geo" with data type GEOGRAPHY.
+errors = client.insert_rows_json(table_id, rows)
+if errors:
+    raise RuntimeError(f"row insert failed: {errors}")
+else:
+    return f"wrote 1 row to {table_id}"                
+```
+
+###  GeoJSON 
+* __Geometry objects__ - geometry object is a spatial shape
+* __Feature objects__ - feature object contains a geometry plus additional app-specifc name/value pairs
+
+```py
+# Use the python-geojson library to generate GeoJSON of a line from LAX to
+# JFK airports. Alternatively, you may define GeoJSON data directly, but it
+# must be converted to a string before loading it into BigQuery.
+my_geography = geojson.LineString([(-118.4085, 33.9416), (-73.7781, 40.6413)])
+rows = [
+    # Convert GeoJSON data into a string.
+    {"geo": geojson.dumps(my_geography)}
+]
 
 
+# named "geo" with data type GEOGRAPHY.
+errors = client.insert_rows_json(table_id, rows)
+if errors:
+    raise RuntimeError(f"row insert failed: {errors}")
+else:
+    return f"wrote 1 row to {table_id} using GeoJSON"    
+```
+
+###  Coordinate systems and edges
+* Bigquery GIS uses WGS84 spheroid
+* doesnt support
+    Z coordinate
+    * supports only Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, and GeometryCollection.
+* to deal with improperly formatted data
+```py
+ST_GEOGFROMTEXT(wkt_string,make_valid=True)
+```
+* to avoid improperly formatted
+data
+```py
+SELECT
+  geojson AS bad_geojson
+FROM
+  mytable
+WHERE
+  geojson IS NOT NULL
+  AND SAFE.ST_GeogFromGeoJson(geojson) IS NULL
+```
+
+### Reference
+* [docs](https://cloud.google.com/bigquery/docs/reference/standard-sql/geography_functions)
+* [earth engine](https://developers.google.com/earth-engine/)
 
 ### Setup
 pip install -r requirements.txt --upgrade --target .\site-packages
