@@ -53,6 +53,7 @@ FILE: __template.py__
 
 * in 'use the geography point fn' paste this code
 ```py
+        if(self.env.get("intro")):
             try:
                 schema = ["WKT","num_bikes_available"]
                 """
