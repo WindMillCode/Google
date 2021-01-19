@@ -13,7 +13,7 @@
 open a terminal and head to project root and run this command
 ```ps1
 npm install -s
-npx ng serve -c=loading --open=true
+npx ng serve -c=nativeQuery --open=true
 ```
 
 ### Setup the Python Backend 

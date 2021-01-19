@@ -1,6 +1,6 @@
 # Querying External Tables In Bigquery
 
-<!-- ## [Youtube Walkthrough]() -->
+## [Youtube Walkthrough](https://youtu.be/vPpjEw6FFX4)
 
 
 * after the lab your file should look like external_query.final.py 
@@ -13,7 +13,7 @@
 open a terminal and head to project root and run this command
 ```ps1
 npm install -s
-npx ng serve -c=loading --open=true
+npx ng serve -c=externalQuery --open=true
 ```
 
 ### Setup the Python Backend 
@@ -26,7 +26,7 @@ pip install -r requirements.txt --upgrade --target .\site-packages
 python .\tornado_server.py
 ```
 
-* open table_schemas.py and in your code editor,
+* open external_query.py and in your code editor,
 
 
 

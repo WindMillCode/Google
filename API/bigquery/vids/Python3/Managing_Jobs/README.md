@@ -3,6 +3,16 @@
 * after the lab your file should look like managing_jobs.final.py
 * if issues copy and paste from managing_jobs.start.py
 
+### Setup the Python Backend 
+* download the backend [here](https://downgit.github.io/#/home?url=https://github.com/WindMillCode/Google/tree/master/API/bigquery/vids/Python3/Managing_Jobs)
+in a terminal in the folder root
+    * target makes it a local package, do not make it global, it might replace your packages
+    * if you make a mistake or believe a corruption happened delete site-packages and try again
+```ps1
+pip install -r requirements.txt --upgrade --target .\site-packages
+```
+
+* open template.py and in your code editor,
 
 ### Viewing job data
 * in ' paste env object here' replace

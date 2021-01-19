@@ -83,5 +83,6 @@ export const environment: any = {
     gis:{
         intro:false
     }
+    //
 };
 
