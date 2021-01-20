@@ -1,9 +1,7 @@
-# Loading Data into Bigquery
+# Visualizing Data With Google Maps Platform, deck.gl and Angular
 
 <!-- ## [Youtube Walkthrough]() -->
 
-
-* after the lab your file should look like template.final.py 
 * if issues head to Final Code Results and copy and paste the code to the respective files
 
 
@@ -31,7 +29,7 @@ python .\tornado_server.py
 * in your code editor open
 * template.py,
 * AngularApp\src\environments\environment.gdp.dev.ts 
-* google-maps.directive.ts
+* AngularApp\src\app\directive\google-maps.directive.ts
 * AngularApp\src\app\app.component.ts
 
 
@@ -96,6 +94,9 @@ let mapOptions = {
 };
 let myMap = new google.maps.Map(this.el.nativeElement, mapOptions);
 ```
+
+* head to the frontend to see the map
+* if issues clear the cache on reload and try again
 
 ### Retrieving Scatter Plot Data from Bigquery
 
@@ -186,6 +187,10 @@ __FILE: google-maps.directive.ts__
     });
     googleMapsOverlay.setMap(myMap);
 ```
+
+* head back to the frontend to see the scatter plot on the map
+* if issues empty cache and reload 
+
 ###  Final Code results
 
 #### template.py
@@ -354,7 +359,7 @@ export class GoogleMapsDirective {
             ])
             .subscribe((result) => {
 
-
+                let error
                 // init the map display
                 let mapOptions = {
                     center: { lat: 40.75097, lng: -73.98765 },
@@ -377,7 +382,8 @@ export class GoogleMapsDirective {
 
                     error: (error) => {
 
-
+                        let error = document.querySelector(".f_o_r_m_error")
+                        error.result = "Check the terminal where the backend is runnning for any messages"
                         eventDispatcher({
                             event: 'resize',
                             element: window
@@ -758,3 +764,5 @@ export const environment: any = {
 ```
 ### Resources
 [google auth](https://google-auth.readthedocs.io/en/latest/index.html)
+[google developer platform](https://google.dev/u/new)
+[deck.gl scatterploy layer](https://deck.gl/docs/api-reference/layers/scatterplot-layer)

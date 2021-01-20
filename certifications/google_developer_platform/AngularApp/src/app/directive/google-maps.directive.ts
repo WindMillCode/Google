@@ -7,7 +7,6 @@ import { environment as env } from '../../environments/environment'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 // import needed classes
-
 //
 
 @Directive({
@@ -64,7 +63,8 @@ export class GoogleMapsDirective {
 
                     error: (error) => {
 
-
+                        let errorZChild = document.querySelector(".f_o_r_m_error") as HTMLElement
+                        errorZChild.innerText = "Check the terminal where the backend is runnning for any messages"
                         eventDispatcher({
                             event: 'resize',
                             element: window

@@ -56,7 +56,7 @@ export const environment: any = {
 
     // paste googleMaps object here
     googleMaps:{
-        APIKey:"Your API Key Here",
+        APIKey:"your api key here",
         scriptLoaded:{
             flag:"false",
             subject: new Subject<any>()

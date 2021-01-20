@@ -67,7 +67,7 @@ class my_bigquery_client():
                 
 
         # query and return the required data
-
+        
         #
 
 
