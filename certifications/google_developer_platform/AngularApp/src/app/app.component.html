@@ -1,0 +1,20 @@
+<ng-container *ngIf ="ryber.appCurrentNav  === '/home' || ryber.appCurrentNav  === '/'  ">
+    <ng-container *ngFor="let item of ryber['formCO$'] | async  ; index as i;">
+        <app-form #myTemp [class] = 'item' [appTV]= 'item'  [ngStyle] = 'ryber[item].quantity[0][0].ngCss[0][0]'></app-form>
+    </ng-container>
+
+    <ng-container  *ngFor="let item of ryber['dialogCO$'] | async  ; index as i;">
+        <ng-container  *ngIf=" ryber.invalid === 'true' && i === 0">
+            <app-dialog  [class] = 'item' [appTV]= 'item'  [ngStyle] = 'ryber[item].quantity[0][0].ngCss[0][0]'></app-dialog>
+        </ng-container>
+        <ng-container  *ngIf=" ryber.sucessful === 'true' && i === 1">
+            <app-dialog  [class] = 'item' [appTV]= 'item'  [ngStyle] = 'ryber[item].quantity[0][0].ngCss[0][0]'></app-dialog>
+        </ng-container>
+        <ng-container  *ngIf=" ryber.loading === 'true' && i === 2">
+            <app-dialog  [class] = 'item' [appTV]= 'item'  [ngStyle] = 'ryber[item].quantity[0][0].ngCss[0][0]'></app-dialog>
+        </ng-container>
+        <ng-container  *ngIf=" ryber.network === 'error' && i === 3">
+            <app-dialog  [class] = 'item' [appTV]= 'item'  [ngStyle] = 'ryber[item].quantity[0][0].ngCss[0][0]'></app-dialog>
+        </ng-container>
+    </ng-container>
+  </ng-container>
