@@ -26,7 +26,9 @@ pip install -r requirements.txt --upgrade --target .\site-packages
 python .\tornado_server.py
 ```
 
-* open table_schemas.py and in your code editor,
+* if there are issues remove all datasets created from the lab and start again
+* open template.py and in your code editor,
+
 
 
 ### Task 1 

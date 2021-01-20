@@ -45,19 +45,18 @@ export const environment: any = {
 		confirm:"false", //true for hubspot false for drive
 		capybara: { // remove this if not doing unit or e2e tests impt
 			main:"true",
-			url:"Bigquery"
+			url:"gdp"
 		}
     },
     sentry:{
-        env:"Bigquery_development",
+        env:"gdp_development",
         defaultIntegrations:true,
         tracingOrigins:["localhost",/^\//]
     },
 
     // paste googleMaps object here
     googleMaps:{
-       
-        APIKey:"",
+        APIKey:"Your API Key Here",
         scriptLoaded:{
             flag:"false",
             subject: new Subject<any>()

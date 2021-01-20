@@ -64,20 +64,7 @@ export class AppComponent implements OnInit, OnDestroy {
         //
 
         // googleMaps JS API setup
-        if(env.googleMaps.confirm === "true"){
-            let googleMapsAPIURI = `https://maps.googleapis.com/maps/api/js?key=${env.googleMaps.APIKey}&callback=createMap`; //
-            let script =this.renderer2.createElement('script');
-            window.createMap = ()=>{
-                env.googleMaps.scriptLoaded.subject.next(
-                    (()=>{
-                        env.googleMaps.scriptLoaded.flag = "true"
-                        return "true"
-                    })()
-                )
-            }
-            script.src = googleMapsAPIURI;
-            this.renderer2.appendChild(window.document.body, script);
-        }
+
         //
 
 

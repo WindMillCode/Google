@@ -67,7 +67,42 @@ class my_bigquery_client():
                 
 
         # query and return the required data
+        if(self.env.get("query_and_return")):
+            try:
+                schema = ["longitude","latitude","name","capacity"]
+                query_job = client.query(
+                    query if query else """
+                    SELECT
+                        longitude,
+                        latitude,
+                        name,
+                        capacity
+                    FROM
+                        `bigquery-public-data.new_york_citibike.citibike_stations`
+                    LIMIT 50
+                    """
+                )
+                query_job.result()
+                        
 
+                return json.dumps({
+                    "schema":[{"field":x} for x in schema     ],
+                    "data":[
+                        dict([
+                            [schema[i],x]
+                            for i,x in enumerate(row)
+                        ])
+                        for row in query_job
+                    ]
+                })                    
+                
+                
+            except BaseException as e:
+                print('my custom error\n')
+                print(e.__class__.__name__)
+                print('\n')
+                print(e)
+                return 'an error occured check the output from the backend'
         #
 
 

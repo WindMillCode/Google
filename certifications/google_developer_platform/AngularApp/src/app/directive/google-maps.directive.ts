@@ -6,14 +6,14 @@ import { catchError, delay } from 'rxjs/operators'
 import { environment as env } from '../../environments/environment'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { ScatterplotLayer } from '@deck.gl/layers';
-import { GoogleMapsOverlay } from '@deck.gl/google-maps';
+// import needed classes
 
+//
 
 @Directive({
     selector: '[appGoogleMaps]'
-  })
-  export class GoogleMapsDirective {
+})
+export class GoogleMapsDirective {
 
     @Input() googleMaps: any;
     extras: any;
@@ -21,6 +21,8 @@ import { GoogleMapsOverlay } from '@deck.gl/google-maps';
     agGrid:any = {
         zSymbol:""
     }
+    Subscription0:Subscription
+
 
     constructor(
         private el: ElementRef,
@@ -30,17 +32,6 @@ import { GoogleMapsOverlay } from '@deck.gl/google-maps';
     ) { }
 
 
-    @HostListener('click') onClick() {
-
-
-        if (this.extras?.confirm === 'true') {
-
-
-
-
-        }
-
-    }
 
     ngOnInit() {
         this.extras = this.googleMaps
@@ -48,24 +39,22 @@ import { GoogleMapsOverlay } from '@deck.gl/google-maps';
         if (this.extras?.confirm === 'true') {
 
 
-            combineLatest([
+            this.Subscription0 = combineLatest([
                 env.googleMaps.scriptLoaded.subject,
                 this.ryber[this.extras.co.valueOf()].metadata.zChildrenSubject
             ])
             .subscribe((result) => {
-                // setup the maps integration
-                let mapOptions = {
-                    center: { lat: 40.75097, lng: -73.98765 },
-                    zoom: 14,
-                };
-                let myMap = new google.maps.Map(this.el.nativeElement, mapOptions);
+
+
+                // init the map display
+
                 //
 
                 // communicate with the python backend for the map data from bigquery
-                let data = {}
+
                 this.http.post(
                     "http://localhost:3005",
-                    data,
+                    {},
                     {
                         responseType: 'json',
                     }
@@ -85,30 +74,13 @@ import { GoogleMapsOverlay } from '@deck.gl/google-maps';
                         console.log(result)
 
                         // setup layer operations
-                        let layerOptions = {
-                            id: 'scatter-plot',
-                            data: result.data,
-                            getPosition: d => [parseFloat(d.longitude), parseFloat(d.latitude)],
-                            getRadius: d => parseInt(d.capacity),
-                            stroked: true,
-                            getFillColor: [255, 133, 27],
-                            getLineColor: [255, 38, 27],
-                            radiusMinPixels: 5,
-                            radiusMaxPixels: 50
-                        };
-                        let scatterplotLayer = new ScatterplotLayer(layerOptions);
+
                         //
 
-                        // apply visualization to Map
-                        let googleMapsOverlay = new GoogleMapsOverlay({
-                            layers: [scatterplotLayer]
-                        });
-                        googleMapsOverlay.setMap(myMap);
+                        // apply scatter plot visualization to Map
+
                         //
-                        eventDispatcher({
-                            event: 'resize',
-                            element: window
-                        })
+
                     }
 
                 })
