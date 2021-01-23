@@ -34,7 +34,6 @@ export class GoogleMapsDirective {
 
     ngOnInit() {
         this.extras = this.googleMaps
-        console.log(this.extras)
         if (this.extras?.confirm === 'true') {
 
 

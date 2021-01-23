@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule   }    from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
+import { HammerModule} from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { FormComponent } from './form/form.component';
 import { DropDownDirective } from './directive/dropdown.directive';
@@ -17,6 +18,7 @@ import { NativeQueryDirective } from './directive/native-query.directive';
 import { AgGridDirective } from './directive/ag-grid.directive';
 import { ExtendDirective } from './directive/extend.directive';
 import { GoogleMapsDirective } from './directive/google-maps.directive';
+import { WebRTCDirective } from './directive/web-rtc.directive';
 
 
 @NgModule({
@@ -32,10 +34,12 @@ import { GoogleMapsDirective } from './directive/google-maps.directive';
     AgGridDirective,
     ExtendDirective,
     GoogleMapsDirective,
+    WebRTCDirective,
     // FormControlDirective,
 
   ],
   imports: [
+    HammerModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

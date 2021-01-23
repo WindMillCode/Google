@@ -1,4 +1,4 @@
-import { Injectable, VERSION } from "@angular/core";
+import { Injectable, VERSION,Renderer2,RendererFactory2 } from "@angular/core";
 import { Observable, of, Subject, Subscription, BehaviorSubject, ReplaySubject, merge, combineLatest } from "rxjs";
 // import { Router,RouterEvent } from "@angular/router";
 import { zChildren, componentObject, numberParse, ryberUpdate, objectCopy } from "./customExports";
@@ -14,10 +14,16 @@ import { tap, last, catchError } from 'rxjs/operators'
 })
 export class RyberService {
 
+    private renderer2:Renderer2
     constructor(
         // private router:Router
-        public http: HttpClient
+        public http: HttpClient,
+        private rendererFactory: RendererFactory2
     ) {
+
+        //start renderer2
+        this.renderer2 = rendererFactory.createRenderer(null, null);
+        //
         // console.log("ryberservice constructor fires")
 
         let rUD = ((a) => {
@@ -42,7 +48,7 @@ export class RyberService {
 
 
             let { mf } = devObj
-            let { imageURL,latch,options,nestUnder,nest,nestGroup,printGroupType, printGroup, key, type, gap, stack, value, group, count, repeatable, newline, form, multipleGroup, refreshGroup, background, color, fonts, title, fontSize, italics, googleSheets, border } = mf
+            let { webRTC,imageURL,latch,options,nestUnder,nest,nestGroup,printGroupType, printGroup, key, type, gap, stack, value, group, count, repeatable, newline, form, multipleGroup, refreshGroup, background, color, fonts, title, fontSize, italics, googleSheets, border } = mf
             let { left, top, height, width, split, next } = devObj.mf
             let component = { left, top, height, width, split, next }
 
@@ -213,6 +219,11 @@ export class RyberService {
                             confirm: 'true',
                             fontSizeDefault: "32px",
                             mobileShrink: "true"
+                        },
+                        appWebRTC:{
+                            confirm:this.appCO0.metadata.webRTC.init.includes(webRTC?.item)  ? "true" : webRTC?.item !== undefined ? "pickup":"false",
+                            co,
+                            webRTC
                         },
                         appInputHandle: {
                             confirm: 'true',
@@ -612,7 +623,12 @@ export class RyberService {
                         appPrintFiles: {
                             printGroup,
                             type: printGroupType
-                        }
+                        },
+                        appWebRTC:{
+                            confirm:this.appCO0.metadata.webRTC.init.includes(webRTC?.item)  ? "true" : webRTC?.item !== undefined ? "pickup":"false",
+                            co,
+                            webRTC
+                        },
                     }
                 })
             }
@@ -706,13 +722,13 @@ export class RyberService {
                 })
             }
 
-            else if (type === "nester") { // for now a better use of divs?
+            else if (type === "div") { // for now a better use of divs?
 
 
                 let css = {
                     'background-color':background,
                     color,
-                    overflow:"scroll"
+                    overflow:"auto"
                 }
                 options.css === undefined ? undefined : (() => {
                     css = {...css,...options.css}
@@ -743,7 +759,12 @@ export class RyberService {
                             nestGroup,
                             nestUnder,
                             nest,
-                        }
+                        },
+                        appWebRTC:{
+                            confirm:this.appCO0.metadata.webRTC.init.includes(webRTC?.item)  ? "true" : webRTC?.item !== undefined ? "pickup":"false",
+                            co,
+                            webRTC
+                        },
                     }
                 })
             }
@@ -868,8 +889,7 @@ export class RyberService {
                     "font-weight": italics
                 }
                 options.css === undefined ? undefined : (() => {
-                    css = options.css;
-                    css['font-size'] === undefined ? (css['font-size'] = '48px') : null
+                    css = {...css,...options.css}
                 })()
 
 
@@ -885,6 +905,11 @@ export class RyberService {
                         component,
                         deltaIndex: 1,
                         type,
+                        appWebRTC:{
+                            confirm:this.appCO0.metadata.webRTC.init.includes(webRTC?.item)  ? "true" : webRTC?.item !== undefined ? "pickup":"false",
+                            co,
+                            webRTC
+                        },
                         appPrintFiles: {
                             printGroup,
                             type: 'signOut'
@@ -1191,6 +1216,90 @@ export class RyberService {
                         multipleGroup,
                         type,
                         extend,
+                        appNest: {
+                            confirm:nestGroup === undefined ? "false": "true",
+                            co,
+                            nestGroup,
+                            nestUnder,
+                            nest,
+                        }
+                    }
+                })
+            }
+
+            else if (type === "video") { // for now a better use of divs?
+
+
+                let css = {
+                }
+                options.css === undefined ? undefined : (() => {
+                    css = {...css,...options.css}
+                })()
+
+                let extend = {
+                    autoplay:"true",
+                    playsinline:"true",
+                }
+
+
+                symbol = rUD({
+                    co,
+                    bool: 'video',
+                    val: key.split("_").reverse()[0]+ ' a_p_p_Video',
+                    css,
+                    extras: {
+                        extend,
+                        deltaIndex: 1,
+                        component,
+                        multipleGroup,
+                        type,
+                        appWebRTC:{
+                            confirm:this.appCO0.metadata.webRTC.init.includes(webRTC?.item)  ? "true" : webRTC?.item !== undefined ? "pickup":"false",
+                            co,
+                            webRTC
+                        },
+                        appNest: {
+                            confirm:nestGroup === undefined ? "false": "true",
+                            co,
+                            nestGroup,
+                            nestUnder,
+                            nest,
+                        }
+                    }
+                })
+            }
+
+            else if (type === "photo") { // for now a better use of divs?
+
+
+                let css = {
+                }
+                options.css === undefined ? undefined : (() => {
+                    css = {...css,...options.css}
+                })()
+
+                let extend = {
+                    autoplay:"true",
+                    playsinline:"true",
+                }
+
+
+                symbol = rUD({
+                    co,
+                    bool: 'c',
+                    val: key.split("_").reverse()[0]+ ' a_p_p_Photo',
+                    css,
+                    extras: {
+                        extend,
+                        deltaIndex: 1,
+                        component,
+                        multipleGroup,
+                        type,
+                        appWebRTC:{
+                            confirm:this.appCO0.metadata.webRTC.init.includes(webRTC?.item)  ? "true" : webRTC?.item !== undefined ? "pickup":"false",
+                            co,
+                            webRTC
+                        },
                         appNest: {
                             confirm:nestGroup === undefined ? "false": "true",
                             co,
@@ -1899,13 +2008,25 @@ export class RyberService {
             devObj.of
         return item
     }
+    appAddScripts:Function = (devObj) =>{
+        let {scripts} = devObj
+        return scripts
+        .map((x, i) => {
+            let s = this.renderer2.createElement('script') as HTMLScriptElement;
+            this.renderer2.setAttribute(s,"type",x.type || 'text/javascript' )
+            this.renderer2.setAttribute(s,"src",x.src)
+            this.renderer2.setAttribute(s,"async","true")
+            this.renderer2.appendChild(window.document.head, s);
+            return {element:s,name:x.name}
+        });
+    }
     appTestKeyword = "root"
     appTV = ""
     // appCO  extra metadata object
     appCO0: Partial<componentObject> = {
         metadata: {
             component:{
-                responsiveHeightExclude:["mat-spinner","ta","c","div","ag-grid","i","b"]
+                responsiveHeightExclude:["mat-spinner","ta","c","div","ag-grid","i","b","video"]
                 // should be if the item is nested
             },
             ES: [], //eventSubscriptions
@@ -1922,6 +2043,9 @@ export class RyberService {
                     split: 9,
                     stack: 20
                 }
+            },
+            webRTC:{
+                init:["localVideo","dataChannelSend","camera"]
             },
             inputHandle: {
                 mappings: [
@@ -1942,17 +2066,16 @@ export class RyberService {
             clickDone: new ReplaySubject<Array<any>>(1),
             clickDoneArray: [],
             destroyComplete: new ReplaySubject<any>(1),
-            updateSheet: new ReplaySubject<any>(1)
+            updateSheet: new ReplaySubject<any>(1),
+            scripts:[]
         },
         quantity: []
     }
     //
 
     //dev additions
-    invalid = 'false'
-    sucessful = 'false'
-    loading = 'false'
-    network = 'connect'
+    webRTCVideo = 'true'
+    webRTCText = 'false'
     //
 
     /* */

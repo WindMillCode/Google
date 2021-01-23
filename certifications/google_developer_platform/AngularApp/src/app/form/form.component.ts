@@ -61,7 +61,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                 let topLevelZChild = this._topLevelZChildInit()
                 let latchZChild
                 let staticZKeys = this.staticZKeysGen(zChild)
-                if(env.component.form.zChild === ii){
+                if(env.component.form.zChild.includes(ii)){
                     console.log(zChild);
                 }
 

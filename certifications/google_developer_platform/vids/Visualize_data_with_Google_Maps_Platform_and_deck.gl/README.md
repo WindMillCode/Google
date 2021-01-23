@@ -1,6 +1,6 @@
 # Visualizing Data With Google Maps Platform, deck.gl and Angular
 
-<!-- ## [Youtube Walkthrough]() -->
+## [Youtube Walkthrough](https://youtu.be/pEPJTeJ01C8)
 
 * if issues head to Final Code Results and copy and paste the code to the respective files
 
@@ -766,3 +766,4 @@ export const environment: any = {
 [google auth](https://google-auth.readthedocs.io/en/latest/index.html)
 [google developer platform](https://google.dev/u/new)
 [deck.gl scatterploy layer](https://deck.gl/docs/api-reference/layers/scatterplot-layer)
+[google maps platform error messages](https://developers.google.com/maps/documentation/javascript/error-messages#expired-key-map-error)

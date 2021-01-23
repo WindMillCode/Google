@@ -92,6 +92,7 @@
         <ng-template #elseBlock8  >
             <p
             #myVal
+            appWebRTC [webRTC] = "ryber.appAvailble( a.extras[1][bb], 'appWebRTC')"
             appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
             *ngIf= "a.bool[1][bb] ==='p' else elseBlock9"
             class = {{a.val[1][bb]}}
@@ -142,6 +143,7 @@
         </ng-template>
         <ng-template #elseBlock13  >
             <textarea
+            appWebRTC [webRTC] = "ryber.appAvailble( a.extras[1][bb], 'appWebRTC')"
             appInputHandle [inputHandle] = "ryber.appAvailble( a.extras[1][bb], 'appInputHandle')"
             appMoneyClick [moneyClick] = "ryber.appAvailble( a.extras[1][bb], 'appMoneyClick')"
             appFocusFont [focusFont] = "ryber.appAvailble( a.extras[1][bb], 'appFocusFont')"
@@ -154,6 +156,7 @@
         </ng-template>
         <ng-template #elseBlock14  >
             <canvas
+            appWebRTC [webRTC] = "ryber.appAvailble( a.extras[1][bb], 'appWebRTC')"
             appInputHandle [inputHandle] = "ryber.appAvailble( a.extras[1][bb], 'appInputHandle')"
             appSignPad [signPad]="ryber.appAvailble( a.extras[1][bb],'appSignPad')"
             #myVal
@@ -190,9 +193,10 @@
         <ng-template #elseBlock18  >
         <div
             #myVal
+            appWebRTC [webRTC] = "ryber.appAvailble( a.extras[1][bb], 'appWebRTC')"
             appGoogleMaps [googleMaps] = "ryber.appAvailble( a.extras[1][bb], 'appGoogleMaps')"
             appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
-            *ngIf= "a.bool[1][bb] ==='div'   else pictureBlock0"
+            *ngIf= "a.bool[1][bb] ==='div'   else elseBlock19"
             class = {{a.val[1][bb]}}
             [ngStyle] = 'a.ngCss[1][bb]' >
         </div>
@@ -201,12 +205,12 @@
 
     <ng-container *ngFor = 'let aa of a.quantity[2];let bb = index; ' >
 
-            <img
-                #myVal
-                *ngIf= "a.bool[2][bb] ==='img' else pictureBlock1"
-                class = {{a.val[2][bb]}}
-                [ngStyle] = 'a.ngCss[2][bb]'
-            />
+        <img
+            #myVal
+            *ngIf= "a.bool[2][bb] ==='img' else pictureBlock1"
+            class = {{a.val[2][bb]}}
+            [ngStyle] = 'a.ngCss[2][bb]'
+        />
         <ng-template #pictureBlock1  >
             <button #myVal
                 appNest [nest] = "ryber.appAvailble( a.extras[2][bb], 'appNest')"
@@ -226,12 +230,14 @@
             *ngIf= "a.bool[2][bb] ==='embed' else pictureBlock3"
             class = {{a.val[2][bb]}}
             [ngStyle] =  'a.ngCss[2][bb]'
-            appExtend [extend] = "ryber.appAvailble( a.extras[1][bb], 'extend')"  >
+            appExtend [extend] = "ryber.appAvailble( a.extras[2][bb], 'extend')"  >
         </ng-template>
         <ng-template #pictureBlock3  >
             <video
             controls
-            appExtend [extend] = "ryber.appAvailble( a.extras[1][bb], 'extend')"
+            appNest [nest] = "ryber.appAvailble( a.extras[2][bb], 'appNest')"
+            appExtend [extend] = "ryber.appAvailble( a.extras[2][bb], 'extend')"
+            appWebRTC [webRTC] = "ryber.appAvailble( a.extras[2][bb], 'appWebRTC')"
             #myVal *ngIf= "a.bool[2][bb] ==='video' else pictureBlock4"
             class = {{a.val[2][bb]}}
             [ngStyle] =  'a.ngCss[2][bb]'>
@@ -245,7 +251,7 @@
             *ngIf= "a.bool[2][bb] ==='audio' else pictureBlock5"
             class = {{a.val[2][bb]}}
             [ngStyle] ='a.ngCss[2][bb]'
-            appExtend [extend] = "ryber.appAvailble( a.extras[1][bb], 'extend')"
+            appExtend [extend] = "ryber.appAvailble( a.extras[2][bb], 'extend')"
             ></audio>
         </ng-template>
         <ng-template #pictureBlock5  >

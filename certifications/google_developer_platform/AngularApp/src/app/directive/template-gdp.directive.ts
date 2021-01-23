@@ -80,13 +80,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
                 this.ryber[this.extras.co.valueOf()].metadata.zChildrenSubject
             ])
             .subscribe((result) => {
-                // setup the maps integration
-                let mapOptions = {
-                    center: { lat: 40.75097, lng: -73.98765 },
-                    zoom: 14,
-                };
-                new google.maps.Map(this.el.nativeElement, mapOptions);
-                //
+
                 this.zChildren = this.ryber[this.extras.co.valueOf()].metadata.zChildren
 
             })

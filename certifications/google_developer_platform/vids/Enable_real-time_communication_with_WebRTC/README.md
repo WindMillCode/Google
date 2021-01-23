@@ -1,4 +1,4 @@
-# Loading Data into Bigquery
+# Enable Real-Time Communication With WebRTC
 
 <!-- ## [Youtube Walkthrough]() -->
 
@@ -13,7 +13,7 @@
 open a terminal and head to project root and run this command
 ```ps1
 npm install -s
-npx ng serve -c=loading --open=true
+npx ng serve -c=webRTC --open=true
 ```
 
 ### Setup the Python Backend 
@@ -31,7 +31,7 @@ python .\tornado_server.py
 
 
 
-### Task 1 
+### Stream video from your webcam
 
 * in 'paste env dictionary here' replace
 ```py
@@ -42,3 +42,10 @@ python .\tornado_server.py
         "add_column":False,
     }
 ```
+
+
+### Resources
+[MediaTrackConstraints](https://w3c.github.io/mediacapture-main/getusermedia.html#media-track-constraints)
+
+### Challenge 
+* implement the socket.io backend in python

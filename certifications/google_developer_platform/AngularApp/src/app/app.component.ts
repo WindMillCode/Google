@@ -7,6 +7,9 @@ import { catchError, take, timeout, debounceTime, tap, distinctUntilKeyChanged, 
 import { HttpClient } from '@angular/common/http';
 import { environment as env} from 'src/environments/environment';
 
+
+
+
 declare global {
     interface Window { Modernizr: any;createMap:any }
     // not let or else local to this file
@@ -17,6 +20,16 @@ declare global {
     var seeeb: any
     var faker: any
     var Pikaday: any
+
+    // globals for webRTC Lab
+    var localConnection :any
+    var remoteConnection :any
+    var room:any
+    var io:any
+    var stream:any
+    var adapter:any
+    var buf:any
+    //
 }
 
 @Component({
@@ -40,31 +53,26 @@ export class AppComponent implements OnInit, OnDestroy {
         if (env.lifecycleHooks) console.log('app ngOnInit fires on mount');
 
 
-        //gapi && datepicker setup
-        [
-            "https://apis.google.com/js/api.js",
-            // "https://code.jquery.com/ui/1.12.1/jquery-ui.js"
-        ]
-            .forEach((x, i) => {
-                let s = this.renderer2.createElement('script');
-                s.type = 'text/javascript';
-                s.src = x
-                this.renderer2.appendChild(window.document.head, s);
+        // adding scripts
+        this.ryber.appCO0.metadata.scripts.push(
+            ...this.ryber.appAddScripts({
+                scripts:[
+                    {
+                        src:"https://webrtc.github.io/adapter/adapter-latest.js",
+                        name:"webRTC Adapter"
+                    },
+                    {
+                        src:"https://apis.google.com/js/api.js",
+                        name:"google api"
+                    },
+                    (false ?{
+                        src: "https://cdn.rawgit.com/Marak/faker.js/master/examples/browser/js/faker.js"
+                    } : null)
+                ].filter((x:any,i)=>{
+                    return x !== null
+                })
             })
-        //
-
-
-        //fake data setup
-        if (!env.production) {
-            const fakerScript = this.renderer2.createElement('script');
-            fakerScript.type = 'text/javascript';
-            fakerScript.src = "https://cdn.rawgit.com/Marak/faker.js/master/examples/browser/js/faker.js"; // Defines someGlobalObject
-            this.renderer2.appendChild(window.document.body, fakerScript);
-        }
-        //
-
-        // googleMaps JS API setup
-
+        )
         //
 
 
