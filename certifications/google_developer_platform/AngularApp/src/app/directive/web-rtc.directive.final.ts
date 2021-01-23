@@ -111,15 +111,222 @@ export class WebRTCDirective {
 
 
                 // self to self mediaStream
+                if(this.extras.webRTC.item === "localVideo"){
+                    // intialize objects for WTC peer connection
+                    let  mediaStreamConstraints = {
+                        video: true,
+                    };
+                    let  offerOptions = {
+                        offerToReceiveVideo: 1,
+                    };
+                    let startTime = null;
+                    const localVideo = this.el.nativeElement;
+                    const remoteVideo =  this.zChildren[this.extras.remoteVideo].element;
+                    const startButton =  this.zChildren[this.extras.startButton].element
+                    const callButton =   this.zChildren[this.extras.callButton].element
+                    const hangupButton = this.zChildren[this.extras.hangupButton].element
+                    let localStream;
+                    let remoteStream;
+                    let localPeerConnection;
+                    let remotePeerConnection;
 
-                //
+                    let {logVideoLoaded,logResizedVideo,startAction,callAction,hangupAction
+                    ,gotLocalMediaStream,handleLocalMediaStreamError} = webRTCVideoInit({
+                        mediaStreamConstraints,
+                        offerOptions,
+                        startTime,
+                        localVideo,
+                        remoteVideo,
+                        startButton,
+                        callButton,
+                        hangupButton,
+                        localStream,
+                        remoteStream,
+                        localPeerConnection,
+                        remotePeerConnection,
+                    })
+                    //
+
+                    // blur the screen so end users can identify you
+                    this.renderer2.setStyle(
+                        localVideo,
+                        "filter",
+                        "blur(10px) invert(2) opacity(.5)"
+                    )
+                    //
+
+                    // blur the caller and change the background
+                    Object.assign(this.zChildren[this.extras.remoteVideo].css,
+                        {
+                            filter:"blur(15px) opacity(.8)"
+                        }
+                    )
+                    //
+
+                    fromEvent(localVideo,'loadedmetadata').subscribe(logVideoLoaded)
+                    fromEvent(remoteVideo,'loadedmetadata').subscribe(logVideoLoaded)
+                    fromEvent(localVideo,'onresize').subscribe(logResizedVideo)
+
+
+                    // // Set up initial action buttons status: disable call and hangup.
+                    callButton.disabled = true;
+                    hangupButton.disabled = true;
+
+                    // Add click event handlers for buttons.
+                    startButton.addEventListener('click', startAction);
+                    callButton.addEventListener('click', callAction);
+                    hangupButton.addEventListener('click', hangupAction);
+
+
+                    // request from the end user use of the webcam
+                    from(navigator.mediaDevices.getUserMedia(mediaStreamConstraints))
+                    .subscribe({
+                        next:gotLocalMediaStream,
+                        error:handleLocalMediaStreamError,
+                    })
+                    //
+                }
 
                 // rtcDatChannel
+                else if(this.extras.webRTC.item === "dataChannelSend"){
 
-                //
+                    // intialize objects for WTC peer connection
+                   // console.log(this.extras)
+                   let   localConnection;
+                   let   remoteConnection;
+                   let   sendChannel;
+                   let   receiveChannel;
+                   let   pcConstraint;
+                   let   dataConstraint;
+                   const dataChannelSend = this.el.nativeElement;
+                   const dataChannelReceive = this.zChildren[this.extras.dataChannelReceive].element;
+                   const startButton =  this.zChildren[this.extras.startButton].element
+                   const sendButton =   this.zChildren[this.extras.sendButton].element
+                   const closeButton = this.zChildren[this.extras.closeButton].element
+
+                   this.renderer2.setAttribute(
+                       dataChannelSend,
+                       "disabled",
+                       "true"
+                   )
+
+                   this.renderer2.setAttribute(
+                       dataChannelReceive,
+                       "disabled",
+                       "true"
+                   )
+
+
+                   let {createConnection,sendData,closeDataChannels} = webRTCTextBoxInit({
+                           localConnection,
+                           remoteConnection,
+                           sendChannel,
+                           receiveChannel,
+                           pcConstraint,
+                           dataConstraint,
+                           dataChannelSend,
+                           dataChannelReceive,
+                           startButton,
+                           sendButton,
+                           closeButton,
+                   })
+
+
+                    // data channel is non media communication
+                   startButton.onclick = createConnection;
+                   sendButton.onclick = sendData;
+                   closeButton.onclick = closeDataChannels;
+                    // intialize objects for WTC peer connection
+                }
 
                 // camera app w/ signaling backend
+                else if(this.extras.webRTC.item === "camera"){
+                    let configuration = null;
 
+                    console.log(this.extras)
+                    let roomURL = this.zChildren[this.extras.url].element;
+                    let video = this.el.nativeElement;
+                    let photo = this.zChildren[this.extras.photo].element
+                    let photoContext = photo.getContext('2d');
+                    let trail =          this.zChildren[this.extras.trail].element
+                    let snapBtn =        this.zChildren[this.extras.snap].element
+                    let sendBtn =        this.zChildren[this.extras.send].element
+                    let snapAndSendBtn = this.zChildren[this.extras.snapAndSend].element
+
+                    let photoContextW;
+                    let photoContextH;
+                    let isInitiator;
+                    let room = window.location.hash.substring(1);
+
+
+                    var peerConn;
+                    var dataChannel;
+                    //initalize the client socket
+                    let socketFn = require ('socket.io-client')
+                    let socket= socketFn("http://localhost:8080/")
+                    // let socket = s.io.connect();
+                    //
+                    console.log(adapter)
+                    let {updateRoomURL,snapAndSend,sendPhoto,snapPhoto,randomToken,grabWebCamVideo,createPeerConnection,signalingMessageCallback}=  webRTCCamera({
+                        roomURL,
+                        video,
+                        photo,
+                        photoContext,
+                        trail,
+                        snapBtn,
+                        sendBtn,
+                        snapAndSendBtn,
+                        photoContextW,
+                        photoContextH,
+                        isInitiator,
+                        room,
+                        peerConn,
+                        dataChannel,
+                        socket,
+                        adapter,
+
+                    })
+
+                    // Attach event handlers
+                    snapBtn.addEventListener('click', snapPhoto);
+                    sendBtn.addEventListener('click', sendPhoto);
+                    snapAndSendBtn.addEventListener('click', snapAndSend);
+
+                    // Disable send buttons by default.
+                    sendBtn.disabled = true;
+                    snapAndSendBtn.disabled = true;
+
+
+                    // Create a random room if not already present in the URL.
+                    if (!room) {
+                    room = window.location.hash = randomToken();
+                    }
+
+                    // blur the screen so end users can identify you
+                    this.renderer2.setStyle(
+                        video,
+                        "filter",
+                        "contrast(100) sepia(.5) saturate(100) invert(1) blur(5px)"
+                    )
+
+                    this.renderer2.setStyle(
+                        photo,
+                        "filter",
+                        "contrast(100) sepia(.5) saturate(100) invert(1) blur(5px)"
+                    )
+                    //
+
+
+                    //setup te client side for the socket session
+                    isInitiator = this.cameraSocketSession({updateRoomURL,socket, isInitiator, grabWebCamVideo, createPeerConnection, configuration, signalingMessageCallback, sendBtn, snapAndSendBtn});
+                    //
+
+                    // Joining a room
+                    socket.emit('create or join', room);
+                    if (location.hostname.match(/localhost|127\.0\.0/)) {
+                        socket.emit('ipaddr');
+                    }
+                }
                 //
 
 

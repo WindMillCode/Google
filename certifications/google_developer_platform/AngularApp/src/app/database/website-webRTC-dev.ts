@@ -12,7 +12,7 @@ website.convertCMS = [
                 "type": "body",
                 "stack": "60",
                 // "height":"1000",
-                "background":"rgb(53,40,250)",
+                "background":"green",
                 "googleSheets": {}
             },
             {
@@ -72,7 +72,7 @@ website.convertCMS = [
                 "nest":"A1",
                 "options":{
                     "css":{
-                        background:"red",
+                        background:"purple",
                         overflow:"hidden"
                         // filter: "blur(20px) invert(1) opacity(0.5)"
                         // filter:"hue-rotate(180deg) saturate(200%);"
@@ -146,7 +146,7 @@ website.convertCMS = [
                 "type": "body",
                 "stack": "60",
                 // "height":"1000",
-                "background":"rgb(53,40,250)",
+                "background":"red",
                 "googleSheets": {}
             },
             {
