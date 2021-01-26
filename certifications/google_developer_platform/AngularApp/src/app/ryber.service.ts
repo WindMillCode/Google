@@ -48,7 +48,7 @@ export class RyberService {
 
 
             let { mf } = devObj
-            let { webRTC,imageURL,latch,options,nestUnder,nest,nestGroup,printGroupType, printGroup, key, type, gap, stack, value, group, count, repeatable, newline, form, multipleGroup, refreshGroup, background, color, fonts, title, fontSize, italics, googleSheets, border } = mf
+            let { webVitals,columnDefs,rowData,webRTC,imageURL,latch,options,nestUnder,nest,nestGroup,printGroupType, printGroup, key, type, gap, stack, value, group, count, repeatable, newline, form, multipleGroup, refreshGroup, background, color, fonts, title, fontSize, italics, googleSheets, border } = mf
             let { left, top, height, width, split, next } = devObj.mf
             let component = { left, top, height, width, split, next }
 
@@ -83,7 +83,11 @@ export class RyberService {
                     extras: {
                         section,
                         type,
-                        component
+                        component,
+                        appWebVitals:{
+                            confirm:webVitals?.confirm,
+                            co,
+                        }
                     }
                 })
             }
@@ -702,8 +706,8 @@ export class RyberService {
                         appAgGrid: {
                             co,
                             zSymbolNeeded:"true",
-                            rowData: [],
-                            columnDefs: [],
+                            rowData: rowData || [],
+                            columnDefs: columnDefs || [],
                             confirm: "true",
                             defaultColDef: {
                                 resizable: true,
@@ -2014,9 +2018,22 @@ export class RyberService {
         .map((x, i) => {
             let s = this.renderer2.createElement('script') as HTMLScriptElement;
             this.renderer2.setAttribute(s,"type",x.type || 'text/javascript' )
-            this.renderer2.setAttribute(s,"src",x.src)
-            this.renderer2.setAttribute(s,"async","true")
-            this.renderer2.appendChild(window.document.head, s);
+            x.src ? this.renderer2.setAttribute(s,"src",x.src) : null
+            x.innerText ? this.renderer2.setProperty(s,"innerText",x.innerText) : null
+            x.innerText ? this.renderer2.setProperty(s,"innerHTML",x.innerText) : null
+            x.async  ? this.renderer2.setAttribute(s,"async",x.async) : null
+            if(x.placement){
+                if(x.placement?.appendChild){
+                    this.renderer2.appendChild(x.placement.appendChild, s)
+                }
+                else if(x.placement?.insertBefore){
+                    
+                    this.renderer2.insertBefore(x.placement.insertBefore.parent, s,x.placement.insertBefore.sibling)
+                }
+            }
+            else{
+                this.renderer2.appendChild(window.document.head, s);
+            }
             return {element:s,name:x.name}
         });
     }
@@ -2045,7 +2062,7 @@ export class RyberService {
                 }
             },
             webRTC:{
-                init:["localVideo","dataChannelSend","camera"]
+                init:["localVideo","dataChannelSend","camera","myVideo"]
             },
             inputHandle: {
                 mappings: [

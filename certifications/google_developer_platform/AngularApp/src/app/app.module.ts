@@ -19,6 +19,7 @@ import { AgGridDirective } from './directive/ag-grid.directive';
 import { ExtendDirective } from './directive/extend.directive';
 import { GoogleMapsDirective } from './directive/google-maps.directive';
 import { WebRTCDirective } from './directive/web-rtc.directive';
+import { WebVitalsDirective } from './directive/web-vitals.directive';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { WebRTCDirective } from './directive/web-rtc.directive';
     ExtendDirective,
     GoogleMapsDirective,
     WebRTCDirective,
+    WebVitalsDirective,
     // FormControlDirective,
 
   ],

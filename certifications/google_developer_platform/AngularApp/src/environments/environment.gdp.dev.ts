@@ -63,6 +63,12 @@ export const environment: any = {
         },
         confirm:"true",
 
+    },
+    //
+
+    // paste webVitals object here
+    webVitals:{
+        gtag:"YOUR GTAG HERE"
     }
     //
 

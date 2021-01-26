@@ -25,7 +25,7 @@ website.convertCMS = [
             },
             {
                 "key": "Choose-Schema",
-                "type": "nester",
+                "type": "div",
                 "value":"",
                 "background":"yellow",
                 // "split": "3",
@@ -137,7 +137,7 @@ website.convertCMS = [
             },
             {
                 "key": "form-item-container",
-                "type": "nester",
+                "type": "div",
                 "value":"",
                 // "background":"red",
                 // "split": "3",
@@ -213,7 +213,7 @@ website.convertCMS = [
             },
             {
                 "key": "input-container",
-                "type": "nester",
+                "type": "div",
                 "value":"",
                 "background":"cyan",
                 // "split": "3",

@@ -122,6 +122,18 @@
                                     "with": "src/environments/environment.gdp.dev.ts"
                                 }
                             ]
+                        },
+                        "webVitals": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/app/website.ts",
+                                    "with": "src/app/database/website-webVitals-dev.ts"
+                                },
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.gdp.dev.ts"
+                                }
+                            ]
                         }
                     }
                 },
@@ -145,6 +157,9 @@
                         },
                         "webRTC": {
                             "browserTarget": "AngularApp:bigquery:webRTC"
+                        },
+                        "webVitals": {
+                            "browserTarget": "AngularApp:bigquery:webVitals"
                         }
                     }
                 },

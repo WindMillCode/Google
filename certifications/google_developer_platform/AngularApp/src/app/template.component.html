@@ -3,6 +3,7 @@
 
     <ng-container *ngFor = 'let aa of a.quantity[0];let bb = index;'  >
         <div
+        appWebVitals [webVitals] = "ryber.appAvailble( a.extras[0][bb], 'appWebVitals')"
         #myVal
         *ngIf= "a.bool[0][bb] ==='divBoard' else boardBlock0"
         class = {{a.val[0][bb]}}

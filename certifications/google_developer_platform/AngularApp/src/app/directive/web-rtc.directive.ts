@@ -86,7 +86,6 @@ export class WebRTCDirective {
             scripts =  scripts .filter((x:any,i)=>{
                 return x.name === "webRTC Adapter"
             })
-
             //
 
             combineLatest([
@@ -106,7 +105,6 @@ export class WebRTCDirective {
                         this.extras[x[1].extras.appWebRTC.webRTC.item] = x[0]
                     }
                 })
-
                 //
 
 
@@ -120,6 +118,44 @@ export class WebRTCDirective {
 
                 // camera app w/ signaling backend
 
+                //
+
+                // custom
+                if(this.extras.webRTC.item === "myVideo"){
+                    // intialize objects for WTC peer connection
+                    let  mediaStreamConstraints = {
+                        video: true,
+                        audio:false
+                    };
+
+                    let myVideo = this.el.nativeElement;
+                    let button = this.zChildren[this.extras.myVideoButton].element
+                    //
+
+                    // blur the screen so end users can identify you
+                    this.renderer2.setStyle(
+                        myVideo,
+                        "filter",
+                        "blur(15px) opacity(.8) contrast(100)"
+                    )
+                    //
+
+
+                    // request from the end user use of the webcam
+                    fromEvent(button,"click")
+                    .subscribe((result:any)=>{
+                        from(navigator.mediaDevices.getUserMedia(mediaStreamConstraints))
+                        .subscribe({
+                            next:(mediaStream)=>{
+                                myVideo.srcObject = mediaStream;
+                            },
+                            error:()=>{
+                                alert("you deny access for the app to use your webcam")
+                            },
+                        })
+                    })
+                    //
+                }
                 //
 
 

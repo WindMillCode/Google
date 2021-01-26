@@ -30,6 +30,12 @@ declare global {
     var adapter:any
     var buf:any
     //
+
+    // globals for web vitals lab
+    var getCLS:any
+    var getFID:any
+    var getLCP:any
+    //
 }
 
 @Component({
@@ -59,7 +65,8 @@ export class AppComponent implements OnInit, OnDestroy {
                 scripts:[
                     {
                         src:"https://webrtc.github.io/adapter/adapter-latest.js",
-                        name:"webRTC Adapter"
+                        name:"webRTC Adapter",
+                        async:"true"
                     },
                     {
                         src:"https://apis.google.com/js/api.js",
