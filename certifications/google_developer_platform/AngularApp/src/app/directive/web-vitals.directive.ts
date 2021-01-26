@@ -40,67 +40,11 @@ export class WebVitalsDirective {
                 ...this.ryber.appAddScripts({
                     scripts:[
                         // send the data to google analytics
-                        {
-                            name:"gtag",
-                            src:"https://www.googletagmanager.com/gtag/js?id="+env.webVitals.gtag,
-                            defer:"true",
-                            placement:{
-                                insertBefore:{
-                                    parent:document.documentElement,
-                                    sibling:document.body
-                                }
-                            }
-                        },
-                        {
-                            name:"gtag-setup",
-                            defer:"true",
-                            innerText:`
-                            window.dataLayer = window.dataLayer || [];
-                            function gtag(){dataLayer.push(arguments);}
-                            gtag('js', new Date());
 
-                            gtag('config', '${env.webVitals.gtag}');
-                            `,
-                            placement:{
-                                insertBefore:{
-                                    parent:document.documentElement,
-                                    sibling:document.body
-                                }
-                            }
-                        },
                         //
 
                         // sample web -vitals
-                        {
-                            name:"Web Vitals",
-                            type:"module",
-                            async:"true",
-                            innerText:`
-                                import {getCLS, getFID, getLCP} from 'https://unpkg.com/web-vitals?module';
 
-                                getCLS(console.log);
-                                getFID(console.log);
-                                getLCP(console.log);
-
-                                // send the data to web ananlytics
-                                function sendToGoogleAnalytics({name, delta, id}) {
-                                    gtag('event', name, {
-                                        event_category: 'Web Vitals',
-                                        value: Math.round(name === 'CLS' ? delta * 1000 : delta),
-                                        event_label: id,
-                                        non_interaction: true,
-                                    });
-                                }
-
-                                getCLS(sendToGoogleAnalytics);
-                                getFID(sendToGoogleAnalytics);
-                                getLCP(sendToGoogleAnalytics);
-                                //
-                            `,
-                            insertion:{
-                                appendChild:document.body
-                            }
-                        },
                         //
                     ].filter((x:any,i)=>{
                         return x !== null
@@ -108,6 +52,9 @@ export class WebVitalsDirective {
                 })
             )
             //
+
+
+
 
 
             combineLatest([

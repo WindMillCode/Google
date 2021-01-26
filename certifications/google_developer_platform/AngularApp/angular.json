@@ -142,7 +142,8 @@
                     "options": {
                         "browserTarget": "AngularApp:bigquery:play",
                         "port": 8000,
-                        "liveReload": true
+                        "liveReload": true,
+                        "hmr": true
                     },
                     "configurations": {
                         "production": {
