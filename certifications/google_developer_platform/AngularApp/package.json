@@ -23,7 +23,6 @@
     "ag-grid-angular": "^25.0.0",
     "ag-grid-community": "^25.0.0",
     "angular-hammer": "^2.2.0",
-    "node-static": "^0.7.10",
     "rxjs": "~6.6.0",
     "socket.io": "^2.4.1",
     "tslib": "^2.1.0",

@@ -254,3 +254,4 @@ The Timings section of the Performance panel  also preload by using a headless b
 * dont crete long tasks
 * use sendBeacon() and requestIdleCallback()
 
+P

@@ -698,7 +698,7 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
 
 
                                                     // xAlign
-                                                    xContain({
+                                                    let duplicateXAlign = {
                                                         preserve:{
                                                             align:duplicateAlign,
                                                             zChild,
@@ -707,7 +707,9 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                                                             left:section.left
                                                         },
                                                         type:'preserve'
-                                                    })
+                                                    }
+                                                    xContain(duplicateXAlign)
+                                                    console.log(duplicateXAlign)
                                                     this.ref.detectChanges()
                                                     // console.log(duplicateAlign,duplicateKeep,duplicateSpacing)
                                                     //

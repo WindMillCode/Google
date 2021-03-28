@@ -36,7 +36,7 @@ if sucessful you get a 200 back
 * __default Compute Engine service account__ [PROJECT_NUMBER]-compute@developer.gserviceaccount.com
 
 
-# Cloud Shell
+# Cloud Shell 
 
 * to set the project 
 ```bash
@@ -53,6 +53,7 @@ gcloud config get-value project
 $(wget -qO - http://ipecho.net/plain)/32
 ```
 
+
 ## storage
 
 * to make a storage bucket
@@ -66,6 +67,22 @@ gsutil mb -p [PROJECT NAME] -c [STORAGE CLASS] -l [LOCATION] gs://[NAME ]
 gsutil -m cp -r GB_folder   gs://my_notebook 
 ```
 
+## Projects
+* to list projects
+```bash
+gcloud projects list
+```
+### Services
+* to list services 
+```
+gcloud services list
+``` 
+
+* to enable disable a service
+```bash
+gcloud services enable 
+gcloud services disable
+```
 ## Service Accounts
 
 *to create a service acct with its private key

@@ -2592,6 +2592,45 @@ WHERE
   AND SAFE.ST_GeogFromGeoJson(geojson) IS NULL
 ```
 
+
+## Bigquery ML
+
+### Listing Models
+
+|permissions|
+|:------|
+|bigquery.dataViewer
+|bigquery.dataEditor
+|bigquery.dataOwner
+|bigquery.metadataViewer
+|bigquery.user
+|bigquery.admin|
+
+
+#### Python3 
+```py
+from google.cloud import bigquery
+
+# Construct a BigQuery client object.
+client = bigquery.Client()
+
+# TODO(developer): Set dataset_id to the ID of the dataset that contains
+#                  the models you are listing.
+# dataset_id = 'your-project.your_dataset'
+
+models = client.list_models(dataset_id)  # Make an API request.
+
+print("Models contained in '{}':".format(dataset_id))
+for model in models:
+    full_model_id = "{}.{}.{}".format(
+        model.project, model.dataset_id, model.model_id
+    )
+    friendly_name = model.friendly_name
+    print("{}: friendly_name='{}'".format(full_model_id, friendly_name))
+```
+
+
+
 ### Reference
 * [docs](https://cloud.google.com/bigquery/docs/reference/standard-sql/geography_functions)
 * [earth engine](https://developers.google.com/earth-engine/)

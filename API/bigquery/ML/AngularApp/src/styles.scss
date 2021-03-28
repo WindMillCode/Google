@@ -1,6 +1,13 @@
+
+
 // from config
-$bg-color-1 : rgb(18,247,75);
+$bg-color-1 :rgba(random(255), random(255), random(255),(random(10)/10) + .5 );
 // $bg-color-1:black;
+@function random-color() {
+    @return rgba(random(255), random(255), random(255),(random(10)/10) + .5 );
+}
+
+
 
 :root{ // very upset if you have css variables avaible to you update the space and use them instead of keep yr own smh
     --bg-color_1: $bg-color-1;
@@ -29,29 +36,40 @@ $bg-color-1 : rgb(18,247,75);
 
 @import "../node_modules/ag-grid-community/dist/styles/ag-grid.css";
 @import "../node_modules/ag-grid-community/dist/styles/ag-theme-blue.css";
-@import "assets/styles/pikaday.css";
+@import "./assets/styles/pikaday.css";
+@import "./assets/styles/component-position";
 
 /* libre-franklin-regular - latin */
 @font-face {
     font-family: 'Libre Franklin';
     font-style: normal;
     font-weight: 400;
-    src: url('assets/fonts/libre-franklin-v4-latin-regular.eot'); /* IE9 Compat Modes */
+    src: url('./assets/fonts/libre-franklin-v4-latin-regular.eot'); /* IE9 Compat Modes */
     src: local('Libre Franklin'), local('LibreFranklin-Regular'),
-         url('assets/fonts/libre-franklin-v4-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-         url('assets/fonts/libre-franklin-v4-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
-         url('assets/fonts/libre-franklin-v4-latin-regular.woff') format('woff'), /* Modern Browsers */
-         url('assets/fonts/libre-franklin-v4-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
-         url('assets/fonts/libre-franklin-v4-latin-regular.svg#LibreFranklin') format('svg'); /* Legacy iOS */
+         url('./assets/fonts/libre-franklin-v4-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('./assets/fonts/libre-franklin-v4-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+         url('./assets/fonts/libre-franklin-v4-latin-regular.woff') format('woff'), /* Modern Browsers */
+         url('./assets/fonts/libre-franklin-v4-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('./assets/fonts/libre-franklin-v4-latin-regular.svg#LibreFranklin') format('svg'); /* Legacy iOS */
 }
+
+
+@font-face {
+    font-family: 'Gilgongo Doro';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./assets/fonts/gilgongo.doro.ttf');
+
+}
+
 
 @font-face {
     font-family: 'BeteNoirNF';
     font-style: normal;
     font-weight: 400;
-    src: url('assets/fonts/BeteNoirNF.otf'); /* IE9 Compat Modes */
+    src: url('./assets/fonts/BeteNoirNF.otf');
     src: local('BeteNoirNF'),
-         url('assets/fonts/BeteNoirNF.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('./assets/fonts/BeteNoirNF.ttf') format('truetype'), /* Safari, Android, iOS */
 }
 
 /* fjalla-one-regular - latin */
@@ -59,13 +77,13 @@ $bg-color-1 : rgb(18,247,75);
     font-family: 'Fjalla One';
     font-style: normal;
     font-weight: 400;
-    src: url('assets/fonts/fjalla-one-v7-latin-regular.eot'); /* IE9 Compat Modes */
+    src: url('./assets/fonts/fjalla-one-v7-latin-regular.eot'); /* IE9 Compat Modes */
     src: local('Fjalla One'), local('FjallaOne-Regular'),
-         url('assets/fonts/fjalla-one-v7-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-         url('assets/fonts/fjalla-one-v7-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
-         url('assets/fonts/fjalla-one-v7-latin-regular.woff') format('woff'), /* Modern Browsers */
-         url('assets/fonts/fjalla-one-v7-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
-         url('assets/fonts/fjalla-one-v7-latin-regular.svg#FjallaOne') format('svg'); /* Legacy iOS */
+         url('./assets/fonts/fjalla-one-v7-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('./assets/fonts/fjalla-one-v7-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+         url('./assets/fonts/fjalla-one-v7-latin-regular.woff') format('woff'), /* Modern Browsers */
+         url('./assets/fonts/fjalla-one-v7-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('./assets/fonts/fjalla-one-v7-latin-regular.svg#FjallaOne') format('svg'); /* Legacy iOS */
 }
 
 
@@ -96,7 +114,7 @@ input {
     padding: 0px 0px 0px 0px;
 }
 
-// modification for labs
+// modification for webrtc
 .incomingPhoto {
     position: initial !important;
 }
@@ -126,10 +144,13 @@ app-root :not([class^='ag']) {
     margin : 0px;
     // transition: top 2s, left 2s, font-size 3s;
 }
-.a_p_p_Board{
-    background-color: $bg-color-1;
-    clip-path: polygon(0 0, 100% 0%, 38% 100%, 0% 100%);
+.a_p_p_Count{
+	// background-color: rgba(random(255), random(255), random(255),(random(10)/10) + .5 );
+	color:black
 }
+
+
+
 
 .a_p_p_BackStageProp{
     width:0px;
@@ -142,7 +163,8 @@ app-root :not([class^='ag']) {
 .a_p_p_Text{
     font-family : 'Arial';
     font-weight : 400;
-    color:  set-text-color( $bg-color-1);
+    // color:  set-text-color( $bg-color-1);
+	color:black
 }
 
 .a_p_p_SubHeading{
@@ -221,7 +243,10 @@ app-root :not([class^='ag']) {
     border :2px solid black;
     font-family:Arial;
     background-color: white;
+	// z-index:-6  !important
 }
+
+
 
 .a_p_p_DropDownLast{
     padding:13px 26px 13px 26px;
@@ -230,4 +255,14 @@ app-root :not([class^='ag']) {
     border :2px solid black;
     font-family:Arial;
     background-color: white;
+}
+
+.a_p_p_Gsap-Cursor{
+	top:-50%;
+	left:-50%;
+	position:absolute;
+	height:50px;
+	width: 50px;
+	background: radial-gradient(red,yellow,green);
+	border-radius: 25%;
 }

@@ -1,0 +1,407 @@
+<ng-container *ngFor = 'let a of ryber[appTV].quantity[1];let b = index' >
+
+
+    <ng-container *ngFor = 'let aa of a.quantity[0];let bb = index;'  >
+		<div
+		appNest [nest] = "ryber.appAvailble( a.extras[0][bb], 'appNest')"
+		appWebVitals [webVitals] = "ryber.appAvailble( a.extras[0][bb], 'appWebVitals')"
+		appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[0][bb], 'appDeltaNode')"
+        appSection [section] = "ryber.appAvailble( a.extras[0][bb], 'appSection')"
+        appNavigation [navigation] = "ryber.appAvailble( a.extras[0][bb], 'appNavigation')"
+        #myVal
+        *ngIf= "a.bool[0][bb] ==='divBoard' else boardBlock0"
+        class = {{a.val[0][bb]}}
+		[ngStyle] = 'a.ngCss[0][bb]'
+		>
+        </div>
+        <ng-template #boardBlock0  >
+            <img
+			#myVal
+			appNest [nest] = "ryber.appAvailble( a.extras[0][bb], 'appNest')"
+			appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[0][bb], 'appDeltaNode')"
+            *ngIf= "a.bool[0][bb] ==='imgBoard' else boardBlock1"
+			class = {{a.val[0][bb]}}
+			[ngStyle] = 'a.ngCss[0][bb]'
+            />
+        </ng-template>
+        <ng-template #boardBlock1  >
+            <video
+			#myVal
+			appNest [nest] = "ryber.appAvailble( a.extras[0][bb], 'appNest')"
+			appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[0][bb], 'appDeltaNode')"
+            *ngIf= "a.bool[0][bb] ==='videoBoard' "
+			class = {{a.val[0][bb]}}
+			[ngStyle] = 'a.ngCss[0][bb]'>
+            </video>
+		</ng-template>
+        <ng-template #boardBlock2  >
+            <canvas
+			#myVal
+			appNest [nest] = "ryber.appAvailble( a.extras[0][bb], 'appNest')"
+			appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[0][bb], 'appDeltaNode')"
+            *ngIf= "a.bool[0][bb] ==='canvasBoard' "
+			class = {{a.val[0][bb]}}
+			[ngStyle] = 'a.ngCss[0][bb]' >
+			</canvas>
+        </ng-template>
+    </ng-container>
+
+    <ng-container *ngFor = 'let aa of a.quantity[1];let bb = index;' >
+		<ng-template *ngIf= "aa ===null else elseBlock1">
+
+		</ng-template>
+		<ng-template #elseBlock1  >
+			<h1
+			#myVal
+			appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
+			appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[1][bb], 'appDeltaNode')"
+            appLatch [latch] = "ryber.appAvailble( a.extras[1][bb], 'appLatch')"
+			*ngIf= "a.bool[1][bb] ==='h1' else elseBlock2"
+			class = {{a.val[1][bb]}}
+			[ngStyle] = 'a.ngCss[1][bb]'
+			[innerHTML] = 'a.text[1][bb].item'>
+			</h1>
+		</ng-template>
+        <ng-template #elseBlock2  >
+            <h2
+			#myVal
+			appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
+			appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[1][bb], 'appDeltaNode')"
+            appLatch [latch] = "ryber.appAvailble( a.extras[1][bb], 'appLatch')"
+            *ngIf= "a.bool[1][bb] ==='h2' else elseBlock3"
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
+            [innerHTML] = 'a.text[1][bb].item'>
+        </h2>
+        </ng-template>
+        <ng-template #elseBlock3  >
+        <h3
+			#myVal
+			appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
+			appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[1][bb], 'appDeltaNode')"
+            appLatch [latch] = "ryber.appAvailble( a.extras[1][bb], 'appLatch')"
+            *ngIf= "a.bool[1][bb] ==='h3' else elseBlock4"
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
+            [innerHTML] = 'a.text[1][bb].item'>
+        </h3>
+        </ng-template>
+        <ng-template #elseBlock4  >
+			<h4 #myVal
+			appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
+			appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[1][bb], 'appDeltaNode')"
+            appLatch [latch] = "ryber.appAvailble( a.extras[1][bb], 'appLatch')"
+            *ngIf= "a.bool[1][bb] ==='h4' else elseBlock5"
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
+            [innerHTML] = 'a.text[1][bb].item'>
+        </h4>
+        </ng-template>
+        <ng-template #elseBlock5  >
+            <h5
+			#myVal
+			appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
+			appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[1][bb], 'appDeltaNode')"
+            appLatch [latch] = "ryber.appAvailble( a.extras[1][bb], 'appLatch')"
+            *ngIf= "a.bool[1][bb] ==='h5' else elseBlock6"
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
+            [innerHTML] = 'a.text[1][bb].item'>
+        </h5>
+        </ng-template>
+        <ng-template #elseBlock6  >
+			<h6 #myVal
+			appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
+			appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[1][bb], 'appDeltaNode')"
+            appLatch [latch] = "ryber.appAvailble( a.extras[1][bb], 'appLatch')"
+            *ngIf= "a.bool[1][bb] ==='h6' else elseBlock7"
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
+            [innerHTML] = 'a.text[1][bb].item'>
+        </h6>
+        </ng-template>
+        <ng-template #elseBlock7  >
+			<a
+			appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
+			appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[1][bb], 'appDeltaNode')"
+			appLatch [latch] = "ryber.appAvailble( a.extras[1][bb], 'appLatch')"
+            appInputHandle [inputHandle] = "ryber.appAvailble( a.extras[1][bb], 'appInputHandle')"
+            toggleButton [stuff] ="ryber.appAvailble( a.extras[1][bb], 'toggleButton')"
+            #myVal
+            *ngIf= "a.bool[1][bb] ==='a' else elseBlock8"
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
+            [innerHTML] = 'a.text[1][bb].item'>
+        </a>
+        </ng-template>
+        <ng-template #elseBlock8  >
+            <p
+			#myVal
+			appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
+			appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[1][bb], 'appDeltaNode')"
+            appWebRTC [webRTC] = "ryber.appAvailble( a.extras[1][bb], 'appWebRTC')"
+            appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
+            appNavigation [navigation] = "ryber.appAvailble( a.extras[1][bb], 'appNavigation')"
+            appLatch [latch] = "ryber.appAvailble( a.extras[1][bb], 'appLatch')"
+            *ngIf= "a.bool[1][bb] ==='p' else elseBlock9"
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
+            [innerHTML] = 'a.text[1][bb].item'>
+            </p>
+        </ng-template>
+        <ng-template #elseBlock9  >
+            <code
+			#myVal
+			appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
+			appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[1][bb], 'appDeltaNode')"
+            appLatch [latch] = "ryber.appAvailble( a.extras[1][bb], 'appLatch')"
+            *ngIf= "a.bool[1][bb] ==='code' else elseBlock10"
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
+            [innerHTML] = 'a.text[1][bb].item'>
+        </code>
+        </ng-template>
+        <ng-template #elseBlock10  >
+            <span
+			#myVal
+			appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
+			appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[1][bb], 'appDeltaNode')"
+            appLatch [latch] = "ryber.appAvailble( a.extras[1][bb], 'appLatch')"
+            *ngIf= "a.bool[1][bb] ==='span' else elseBlock11"
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
+            [innerHTML] = 'a.text[1][bb].item'>
+        </span>
+        </ng-template>
+        <ng-template #elseBlock11  >
+            <strong
+			#myVal
+			appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
+			appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[1][bb], 'appDeltaNode')"
+            appLatch [latch] = "ryber.appAvailble( a.extras[1][bb], 'appLatch')"
+            *ngIf= "a.bool[1][bb] ==='strong' else elseBlock12"
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
+            [innerHTML] = 'a.text[1][bb].item'>
+        </strong>
+        </ng-template>
+        <ng-template #elseBlock12  >
+			<input
+
+			appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[1][bb], 'appDeltaNode')"
+            appLatch [latch] = "ryber.appAvailble( a.extras[1][bb], 'appLatch')"
+            appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
+            appExtend [extend] = "ryber.appAvailble( a.extras[1][bb], 'extend')"
+            appInputHandle [inputHandle] = "ryber.appAvailble( a.extras[1][bb], 'appInputHandle')"
+            appMoneyClick [moneyClick] = "ryber.appAvailble( a.extras[1][bb], 'appMoneyClick')"
+            appFocusFont [focusFont] = "ryber.appAvailble( a.extras[1][bb], 'appFocusFont')"
+            appDateClick [dateClick] = "ryber.appAvailble( a.extras[1][bb], 'appDateClick')"
+            #myVal
+            *ngIf= "a.bool[1][bb] ==='i' else elseBlock13" class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
+            >
+        </ng-template>
+        <ng-template #elseBlock13  >
+			<textarea
+			appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
+			appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[1][bb], 'appDeltaNode')"
+            appWebRTC [webRTC] = "ryber.appAvailble( a.extras[1][bb], 'appWebRTC')"
+            appInputHandle [inputHandle] = "ryber.appAvailble( a.extras[1][bb], 'appInputHandle')"
+            appMoneyClick [moneyClick] = "ryber.appAvailble( a.extras[1][bb], 'appMoneyClick')"
+            appFocusFont [focusFont] = "ryber.appAvailble( a.extras[1][bb], 'appFocusFont')"
+            appLatch [latch] = "ryber.appAvailble( a.extras[1][bb], 'appLatch')"
+            #myVal
+            *ngIf= "a.bool[1][bb] ==='ta' else elseBlock14"
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
+            appExtend [extend] = "ryber.appAvailble( a.extras[1][bb], 'extend')"
+            ></textarea>
+        </ng-template>
+        <ng-template #elseBlock14  >
+			<canvas
+			appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
+			appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[1][bb], 'appDeltaNode')"
+            appWebRTC [webRTC] = "ryber.appAvailble( a.extras[1][bb], 'appWebRTC')"
+            appInputHandle [inputHandle] = "ryber.appAvailble( a.extras[1][bb], 'appInputHandle')"
+            appSignPad [signPad]="ryber.appAvailble( a.extras[1][bb],'appSignPad')"
+            appLatch [latch] = "ryber.appAvailble( a.extras[1][bb], 'appLatch')"
+            #myVal
+            *ngIf= "a.bool[1][bb] ==='c' else elseBlock15"
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]' >
+            </canvas>
+        </ng-template>
+        <ng-template #elseBlock15  >
+            <label
+			#myVal
+			appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
+			appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[1][bb], 'appDeltaNode')"
+            appLatch [latch] = "ryber.appAvailble( a.extras[1][bb], 'appLatch')"
+            *ngIf= "a.bool[1][bb] ==='l' else elseBlock16"
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
+            [innerHTML] = 'a.text[1][bb].item'></label>
+        </ng-template>
+        <ng-template #elseBlock16  >
+            <ul
+			#myVal
+			appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
+			appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[1][bb], 'appDeltaNode')"
+            appLatch [latch] = "ryber.appAvailble( a.extras[1][bb], 'appLatch')"
+            *ngIf= "a.bool[1][bb] ==='ul' else elseBlock17"
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
+            [innerHTML] = 'a.text[1][bb].item'></ul>
+        </ng-template>
+        <ng-template #elseBlock17  >
+            <form
+			#myVal
+			appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
+            *ngIf= "a.bool[1][bb] ==='f' else elseBlock18"
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
+			[innerHTML] = 'a.text[1][bb].item'
+			appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[1][bb], 'appDeltaNode')"
+            appLatch [latch] = "ryber.appAvailble( a.extras[1][bb], 'appLatch')"
+            appExtend [extend] = "ryber.appAvailble( a.extras[1][bb], 'extend')" ></form>
+        </ng-template>
+        <ng-template #elseBlock18  >
+			<div
+				#myVal
+				appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[1][bb], 'appDeltaNode')"
+				appWebRTC [webRTC] = "ryber.appAvailble( a.extras[1][bb], 'appWebRTC')"
+				appGoogleMaps [googleMaps] = "ryber.appAvailble( a.extras[1][bb], 'appGoogleMaps')"
+				appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
+                appLatch [latch] = "ryber.appAvailble( a.extras[1][bb], 'appLatch')"
+				*ngIf= "a.bool[1][bb] ==='div'   else elseBlock19"
+				class = {{a.val[1][bb]}}
+				[ngStyle] = 'a.ngCss[1][bb]' >
+			</div>
+		</ng-template>
+		<ng-template #elseBlock19  >
+			<img
+			#myVal
+			appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
+			appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[1][bb], 'appDeltaNode')"
+			appExtend [extend] = "ryber.appAvailble( a.extras[1][bb], 'extend')"
+            appLatch [latch] = "ryber.appAvailble( a.extras[1][bb], 'appLatch')"
+            *ngIf= "a.bool[1][bb] ==='img' else elseBlock20"
+            class = {{a.val[1][bb]}}
+            [ngStyle] = 'a.ngCss[1][bb]'
+        	/>
+		</ng-template>
+        <ng-template #elseBlock20  >
+			<button #myVal
+				appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[1][bb], 'appDeltaNode')"
+                appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
+                appInputHandle [inputHandle] = "ryber.appAvailble( a.extras[1][bb], 'appInputHandle')"
+                appFormControl [formControl] = "ryber.appAvailble( a.extras[1][bb], 'appFormControl')"
+                appFileHandler [fileHandler] = "ryber.appAvailble( a.extras[1][bb], 'appFileHandler')"
+                appLatch [latch] = "ryber.appAvailble( a.extras[1][bb], 'appLatch')"
+                appListModels [listModels] = "ryber.appAvailble( a.extras[1][bb], 'appListModels')"
+                *ngIf= "a.bool[1][bb] ==='b' else elseBlock22 "
+                class = {{a.val[1][bb]}}
+                [ngStyle] =  'a.ngCss[1][bb]'
+                [innerHTML] = 'a.text[1][bb].item'
+                appExtend [extend] = "ryber.appAvailble( a.extras[1][bb], 'extend')" >
+            </button>
+		</ng-template>
+
+        <ng-template #elseBlock22  >
+            <embed
+			#myVal
+			appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
+			appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[1][bb], 'appDeltaNode')"
+            appLatch [latch] = "ryber.appAvailble( a.extras[1][bb], 'appLatch')"
+            *ngIf= "a.bool[1][bb] ==='embed' else elseBlock23"
+            class = {{a.val[1][bb]}}
+            [ngStyle] =  'a.ngCss[1][bb]'
+            appExtend [extend] = "ryber.appAvailble( a.extras[1][bb], 'extend')"  >
+        </ng-template>
+        <ng-template #elseBlock23  >
+            <video
+			controls
+			appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[1][bb], 'appDeltaNode')"
+            appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
+            appLatch [latch] = "ryber.appAvailble( a.extras[1][bb], 'appLatch')"
+            appExtend [extend] = "ryber.appAvailble( a.extras[1][bb], 'extend')"
+            appWebRTC [webRTC] = "ryber.appAvailble( a.extras[1][bb], 'appWebRTC')"
+            #myVal *ngIf= "a.bool[1][bb] ==='video' else elseBlock24"
+            class = {{a.val[1][bb]}}
+            [ngStyle] =  'a.ngCss[1][bb]'>
+                <!-- <source src="/media/examples/flower.mp4" type="video/mp4">
+                    use a directive to setControls?-->
+            </video>
+        </ng-template>
+        <ng-template #elseBlock24  >
+            <audio
+			#myVal
+			appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
+			appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[1][bb], 'appDeltaNode')"
+            appLatch [latch] = "ryber.appAvailble( a.extras[1][bb], 'appLatch')"
+            *ngIf= "a.bool[1][bb] ==='audio' else elseBlock25"
+            class = {{a.val[1][bb]}}
+            [ngStyle] ='a.ngCss[1][bb]'
+            appExtend [extend] = "ryber.appAvailble( a.extras[1][bb], 'extend')"
+            ></audio>
+        </ng-template>
+        <ng-template #elseBlock25  >
+            <mat-progress-spinner
+			#myVal
+			appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
+			appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[1][bb], 'appDeltaNode')"
+            appLatch [latch] = "ryber.appAvailble( a.extras[1][bb], 'appLatch')"
+            *ngIf= "a.bool[1][bb] ==='mat-spinner' else elseBlock26"
+            class = {{a.val[1][bb]}}
+            [ngStyle] ='a.ngCss[1][bb]'
+            appExtend [extend] = "ryber.appAvailble( a.extras[1][bb], 'extend')"
+            mode="indeterminate"
+            ></mat-progress-spinner>
+
+        </ng-template>
+        <ng-template #elseBlock26  >
+            <div
+			#myVal
+			appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
+			appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[1][bb], 'appDeltaNode')"
+            appAgGrid [agGrid] = "ryber.appAvailble( a.extras[1][bb], 'appAgGrid')"
+            *ngIf= "a.bool[1][bb] ==='ag-grid' else elseBlock27"
+            class = {{a.val[1][bb]}}
+            [ngStyle] ='a.ngCss[1][bb]'
+            appExtend [extend] = "ryber.appAvailble( a.extras[1][bb], 'extend')"
+            appLatch [latch] = "ryber.appAvailble( a.extras[1][bb], 'appLatch')"
+            >
+                <ag-grid-angular
+                style="height: inherit;  width: inherit; "
+                class="ag-theme-blue"
+                [rowData]="a.extras[1][bb].appAgGrid.rowData"
+                [columnDefs]="a.extras[1][bb].appAgGrid.columnDefs"
+                [defaultColDef]="a.extras[1][bb].appAgGrid.defaultColDef"
+                >
+                </ag-grid-angular>
+
+            </div>
+		</ng-template>
+		<ng-template #elseBlock27  >
+            <div
+			#myVal
+			appNest [nest] = "ryber.appAvailble( a.extras[1][bb], 'appNest')"
+			appDeltaNode [deltaNode] = "ryber.appAvailble( a.extras[1][bb], 'appDeltaNode')"
+			appGsapCursor [gsapCursor] = "ryber.appAvailble( a.extras[1][bb], 'appGsapCursor')"
+            *ngIf= "a.bool[1][bb] ==='gsap-cursor' else elseBlock27"
+            class = {{a.val[1][bb]}}
+            [ngStyle] ='a.ngCss[1][bb]'
+            appExtend [extend] = "ryber.appAvailble( a.extras[1][bb], 'extend')"
+            appLatch [latch] = "ryber.appAvailble( a.extras[1][bb], 'appLatch')"
+			>
+				<div class = "a_p_p_Gsap-Cursor" *ngFor = 'let xx of a.extras[1][bb].appGsapCursor.amnt'>
+
+				</div>
+			</div>
+		</ng-template>
+    </ng-container>
+
+
+    </ng-container>
+
+

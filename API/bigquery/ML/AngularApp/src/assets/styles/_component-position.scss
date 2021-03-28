@@ -1,0 +1,22 @@
+
+@function set-text-color($color) {
+@if(lightness($color) > 50) {
+	@return #333;
+} @else {
+	@return #fff;
+}
+}
+
+$bg-color-1 : rgb(205, 180, 178);
+$bg-color-2 : rgb(117,138,201);
+.formCO0 > .a_p_p_Board{
+	background:$bg-color-1;
+}
+// .formCO1 > .a_p_p_Board{
+// 	background:$bg-color-2;
+// }
+
+.a_p_p_Board:nth-child(1) > .a_p_p_Heading {
+	color:set-text-color($bg-color-1)
+}
+
