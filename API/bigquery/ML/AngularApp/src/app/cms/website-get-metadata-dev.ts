@@ -28,7 +28,7 @@ website.convertCMS = [
 				},
 				appSection:{
 					confirm:"true",
-                    
+
 				}
 			},
 			{
@@ -57,7 +57,7 @@ website.convertCMS = [
 							logic:{
 								desktop:{
 									width:1.1,
-									height:1.2,
+									height:1.7,
 									top:-30,
 									left:-50
 								},
@@ -88,13 +88,14 @@ website.convertCMS = [
 
 			},
 			{
-				key:"table",
-				type:"simpleTable",
-				height:"500",
-				split:9,
+				key:"question",
+				type:"text",
+				value:"Enter the name of the model to get metadata",
+                left:350,
 				options:{
 					css:{
-                        "z-index":2
+                        "z-index":2,
+                        "text-align":"center"
                     },
 
 				},
@@ -107,10 +108,37 @@ website.convertCMS = [
 				},
 			},
 			{
+				key:"input",
+				type:"input",
+                next:"true",
+                left:350,
+                width:600,
+				options:{
+					css:{
+                        "z-index":2,
+                        "text-align":"center"
+                    },
+                    extras:{
+                        appGetModelMetadata:{
+                            type:"input"
+                        }
+                    }
+				},
+				latch:{
+					type:"display",
+					display:{
+						type:"part",
+						name:"my_display_expand_2"
+					},
+				},
+			},
+			{
 				key:"list models",
-				type:"listModelsButton",
-				split:9,
-				value:"List Models",
+				type:"getMetadataButton",
+				split:5,
+                left:370,
+                next:"true",
+				value:"Get Model Metadata",
 				options:{
 					css:{},
 
@@ -120,6 +148,31 @@ website.convertCMS = [
 					display:{
 						type:"part",
 						name:"my_display_expand_3"
+					},
+				},
+			},
+			{
+				key:"result",
+				type:"text",
+				value:"Result:",
+                next:"true",
+                split:9,
+                left:350,
+				options:{
+					css:{
+                        "z-index":2,
+                    },
+                    extras:{
+                        appGetModelMetadata:{
+                            type:"result"
+                        }
+                    }
+				},
+				latch:{
+					type:"display",
+					display:{
+						type:"part",
+						name:"my_display_expand_2"
 					},
 				},
 			},

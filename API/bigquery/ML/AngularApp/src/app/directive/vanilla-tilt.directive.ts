@@ -54,7 +54,6 @@ export class VanillaTiltDirective {
                 .subscribe((result:any)=>{
                     this.zChildren = zChildren = ryber[co].metadata.zChildren
                     let ref = result[1].ref
-                    console.log(result[1])
                     VanillaTilt.init(el.nativeElement,{
                         perspective:500
                     })

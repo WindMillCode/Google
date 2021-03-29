@@ -29,7 +29,7 @@ class my_bigquery_client():
 
     # paste env dictionary here
     env=  {
-        "list_models":True,
+        "list_models":False,
         "get_metadata":True
     }
     #
@@ -111,10 +111,20 @@ class my_bigquery_client():
 
         # get model metadata
         elif(self.env.get("get_metadata")):
-            model_id = "{}.{}".format(dataset_main[0], name) 
-            model = client.get_model(model_id)
+            try:
+                model_id = "{}.{}".format(dataset_main[0], name) 
+                model = client.get_model(model_id)
+                pprint.pprint(model)
 
-            return "{} {}".format(model.model_id,model.friendly_name)
+                return """\nModel id is {} 
+                Model friendly name is {}
+                Model created on {}
+                Model location {}""".format(model.model_id,model.friendly_name,model.created,model.location)
+            except BaseException as e:
+                print('my custom error\n')
+                print(e.__class__.__name__)
+                print(e)
+                return 'an error occured check the output from the backend'              
         #
 
         return "Check the backend env dictionary you did set it so the backend didnt do anything"

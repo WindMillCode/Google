@@ -194,7 +194,8 @@ app-root :not([class^='ag']) {
 }
 
 .a_p_p_Input{
-    background : transparent;
+    // background : transparent;
+    border-radius: 10px;
     font-family : 'Roboto', sans-serif;
     border:0px;
     border-bottom:2px solid black;

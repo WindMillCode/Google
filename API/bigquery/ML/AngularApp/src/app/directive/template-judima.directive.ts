@@ -2,7 +2,7 @@ import { Directive, ElementRef, HostListener, Input, Renderer2, TemplateRef, Vie
 import { RyberService } from '../ryber.service'
 import { fromEvent, from, Subscription, Subscriber, of, combineLatest } from 'rxjs';
 import { deltaNode, eventDispatcher, numberParse, objectCopy } from '../customExports'
-import { catchError, delay } from 'rxjs/operators'
+import { catchError, delay,first } from 'rxjs/operators'
 import { environment as env } from '../../environments/environment'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -30,9 +30,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
         if (this.extras?.confirm === 'true') {
 
-
+            let {http,subscriptions} = this
             //communicate with the python backend
-            this.http.post(
+            let postRequest =http.post(
                 "http://localhost:3005",
                 {},
                 {
@@ -61,6 +61,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
                 }
 
             })
+            subscriptions.push(postRequest)
             //
 
         }

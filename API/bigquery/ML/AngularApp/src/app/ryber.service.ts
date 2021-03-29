@@ -263,7 +263,7 @@ export class RyberService {
 				extend = {
 					...extend,
 					type: 'text',
-                    placeholder: value,
+                    placeholder: value || "",
 					form: 'myForm',
 					...options.extend
 				}
@@ -912,6 +912,60 @@ export class RyberService {
 							type:"button"
                         },
                         appListModels:{
+                            confirm:"true",
+                            co
+                        },
+                        appLatch,
+                        ...options.extras
+                    }
+                })
+
+
+
+            }
+
+            else if (type === "getMetadataButton") {
+
+                let css = {
+                    width: '325px',
+                    "font-size": "48px",
+                    top: "0px",
+                    // height: "75px",
+                    left: '400px',
+                    "z-index": 4,
+                    'background-color': background,
+                    color,
+                    "font-family": fonts,
+					"font-weight": italics,
+					...options.css
+				}
+				extend = {
+					...extend,
+					//your props here
+					...options.extend
+				}
+				judima = {
+					...judima,
+					//your props here
+					...options.judima
+				}
+
+
+
+                symbol = rUD({
+                    co,
+                    bool: 'b',
+                    text: value,
+                    val: key.split("_").reverse()[0] + ' a_p_p_Button',
+                    css,
+                    extras: {
+						extend,
+						judima,
+                        component,
+						type,
+						appDeltaNode,
+                        appNest,
+                        appGetModelMetadata:{
                             confirm:"true",
                             co
                         },
@@ -1940,11 +1994,11 @@ export class RyberService {
                 }
             },
             navigation:{
-                type:"SPA", //[SPA,full],
+                type:"full", //[SPA,full],
                 full:{
                     map:{},
                     navigated:"false",
-                    startURL:"/guides"
+                    startURL:"/List Models"
                 }
             },
             webRTC:{
