@@ -27,7 +27,8 @@ website.convertCMS = [
 					}
 				},
 				appSection:{
-					confirm:"true"
+					confirm:"true",
+                    
 				}
 			},
 			{
@@ -36,6 +37,9 @@ website.convertCMS = [
 				value:"Bigquery ML",
 				split:9,
 				top:70,
+                options:{
+
+                },
 				latch:{
 					type:"display",
 					display:{
@@ -47,7 +51,7 @@ website.convertCMS = [
 							bool:"div",
 							css:{
 								"background-color":"lightgreen",
-								"z-index":"-1",
+								// "z-index":"-1",
 							},
 							val:"my-display-overlay",
 							logic:{
@@ -72,6 +76,11 @@ website.convertCMS = [
 							group:Array.from(Array(3),(x,i)=>{
 								return "my_display_expand_"+(i+1)
 							}),
+                            extras:{
+                                appVanillaTilt:{
+                                    confirm:"true"
+                                }
+                            }
 							// type:["deltaNodeContainer"]
 						}
 					]
@@ -84,7 +93,10 @@ website.convertCMS = [
 				height:"500",
 				split:9,
 				options:{
-					css:{}
+					css:{
+                        "z-index":2
+                    },
+
 				},
 				latch:{
 					type:"display",
@@ -100,7 +112,8 @@ website.convertCMS = [
 				split:9,
 				value:"List Models",
 				options:{
-					css:{}
+					css:{},
+
 				},
 				latch:{
 					type:"display",
@@ -109,7 +122,8 @@ website.convertCMS = [
 						name:"my_display_expand_3"
 					},
 				},
-			}
+			},
+
 		]
 	}
 ]

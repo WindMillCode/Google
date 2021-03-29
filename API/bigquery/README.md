@@ -2595,6 +2595,64 @@ WHERE
 
 ## Bigquery ML
 
+### Building and using a classification model on census data
+* __binary logistic regression__ - one of 2 categories
+* __multi-class logistic regression model__ - one of multiple categories
+#### Examples
+* based on demograhpics who makes more or less than 50k
+
+### Creating a k-means clustering model
+* __unsupervised learning__ - It's about understanding your data so that you can make data-driven decisions.
+
+####  Examples
+* cluster items based on who purchased them, when they were purchased, where they were purchased, and so on
+* cluster bikes stations based on population, distance from city center, trip duration
+    * may put racing bikes on trips that are used longer
+![](./images/k-means-clustering.PNG)
+
+
+### Using BigQuery ML to predict birth weight
+* linear regression
+    * determine from gender, mother age, and gestation from past to take a mother in the future and with factors come up with a prediction
+    * in ML.PREDICT used predicted_(tested column), to get a prediction
+```sql
+#standardSQL
+CREATE MODEL `bqml_tutorial.natality_model`
+OPTIONS
+  (model_type='linear_reg',
+    input_label_cols=['weight_pounds']) AS
+SELECT
+  weight_pounds,
+  is_male,
+  gestation_weeks,
+  mother_age,
+  CAST(mother_race AS string) AS mother_race
+FROM
+  `bigquery-public-data.samples.natality`
+WHERE
+  weight_pounds IS NOT NULL
+  AND RAND() < 0.001
+```
+
+### Using the BigQuery ML TRANSFORM clause for feature engineering
+
+### Using BigQuery ML to make recommendations from movie ratings
+
+* __matrix factorization model__ 
+* need to setup bigquery reservation API
+
+### Exporting a BigQuery ML model for online prediction
+
+bq extract -m bqml_tutorial.iris_model gs://sample_test_bucket_2123231/iris_model
+
+
+### Single time-series forecasting from Google Analytics data
+* arima based time series model
+
+
+### Multiple time-series forecasting with a single query for NYC Citi Bike trips
+* 
+
 ### Listing Models
 
 |permissions|
@@ -2609,26 +2667,59 @@ WHERE
 
 #### Python3 
 ```py
-from google.cloud import bigquery
+        if(self.env.get("list_models")):
+            try:
+                models = client.list_models(dataset_main[0])  
+                schema = [
+                    "project",
+                    "dataset_id",
+                    "model_id"
+                ]
+                # for model in models:
+                #     print(model.reference.project)
+                result = {
+                    "schema":[{"field":x} for x in schema],
+                    "data":[
+                        # Row values can be accessed by field name or index.
+                        {
+                            schema[0]:row.reference.project,
+                            schema[1]:row.reference.dataset_id,
+                            schema[2]:row.reference.model_id  
+                        }
+                        for row in models
+                    ]
+                }
+                if(len(result["data"]) == 0):
+                    result["data"] = [
+                        {
+                            schema[0]:"No",
+                            schema[1]:"Models",
+                            schema[2]:"Here"
+                        }
+                        for row in [None]
+                    ]
 
-# Construct a BigQuery client object.
-client = bigquery.Client()
-
-# TODO(developer): Set dataset_id to the ID of the dataset that contains
-#                  the models you are listing.
-# dataset_id = 'your-project.your_dataset'
-
-models = client.list_models(dataset_id)  # Make an API request.
-
-print("Models contained in '{}':".format(dataset_id))
-for model in models:
-    full_model_id = "{}.{}.{}".format(
-        model.project, model.dataset_id, model.model_id
-    )
-    friendly_name = model.friendly_name
-    print("{}: friendly_name='{}'".format(full_model_id, friendly_name))
+                return json.dumps(result)                 
+                
+            except BaseException as e:
+                print('my custom error\n')
+                print(e.__class__.__name__)
+                print(e)
+                return 'an error occured check the output from the backend'                 
+        #
 ```
 
+
+
+### Getting model metadata
+
+|permissions|
+|:------|
+|bigquery.dataViewer
+|bigquery.dataEditor
+|bigquery.dataOwner
+|bigquery.metadataViewer
+|bigquery.admin
 
 
 ### Reference

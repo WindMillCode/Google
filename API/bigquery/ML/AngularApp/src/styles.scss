@@ -37,7 +37,9 @@ $bg-color-1 :rgba(random(255), random(255), random(255),(random(10)/10) + .5 );
 @import "../node_modules/ag-grid-community/dist/styles/ag-grid.css";
 @import "../node_modules/ag-grid-community/dist/styles/ag-theme-blue.css";
 @import "./assets/styles/pikaday.css";
-@import "./assets/styles/component-position";
+// @import "./assets/styles/component-position";
+@import "./assets/styles/glassmorphism";
+
 
 /* libre-franklin-regular - latin */
 @font-face {
@@ -186,7 +188,7 @@ app-root :not([class^='ag']) {
 .a_p_p_Heading{
     font-family : var(--font_2);
     // color:black;
-    color: set-text-color( $bg-color-1);
+    // color: set-text-color( $bg-color-1);
     font-weight: 400;
     text-align: center;
 }
@@ -266,3 +268,4 @@ app-root :not([class^='ag']) {
 	background: radial-gradient(red,yellow,green);
 	border-radius: 25%;
 }
+

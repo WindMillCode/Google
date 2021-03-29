@@ -392,7 +392,8 @@ export class FormComponent implements OnInit  , AfterViewInit, OnDestroy {
                         options:{
                             type:["latch"]
                         },
-                        templateMyElements:this.templateMyElements
+                        templateMyElements:this.templateMyElements,
+                        ref:this.ref
                     })
 
 

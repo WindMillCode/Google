@@ -340,7 +340,7 @@ export class LatchDirective {
 						}
 						// determine if there are duplicates
 
-							let deltaNodegroup = zChildren[extras.zSymbol].extras.appDeltaNode?.group || extras.deltaNode.group || null
+							let deltaNodegroup = zChildren[extras.zSymbol].extras.appDeltaNode?.group || extras.deltaNode?.group || null
 							if(ryber[co].metadata.deltaNode.groups[deltaNodegroup]){
 								extras.deltaNode =extras.deltaNode || {
 									group:null,
@@ -361,8 +361,10 @@ export class LatchDirective {
 						extras.display.targets =[]
 						Object.keys(zChildren)
 						.forEach((x:any,i)=>{
-							if(["target","part"].includes(zChildren[x].extras?.appLatch?.display.type)){
+
+							if(["target","part"].includes(zChildren[x].extras?.appLatch?.display?.type)){
 								// consider duplicates
+
 
 								let {suffix,deltaNode} = ryber[co].metadata.latch.display
 								let neededZSymbol = zChildren[x].extras.appLatch?.deltaNode?.zSymbol ||zChildren[x].extras.appLatch.zSymbol
@@ -374,7 +376,8 @@ export class LatchDirective {
 								}
 								//
 
-								if(deltaNode[deltaNodegroup]?.symbols.includes(neededZSymbol) || deltaNodegroup ===null ){
+
+								if(deltaNode[deltaNodegroup]?.symbols.includes(neededZSymbol) || deltaNodegroup !==null ){
 									zChildren[x].extras.appLatch.display.name =
 									zChildren[x].extras.appLatch.display.originalName+ suffix + deltaNode[deltaNodegroup].count
 
@@ -396,7 +399,7 @@ export class LatchDirective {
 											y.group = y.group
 											.map((z:any,k)=>{
 
-												if(deltaNode[deltaNodegroup]?.symbols.includes(neededZSymbol) || deltaNodegroup ===null){
+												if(deltaNode[deltaNodegroup]?.symbols.includes(neededZSymbol) || deltaNodegroup !==null){
 													return  y.originalGroup[k] + suffix + deltaNode[deltaNodegroup].count
 												}
 												return z
@@ -460,6 +463,7 @@ export class LatchDirective {
 								neededTargets = x.neededTargets= extras.display.targets
 								.filter((y:any,j)=>{
 									// console.log(zChildren[y].extras.appLatch.display.name)
+
 									return x.group.includes(zChildren[y].extras.appLatch.display.name)
 								})
 							}
@@ -500,7 +504,7 @@ export class LatchDirective {
 									},
 									...zChidlrenExtras
 								},
-								val:"a_p_p_Display " +x.val
+								val:x.val +" a_p_p_Display "
 							})
 
 							if(x?.type?.includes("deltaNodeContainer")){
@@ -573,6 +577,7 @@ export class LatchDirective {
 			horizontal:null,
 			current:null
 		}
+
 		dims
 		.forEach((z: any, k) => {
 			delta.current = minMaxDelta({

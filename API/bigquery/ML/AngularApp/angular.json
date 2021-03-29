@@ -50,7 +50,8 @@
                             "backend/modernizr/modernizr.js",
                             "backend/polyfills/object.js",
                             "backend/polyfills/signaturePad.js",
-                            "src/assets/scripts/pikaday.js"
+                            "src/assets/scripts/pikaday.js",
+                            // "src/assets/scripts/vanilla-tilt.min.js"
                         ],
                         "optimization": false,
                         "sourceMap": true,
@@ -110,6 +111,18 @@
                                     "with": "src/environments/environment.bigquery.dev.ts"
                                 }
                             ]
+                        },
+                        "get_metadata": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/app/website.ts",
+                                    "with": "src/app/cms/website-get-metadata-dev.ts"
+                                },
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.bigquery.dev.ts"
+                                }
+                            ]
                         }
 
 
@@ -120,7 +133,7 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
                         "browserTarget": "AngularApp:bigquery:play",
-                        "port": 8000,
+                        "port": 8001,
                         "liveReload": true,
 						"hmr": false
                     },
@@ -129,12 +142,13 @@
                             "browserTarget": "AngularApp:bigquery:production"
                         },
                         "play": {
-                            "port": 8000,
                             "browserTarget": "AngularApp:bigquery:play"
                         },
                         "list": {
-                            "port": 8000,
                             "browserTarget": "AngularApp:bigquery:list"
+                        },
+                        "get_metadata": {
+                            "browserTarget": "AngularApp:bigquery:get_metadata"
                         }
 
 

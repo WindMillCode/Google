@@ -72,7 +72,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
         this.extras = this.googleMaps
 
         if (this.extras?.confirm === 'true') {
-            if(env.directive.googleMaps.lifecycleHooks) console.log(this.extras.co + " " + this.extras.zSymbol+ ' googleMaps ngOnInit fires on mount')
+            if(env.directive?.googleMaps?.lifecycleHooks) console.log(this.extras.co + " " + this.extras.zSymbol+ ' googleMaps ngOnInit fires on mount')
             let {ryber,extras,zChildren,subscriptions} = this
             let {co} = extras
 
@@ -90,7 +90,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 	ngOnDestroy() {
 		if (this.extras?.confirm === 'true') {
-            if(env.directive.googleMaps.lifecycleHooks) console.log(this.extras.co + " " + this.extras.zSymbol+ ' googleMaps ngOnDestroy fires on dismount')
+            if(env.directive?.googleMaps?.lifecycleHooks) console.log(this.extras.co + " " + this.extras.zSymbol+ ' googleMaps ngOnDestroy fires on dismount')
 			this.subscriptions
 			.forEach((x: any, i) => {
 				try{

@@ -29,13 +29,14 @@ class my_bigquery_client():
 
     # paste env dictionary here
     env=  {
-        "list_models":True
+        "list_models":True,
+        "get_metadata":True
     }
     #
 
     # setup
     dataset_names = [
-        "Models_Dataset",
+        "bqml_tutorial",
     ]
     #
 
@@ -58,7 +59,7 @@ class my_bigquery_client():
 
         # create a dataset first if needed
         dataset_main = self.make_dataset()
-        table_id = "{}.{}".format(dataset_main[0], name) 
+        # table_id = "{}.{}".format(dataset_main[0], name) 
         #    
 
         #create a table if needed
@@ -75,14 +76,16 @@ class my_bigquery_client():
                     "dataset_id",
                     "model_id"
                 ]
+                # for model in models:
+                #     print(model.reference.project)
                 result = {
                     "schema":[{"field":x} for x in schema],
                     "data":[
                         # Row values can be accessed by field name or index.
                         {
-                            schema[0]:row[schema[0]],
-                            schema[1]:row[schema[1]],
-                            schema[2]:row[schema[2]]  
+                            schema[0]:row.reference.project,
+                            schema[1]:row.reference.dataset_id,
+                            schema[2]:row.reference.model_id  
                         }
                         for row in models
                     ]
@@ -90,11 +93,11 @@ class my_bigquery_client():
                 if(len(result["data"]) == 0):
                     result["data"] = [
                         {
-                            schema[0]:"gcp-data-certs",
-                            schema[1]:"Models_Dataset",
-                            schema[2]:"My_model"
+                            schema[0]:"No",
+                            schema[1]:"Models",
+                            schema[2]:"Here"
                         }
-                        for row in [None,None,None]
+                        for row in [None]
                     ]
 
                 return json.dumps(result)                 
@@ -102,9 +105,16 @@ class my_bigquery_client():
             except BaseException as e:
                 print('my custom error\n')
                 print(e.__class__.__name__)
-                print('\n')
                 print(e)
                 return 'an error occured check the output from the backend'                 
+        #
+
+        # get model metadata
+        elif(self.env.get("get_metadata")):
+            model_id = "{}.{}".format(dataset_main[0], name) 
+            model = client.get_model(model_id)
+
+            return "{} {}".format(model.model_id,model.friendly_name)
         #
 
         return "Check the backend env dictionary you did set it so the backend didnt do anything"

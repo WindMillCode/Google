@@ -24,6 +24,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SectionDirective } from './directive/section.directive';
 import { NavigationDirective } from './directive/navigation.directive';
 import { ListModelsDirective } from './directive/list-models.directive';
+import { VanillaTiltDirective } from './directive/vanilla-tilt.directive';
 
 let providers = []
 if(env.testingAcct.confirm === "true"){
@@ -45,6 +46,7 @@ if(env.testingAcct.confirm === "true"){
     SectionDirective,
     NavigationDirective,
     ListModelsDirective,
+    VanillaTiltDirective,
 
   ],
   imports: [

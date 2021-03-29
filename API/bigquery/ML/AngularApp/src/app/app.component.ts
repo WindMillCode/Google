@@ -41,6 +41,10 @@ declare global {
 	// globals for randomTextGenerator
 	var RandomTextGenerator
 	//
+
+    // vanillaTilt
+    var VanillaTilt
+    //
 }
 
 @Component({
@@ -72,11 +76,7 @@ export class AppComponent implements OnInit, OnDestroy {
         ryber.appCO0.metadata.scripts.push(
             ...this.ryber.appAddScripts({
                 scripts:[
-                    {
-                        src:"https://webrtc.github.io/adapter/adapter-latest.js",
-                        name:"webRTC Adapter",
-                        async:"true"
-                    },
+
                     {
                         src:"https://apis.google.com/js/api.js",
                         name:"google api"
@@ -87,9 +87,17 @@ export class AppComponent implements OnInit, OnDestroy {
 						// integrity:"sha512-D5D6A51C3906F44B5C3A60A7A028E2C10FC7101E520CDAB0F1DE06D8C2A83708E2C0C35E04092E76C04299294C9D776C1FC066D2639DDED97FEA72F9CB46CC69",
 						defer:"true"
 					},
-                    (false ?{
-                        src: "https://cdn.rawgit.com/Marak/faker.js/master/examples/browser/js/faker.js"
-                    } : null)
+					{
+						src:"https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js",
+						name:"vanillaTilt",
+						// integrity:"sha512-SttpKhJqONuBVxbRcuH0wezjuX+BoFoli0yPsnrAADcHsQMW8rkR84ItFHGIkPvhnlRnE2FaifDOUw+EltbuHg==",
+						// defer:"true",
+                        placement:{
+                            appendChild:document.body
+                        }
+					},
+
+
                 ].filter((x:any,i)=>{
                     return x !== null
                 })
@@ -285,7 +293,7 @@ export class AppComponent implements OnInit, OnDestroy {
         if (env.component.app.lifecycleHooks) {console.log('app ngAfterViewInit fires on mount ')}
 		let {templateMyComponents,ryber,subscriptions} = this
 
-        
+
         // listen for route changes
         subscriptions.push(
             templateMyComponents.changes
