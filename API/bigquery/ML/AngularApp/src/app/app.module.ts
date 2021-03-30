@@ -26,6 +26,10 @@ import { NavigationDirective } from './directive/navigation.directive';
 import { ListModelsDirective } from './directive/list-models.directive';
 import { VanillaTiltDirective } from './directive/vanilla-tilt.directive';
 import { GetModelMetadataDirective } from './directive/get-model-metadata.directive';
+import { UpdateModelMetadataDirective } from './directive/update-model-metadata.directive';
+import { CopyModelDirective } from './directive/copy-model.directive';
+import { ExportModelDirective } from './directive/export-model.directive';
+import { DeleteModelDirective } from './directive/delete-model.directive';
 
 let providers = []
 if(env.testingAcct.confirm === "true"){
@@ -49,6 +53,10 @@ if(env.testingAcct.confirm === "true"){
     ListModelsDirective,
     VanillaTiltDirective,
     GetModelMetadataDirective,
+    UpdateModelMetadataDirective,
+    CopyModelDirective,
+    ExportModelDirective,
+    DeleteModelDirective,
 
   ],
   imports: [

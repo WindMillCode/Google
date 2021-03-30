@@ -577,7 +577,7 @@ export class LatchDirective {
 			horizontal:null,
 			current:null
 		}
-
+		
 		dims
 		.forEach((z: any, k) => {
 			delta.current = minMaxDelta({

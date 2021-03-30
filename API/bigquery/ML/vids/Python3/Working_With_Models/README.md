@@ -1,4 +1,4 @@
-# Loading Data into Bigquery
+# Working with Bigquery ML
 
 <!-- ## [Youtube Walkthrough]() -->
 
@@ -9,11 +9,11 @@
 
 ### Start the Angular App
 
-* download the frontend [here](https://downgit.github.io/#/home?url=https://github.com/WindMillCode/Google/tree/master/API/bigquery/AngularApp)
+* download the frontend [here](https://downgit.github.io/#/home?url=https://github.com/WindMillCode/Google/tree/master/API/bigquery/ML/AngularApp)
 open a terminal and head to project root and run this command
 ```ps1
 npm install -s
-npx ng serve -c=loading --open=true
+npx ng serve -c=bigqueryML --open=true
 ```
 
 ### Setup the Python Backend 

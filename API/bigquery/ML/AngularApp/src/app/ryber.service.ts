@@ -204,7 +204,7 @@ export class RyberService {
                 let css = {
                     "z-index": 4,
                     display: "table",
-                    "font-size": fontSize !== undefined ? fontSize + "px" : "54px",
+                    "font-size": fontSize !== undefined ? fontSize + "px" : "30px",
                     "font-weight": italics,
                     'background-color': background,
                     color,
@@ -314,7 +314,7 @@ export class RyberService {
 
                 form?.required === undefined ? null : ((a:any) => { a.required = form?.required })(extend)
                 let css = {
-                    "font-size": "27px",
+                    "font-size": "20px",
                     "z-index": 4,
                     'background-color': background,
                     color,
@@ -324,7 +324,7 @@ export class RyberService {
 				extend = {
 					...extend,
                     type: 'text',
-                    placeholder: value,
+                    placeholder: value || "",
                     form: 'myForm',
 					...options.extend
                 }
@@ -489,7 +489,7 @@ export class RyberService {
 
 
                 let css = {
-                    "font-size": fontSize !== undefined ? fontSize + "px" : "30px",
+                    "font-size": fontSize !== undefined ? fontSize + "px" : "20px",
                     "z-index": 4,
                     'background-color': background,
                     color,
@@ -798,7 +798,7 @@ export class RyberService {
 
                 let css = {
                     width: '325px',
-                    "font-size": "48px",
+                    "font-size": "24px",
                     top: "0px",
                     // height: "75px",
                     left: '400px',
@@ -861,7 +861,7 @@ export class RyberService {
 
                 let css = {
                     width: '325px',
-                    "font-size": "48px",
+                    "font-size": "24px",
                     top: "0px",
                     // height: "75px",
                     left: '400px',
@@ -928,7 +928,7 @@ export class RyberService {
 
                 let css = {
                     width: '325px',
-                    "font-size": "48px",
+                    "font-size": "24px",
                     top: "0px",
                     // height: "75px",
                     left: '400px',
@@ -975,6 +975,219 @@ export class RyberService {
                 })
 
 
+
+            }
+
+            else if (type === "updateMetadataButton") {
+
+                let css = {
+                    width: '325px',
+                    "font-size": "24px",
+                    top: "0px",
+                    // height: "75px",
+                    left: '400px',
+                    "z-index": 4,
+                    'background-color': background,
+                    color,
+                    "font-family": fonts,
+					"font-weight": italics,
+					...options.css
+				}
+				extend = {
+					...extend,
+					//your props here
+					...options.extend
+				}
+				judima = {
+					...judima,
+					//your props here
+					...options.judima
+				}
+
+
+
+                symbol = rUD({
+                    co,
+                    bool: 'b',
+                    text: value,
+                    val: key.split("_").reverse()[0] + ' a_p_p_Button',
+                    css,
+                    extras: {
+						extend,
+						judima,
+                        component,
+						type,
+						appDeltaNode,
+                        appNest,
+                        appUpdateModelMetadata:{
+                            confirm:"true",
+                            co
+                        },
+                        appLatch,
+                        ...options.extras
+                    }
+                })
+
+
+
+            }
+
+            else if (type === "copyModelButton") {
+
+                let css = {
+                    width: '325px',
+                    "font-size": "24px",
+                    top: "0px",
+                    // height: "75px",
+                    left: '400px',
+                    "z-index": 4,
+                    'background-color': background,
+                    color,
+                    "font-family": fonts,
+					"font-weight": italics,
+					...options.css
+				}
+				extend = {
+					...extend,
+					//your props here
+					...options.extend
+				}
+				judima = {
+					...judima,
+					//your props here
+					...options.judima
+				}
+
+
+
+                symbol = rUD({
+                    co,
+                    bool: 'b',
+                    text: value,
+                    val: key.split("_").reverse()[0] + ' a_p_p_Button',
+                    css,
+                    extras: {
+						extend,
+						judima,
+                        component,
+						type,
+						appDeltaNode,
+                        appNest,
+                        appCopyModel:{
+                            confirm:"true",
+                            co
+                        },
+                        appLatch,
+                        ...options.extras
+                    }
+                })
+
+
+
+            }
+
+            else if (type === "exportModelButton") {
+
+                let css = {
+                    width: '325px',
+                    "font-size": "24px",
+                    top: "0px",
+                    // height: "75px",
+                    left: '400px',
+                    "z-index": 4,
+                    'background-color': background,
+                    color,
+                    "font-family": fonts,
+					"font-weight": italics,
+					...options.css
+				}
+				extend = {
+					...extend,
+					//your props here
+					...options.extend
+				}
+				judima = {
+					...judima,
+					//your props here
+					...options.judima
+				}
+
+
+
+                symbol = rUD({
+                    co,
+                    bool: 'b',
+                    text: value,
+                    val: key.split("_").reverse()[0] + ' a_p_p_Button',
+                    css,
+                    extras: {
+						extend,
+						judima,
+                        component,
+						type,
+						appDeltaNode,
+                        appNest,
+                        appExportModel:{
+                            confirm:"true",
+                            co
+                        },
+                        appLatch,
+                        ...options.extras
+                    }
+                })
+
+            }
+
+
+            else if (type === "deleteModelButton") {
+
+                let css = {
+                    width: '325px',
+                    "font-size": "24px",
+                    top: "0px",
+                    // height: "75px",
+                    left: '400px',
+                    "z-index": 4,
+                    'background-color': background,
+                    color,
+                    "font-family": fonts,
+					"font-weight": italics,
+					...options.css
+				}
+				extend = {
+					...extend,
+					//your props here
+					...options.extend
+				}
+				judima = {
+					...judima,
+					//your props here
+					...options.judima
+				}
+
+
+
+                symbol = rUD({
+                    co,
+                    bool: 'b',
+                    text: value,
+                    val: key.split("_").reverse()[0] + ' a_p_p_Button',
+                    css,
+                    extras: {
+						extend,
+						judima,
+                        component,
+						type,
+						appDeltaNode,
+                        appNest,
+                        appDeleteModel:{
+                            confirm:"true",
+                            co
+                        },
+                        appLatch,
+                        ...options.extras
+                    }
+                })
 
             }
             //
@@ -1061,6 +1274,7 @@ export class RyberService {
 						extend,
 						appDeltaNode,
                         appNest,
+                        appLatch,
                         ...options.extras
                     }
                 })
@@ -1973,9 +2187,9 @@ export class RyberService {
             ryber: {
                 CO$: [],
                 sectionDefault: {
-                    gap: 90, // if the gap is wildily bigger it wont stack appropraitely, make sure we gap approaitely
+                    gap: 50, // if the gap is wildily bigger it wont stack appropraitely, make sure we gap approaitely
                     left: 50,
-                    width: 1175,
+                    width: 1075,
                     split: 9,
                     stack: 20,
                     app:{

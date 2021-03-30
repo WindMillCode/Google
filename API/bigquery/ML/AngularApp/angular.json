@@ -145,7 +145,7 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
                         "browserTarget": "AngularApp:bigquery:play",
-                        "port": 8001,
+                        "port": 4521,
                         "liveReload": true,
 						"hmr": false
                     },

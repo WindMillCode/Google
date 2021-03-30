@@ -2721,7 +2721,178 @@ bq extract -m bqml_tutorial.iris_model gs://sample_test_bucket_2123231/iris_mode
 |bigquery.metadataViewer
 |bigquery.admin
 
+#### Python3
+```py
+        elif(env == "get_model_metadata"):
+            try:
+                model_id = "{}.{}".format(dataset_main[0], name) 
+                model = client.get_model(model_id)
+                
 
+                return """\nModel id is {} 
+                Model friendly name is {}
+                Model created on {}
+                Model location {}""".format(model.model_id,model.friendly_name,model.created,model.location)
+            except BaseException as e:
+                print('my custom error\n')
+                print(e.__class__.__name__)
+                print(e)
+                return 'an error occured check the output from the backend' 
+```
+
+###  Updating Model Metadata
+
+|permissions|
+|:----|
+|bigquery.dataEditor
+|bigquery.dataOwner
+|bigquery.admin
+
+#### Python3
+```py
+
+            try:
+                model_id = "{}.{}".format(dataset_main[0], name) 
+                model = client.get_model(model_id)  # Make an API request.
+                model.description = query
+                model = client.update_model(model, ["description"])  # Make an API request.
+
+                full_model_id = "{}.{}.{}".format(model.project, model.dataset_id, model.model_id)
+                return  "Updated model '{}' with description '{}'.".format(
+                        full_model_id, model.description
+                    )
+                                
+            except BaseException as e:
+                print('my custom error\n')
+                print(e.__class__.__name__)
+                print('\n')
+                print(e)
+                return 'an error occured check the output from the backend' 
+```
+
+
+### Managing models
+* to rename a model you must copy it srry
+
+#### Copying Models
+* cant do in cloud console
+* same location
+
+
+##### Python3
+```py
+        elif(env == "copy_model"):
+            try:
+                job_config = bigquery.job.CopyJobConfig(
+                    create_disposition  ="CREATE_IF_NEEDED",
+                    write_disposition  ="WRITE_TRUNCATE",
+                )
+                job = bigquery.job.CopyJob(
+                    job_config=job_config,
+                    sources = [
+                        bigquery.table.TableReference(
+                            dataset_ref = client.get_dataset(dataset_main[0]),
+                            table_id = name                    
+                        )]
+                    ,
+                    destination = 
+                        bigquery.table.TableReference(
+                            dataset_ref = client.get_dataset(dataset_main[0]),
+                            table_id = dest_name                
+                        )
+                    ,
+                    client= client,
+                    job_id = "my_copy_{}".format(uuid.uuid4())
+                )
+                job.result()  # Wait for the job to complete.
+                return "A copy of the model created."             
+            except BaseException as e:
+                print('my custom error\n')
+                print(e.__class__.__name__)
+                print('\n')
+                print(e)
+                return 'an error occured check the output from the backend'
+```
+
+### Exporting Models
+
+* extract job
+
+only export folllowing model types
+|property|value|data|
+|:------|:------:|------|
+|AUTOML_CLASSIFIER|Tensorflow (tf 1.15)
+|AUTOML_REGRESSOR|Tensorflow (tf 1.15)
+|BOOSTED_TREE_CLASSIFIER|Tensorflow (tf 1.15)
+|BOOSTED_TREE_REGRESSOR|Tensorflow (tf 1.15)
+|DNN_CLASSIFIER|Tensorflow (tf 1.15)
+|DNN_REGRESSOR|Tensorflow (tf 1.15)
+|KMEANS|Tensorflow (tf 1.15)
+|LINEAR_REG|Tensorflow (tf 1.15)
+|LOGISTIC_REG|Tensorflow (tf 1.15)
+|MATRIX_FACTORIZATION|Tensorflow (tf 1.15)
+|TENSORFLOW (imported TensorFlow models)| Booster(xgboost 0.82)
+|XGBOOST (imported XGBoost models)| (tensorflow saved model)
+
+* doesnt work with ARRAY, TIMESTAMP, or GEOGRAPHY columns
+
+
+#### Python3
+```py
+
+        elif(env == "extract_model"):
+            try:
+                model_id = "{}.{}".format(dataset_main[0], name) 
+                model = client.get_model(model_id)
+
+                
+                job = bigquery.job.ExtractJob(
+                    client= client,
+                    job_id = "my_copy_{}".format(uuid.uuid4()),
+                    source = model,
+                    destination_uris = storage_buckets,
+                    job_config= bigquery.job.ExtractJobConfig(
+                        destination_format="ML_TF_SAVED_MODEL" # ML_TF_SAVED_MODEL or ML_XGBOOST_BOOSTER                        
+                    )
+                )
+                job.result()
+                return "model {} export has been completed".format(name)
+            except BaseException as e:
+                print('my custom error\n')
+                print(e.__class__.__name__)
+                print('\n')
+                print(e)
+                return 'an error occured check the output from the backend'
+```
+
+### Deleteing Models
+
+* one by one
+* cannot resotre
+
+|permissions|
+|:------|
+|bigquery.dataEditor
+|bigquery.dataOwner
+|bigquery.admin
+
+
+#### Python3
+
+```py
+        elif(env == "delete_model"):
+            try:
+                for name in models:
+                    model_id = "{}.{}".format(dataset_main[0], name)
+                    client.delete_model(model_id)  # Make an API request.
+                return "Deleted all models as requested"          
+            except BaseException as e:
+                print('my custom error\n')
+                print(e.__class__.__name__)
+                print('\n')
+                print(e)
+                return 'an error occured check the output from the backend' 
+```
 ### Reference
 * [docs](https://cloud.google.com/bigquery/docs/reference/standard-sql/geography_functions)
 * [earth engine](https://developers.google.com/earth-engine/)

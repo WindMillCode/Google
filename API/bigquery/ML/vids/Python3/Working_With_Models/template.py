@@ -26,6 +26,7 @@ class my_bigquery_client():
         self.datetime = datetime
         self.pytz = pytz
         self.time = time 
+        self.uuid = uuid
 
     # paste env dictionary here
     env=  {
@@ -49,12 +50,16 @@ class my_bigquery_client():
         datetime = self.datetime 
         pytz = self.pytz        
         time = self.time 
-        name = data.get("titleName") if data.get("titleName")  else "My_Target_Table"
+        uuid = self.uuid
+        name = data.get("titleName") if data.get("titleName")  else "My_Source_Model"
+        dest_name = data.get("destName") if data.get("destName")  else "My_Dest_Model"
         emails = data.get("emails") if data.get("emails") else ["data_analysts@example.com"]
         query = data.get("query")
         source_url = data.get("sourceURL")  if data.get("titleName") else "gs://cloud-samples-data/bigquery/us-states/us-states.csv"
         emails = data.get("emails")
         env = data.get("env")
+        storage_buckets =  data.get("storageBuckets")
+        models =  data.get("models")
         table = ""
         #
 
@@ -115,12 +120,13 @@ class my_bigquery_client():
             try:
                 model_id = "{}.{}".format(dataset_main[0], name) 
                 model = client.get_model(model_id)
-                pprint.pprint(model)
+                
 
                 return """\nModel id is {} 
                 Model friendly name is {}
                 Model created on {}
-                Model location {}""".format(model.model_id,model.friendly_name,model.created,model.location)
+                Model location {}
+                Model description {}""".format(model.model_id,model.friendly_name,model.created,model.location,model.description)
             except BaseException as e:
                 print('my custom error\n')
                 print(e.__class__.__name__)
@@ -128,6 +134,102 @@ class my_bigquery_client():
                 return 'an error occured check the output from the backend'              
         #
 
+        # update model metadata
+        elif(env == "update_model_metadata"):
+            try:
+                model_id = "{}.{}".format(dataset_main[0], name) 
+                model = client.get_model(model_id)  # Make an API request.
+                model.description = query
+                model = client.update_model(model, ["description"])  # Make an API request.
+
+                full_model_id = "{}.{}.{}".format(model.project, model.dataset_id, model.model_id)
+                return  "Updated model '{}' with description '{}'.".format(
+                        full_model_id, model.description
+                    )
+                                
+            except BaseException as e:
+                print('my custom error\n')
+                print(e.__class__.__name__)
+                print('\n')
+                print(e)
+                return 'an error occured check the output from the backend'    
+        #
+
+        # copy a model
+        elif(env == "copy_model"):
+            try:
+                
+                job_config = bigquery.job.CopyJobConfig(
+                    create_disposition  ="CREATE_IF_NEEDED",
+                    write_disposition  ="WRITE_TRUNCATE",
+                )
+                job = bigquery.job.CopyJob(
+                    job_config=job_config,
+                    sources = [
+                        bigquery.table.TableReference(
+                            dataset_ref = client.get_dataset(dataset_main[0]),
+                            table_id = name                    
+                        )]
+                    ,
+                    destination = 
+                        bigquery.table.TableReference(
+                            dataset_ref = client.get_dataset(dataset_main[0]),
+                            table_id = dest_name                
+                        )
+                    ,
+                    client= client,
+                    job_id = "my_copy_{}".format(uuid.uuid4())
+                )
+                job.result()  # Wait for the job to complete.
+                return "A copy of the model created."             
+            except BaseException as e:
+                print('my custom error\n')
+                print(e.__class__.__name__)
+                print('\n')
+                print(e)
+                return 'an error occured check the output from the backend'
+        #
+
+        # extract a model
+        elif(env == "extract_model"):
+            try:
+                model_id = "{}.{}".format(dataset_main[0], name) 
+                model = client.get_model(model_id)
+
+                print(storage_buckets)
+                job = bigquery.job.ExtractJob(
+                    client= client,
+                    job_id = "my_copy_{}".format(uuid.uuid4()),
+                    source = model,
+                    destination_uris = storage_buckets,
+                    job_config= bigquery.job.ExtractJobConfig(
+                        destination_format="ML_TF_SAVED_MODEL" # ML_TF_SAVED_MODEL or ML_XGBOOST_BOOSTER                        
+                    )
+                )
+                job.result()
+                return "model {} export has been completed".format(name)
+            except BaseException as e:
+                print('my custom error\n')
+                print(e.__class__.__name__)
+                print('\n')
+                print(e)
+                return 'an error occured check the output from the backend'
+        #
+
+        # delete a model
+        elif(env == "delete_model"):
+            try:
+                for name in models:
+                    model_id = "{}.{}".format(dataset_main[0], name)
+                    client.delete_model(model_id)  # Make an API request.
+                return "Deleted all models as requested"          
+            except BaseException as e:
+                print('my custom error\n')
+                print(e.__class__.__name__)
+                print('\n')
+                print(e)
+                return 'an error occured check the output from the backend'        
+        #
         return "Check the backend env dictionary you did set it so the backend didnt do anything"
 
 

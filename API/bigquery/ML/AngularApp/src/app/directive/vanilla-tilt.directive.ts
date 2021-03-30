@@ -90,6 +90,10 @@ export class VanillaTiltDirective {
                         .subscribe(tiltOthers)
                     )
 
+                }),
+                ryber[co].metadata.zChildrenSubject
+                .subscribe((result:any)=>{
+                    this.zChildren = zChildren = ryber[co].metadata.zChildren
                 })
             )
 			//
