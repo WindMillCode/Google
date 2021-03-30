@@ -28,9 +28,11 @@ export class VanillaTiltDirective {
 
 
     ngOnInit() {
+
         this.extras = this.vanillaTilt
 
         if (this.extras?.confirm === 'true') {
+
             if(env.directive?.vanillaTilt?.lifecycleHooks) console.log(this.extras.co + " " + this.extras.zSymbol+ ' vanillaTilt ngOnInit fires on mount')
             let {ryber,extras,zChildren,subscriptions,el} = this
             let {co} = extras
@@ -42,18 +44,25 @@ export class VanillaTiltDirective {
             scripts =  scripts .filter((x:any,i)=>{
                 return x.name === "vanillaTilt"
             })
-
+            let loadedScripts = Array.from(
+                scripts.filter((x:any,i)=>{
+                    return x.loaded !== "true"
+                }),
+                (x:any,i)=>{return fromEvent(x.element,"load")}
+            )
             subscriptions.push(
                 combineLatest([
-                ...Array.from(scripts,(x:any,i)=>{return fromEvent(x.element,"load")}),
-                ryber[co].metadata.zChildrenSubject
+                    ryber[co].metadata.zChildrenSubject,
+                ...loadedScripts,
+
                 ])
                 .pipe(
                     first()
                 )
                 .subscribe((result:any)=>{
+
                     this.zChildren = zChildren = ryber[co].metadata.zChildren
-                    let ref = result[1].ref
+                    let ref = result[0].ref
                     VanillaTilt.init(el.nativeElement,{
                         perspective:500
                     })

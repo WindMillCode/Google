@@ -1,5 +1,5 @@
 import { Injectable, VERSION,Renderer2,RendererFactory2, ChangeDetectorRef,Inject } from "@angular/core";
-import { Observable, of, Subject, Subscription, BehaviorSubject, ReplaySubject, merge, combineLatest } from "rxjs";
+import { Observable, of, Subject, Subscription, BehaviorSubject, ReplaySubject, merge, combineLatest, fromEvent } from "rxjs";
 // import { Router,RouterEvent } from "@angular/router";
 import { zChildren, componentObject, numberParse, ryberUpdate,ryberUpdateFactory, objectCopy } from "./customExports";
 import { HttpClient } from "@angular/common/http";
@@ -1948,7 +1948,12 @@ export class RyberService {
             else{
                 this.renderer2.appendChild(window.document.head, s);
             }
-            return {element:s,name:x.name}
+            let scriptMetadata =  {element:s,name:x.name,loaded:"false"}
+            fromEvent(s,"load")
+            .subscribe((result:any)=>{
+                scriptMetadata.loaded = "true"
+            })
+            return scriptMetadata
         });
     }
     appTestKeyword = "root"

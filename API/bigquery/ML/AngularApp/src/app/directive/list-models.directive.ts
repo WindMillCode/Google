@@ -38,7 +38,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
             //communicate with the python backend
             let postRequest =http.post(
                 "http://localhost:3005",
-                {},
+                {
+                    env:"list_models"
+                },
                 {
                     responseType: 'text',
                 }
@@ -60,7 +62,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
                     result = JSON.parse(result)
                     zChildren[agGrid.zSymbol].extras.appAgGrid.columnDefs = result.schema
                     zChildren[agGrid.zSymbol].extras.appAgGrid.rowData = result.data
-                    console.log(zChildren[agGrid.zSymbol].extras.appAgGrid)
+                    
                     postRequest.unsubscribe()
                     this.agGrid.zSymbol
                     eventDispatcher({

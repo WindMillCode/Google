@@ -40,7 +40,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
             //communicate with the python backend
 
             let data:any = {
-                titleName:zChildren[group.input].element.value
+                titleName:zChildren[group.input].element.value,
+                env:"get_model_metadata"
             }
             zChildren[group.result].element.innerText = "Submitting..."
 

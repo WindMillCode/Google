@@ -54,6 +54,7 @@ class my_bigquery_client():
         query = data.get("query")
         source_url = data.get("sourceURL")  if data.get("titleName") else "gs://cloud-samples-data/bigquery/us-states/us-states.csv"
         emails = data.get("emails")
+        env = data.get("env")
         table = ""
         #
 
@@ -68,7 +69,7 @@ class my_bigquery_client():
                 
 
         # list models
-        if(self.env.get("list_models")):
+        if( env == "list_models"):
             try:
                 models = client.list_models(dataset_main[0])  
                 schema = [
@@ -110,7 +111,7 @@ class my_bigquery_client():
         #
 
         # get model metadata
-        elif(self.env.get("get_metadata")):
+        elif(env == "get_model_metadata"):
             try:
                 model_id = "{}.{}".format(dataset_main[0], name) 
                 model = client.get_model(model_id)

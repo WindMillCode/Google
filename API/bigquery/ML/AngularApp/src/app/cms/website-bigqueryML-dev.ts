@@ -22,29 +22,14 @@ let navigation = [
 				navigation:{
 					"group":[
 						{
-							name:"home",
+							name:"List Models",
 							type:"direct_link"
 						},
 						{
-							name:"about",
+							name:"Get Model Metadata",
 							type:"direct_link"
 						},
-						{
-							name:"articles",
-							type:"direct_link"
-						},
-						{
-							name:"videos",
-							type:"direct_link"
-						},
-						{
-							name:"blog",
-							type:"direct_link"
-						},
-						{
-							name:"guides",
-							type:"direct_link"
-						},
+
 					],
 					name:"List Models"
 				},
@@ -95,7 +80,7 @@ let navigation = [
 							logic:{
 								desktop:{
 									width:1,
-									height:1,
+									height:1.5,
 									top:0,
 									left:0
 								},
@@ -140,7 +125,7 @@ let navigation = [
 				}
             },
 			{
-				"key": "List Models",
+				"key": "List-Models",
 				type:"text",
 				"value":"List Models",
 				navigation:{
@@ -156,61 +141,23 @@ let navigation = [
 				}
 			},
 			{
-				"key": "about",
+				"key": "get-Model-Metadata",
 				type:"text",
-				"value":"About",
+				"value":"Get Model Metadata",
 				navigation:{
-					group:"about",
-					type:"direct_link"
-				}
-
-			},
-			{
-				"key": "articles",
-				type:"text",
-				"value":"Articles",
-				navigation:{
-					group:"articles",
-					type:"direct_link"
-				}
-
-			},
-			{
-				"key": "videos",
-				type:"text",
-				"value":"Videos",
-				navigation:{
-					group:"videos",
-					type:"direct_link"
-				}
-
-			},
-			{
-				"key": "blog",
-				type:"text",
-				"value":"Blog",
-				next:"true",
-				navigation:{
-					group:"blog",
+					group:"Get Model Metadata",
 					type:"direct_link"
 				},
-				options:{
-					judima:{
-						stack:{
-							overlapFix:"false"
-						}
-					}
+				latch:{
+					type:"display",
+					display:{
+						type:"part",
+						name:"my_display_expand_2"
+					},
 				}
+
 			},
-			{
-				"key": "guides",
-				type:"text",
-				navigation:{
-					group:"guides",
-					type:"direct_link"
-				},
-				"value":"Guides",
-			},
+
 
 
 
@@ -222,10 +169,10 @@ let navigation = [
 		})
 	},
 ]
-let list_models = [
+let listModels = [
 	...navigation,
 	{
-		"title":"list_models",
+		"title":"listModels",
 		"type_slug": "forms",
 		"metafields":[
 			{
@@ -338,9 +285,16 @@ let list_models = [
 		]
 	}
 ]
-let get_model_metadata = [
+let  getModelMetadataNavigation = objectCopy(navigation)
+getModelMetadataNavigation[0].metafields[0].navigation.name = "Get Model Metadata"
+console.log(
+	navigation[0].metafields[0].navigation.name,
+	getModelMetadataNavigation[0].metafields[0].navigation.name
+)
+let getModelMetadata = [
+	...getModelMetadataNavigation,
 	{
-		"title":"get_model_metadata",
+		"title":"getModelMetadata",
 		"type_slug": "forms",
 		"metafields":[
 			{
@@ -358,6 +312,9 @@ let get_model_metadata = [
 							footerSpace:50
 						}
 					}
+				},
+				navigation:{
+					name:"Get Model Metadata"
 				},
 				appSection:{
 					confirm:"true",
@@ -489,7 +446,7 @@ let get_model_metadata = [
 				type:"text",
 				value:"Result:",
                 next:"true",
-                // split:9,
+                split:5,
                 left:350,
 				options:{
 					css:{
@@ -516,7 +473,8 @@ let get_model_metadata = [
 
 
 website.convertCMS = [
-	...list_models
+	...listModels,
+	...getModelMetadata
 ]
 
 
