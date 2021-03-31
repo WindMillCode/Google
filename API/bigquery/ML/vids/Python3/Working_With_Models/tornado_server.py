@@ -79,7 +79,7 @@ def start_app(*args, **kwargs):
         try:
             reload(template)
             my_bigquery_client_code = template.my_bigquery_client().execute.__code__
-            my_client.env = template.my_bigquery_client().env
+            # my_client.env = template.my_bigquery_client().env
             loading_error = False
         except Exception as e:
             print("fix the error in the code you have modifed\n")

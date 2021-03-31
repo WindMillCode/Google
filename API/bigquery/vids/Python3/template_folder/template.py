@@ -26,20 +26,13 @@ class my_bigquery_client():
         self.datetime = datetime
         self.pytz = pytz
         self.time = time 
+        self.uuid = uuid
 
-    # paste env dictionary here
-    env=  {
-        "create_view":False,
-        "create_authorized_view":False,
-        "list_views":False,
-        "update_views":True
-    }
-    #
+
 
     # setup
     dataset_names = [
-        "Views_Dataset",
-        "Authorized_Views_Dataset"
+        "bqml_tutorial",
     ]
     #
 
@@ -52,38 +45,39 @@ class my_bigquery_client():
         datetime = self.datetime 
         pytz = self.pytz        
         time = self.time 
-        name = data.get("titleName") if data.get("titleName")  else "My_Target_Table"
+        uuid = self.uuid
+        name = data.get("titleName") if data.get("titleName")  else "My_Source_Model"
+        dest_name = data.get("destName") if data.get("destName")  else "My_Dest_Model"
         emails = data.get("emails") if data.get("emails") else ["data_analysts@example.com"]
         query = data.get("query")
         source_url = data.get("sourceURL")  if data.get("titleName") else "gs://cloud-samples-data/bigquery/us-states/us-states.csv"
         emails = data.get("emails")
+        env = data.get("env")
+        storage_buckets =  data.get("storageBuckets")
+        models =  data.get("models")
         table = ""
         #
 
         # create a dataset first if needed
         dataset_main = self.make_dataset()
-        table_id = "{}.{}".format(dataset_main[0], name) 
+        # table_id = "{}.{}".format(dataset_main[0], name) 
         #    
 
         #create a table if needed
-        table= self.make_table(table_id,"load")
+        # table= self.make_table(table_id,"load")
         #
                 
 
-        # create a view
-
-        #
-
-        # create an anuthorized view
-
-        #
-         
-        # list views
-
-        #
-
-        # update view query
-
+        # action
+        if( env == "list_models"):
+            try:
+            
+            except BaseException as e:
+                print('my custom error\n')
+                print(e.__class__.__name__)
+                print('\n')
+                print(e)
+                return 'an error occured check the output from the backend'
         #
 
 

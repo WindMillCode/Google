@@ -2651,7 +2651,7 @@ bq extract -m bqml_tutorial.iris_model gs://sample_test_bucket_2123231/iris_mode
 
 
 ### Multiple time-series forecasting with a single query for NYC Citi Bike trips
-* 
+* arima based time series model
 
 ### Listing Models
 
@@ -2893,6 +2893,9 @@ only export folllowing model types
                 print(e)
                 return 'an error occured check the output from the backend' 
 ```
+
+### Lab [Working with  Bigquery ML](./ML/vids/Python3/Working_With_Models/README.md)
+
 ### Reference
 * [docs](https://cloud.google.com/bigquery/docs/reference/standard-sql/geography_functions)
 * [earth engine](https://developers.google.com/earth-engine/)
